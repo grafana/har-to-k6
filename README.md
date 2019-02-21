@@ -142,6 +142,7 @@ type Check = {
   type: CheckTypeVariant,
   subject: CheckSubjectVariant,
   condition: CheckConditionVariant,
+  expression: String,
   value: String
 }
 
