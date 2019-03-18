@@ -1,5 +1,5 @@
 # LI-HAR config format
-The specification describes a JSON config format designed to act as a static representation of a K6 script.
+The specification describes a JSON config format to act as a static representation of a K6 script.
 
 The proposed format is an extension of [HAR 1.2](http://www.softwareishard.com/blog/har-12-spec/)
 Fields deviating from the HAR spec are:
