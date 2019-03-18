@@ -4,25 +4,24 @@ The specification describes a JSON config format designed to act as a static rep
 The proposed format is an extension of [HAR 1.2](http://www.softwareishard.com/blog/har-12-spec/)
 Fields deviating from the HAR spec are:
 
-```
+```javascript
 log.entries[0].checks: Array<Check>
 log.entries[0].variables: Array<Variable>
 ```
-~~log.entries[0].request.postData.file: String~~
 
 ## Request body configuration
 
-> A text based body with selection for common text content types (application/json, text/xml, text/plain etc.)
+> __Requirement__: A text based body with selection for common text content types (application/json, text/xml, text/plain etc.)
 
 Below are example of configuration for different mime-types.
 HAR path: `log.entries[0].request.postData`
 
 #### application/json
 
-```
+```javascript
 {
   postData: {
-    "mimeType": "application/json; charset=UTF-8",
+    "mimeType": "application/json",
     "text": "{\"foo\":\"bar\",\"hello\":\"world!\"}"
   }
 }
@@ -30,7 +29,7 @@ HAR path: `log.entries[0].request.postData`
 
 #### application/x-www-form-urlencoded
 
-```
+```javascript
 {
   postData: {
     mimeType: "application/x-www-form-urlencoded",
@@ -51,10 +50,10 @@ HAR path: `log.entries[0].request.postData`
 
 #### text/plain
 
-```
+```javascript
 {
   postData: {
-    "mimeType": "text/plan; charset=UTF-8",
+    "mimeType": "text/plain",
     "text": "Hello world"
   }
 }
@@ -62,36 +61,29 @@ HAR path: `log.entries[0].request.postData`
 
 #### text/xml
 
-```
+```javascript
 {
   postData: {
-    "mimeType": "text/xml; charset=UTF-8",
+    "mimeType": "text/xml",
     "text": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<note>\r\n  <to>Foo</to>\r\n  <from>Bar</Ffrom>\r\n  <heading>Reminder</heading>\r\n  <body>Hello world!</body>\r\n</note>\r\n"
   }
 }
 ```
 
 #### image/png
-```
+```javascript
 {
   postData: {
-    "mimeType": "text/xml; charset=UTF-8",
-    "text": base64encoded(file)
-  }
-}
-
-// NOTE: Second iteration
-{
-  postData: {
-    "mimeType": "text/xml; charset=UTF-8",
-    "file": "mypicture.png" // custom field
+    "mimeType": "image/png",
+    "text": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAKz2lDQ1BJQ0MgUHJvZmlsZQAASImVlwdUU2k"
   }
 }
 ```
 
+<!-- 
 ## Uploading files
 
-> "Uploading a binary file with selection for common binary content types (and we should do basic detection of the appropriate type)"
+> __Requirement__: Uploading a binary file with selection for common binary content types (and we should do basic detection of the appropriate type)
 
 Uploaded files will be base64encoded and added to [postData text like](#text/plain)
 
@@ -107,11 +99,11 @@ The uploaded files would be packaged with the K6 archive and be referenceable in
     }
   ]
 }
-```
+``` -->
 
 #### Generated K6 script
 
-```
+```javascript
 import http from "k6/http";
 import { sleep } from "k6";
 
@@ -127,18 +119,17 @@ export default function() {
 
 ## Assertions _(Checks)_
 
-> Support for adding assertions (which would become k6 checks) by looking for string, JSON expression or regex in a choice of:
+> __Requirement__: Support for adding assertions (which would become k6 checks) by looking for string, JSON expression or regex in a choice of:
 >
 > - Response headers
 > - Response body
 
-Extend [entry](#har-entry) with custom field `checks`
+<!-- Extend [entry](#har-entry) with custom field `checks` -->
 
 ### Type definition
 
 ```
 type Check = {
-  name: String,
   type: CheckTypeVariant,
   subject: CheckSubjectVariant,
   condition: CheckConditionVariant,
@@ -147,39 +138,56 @@ type Check = {
 }
 
 type CheckTypeVariant =
-  | Text
-  | ResponseTime
-  | Regex
-  | JSONPathValue
-  | JSONPath;
+  | Text = 0
+  | JSONPathValue = 1
+  | JSONPath = 2
+  | Regex = 3
+  | ResponseTime = 4; (Not sure if this will be included)
 
 type CheckSubjectVariant =
-  | HttpStatusCode
-  | ResponseBody
-  | ResponseHeaders;
+  | ResponseBody = 0
+  | ResponseHeaders = 1
+  | HttpStatusCode = 2;
 
 type CheckConditionVariant =
-  | Contains
-  | NotContains
-  | Equals
-  | StartsWith
-  | EndsWith
-  | Includes;
+  | Contains = 0
+  | NotContains = 1
+  | Equals = 2
+  | StartsWith = 3
+  | EndsWith = 4;
 ```
 
 ### HAR example
 
-HAR path: `log.entries[0].request.checks`
+<!-- HAR path: `log.entries[0].request.checks` -->
+Some fields wont always be present, for example condition and value does not make sense when check is of type _Regex_  
+Check type _JSONPathValue_ and _JSONPath_ will always check agains body.
 
-```
+```javascript
 {
   checks: [
     {
-      name: "Body includes Hello world",
+      "type": 1,
+      "expression": "user.name",
+      "condition": 2,
+      "value": "Simon Legander"
+    },
+    {
       type: 0,
       subject: 1,
-      condition: 5,
+      condition: 0,
       value: "Hello world"
+    },
+    {
+      type: 0,
+      subject: 2,
+      condition: 2,
+      value: 200
+    },
+    {
+      "type": 3,
+      "subject": 0,
+      "expression": "[0-9]+(\s{1})?%"
     }
   ]
 }
@@ -187,20 +195,32 @@ HAR path: `log.entries[0].request.checks`
 ### Generated K6 script
 The above config would generate
 
-```
+```javascript
 check(res, {
-  "Body includes Hello world": (r) => r.includes("Hello world")
+  "user.name equals Simon Legander": (r) => r.body.user.name === "Simon Legander"
+});
+
+check(res, {
+  "body contains Hello world": (r) => r.body.includes("Hello world")
+});
+
+check(res, {
+  "HTTP status code equals 200": (r) => r.status === 200
+});
+
+check(res, {
+  "body matches [0-9]+(\s{1})?%": (r) => /[0-9]+(\s{1})?%/.test(r.body)
 });
 ```
 
 
 ## Global variables
 
-> Support for extracting a piece of data from a response into a variable name (would become a JS variable in k6 script) by using regex or JSON expression in a choice of:
-> - Response headers
+> __Requirement__: Support for extracting a piece of data from a response into a variable name (would become a JS variable in k6 script) by using regex or JSON expression in a choice of:
 > - Response body
+> - ~~Response headers~~ (Skipped)
 
-Extend [entry](#har-entry) with custom field `variables`
+<!-- Extend [entry](#har-entry) with custom field `variables` -->
 
 ### Type definition
 
@@ -208,38 +228,93 @@ Extend [entry](#har-entry) with custom field `variables`
 type Variable = {
   name: String,
   type: VariableTypeVariant,
-  subject: VariableSubjectVariant,
   expression: String
 }
 
 type VariableTypeVariant =
-  | JSONPath
-  | Regex;
-
-type VariableSubjectVariant =
-  | ResponseBody
-  | ResponseHeaders;
+  | JSONPath = 0
+  | Regex = 1;
 ```
 
 ### HAR example
 
 HAR path: `log.entries[0].variables`
 
-```
+```javascript
 {
-  variables: [
-    {
-      name: "accessToken",
-      type: 0,
-      expression: "data.user.token"
-    }
-  ]
+  "log": {
+    "entries": [
+      {
+        "variables": [
+          {
+            name: "accessToken",
+            type: 0,
+            expression: "user.token"
+          }
+        ],
+        "request": {
+          "url": "http://api.test.com/authenticate",
+          "method": "POST",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+          "postData": {
+            "mimeType": "application/json",
+            "text": "{\"username\":\"admin\",\"password\":\"123\"}"
+          }
+        }
+      },
+      {
+        "request": {
+          "url": "http://api.test.com/users",
+          "method": "GET",
+          "headers": [
+            {
+              "name": "Autorization",
+              "value": "Bearer ${accessToken}"
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
 ```
 
+### Generated K6 script
+The above config would generate
+
+```javascript
+export default function() {
+  let accessToken;
+  var r = http.post("http://api.test.com/authenticate",
+    JSON.stringify({
+      username: "admin",
+      password: "123"
+    }),
+    {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  );
+  accessToken = r.body.user.token;
+
+  http.get("http://api.test.com/users", {
+    headers: {
+      "Authorization": `Bearer ${accessToken}`
+    }
+  })
+}
+```
+
+
 ## HAR entry
 Path `log.entries[0]`
-```
+```javascript
 {
   pageref: "page_0",
   startedDateTime: "2009-04-16T12:07:23.596Z",
@@ -256,7 +331,7 @@ Path `log.entries[0]`
 
 ## HAR request property
 Path `log.entries[0].request`
-```
+```javascript
 {
   method: "GET",
   url: "http://www.example.com/path/?param=value",
@@ -273,7 +348,7 @@ Path `log.entries[0].request`
 
 ## HAR postData property
 Path `log.entries[0].request.postData`
-```
+```javascript
 {
   mimeType: "application/x-www-form-urlencoded",
   text: "foo=bar",
@@ -287,7 +362,7 @@ Path `log.entries[0].request.postData`
 ```
 
 ## Full HAR
-```
+```javascript
 {
   log: {
     version: "1.2",
@@ -337,7 +412,7 @@ Path `log.entries[0].request.postData`
 
 #### Post JSON data to api
 
-```
+```javascript
 // Config
 {
   log: {
@@ -346,14 +421,12 @@ Path `log.entries[0].request.postData`
         request: {
           method: "POST",
           url: "http://test.loadimpact.com/login",
-          httpVersion: "http/2.0",
           headers: [
             {
               "name": "Content-Type",
               "value": "application/json"
             }
           ],
-          queryString: [],
           postData: {
             "mimeType": "application/json",
             "text": "{\"user\":\"admin\",\"password\":\"123\"}"
@@ -376,7 +449,7 @@ export default function() {
 ```
 
 #### Post JSON data with check
-```
+```javascript
 // Config
 {
   log: {
@@ -384,9 +457,8 @@ export default function() {
       {
         checks: [
           {
-            name: "Login success",
             type: 0,
-            subject: 0,
+            subject: 2,
             condition: 2,
             value: 200
           }
@@ -394,14 +466,12 @@ export default function() {
         request: {
           method: "POST",
           url: "http://test.loadimpact.com/login",
-          httpVersion: "http/2.0",
           headers: [
             {
               "name": "Content-Type",
               "value": "application/json"
             }
           ],
-          queryString: [],
           postData: {
             "mimeType": "application/json",
             "text": "{\"user\":\"admin\",\"password\":\"123\"}"
@@ -423,13 +493,14 @@ export default function() {
   });
 
   check(res, {
-    "Login success": r => r.status === 200
+    "HTTP status code equals 200": r => r.status === 200
   });
 }
 ```
 
+
 #### Set reusable variable based on request response
-```
+```javascript
 // Config
 {
   log: {
@@ -437,15 +508,14 @@ export default function() {
       {
         variables: [
           {
-            name: "accessToken",
             type: 0,
-            subject: 0
+            name: "accessToken",
+            expression: "user.token"
           }
         ],
         request: {
           method: "POST",
           url: "http://test.loadimpact.com/login",
-          httpVersion: "http/2.0",
           headers: [
             {
               "name": "Content-Type",
@@ -461,12 +531,11 @@ export default function() {
       {
         request: {
           method: "GET",
-          url: "http://test.loadimpact.com/my_messages",
-          httpVersion: "http/2.0",
+          url: "http://test.loadimpact.com/users",
           headers: [
             {
               "name": "Authorization",
-              "value": "${accessToken}"
+              "value": "Bearer ${accessToken}"
             }
           ]
         },
@@ -489,7 +558,7 @@ export default function() {
   accessToken = res.body.accessToken;
 
   http.get("http://test.loadimpact.com/my_messages", {
-    headers: { Authorization: accessToken }
+    headers: { Authorization: `Bearer ${accessToken}` }
   });
 }
 ```
