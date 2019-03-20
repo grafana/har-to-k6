@@ -1,6 +1,6 @@
 # LI-HAR config format
-The specification describes a JSON config format to act as a static representation of a K6 script.  
-The proposed format is an extension of [HAR 1.2](http://www.softwareishard.com/blog/har-12-spec/)  
+The specification describes a JSON config format to act as a static representation of a K6 script.
+The proposed format is an extension of [HAR 1.2](http://www.softwareishard.com/blog/har-12-spec/)
 fields deviating from the HAR spec are:
 
 - [checks](#checks)
@@ -9,8 +9,8 @@ fields deviating from the HAR spec are:
 
 
 ## Entries
-This object represents an array with all exported HTTP requests sorted by `index`. However the reader application should always make sure the array is sorted.  
-This field deviates from [HAR 1.2 request](http://www.softwareishard.com/blog/har-12-spec/#request), additional properties have been added (_checks_, _variables_, _index_).  
+This object represents an array with all exported HTTP requests sorted by `index`. However the reader application should always make sure the array is sorted.
+This field deviates from [HAR 1.2 request](http://www.softwareishard.com/blog/har-12-spec/#request), additional properties have been added (_checks_, _variables_, _index_).
 <small>_Commented out are fields that are currently out of the scope of this spec._</small>
 <!-- startedDateTime (starting from the oldest) is preferred way how to export data since it can make importing faster. However the reader application should always make sure the array is sorted (if required for the import). -->
 ```javascript
@@ -40,7 +40,7 @@ Optional properties are denoted with "?"
 type Entry = {
   index: Integer, // Used to determine the execution order of requests
   comment: String, // Used as a name or description of the request
-  pageref?: String, // Reference to a group of entries. Leave out this field if the application does not support grouping by entries. 
+  pageref?: String, // Reference to a group of entries. Leave out this field if the application does not support grouping by entries.
   request?: Array, // Detailed info about the request.
   checks?: Check, // List of check objects.
   variables?: Variable // List of variable objects.
@@ -49,8 +49,8 @@ type Entry = {
 
 
 ## Request
-This object contains detailed info about performed request.  
-This field does not deviate from [HAR 1.2 request](http://www.softwareishard.com/blog/har-12-spec/#request), however not all fields are necessary for this application.  
+This object contains detailed info about performed request.
+This field does not deviate from [HAR 1.2 request](http://www.softwareishard.com/blog/har-12-spec/#request), however not all fields are necessary for this application.
 <small>_Commented out are fields that are currently out of the scope of this spec._</small>
 ```javascript
 {
@@ -82,7 +82,7 @@ type Request = {
 ```
 
 ### Headers
-List of request headers, if any (embedded in [_request_](#request) object).   
+List of request headers, if any (embedded in [_request_](#request) object).
 If the _value_ property includes a variable notation like `${accessToken}`, this means that the header tries to access a previously set _[variable](#variables)_ and should be replaced with the value which the variable is assigned.
 ```javascript
 [
@@ -98,8 +98,8 @@ If the _value_ property includes a variable notation like `${accessToken}`, this
 ```
 
 ### QueryString
-This object contains list of all parameters & values parsed from a query string, if any (embedded in [_request_](#request) object).  
-<!-- List of request headers, if any (embedded in [_request_](#request) object).   
+This object contains list of all parameters & values parsed from a query string, if any (embedded in [_request_](#request) object).
+<!-- List of request headers, if any (embedded in [_request_](#request) object).
 If the _value_ property includes a variable notation like `${accessToken}`, this means that the header tries to access a previously set _[variable](#variables)_ and should be replaced with the value which the variable is assigned. -->
 ```javascript
 [
@@ -116,7 +116,7 @@ If the _value_ property includes a variable notation like `${accessToken}`, this
 
 
 ### PostData
-This object describes posted data, if any (embedded in [_request_](#request) object).  
+This object describes posted data, if any (embedded in [_request_](#request) object).
 ```javascript
 {
   postData: {
@@ -240,8 +240,8 @@ export default function() {
 >
 > - Response headers
 > - Response body -->
-This property represents an array with checks (assertions) to be done, if any (embedded in [_entry_](#entries) object).  
-The properties present in the _check_ object will differ depending on the _type_ of the check.  
+This property represents an array with checks (assertions) to be done, if any (embedded in [_entry_](#entries) object).
+The properties present in the _check_ object will differ depending on the _type_ of the check.
 Here is a mapping of the type - fields relation:
 
 ```javascript
@@ -299,7 +299,7 @@ type CheckConditionVariant =
 ### HAR example
 
 <!-- HAR path: `log.entries[0].request.checks` -->
-Some fields wont always be present, for example condition and value does not make sense when check is of type _Regex_  
+Some fields wont always be present, for example condition and value does not make sense when check is of type _Regex_
 Check type _JSONPathValue_ and _JSONPath_ will always check agains body.
 
 _NOTE: Consider adding a property __name__ or __description__ that can be used as the K6 check name._
@@ -356,10 +356,10 @@ check(res, {
 
 ## variables
 
-List of variables, if any (embedded in [_entry_](#entries) object).  
-The object defines instructions for data that should be extracted from the responseBody and be reusable in subsequent requests.  
-The variable should be referenceable in entries with a higher _index_ than the entry which the variable definition is embedded in.  
-Properties that can reference variables are _[headers](#headers)_, _[postData](#postdata)_, _[url](#url)_ and _[queryString](#querystring)_.  
+List of variables, if any (embedded in [_entry_](#entries) object).
+The object defines instructions for data that should be extracted from the responseBody and be reusable in subsequent requests.
+The variable should be referenceable in entries with a higher _index_ than the entry which the variable definition is embedded in.
+Properties that can reference variables are _[headers](#headers)_, _[postData](#postdata)_, _[url](#url)_ and _[queryString](#querystring)_.
 A variable named `access_token` is referenced as `${access_token}`.
 <!-- > __Requirement__: Support for extracting a piece of data from a response into a variable name (would become a JS variable in k6 script) by using regex or JSON expression in a choice of:
 > - Response body
@@ -461,102 +461,6 @@ export default function() {
 }
 ```
 
-
-## HAR entry
-Path `log.entries[0]`
-```javascript
-{
-  pageref: "page_0",
-  startedDateTime: "2009-04-16T12:07:23.596Z",
-  time: 50,
-  request: {},
-  response: {},
-  cache: {},
-  timings: {},
-  serverIPAddress: "10.0.0.1",
-  connection: "52492",
-  comment: ""
-}
-```
-
-## HAR request property
-Path `log.entries[0].request`
-```javascript
-{
-  method: "GET",
-  url: "http://www.example.com/path/?param=value",
-  httpVersion: "HTTP/1.1",
-  cookies: [],
-  headers: [],
-  queryString: [],
-  postData: {},
-  headersSize: 150,
-  bodySize: 0,
-  comment: ""
-}
-```
-
-## HAR postData property
-Path `log.entries[0].request.postData`
-```javascript
-{
-  mimeType: "application/x-www-form-urlencoded",
-  text: "foo=bar",
-  params: [
-    {
-      name: "foo",
-      value: "bar"
-    }
-  ]
-}
-```
-
-## Full HAR
-```javascript
-{
-  log: {
-    version: "1.2",
-    creator: {},
-    browser: {},
-    pages: [],
-    entries: [
-      {
-        pageref: "page_0",
-        startedDateTime: "2009-04-16T12:07:23.596Z",
-        time: 50,
-        request: {
-          method: "GET",
-          url: "http://www.example.com/path/?param=value",
-          httpVersion: "HTTP/1.1",
-          cookies: [],
-          headers: [],
-          queryString: [],
-          postData: {
-            mimeType: "application/x-www-form-urlencoded",
-            text: "foo=bar",
-            params: [
-              {
-                name: "foo",
-                value: "bar"
-              }
-            ]
-          },
-          headersSize: 150,
-          bodySize: 0,
-          comment: ""
-        },
-        response: {},
-        cache: {},
-        timings: {},
-        serverIPAddress: "10.0.0.1",
-        connection: "52492",
-        comment: ""
-      }
-    ],
-    comment: ""
-  }
-};
-```
 
 ## Examples
 
