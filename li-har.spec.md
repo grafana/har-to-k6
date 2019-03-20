@@ -8,9 +8,26 @@ fields deviating from the HAR spec are:
 - [index](#Entries)
 
 
+## Pages
+This object represents list of pages/groups.  
+Pages are a way to couple entries together. Pages can be referenced via the _pageref_ property and need to match the page objects _id_.  
+The index of the page object specifies the order in which the pages/groups should be executed.
+```javascript
+{
+  pages: [
+    {
+      index: 0,
+      id: "group_0",
+      title: "Group 0"
+    }
+  ]
+}
+```
+
 ## Entries
 This object represents an array with all exported HTTP requests sorted by `index`. However the reader application should always make sure the array is sorted.  
 This field deviates from [HAR 1.2 request](http://www.softwareishard.com/blog/har-12-spec/#request), additional properties have been added (_checks_, _variables_, _index_).  
+
 <small>_Commented out are fields that are currently out of the scope of this spec._</small>
 <!-- startedDateTime (starting from the oldest) is preferred way how to export data since it can make importing faster. However the reader application should always make sure the array is sorted (if required for the import). -->
 ```javascript
@@ -40,12 +57,64 @@ Optional properties are denoted with "?"
 type Entry = {
   index: Integer, // Used to determine the execution order of requests
   comment: String, // Used as a name or description of the request
-  pageref?: String, // Reference to a group of entries. Leave out this field if the application does not support grouping by entries. 
+  pageref?: String, // Reference to a group of entries
   request?: Array, // Detailed info about the request.
   checks?: Check, // List of check objects.
   variables?: Variable // List of variable objects.
 }
 ```
+
+
+
+### Pageref
+`pageref` is a property that specified which _[page](#pages)_ a given entry belongs to. Two entries specifying the same pageref should alas end up in the same _[K6 group](https://docs.k6.io/docs/tags-and-groups)_.  
+If only some entries specify _pageref_ the following order criterion should be implemented:  
+1. group.index
+2. entry.index
+
+The same order criterion applies in the case of not specifying a _pageref_ or specifying a _pageref_ that does not match any of the _[page](#pages)_ objects ids will
+
+The index property specified on the entry applies within the group (only if a pageref is specified).
+
+
+#### Example
+```javascript
+{
+  pages: [
+    {
+      index: 0,
+      id: "group_0",
+      title: "Group 0",
+    },
+    {
+      index: 1,
+      id: "group_0",
+      title: "Group 0",
+    } 
+  ],
+  entries: [
+    {
+      index: 0,
+      pageref: "group_0"
+    },
+    {
+      index: 1,
+      pageref: "group_0"
+    }
+    },
+    {
+      index: 0,
+      pageref: "group_1"
+    }
+    },
+    {
+      index: 1,
+      pageref: "group_1"
+    }
+  ]
+}
+```
+
 
 
 ## Request
@@ -458,56 +527,6 @@ export default function() {
       "Authorization": `Bearer ${accessToken}`
     }
   })
-}
-```
-
-
-## HAR entry
-Path `log.entries[0]`
-```javascript
-{
-  pageref: "page_0",
-  startedDateTime: "2009-04-16T12:07:23.596Z",
-  time: 50,
-  request: {},
-  response: {},
-  cache: {},
-  timings: {},
-  serverIPAddress: "10.0.0.1",
-  connection: "52492",
-  comment: ""
-}
-```
-
-## HAR request property
-Path `log.entries[0].request`
-```javascript
-{
-  method: "GET",
-  url: "http://www.example.com/path/?param=value",
-  httpVersion: "HTTP/1.1",
-  cookies: [],
-  headers: [],
-  queryString: [],
-  postData: {},
-  headersSize: 150,
-  bodySize: 0,
-  comment: ""
-}
-```
-
-## HAR postData property
-Path `log.entries[0].request.postData`
-```javascript
-{
-  mimeType: "application/x-www-form-urlencoded",
-  text: "foo=bar",
-  params: [
-    {
-      name: "foo",
-      value: "bar"
-    }
-  ]
 }
 ```
 
