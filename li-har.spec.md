@@ -195,8 +195,10 @@ type Request = {
 ```
 
 ### URL
-Url of the request to be performed. The url must include a valid protocol e.g. http://.  
-_[Variables](#variables)_ can be referenced in the URL like `http://test.loadimpact.com/?someParam=${variableName}` or `http://test.loadimpact.com/users/${userId}/profile`
+Url of the request to be performed. The url must include a valid protocol e.g. `http://`.  
+_[Variables](#variables)_ can be referenced in the URL like:  
+`http://test.loadimpact.com/?someParam=${variableName}`  
+`http://test.loadimpact.com/users/${userId}/profile`
 
 ### Headers
 List of request headers, if any (embedded in [_request_](#request) object).   
