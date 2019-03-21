@@ -3,15 +3,30 @@ The specification describes a JSON config format to act as a static representati
 The proposed format is an extension of [HAR 1.2](http://www.softwareishard.com/blog/har-12-spec/)  
 fields deviating from the HAR spec are:
 
+- [page.index](#pages)
+- [entry.index](#Entries)
 - [checks](#checks)
 - [variables](#variables)
-- [index](#Entries)
+
+
+## Table of Contents
+1. [Pages](#pages)
+2. [Entries](#entries)  
+2.1 [PageRef](#pageref)  
+2.2 [Request](#request)  
+&nbsp;&nbsp;&nbsp;&nbsp;2.2.1 [Url](#url)  
+&nbsp;&nbsp;&nbsp;&nbsp;2.2.2 [Headers](#headers)  
+&nbsp;&nbsp;&nbsp;&nbsp;2.2.3 [QueryString](#querystring)  
+&nbsp;&nbsp;&nbsp;&nbsp;2.2.4 [PostData](#postdata)  
+2.3 [Checks](#checks)  
+2.4 [Variables](#variables)
+3. [Examples](#examples)
 
 
 ## Pages
 This object represents list of pages/groups.  
-Pages are a way to couple entries together. Pages can be referenced via the _pageref_ property and need to match the page objects _id_.  
-The index of the page object specifies the order in which the pages/groups should be executed.
+Pages are a way to couple entries together. Pages can be referenced from an entry via the _pageref_ property and need to match the page objects _id_.  
+The index property specifies the order in which the pages/groups should be executed.
 ```javascript
 {
   pages: [
@@ -24,29 +39,28 @@ The index of the page object specifies the order in which the pages/groups shoul
 }
 ```
 
-## Entries
-This object represents an array with all exported HTTP requests sorted by `index`. However the reader application should always make sure the array is sorted.  
-This field deviates from [HAR 1.2 request](http://www.softwareishard.com/blog/har-12-spec/#request), additional properties have been added (_checks_, _variables_, _index_).  
+```javascript
+type Page = {
+  index: Integer, // Used to determine the execution order of pages/groups
+  id: String, // Unique identifier referenceable from entry.pageref
+  title: String // Name or description of the page/group
+}
+```
 
-<small>_Commented out are fields that are currently out of the scope of this spec._</small>
-<!-- startedDateTime (starting from the oldest) is preferred way how to export data since it can make importing faster. However the reader application should always make sure the array is sorted (if required for the import). -->
+
+## Entries
+This object represents an array with all HTTP requests that should be executed sorted by `index`. However the reader application should always make sure the array is sorted.  
+
 ```javascript
 {
   entries: [
     {
       index: 0,
+      request: {},
       comment: "",
       pageref: "page_0",
-      request: {},
       checks: [],
       variables: []
-      // "time": 50,
-      // "response": {...},
-      // "cache": {...},
-      // "timings": {},
-      // "serverIPAddress": "10.0.0.1",
-      // "startedDateTime": "2009-04-16T12:07:23.596Z",
-      // "connection": "52492",
     }
   ]
 }
@@ -56,11 +70,11 @@ Optional properties are denoted with "?"
 ```javascript
 type Entry = {
   index: Integer, // Used to determine the execution order of requests
-  comment: String, // Used as a name or description of the request
-  pageref?: String, // Reference to a group of entries
-  request?: Array, // Detailed info about the request.
-  checks?: Check, // List of check objects.
-  variables?: Variable // List of variable objects.
+  request: Array, // Detailed info about the request
+  comment?: String, // Used as a name or description of the request
+  pageref?: String, // Reference to a page/group
+  checks?: Check, // List of check objects
+  variables?: Variable // List of variable objects
 }
 ```
 
@@ -78,7 +92,10 @@ The index property specified on the entry applies within the group (only if a pa
 
 
 #### Example
+
 ```javascript
+// HAR configuration
+
 {
   pages: [
     {
@@ -88,39 +105,70 @@ The index property specified on the entry applies within the group (only if a pa
     },
     {
       index: 1,
-      id: "group_0",
-      title: "Group 0",
+      id: "group_1",
+      title: "Group 1",
     } 
   ],
   entries: [
     {
       index: 0,
-      pageref: "group_0"
+      pageref: "group_0",
+      request: {
+        method: "POST",
+        url: "http://test.loadimpact.com/login",
+      }
     },
     {
       index: 1,
-      pageref: "group_0"
+      pageref: "group_0",
+      request: {
+        method: "GET",
+        url: "http://test.loadimpact.com/users",
+      }
     }
     },
     {
       index: 0,
-      pageref: "group_1"
+      pageref: "group_1",
+      request: {
+        method: "GET",
+        url: "http://test.loadimpact.com/items",
+      }
     }
     },
     {
       index: 1,
-      pageref: "group_1"
+      pageref: "group_1",
+      request: {
+        method: "POST",
+        url: "http://test.loadimpact.com/checkout",
+      }
     }
   ]
 }
-```
 
+
+// K6 script equivalent
+
+import { group } from "k6";
+
+export default function() {
+  group("Group 0", function() {
+    http.post("http://test.loadimpact.com/login");
+    http.get("http://test.loadimpact.com/users");
+  });
+
+  group("Group 1", function() {
+    http.get("http://test.loadimpact.com/items");
+    http.post("http://test.loadimpact.com/checkout");
+  });
+};
+```
 
 
 ## Request
 This object contains detailed info about performed request.  
-This field does not deviate from [HAR 1.2 request](http://www.softwareishard.com/blog/har-12-spec/#request), however not all fields are necessary for this application.  
-<small>_Commented out are fields that are currently out of the scope of this spec._</small>
+
 ```javascript
 {
   request: {
@@ -129,16 +177,12 @@ This field does not deviate from [HAR 1.2 request](http://www.softwareishard.com
     httpVersion: "HTTP/1.1",
     headers: [],
     queryString: [],
-    postData : {},
-    // "cookies": [],
-    // "headersSize" : 150,
-    // "bodySize" : 0,
-    // "comment" : ""
+    postData : {}
   }
 }
 ```
 
-Optional properties are denoted with "?"
+_Optional properties are denoted with "?"_
 ```javascript
 type Request = {
   method: String, // Request method (GET, POST, ...)
@@ -150,9 +194,13 @@ type Request = {
 }
 ```
 
+### URL
+Url of the request to be performed. The url must include a valid protocol e.g. http://.  
+_[Variables](#variables)_ can be referenced in the URL like `http://test.loadimpact.com/?someParam=${variableName}` or `http://test.loadimpact.com/users/${userId}/profile`
+
 ### Headers
 List of request headers, if any (embedded in [_request_](#request) object).   
-If the _value_ property includes a variable notation like `${accessToken}`, this means that the header tries to access a previously set _[variable](#variables)_ and should be replaced with the value which the variable is assigned.
+If the `value` property includes a variable notation like `${accessToken}`, this means that the header tries to access a _[variable](#variables)_ defined by another _[entry](#entries)_ and should be replaced with the variables assigned value.
 ```javascript
 [
   {
@@ -168,8 +216,7 @@ If the _value_ property includes a variable notation like `${accessToken}`, this
 
 ### QueryString
 This object contains list of all parameters & values parsed from a query string, if any (embedded in [_request_](#request) object).  
-<!-- List of request headers, if any (embedded in [_request_](#request) object).   
-If the _value_ property includes a variable notation like `${accessToken}`, this means that the header tries to access a previously set _[variable](#variables)_ and should be replaced with the value which the variable is assigned. -->
+
 ```javascript
 [
   {
@@ -179,6 +226,10 @@ If the _value_ property includes a variable notation like `${accessToken}`, this
   {
     name: "color",
     value: "red"
+  },
+  {
+    name: "token",
+    value: "${accessToken}"
   }
 ]
 ```
@@ -192,7 +243,6 @@ This object describes posted data, if any (embedded in [_request_](#request) obj
     mimeType: "application/json",
     text : "plain posted data",
     params: []
-    // comment: ""
   }
 }
 ```
@@ -206,7 +256,7 @@ type PostData = {
 ```
 
 #### Referencing variables
-Just like headers, _[variables](#headers)_ can also be used in the request body.
+Just like _[headers](#headers)_, _[variables](#headers)_ can also be used in the request body.
 ```javascript
 {
   postData: {
@@ -217,12 +267,9 @@ Just like headers, _[variables](#headers)_ can also be used in the request body.
 ```
 
 
-<!-- > __Requirement__: A text based body with selection for common text content types (application/json, text/xml, text/plain etc.) -->
-<!-- HAR path: `log.entries[0].request.postData` -->
+#### Examples with different payload types
 
-### Examples with different payload types
-
-#### application/json
+##### application/json
 
 ```javascript
 {
@@ -233,7 +280,7 @@ Just like headers, _[variables](#headers)_ can also be used in the request body.
 }
 ```
 
-#### application/x-www-form-urlencoded
+##### application/x-www-form-urlencoded
 
 ```javascript
 {
@@ -254,7 +301,7 @@ Just like headers, _[variables](#headers)_ can also be used in the request body.
 }
 ```
 
-#### text/plain
+##### text/plain
 
 ```javascript
 {
@@ -265,7 +312,7 @@ Just like headers, _[variables](#headers)_ can also be used in the request body.
 }
 ```
 
-#### text/xml
+##### text/xml
 
 ```javascript
 {
@@ -276,22 +323,19 @@ Just like headers, _[variables](#headers)_ can also be used in the request body.
 }
 ```
 
-#### image/png
+##### image/png
 ```javascript
+// HAR configuration
 {
   postData: {
     "mimeType": "image/png",
     "text": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAKz2lDQ1BJQ0MgUHJvZmlsZQAASImVlwdUU2k"
   }
 }
-```
 
 
-#### Generated K6 script
-
-```javascript
+// Generated K6 script
 import http from "k6/http";
-import { sleep } from "k6";
 
 let binFile = open("./mypicture.png", "b");
 
@@ -299,16 +343,12 @@ export default function() {
   var res = http.post("https://api.example.com/upload", {
     file: http.file(binFile, "mypicture.png")
   });
-  sleep(3);
 }
 ```
 
+
 ## Checks
 
-<!-- > __Requirement__: Support for adding assertions (which would become k6 checks) by looking for string, JSON expression or regex in a choice of:
->
-> - Response headers
-> - Response body -->
 This property represents an array with checks (assertions) to be done, if any (embedded in [_entry_](#entries) object).  
 The properties present in the _check_ object will differ depending on the _type_ of the check.  
 Here is a mapping of the type - fields relation:
@@ -349,8 +389,7 @@ type CheckTypeVariant =
   | Text = 0
   | JSONPathValue = 1
   | JSONPath = 2
-  | Regex = 3
-  // | ResponseTime = 4;
+  | Regex = 3;
 
 type CheckSubjectVariant =
   | ResponseBody = 0
@@ -367,9 +406,8 @@ type CheckConditionVariant =
 
 ### HAR example
 
-<!-- HAR path: `log.entries[0].request.checks` -->
-Some fields wont always be present, for example condition and value does not make sense when check is of type _Regex_  
-Check type _JSONPathValue_ and _JSONPath_ will always check agains body.
+Some fields wont always be present, for example condition and value does not make sense when check is of type _Regex_.  
+Check type `JSONPathValue` and `JSONPath` should assume `CheckSubjectVariant.ResponseBody`.
 
 _NOTE: Consider adding a property __name__ or __description__ that can be used as the K6 check name._
 ```javascript
@@ -430,11 +468,7 @@ The object defines instructions for data that should be extracted from the respo
 The variable should be referenceable in entries with a higher _index_ than the entry which the variable definition is embedded in.  
 Properties that can reference variables are _[headers](#headers)_, _[postData](#postdata)_, _[url](#url)_ and _[queryString](#querystring)_.  
 A variable named `access_token` is referenced as `${access_token}`.
-<!-- > __Requirement__: Support for extracting a piece of data from a response into a variable name (would become a JS variable in k6 script) by using regex or JSON expression in a choice of:
-> - Response body
-> - ~~Response headers~~ (Skipped) -->
 
-<!-- Extend [entry](#har-entry) with custom field `variables` -->
 ### Type definition
 ```javascript
 type Variable = {
@@ -457,7 +491,6 @@ If multilple entries define the same variable names then the variable will be ov
 
 ### HAR example
 
-<!-- HAR path: `log.entries[0].variables` -->
 
 ```javascript
 {
@@ -530,52 +563,7 @@ export default function() {
 }
 ```
 
-## Full HAR
-```javascript
-{
-  log: {
-    version: "1.2",
-    creator: {},
-    browser: {},
-    pages: [],
-    entries: [
-      {
-        pageref: "page_0",
-        startedDateTime: "2009-04-16T12:07:23.596Z",
-        time: 50,
-        request: {
-          method: "GET",
-          url: "http://www.example.com/path/?param=value",
-          httpVersion: "HTTP/1.1",
-          cookies: [],
-          headers: [],
-          queryString: [],
-          postData: {
-            mimeType: "application/x-www-form-urlencoded",
-            text: "foo=bar",
-            params: [
-              {
-                name: "foo",
-                value: "bar"
-              }
-            ]
-          },
-          headersSize: 150,
-          bodySize: 0,
-          comment: ""
-        },
-        response: {},
-        cache: {},
-        timings: {},
-        serverIPAddress: "10.0.0.1",
-        connection: "52492",
-        comment: ""
-      }
-    ],
-    comment: ""
-  }
-};
-```
+
 
 ## Examples
 
