@@ -1,0 +1,20 @@
+{
+    "name": "har-to-k6",
+    "description": "Convert LI-HAR to k6 script",
+    "version": "0.1.0-dev",
+    "license": "Apache-2.0",
+    "keywords": [
+        "k6",
+        "har",
+        "li-har",
+        "loadtest",
+        "load-test",
+        "load-testing",
+        "server-load",
+        "performance"
+    ],
+    "directories": {
+        "bin": "bin",
+        "lib": "src"
+    }
+}
