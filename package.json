@@ -34,5 +34,8 @@
         "test-unit": "cross-env NODE_PATH=src:test ava test/unit",
         "test-hoc": "cross-env NODE_PATH=src:test ava"
     },
-    "dependencies": {}
+    "dependencies": {
+        "is-plain-object": "^2.0.4",
+        "verror": "^1.10.0"
+    }
 }
