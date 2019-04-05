@@ -1,6 +1,7 @@
 function makeResult () {
   return {
-    comment: []
+    comment: [],
+    pages: new Map()
   }
 }
 

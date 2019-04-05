@@ -4,8 +4,9 @@ const { InvalidArchiveError } = require('../error')
 
 function pages (node, result) {
   validate(node)
-  for (const item of node) {
-    page(item, result)
+  for (let i = 0; i < node.length; i++) {
+    const item = node[i]
+    page(item, i, result)
   }
 }
 
