@@ -16,13 +16,13 @@ test.afterEach.always(t => {
 test('missing root', t => {
   t.throws(() => {
     root()
-  }, 'Missing root node')
+  }, { name: 'MissingRoot' })
 })
 
 test('missing log', t => {
   t.throws(() => {
     root({})
-  }, 'Missing log section')
+  }, { name: 'MissingLog' })
 })
 
 test('success', t => {

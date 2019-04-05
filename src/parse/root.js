@@ -9,10 +9,16 @@ function root (node, result) {
 
 function validate (node) {
   if (!isPlainObject(node)) {
-    throw new InvalidArchiveError('Missing root node')
+    throw new InvalidArchiveError(
+      { name: 'MissingRoot' },
+      'Missing root node'
+    )
   }
   if (!isPlainObject(node.log)) {
-    throw new InvalidArchiveError('Missing log section')
+    throw new InvalidArchiveError(
+      { name: 'MissingLog' },
+      'Missing log section'
+    )
   }
 }
 
