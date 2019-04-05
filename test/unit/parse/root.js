@@ -13,19 +13,19 @@ test.afterEach.always(t => {
   log.reset()
 })
 
-test('missing root', t => {
+test.serial('missing root', t => {
   t.throws(() => {
     root()
   }, { name: 'MissingRoot' })
 })
 
-test('missing log', t => {
+test.serial('missing log', t => {
   t.throws(() => {
     root({})
   }, { name: 'MissingLog' })
 })
 
-test('success', t => {
+test.serial('success', t => {
   root({ log: {} })
   t.true(log.calledOnce)
 })

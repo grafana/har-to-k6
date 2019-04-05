@@ -17,43 +17,43 @@ test.afterEach.always(t => {
   pages.reset()
 })
 
-test('invalid pages', t => {
+test.serial('invalid pages', t => {
   t.throws(() => {
     log({ pages: {} })
   }, { name: 'InvalidPages' })
 })
 
-test('invalid entries', t => {
+test.serial('invalid entries', t => {
   t.throws(() => {
     log({ entries: {} })
   }, { name: 'InvalidEntries' })
 })
 
-test('version explicit', t => {
+test.serial('version explicit', t => {
   const result = makeResult()
   log({ version: '1.2' }, result)
   t.is(result.comment[0], 'Converted from HAR v1.2 archive')
 })
 
-test('version default', t => {
+test.serial('version default', t => {
   const result = makeResult()
   log({}, result)
   t.is(result.comment[0], 'Converted from HAR v1.1 archive')
 })
 
-test('creator name', t => {
+test.serial('creator name', t => {
   const result = makeResult()
   log({ creator: { name: 'WebTracer' } }, result)
   t.is(result.comment[1], 'Creator: WebTracer')
 })
 
-test('creator version', t => {
+test.serial('creator version', t => {
   const result = makeResult()
   log({ creator: { name: 'WebTracer', version: '2' } }, result)
   t.is(result.comment[1], 'Creator: WebTracer 2')
 })
 
-test('creator comment', t => {
+test.serial('creator comment', t => {
   const result = makeResult()
   log({
     creator: { name: 'WebTracer', comment: 'Recorded 2015-04-07' }
@@ -64,19 +64,19 @@ test('creator comment', t => {
   ].join('\n'))
 })
 
-test('browser name', t => {
+test.serial('browser name', t => {
   const result = makeResult()
   log({ browser: { name: 'Brave' } }, result)
   t.is(result.comment[1], 'Browser: Brave')
 })
 
-test('browser version', t => {
+test.serial('browser version', t => {
   const result = makeResult()
   log({ browser: { name: 'Brave', version: '1' } }, result)
   t.is(result.comment[1], 'Browser: Brave 1')
 })
 
-test('browser comment', t => {
+test.serial('browser comment', t => {
   const result = makeResult()
   log({
     browser: { name: 'Brave', comment: 'Developer build 20190103' }
@@ -87,19 +87,19 @@ test('browser comment', t => {
   ].join('\n'))
 })
 
-test('comment', t => {
+test.serial('comment', t => {
   const result = makeResult()
   log({ comment: 'Sent from my iPad' }, result)
   t.is(result.comment[1], 'Sent from my iPad')
 })
 
-test('pages', t => {
+test.serial('pages', t => {
   const result = makeResult()
   log({ pages: [] }, result)
   t.true(pages.calledOnce)
 })
 
-test('entries', t => {
+test.serial('entries', t => {
   const result = makeResult()
   log({ entries: [] }, result)
   t.true(entries.calledOnce)

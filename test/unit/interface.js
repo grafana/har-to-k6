@@ -16,7 +16,7 @@ test.afterEach.always(t => {
   render.reset()
 })
 
-test('liHARToK6Script', t => {
+test.serial('liHARToK6Script', t => {
   const result = Symbol('result')
   render.returns(result)
   t.is(harToK6.liHARToK6Script(), result)
