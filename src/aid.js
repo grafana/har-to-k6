@@ -1,5 +1,7 @@
 function makeResult () {
-  return {}
+  return {
+    comment: []
+  }
 }
 
 Object.assign(exports, {
