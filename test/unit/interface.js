@@ -20,4 +20,6 @@ test('liHARToK6Script', t => {
   const result = Symbol('result')
   render.returns(result)
   t.is(harToK6.liHARToK6Script(), result)
+  t.true(parse.calledOnce)
+  t.true(render.calledOnce)
 })
