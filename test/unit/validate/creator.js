@@ -17,7 +17,7 @@ test('invalid version', t => {
 test('invalid comment', t => {
   t.throws(() => {
     creator({ name: 'WebTracer', version: '5', comment: 5 }, makeAssay())
-  })
+  }, { name: 'InvalidComment' })
 })
 
 test('valid empty', t => {
