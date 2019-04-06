@@ -17,18 +17,6 @@ test.afterEach.always(t => {
   pages.reset()
 })
 
-test.serial('invalid pages', t => {
-  t.throws(() => {
-    log({ pages: {} })
-  }, { name: 'InvalidPages' })
-})
-
-test.serial('invalid entries', t => {
-  t.throws(() => {
-    log({ entries: {} })
-  }, { name: 'InvalidEntries' })
-})
-
 test.serial('version explicit', t => {
   const result = makeResult()
   log({ version: '1.2' }, result)

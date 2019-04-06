@@ -1,10 +1,7 @@
 const entries = require('./entries')
-const isPlainObject = require('is-plain-object')
 const pages = require('./pages')
-const { InvalidArchiveError } = require('../error')
 
 function log (node, result) {
-  validate(node)
   version(node, result)
   creator(node, result)
   browser(node, result)
@@ -17,28 +14,13 @@ function log (node, result) {
   }
 }
 
-function validate (node) {
-  if (node.pages && !Array.isArray(node.pages)) {
-    throw new InvalidArchiveError(
-      { name: 'InvalidPages' },
-      'Invalid pages section: must be array'
-    )
-  }
-  if (node.entries && !Array.isArray(node.entries)) {
-    throw new InvalidArchiveError(
-      { name: 'InvalidEntries' },
-      'Invalid entries section: must be array'
-    )
-  }
-}
-
 function version (node, result) {
   const value = node.version || '1.1'
   result.comment.push(`Converted from HAR v${value} archive`)
 }
 
 function creator (node, result) {
-  if (isPlainObject(node.creator)) {
+  if (node.creator) {
     const creator = node.creator
     const lines = []
     if (creator.name) {
@@ -59,7 +41,7 @@ function creator (node, result) {
 }
 
 function browser (node, result) {
-  if (isPlainObject(node.browser)) {
+  if (node.browser) {
     const browser = node.browser
     const lines = []
     if (browser.name) {
