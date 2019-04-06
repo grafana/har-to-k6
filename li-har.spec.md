@@ -81,7 +81,7 @@ type Entry = {
 
 
 ### Pageref
-`pageref` is a property that specified which _[page](#pages)_ a given entry belongs to. Two entries specifying the same pageref should alas end up in the same _[K6 group](https://docs.k6.io/docs/tags-and-groups)_.  
+`pageref` is a property that specified which _[page](#pages)_ a given entry belongs to. Two entries specifying the same pageref should always end up in the same _[K6 group](https://docs.k6.io/docs/tags-and-groups)_.  
 If only some entries specify _pageref_ the following order criterion should be implemented:  
 1. group.index
 2. entry.index
