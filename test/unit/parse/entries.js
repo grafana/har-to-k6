@@ -14,37 +14,19 @@ test.afterEach.always(t => {
   entry.reset()
 })
 
-test.serial('invalid entry 0', t => {
-  t.throws(() => {
-    entries([ 5 ])
-  }, {
-    name: 'InvalidEntry',
-    message: 'Invalid entry (0): must be object'
-  })
-})
-
-test.serial('invalid entry 2', t => {
-  t.throws(() => {
-    entries([ {}, {}, 5 ])
-  }, {
-    name: 'InvalidEntry',
-    message: 'Invalid entry (2): must be object'
-  })
-})
-
-test.serial('success 0', t => {
+test.serial('0', t => {
   const result = makeResult()
   entries([], result)
   t.true(entry.notCalled)
 })
 
-test.serial('success 1', t => {
+test.serial('1', t => {
   const result = makeResult()
   entries([ {} ], result)
   t.true(entry.calledOnce)
 })
 
-test.serial('success 3', t => {
+test.serial('3', t => {
   const result = makeResult()
   entries([ {}, {}, {} ], result)
   t.true(entry.calledThrice)
