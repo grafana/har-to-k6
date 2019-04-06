@@ -14,10 +14,16 @@ function validate (node) {
       'Missing root node'
     )
   }
-  if (!isPlainObject(node.log)) {
+  if (!('log' in node)) {
     throw new InvalidArchiveError(
       { name: 'MissingLog' },
       'Missing log section'
+    )
+  }
+  if (!isPlainObject(node.log)) {
+    throw new InvalidArchiveError(
+      { name: 'InvalidLog' },
+      'Invalid log section: must be object'
     )
   }
 }

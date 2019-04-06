@@ -25,6 +25,12 @@ test.serial('missing log', t => {
   }, { name: 'MissingLog' })
 })
 
+test.serial('invalid log', t => {
+  t.throws(() => {
+    root({ log: 5 })
+  }, { name: 'InvalidLog' })
+})
+
 test.serial('success', t => {
   t.notThrows(() => {
     root({ log: {} })
