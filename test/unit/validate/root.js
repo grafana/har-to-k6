@@ -31,7 +31,7 @@ test.serial('invalid log', t => {
   }, { name: 'InvalidLog' })
 })
 
-test.serial('success', t => {
+test.serial('valid', t => {
   t.notThrows(() => {
     root({ log: {} })
   })

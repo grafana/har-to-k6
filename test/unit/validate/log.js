@@ -58,13 +58,13 @@ test.serial('invalid entries', t => {
   }, { name: 'InvalidEntries' })
 })
 
-test.serial('success empty', t => {
+test.serial('valid empty', t => {
   t.notThrows(() => {
     log({})
   })
 })
 
-test.serial('success full', t => {
+test.serial('valid full', t => {
   t.notThrows(() => {
     log({
       version: '1.2',

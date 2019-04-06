@@ -31,19 +31,19 @@ test.serial('invalid entry 2', t => {
   })
 })
 
-test.serial('success 0', t => {
+test.serial('valid 0', t => {
   t.notThrows(() => {
     entries([])
   })
 })
 
-test.serial('success 1', t => {
+test.serial('valid 1', t => {
   t.notThrows(() => {
     entries([ {} ])
   })
 })
 
-test.serial('success 3', t => {
+test.serial('valid 3', t => {
   t.notThrows(() => {
     entries([ {}, {}, {} ])
   })
