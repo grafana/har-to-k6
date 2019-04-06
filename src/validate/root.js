@@ -2,6 +2,10 @@ const isPlainObject = require('is-plain-object')
 const log = require('./log')
 const { InvalidArchiveError } = require('../error')
 
+/*
+ * root: required object
+ * log: required object
+ */
 function root (node, assay) {
   validate(node)
   log(node.log, assay)

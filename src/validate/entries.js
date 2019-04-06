@@ -3,7 +3,7 @@ const entry = require('./entry')
 const { InvalidArchiveError } = require('../error')
 
 /*
- * [i] object
+ * [i]: object
  */
 function entries (node, assay) {
   validate(node)
