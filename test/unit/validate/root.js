@@ -24,3 +24,9 @@ test.serial('missing log', t => {
     root({})
   }, { name: 'MissingLog' })
 })
+
+test.serial('success', t => {
+  t.notThrows(() => {
+    root({ log: {} })
+  })
+})
