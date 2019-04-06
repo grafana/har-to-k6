@@ -5,19 +5,19 @@ const isPlainObject = require('is-plain-object')
 const pages = require('./pages')
 const { InvalidArchiveError } = require('../error')
 
-function log (node) {
+function log (node, assay) {
   validate(node)
   if (node.creator) {
-    creator(node.creator)
+    creator(node.creator, assay)
   }
   if (node.browser) {
-    browser(node.browser)
+    browser(node.browser, assay)
   }
   if (node.pages) {
-    pages(node.pages)
+    pages(node.pages, assay)
   }
   if (node.entries) {
-    entries(node.entries)
+    entries(node.entries, assay)
   }
 }
 

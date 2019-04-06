@@ -1,4 +1,5 @@
 const root = require('./root')
+const { makeAssay } = require('../aid')
 
 /**
  * Validate LI-HAR archive
@@ -7,7 +8,7 @@ const root = require('./root')
  * @throws {InvalidArchiveError} If invalid.
  */
 function validate (archive) {
-  root(archive)
+  root(archive, makeAssay())
 }
 
 module.exports = validate
