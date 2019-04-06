@@ -53,7 +53,7 @@ function validate (node, i, assay) {
   if (!isNaturalNumber(node.index, { includeZero: true })) {
     throw new InvalidArchiveError(
       { name: 'InvalidPageIndex' },
-      `Invalid page index (${i}): must be natural number`
+      `Invalid page index (${i}): must be nonnegative integer`
     )
   }
   if (assay.pageIndices.has(node.index)) {

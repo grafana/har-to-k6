@@ -10,7 +10,8 @@ function empty (value) {
 function makeAssay () {
   return {
     pageIds: new Set(),
-    pageIndices: new Set()
+    pageIndices: new Set(),
+    scopeIndices: new Map()
   }
 }
 
