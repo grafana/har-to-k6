@@ -60,3 +60,9 @@ test('invalid comment', t => {
     page({ id: 'page1', title: 'Page 1', index: 0, comment: 5 }, 0, assay)
   }, { name: 'InvalidComment' })
 })
+
+test('success', t => {
+  t.notThrows(() => {
+    page({ id: 'page1', title: 'Page 1', index: 0 }, 0, makeAssay())
+  })
+})
