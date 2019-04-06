@@ -14,37 +14,19 @@ test.afterEach.always(t => {
   page.reset()
 })
 
-test.serial('invalid page 0', t => {
-  t.throws(() => {
-    pages([ 5 ])
-  }, {
-    name: 'InvalidPage',
-    message: 'Invalid page (0): must be object'
-  })
-})
-
-test.serial('invalid page 2', t => {
-  t.throws(() => {
-    pages([ {}, {}, 5 ])
-  }, {
-    name: 'InvalidPage',
-    message: 'Invalid page (2): must be object'
-  })
-})
-
-test.serial('success 0', t => {
+test.serial('0', t => {
   const result = makeResult()
   pages([], result)
   t.true(page.notCalled)
 })
 
-test.serial('success 1', t => {
+test.serial('1', t => {
   const result = makeResult()
   pages([ {} ], result)
   t.true(page.calledOnce)
 })
 
-test.serial('success 3', t => {
+test.serial('3', t => {
   const result = makeResult()
   pages([ {}, {}, {} ], result)
   t.true(page.calledThrice)
