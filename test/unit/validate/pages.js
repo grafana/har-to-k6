@@ -36,16 +36,19 @@ test.serial('valid 0', t => {
   t.notThrows(() => {
     pages([], makeAssay())
   })
+  t.true(page.notCalled)
 })
 
 test.serial('valid 1', t => {
   t.notThrows(() => {
     pages([ {} ], makeAssay())
   })
+  t.true(page.calledOnce)
 })
 
 test.serial('valid 3', t => {
   t.notThrows(() => {
     pages([ {}, {}, {} ], makeAssay())
   })
+  t.true(page.calledThrice)
 })
