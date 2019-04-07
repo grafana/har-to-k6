@@ -1,6 +1,7 @@
 import test from 'ava'
 import mockRequire from 'mock-require'
 import sinon from 'sinon'
+import { makeAssay } from 'aid'
 const browser = sinon.stub()
 const creator = sinon.stub()
 const entries = sinon.stub()
@@ -24,43 +25,43 @@ test.afterEach.always(t => {
 
 test.serial('invalid version', t => {
   t.throws(() => {
-    log({ version: 5 })
+    log({ version: 5 }, makeAssay())
   }, { name: 'InvalidVersion' })
 })
 
 test.serial('invalid creator', t => {
   t.throws(() => {
-    log({ creator: 5 })
+    log({ creator: 5 }, makeAssay())
   }, { name: 'InvalidCreator' })
 })
 
 test.serial('invalid browser', t => {
   t.throws(() => {
-    log({ browser: 5 })
+    log({ browser: 5 }, makeAssay())
   }, { name: 'InvalidBrowser' })
 })
 
 test.serial('invalid comment', t => {
   t.throws(() => {
-    log({ comment: 5 })
+    log({ comment: 5 }, makeAssay())
   }, { name: 'InvalidComment' })
 })
 
 test.serial('invalid pages', t => {
   t.throws(() => {
-    log({ pages: {} })
+    log({ pages: {} }, makeAssay())
   }, { name: 'InvalidPages' })
 })
 
 test.serial('invalid entries', t => {
   t.throws(() => {
-    log({ entries: {} })
+    log({ entries: {} }, makeAssay())
   }, { name: 'InvalidEntries' })
 })
 
 test.serial('valid empty', t => {
   t.notThrows(() => {
-    log({})
+    log({}, makeAssay())
   })
 })
 
@@ -73,6 +74,6 @@ test.serial('valid full', t => {
       comment: 'High load',
       pages: [],
       entries: []
-    })
+    }, makeAssay())
   })
 })

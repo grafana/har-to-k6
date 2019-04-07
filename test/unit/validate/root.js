@@ -1,6 +1,7 @@
 import test from 'ava'
 import mockRequire from 'mock-require'
 import sinon from 'sinon'
+import { makeAssay } from 'aid'
 const log = sinon.stub()
 let root
 
@@ -15,24 +16,24 @@ test.afterEach.always(t => {
 
 test.serial('missing root', t => {
   t.throws(() => {
-    root()
+    root(null, makeAssay())
   }, { name: 'MissingRoot' })
 })
 
 test.serial('missing log', t => {
   t.throws(() => {
-    root({})
+    root({}, makeAssay())
   }, { name: 'MissingLog' })
 })
 
 test.serial('invalid log', t => {
   t.throws(() => {
-    root({ log: 5 })
+    root({ log: 5 }, makeAssay())
   }, { name: 'InvalidLog' })
 })
 
 test.serial('valid', t => {
   t.notThrows(() => {
-    root({ log: {} })
+    root({ log: {} }, makeAssay())
   })
 })

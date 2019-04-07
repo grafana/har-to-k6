@@ -22,7 +22,7 @@ test('invalid comment', t => {
 
 test('valid empty', t => {
   t.notThrows(() => {
-    creator({})
+    creator({}, makeAssay())
   })
 })
 
