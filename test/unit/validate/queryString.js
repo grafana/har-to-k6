@@ -33,22 +33,16 @@ test.serial('invalid item 2', t => {
 })
 
 test.serial('valid 0', t => {
-  t.notThrows(() => {
-    queryString([], 0, makeAssay())
-  })
+  queryString([], 0, makeAssay())
   t.true(queryItem.notCalled)
 })
 
 test.serial('valid 1', t => {
-  t.notThrows(() => {
-    queryString([ {} ], 0, makeAssay())
-  })
+  queryString([ {} ], 0, makeAssay())
   t.true(queryItem.calledOnce)
 })
 
 test.serial('valid 3', t => {
-  t.notThrows(() => {
-    queryString([ {}, {}, {} ], 0, makeAssay())
-  })
+  queryString([ {}, {}, {} ], 0, makeAssay())
   t.true(queryItem.calledThrice)
 })

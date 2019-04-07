@@ -33,8 +33,6 @@ test.serial('invalid log', t => {
 })
 
 test.serial('valid', t => {
-  t.notThrows(() => {
-    root({ log: {} }, makeAssay())
-  })
+  root({ log: {} }, makeAssay())
   t.true(log.calledOnce)
 })

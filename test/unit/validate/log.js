@@ -60,9 +60,7 @@ test.serial('invalid entries', t => {
 })
 
 test.serial('valid empty', t => {
-  t.notThrows(() => {
-    log({}, makeAssay())
-  })
+  log({}, makeAssay())
   t.true(creator.notCalled)
   t.true(browser.notCalled)
   t.true(pages.notCalled)
@@ -70,16 +68,14 @@ test.serial('valid empty', t => {
 })
 
 test.serial('valid full', t => {
-  t.notThrows(() => {
-    log({
-      version: '1.2',
-      creator: {},
-      browser: {},
-      comment: 'High load',
-      pages: [],
-      entries: []
-    }, makeAssay())
-  })
+  log({
+    version: '1.2',
+    creator: {},
+    browser: {},
+    comment: 'High load',
+    pages: [],
+    entries: []
+  }, makeAssay())
   t.true(creator.calledOnce)
   t.true(browser.calledOnce)
   t.true(pages.calledOnce)

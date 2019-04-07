@@ -85,25 +85,21 @@ test.serial('invalid comment', t => {
 })
 
 test.serial('valid minimal', t => {
-  t.notThrows(() => {
-    entry({ index: 0, request: {} }, 0, makeAssay())
-  })
+  entry({ index: 0, request: {} }, 0, makeAssay())
   t.true(request.calledOnce)
   t.true(checks.notCalled)
   t.true(variables.notCalled)
 })
 
 test.serial('valid maximal', t => {
-  t.notThrows(() => {
-    entry({
-      index: 0,
-      request: {},
-      pageref: 'page1',
-      checks: [],
-      variables: [],
-      comment: 'Apple a day'
-    }, 0, makeAssay())
-  })
+  entry({
+    index: 0,
+    request: {},
+    pageref: 'page1',
+    checks: [],
+    variables: [],
+    comment: 'Apple a day'
+  }, 0, makeAssay())
   t.true(request.calledOnce)
   t.true(checks.calledOnce)
   t.true(variables.calledOnce)

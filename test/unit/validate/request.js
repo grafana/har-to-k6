@@ -112,9 +112,7 @@ test.serial('invalid comment', t => {
 })
 
 test.serial('valid http url', t => {
-  t.notThrows(() => {
-    request({ method: 'GET', url: 'http://example.com' }, 0, makeAssay())
-  })
+  request({ method: 'GET', url: 'http://example.com' }, 0, makeAssay())
   t.true(queryString.notCalled)
   t.true(headers.notCalled)
   t.true(cookies.notCalled)
@@ -122,9 +120,7 @@ test.serial('valid http url', t => {
 })
 
 test.serial('valid https url', t => {
-  t.notThrows(() => {
-    request({ method: 'GET', url: 'https://example.com' }, 0, makeAssay())
-  })
+  request({ method: 'GET', url: 'https://example.com' }, 0, makeAssay())
   t.true(queryString.notCalled)
   t.true(headers.notCalled)
   t.true(cookies.notCalled)
@@ -132,9 +128,7 @@ test.serial('valid https url', t => {
 })
 
 test.serial('valid ftp url', t => {
-  t.notThrows(() => {
-    request({ method: 'GET', url: 'ftp://example.com' }, 0, makeAssay())
-  })
+  request({ method: 'GET', url: 'ftp://example.com' }, 0, makeAssay())
   t.true(queryString.notCalled)
   t.true(headers.notCalled)
   t.true(cookies.notCalled)
@@ -142,9 +136,7 @@ test.serial('valid ftp url', t => {
 })
 
 test.serial('valid variable url', t => {
-  t.notThrows(() => {
-    request({ method: 'GET', url: '${base}/index.html' }, 0, makeAssay())
-  })
+  request({ method: 'GET', url: '${base}/index.html' }, 0, makeAssay())
   t.true(queryString.notCalled)
   t.true(headers.notCalled)
   t.true(cookies.notCalled)
@@ -152,17 +144,15 @@ test.serial('valid variable url', t => {
 })
 
 test.serial('valid full', t => {
-  t.notThrows(() => {
-    request({
-      method: 'GET',
-      url: 'http://example.com',
-      queryString: [],
-      headers: [],
-      cookies: [],
-      postData: {},
-      comment: 'Load front page'
-    }, 0, makeAssay())
-  })
+  request({
+    method: 'GET',
+    url: 'http://example.com',
+    queryString: [],
+    headers: [],
+    cookies: [],
+    postData: {},
+    comment: 'Load front page'
+  }, 0, makeAssay())
   t.true(queryString.calledOnce)
   t.true(headers.calledOnce)
   t.true(cookies.calledOnce)
