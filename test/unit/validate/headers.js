@@ -23,7 +23,7 @@ test.serial('invalid header 0', t => {
   })
 })
 
-test.serial('Invalid header 2', t => {
+test.serial('invalid header 2', t => {
   t.throws(() => {
     headers([ {}, {}, 5 ], 8, makeAssay())
   }, {
