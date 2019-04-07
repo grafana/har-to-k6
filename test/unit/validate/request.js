@@ -115,24 +115,40 @@ test.serial('valid http url', t => {
   t.notThrows(() => {
     request({ method: 'GET', url: 'http://example.com' }, 0, makeAssay())
   })
+  t.true(queryString.notCalled)
+  t.true(headers.notCalled)
+  t.true(cookies.notCalled)
+  t.true(postData.notCalled)
 })
 
 test.serial('valid https url', t => {
   t.notThrows(() => {
     request({ method: 'GET', url: 'https://example.com' }, 0, makeAssay())
   })
+  t.true(queryString.notCalled)
+  t.true(headers.notCalled)
+  t.true(cookies.notCalled)
+  t.true(postData.notCalled)
 })
 
 test.serial('valid ftp url', t => {
   t.notThrows(() => {
     request({ method: 'GET', url: 'ftp://example.com' }, 0, makeAssay())
   })
+  t.true(queryString.notCalled)
+  t.true(headers.notCalled)
+  t.true(cookies.notCalled)
+  t.true(postData.notCalled)
 })
 
 test.serial('valid variable url', t => {
   t.notThrows(() => {
     request({ method: 'GET', url: '${base}/index.html' }, 0, makeAssay())
   })
+  t.true(queryString.notCalled)
+  t.true(headers.notCalled)
+  t.true(cookies.notCalled)
+  t.true(postData.notCalled)
 })
 
 test.serial('valid full', t => {
@@ -147,4 +163,8 @@ test.serial('valid full', t => {
       comment: 'Load front page'
     }, 0, makeAssay())
   })
+  t.true(queryString.calledOnce)
+  t.true(headers.calledOnce)
+  t.true(cookies.calledOnce)
+  t.true(postData.calledOnce)
 })

@@ -63,6 +63,10 @@ test.serial('valid empty', t => {
   t.notThrows(() => {
     log({}, makeAssay())
   })
+  t.true(creator.notCalled)
+  t.true(browser.notCalled)
+  t.true(pages.notCalled)
+  t.true(entries.notCalled)
 })
 
 test.serial('valid full', t => {
@@ -76,4 +80,8 @@ test.serial('valid full', t => {
       entries: []
     }, makeAssay())
   })
+  t.true(creator.calledOnce)
+  t.true(browser.calledOnce)
+  t.true(pages.calledOnce)
+  t.true(entries.calledOnce)
 })
