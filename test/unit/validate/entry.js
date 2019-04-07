@@ -92,17 +92,13 @@ test.serial('valid minimal', t => {
 
 test.serial('valid maximal', t => {
   t.notThrows(() => {
-    request(
-      {
-        index: 0,
-        request: {},
-        pageref: 'page1',
-        checks: [],
-        variables: [],
-        comment: 'Apple a day'
-      },
-      0,
-      makeAssay()
-    )
+    request({
+      index: 0,
+      request: {},
+      pageref: 'page1',
+      checks: [],
+      variables: [],
+      comment: 'Apple a day'
+    }, 0, makeAssay())
   })
 })
