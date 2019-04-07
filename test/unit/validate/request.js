@@ -145,6 +145,6 @@ test.serial('valid full', t => {
       cookies: [],
       postData: {},
       comment: 'Load front page'
-    })
+    }, 0, makeAssay())
   })
 })
