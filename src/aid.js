@@ -7,6 +7,11 @@ function empty (value) {
   )
 }
 
+// Produce valid encoding not used by enumeration
+function extrinsic (enumeration) {
+  return Math.max(...Object.values(enumeration)) + 1
+}
+
 function makeAssay () {
   return {
     pageIds: new Set(),
@@ -24,6 +29,7 @@ function makeResult () {
 
 Object.assign(exports, {
   empty,
+  extrinsic,
   makeAssay,
   makeResult
 })

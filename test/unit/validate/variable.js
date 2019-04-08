@@ -1,7 +1,7 @@
 import test from 'ava'
 import variable from 'validate/variable'
 import { VariableType } from 'enum'
-import { makeAssay } from 'aid'
+import { extrinsic, makeAssay } from 'aid'
 
 test('missing name', t => {
   t.throws(() => {
@@ -43,11 +43,12 @@ test('invalid type type', t => {
 })
 
 test('invalid type undefined', t => {
+  const type = extrinsic(VariableType)
   t.throws(() => {
-    variable({ name: 'a', type: 99 }, 0, 0, makeAssay())
+    variable({ name: 'a', type }, 0, 0, makeAssay())
   }, {
     name: 'InvalidVariableType',
-    message: 'Invalid variable type (0:0): 99'
+    message: `Invalid variable type (0:0): ${type}`
   })
 })
 
