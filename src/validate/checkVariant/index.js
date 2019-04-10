@@ -1,4 +1,5 @@
 const checkVariant = {
+  JSONPathValue: require('./JSONPathValue'),
   Text: require('./Text')
 }
 
