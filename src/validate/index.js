@@ -10,8 +10,8 @@ const { makeAssay } = require('../aid')
  */
 function validate (archive) {
   root(archive, makeAssay())
-  if (archive.log && archive.log.entries) {
-    entryIndex(archive)
+  if (archive.log.entries) {
+    entryIndex(archive.log.entries)
   }
 }
 
