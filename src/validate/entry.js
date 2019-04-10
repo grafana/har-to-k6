@@ -4,9 +4,8 @@ const isPlainObject = require('is-plain-object')
 const request = require('./request')
 const variables = require('./variables')
 const { empty } = require('../aid')
+const { ExternalScope } = require('../sym')
 const { InvalidArchiveError } = require('../error')
-
-const ExternalScope = Symbol('ExternalScope')
 
 /*
  * index: required nonnegative integer, scopewide unique

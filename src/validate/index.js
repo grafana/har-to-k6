@@ -1,3 +1,4 @@
+const entryIndex = require('./entryIndex')
 const root = require('./root')
 const { makeAssay } = require('../aid')
 
@@ -9,6 +10,9 @@ const { makeAssay } = require('../aid')
  */
 function validate (archive) {
   root(archive, makeAssay())
+  if (archive.log && archive.log.entries) {
+    entryIndex(archive)
+  }
 }
 
 module.exports = validate
