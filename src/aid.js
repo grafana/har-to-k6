@@ -1,4 +1,5 @@
 const undef = void 0
+
 function empty (value) {
   return (
     value === undef ||
@@ -27,9 +28,17 @@ function makeResult () {
   }
 }
 
+function nought (value) {
+  return (
+    value === undef ||
+    value === null
+  )
+}
+
 Object.assign(exports, {
   empty,
   extrinsic,
   makeAssay,
-  makeResult
+  makeResult,
+  nought
 })

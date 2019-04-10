@@ -51,6 +51,17 @@ test('valid', t => {
   })
 })
 
+test('valid empty value', t => {
+  t.notThrows(() => {
+    JSONPathValue({
+      type: CheckType.JSONPathValue,
+      expression: 'user.bio',
+      condition: CheckCondition.Equals,
+      value: ''
+    }, 0, 0, makeAssay())
+  })
+})
+
 test('valid subject', t => {
   t.notThrows(() => {
     JSONPathValue({

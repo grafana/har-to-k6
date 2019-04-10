@@ -1,4 +1,4 @@
-const { empty } = require('../../aid')
+const { empty, nought } = require('../../aid')
 const { CheckSubject } = require('../../enum')
 const { InvalidArchiveError } = require('../../error')
 
@@ -25,7 +25,7 @@ function validate (node, i, j) {
       `Missing check condition (${i}:${j}): required for JSONPathValue`
     )
   }
-  if (empty(node.value)) {
+  if (nought(node.value)) {
     throw new InvalidArchiveError(
       { name: 'MissingCheckValue' },
       `Missing check value (${i}:${j}): required for JSONPathValue`
