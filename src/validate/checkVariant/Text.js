@@ -4,8 +4,8 @@ const { InvalidArchiveError } = require('../../error')
 /*
  * subject: required
  * condition: required
- * expression: prohibited
  * value: required
+ * expression: prohibited
  */
 function Text (node, i, j, assay) {
   validate(node, i, j)
@@ -24,16 +24,16 @@ function validate (node, i, j) {
       `Missing check condition (${i}:${j}): required for Text`
     )
   }
-  if (!empty(node.expression)) {
-    throw new InvalidArchiveError(
-      { name: 'InvalidCheckExpression' },
-      `Invalid check expression (${i}:${j}): prohibited for Text`
-    )
-  }
   if (empty(node.value)) {
     throw new InvalidArchiveError(
       { name: 'MissingCheckValue' },
       `Missing check value (${i}:${j}): required for Text`
+    )
+  }
+  if (!empty(node.expression)) {
+    throw new InvalidArchiveError(
+      { name: 'InvalidCheckExpression' },
+      `Invalid check expression (${i}:${j}): prohibited for Text`
     )
   }
 }

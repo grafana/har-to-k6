@@ -18,17 +18,6 @@ test('missing condition', t => {
   }, { name: 'MissingCheckCondition' })
 })
 
-test('invalid expression', t => {
-  t.throws(() => {
-    Text({
-      type: CheckType.Text,
-      subject: CheckSubject.ResponseHeaders,
-      condition: CheckCondition.Contains,
-      expression: 'user.id'
-    }, 0, 0, makeAssay())
-  }, { name: 'InvalidCheckExpression' })
-})
-
 test('missing value', t => {
   t.throws(() => {
     Text({
@@ -37,6 +26,18 @@ test('missing value', t => {
       condition: CheckCondition.Equals
     }, 0, 0, makeAssay())
   }, { name: 'MissingCheckValue' })
+})
+
+test('invalid expression', t => {
+  t.throws(() => {
+    Text({
+      type: CheckType.Text,
+      subject: CheckSubject.ResponseHeaders,
+      condition: CheckCondition.Contains,
+      value: 'GET, POST, HEAD',
+      expression: 'user.id'
+    }, 0, 0, makeAssay())
+  }, { name: 'InvalidCheckExpression' })
 })
 
 test('valid', t => {
