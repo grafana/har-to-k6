@@ -39,6 +39,16 @@ test('invalid value empty', t => {
   }, { name: 'InvalidCheckValue' })
 })
 
+test('invalid flags', t => {
+  t.throws(() => {
+    JSONPath({
+      type: CheckType.JSONPath,
+      expression: 'user.id',
+      flags: 'i'
+    }, 0, 0, makeAssay())
+  }, { name: 'InvalidCheckFlags' })
+})
+
 test('invalid subject', t => {
   t.throws(() => {
     JSONPath({

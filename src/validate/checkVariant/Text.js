@@ -6,6 +6,7 @@ const { InvalidArchiveError } = require('../../error')
  * condition: required
  * value: required
  * expression: prohibited
+ * flags: prohibited
  */
 function Text (node, i, j, assay) {
   validate(node, i, j)
@@ -34,6 +35,12 @@ function validate (node, i, j) {
     throw new InvalidArchiveError(
       { name: 'InvalidCheckExpression' },
       `Invalid check expression (${i}:${j}): prohibited for Text`
+    )
+  }
+  if (!empty(node.flags)) {
+    throw new InvalidArchiveError(
+      { name: 'InvalidCheckFlags' },
+      `Invalid check flags (${i}:${j}): prohibited for Text`
     )
   }
 }

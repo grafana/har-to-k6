@@ -28,6 +28,18 @@ test('missing value', t => {
   }, { name: 'MissingCheckValue' })
 })
 
+test('invalid flags', t => {
+  t.throws(() => {
+    JSONPathValue({
+      type: CheckType.JSONPathValue,
+      expression: 'user.id',
+      condition: CheckCondition.Equals,
+      value: '578',
+      flags: 'i'
+    }, 0, 0, makeAssay())
+  }, { name: 'InvalidCheckFlags' })
+})
+
 test('invalid subject', t => {
   t.throws(() => {
     JSONPathValue({

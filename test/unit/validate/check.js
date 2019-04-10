@@ -57,6 +57,12 @@ test.serial('invalid expression', t => {
   }, { name: 'InvalidCheckExpression' })
 })
 
+test.serial('invalid flags', t => {
+  t.throws(() => {
+    check({ type: CheckType.Text, flags: 5 }, 0, 0, makeAssay())
+  }, { name: 'InvalidCheckFlags' })
+})
+
 test.serial('invalid value', t => {
   t.throws(() => {
     check({ type: CheckType.Text, value: 5 }, 0, 0, makeAssay())
@@ -80,6 +86,7 @@ test.serial('valid full', t => {
     subject: CheckSubject.HttpStatusCode,
     condition: CheckCondition.Equals,
     expression: 'user.id',
+    flags: 'i',
     value: '7484',
     comment: 'How deep does the rabbit hole go?'
   }, 0, 0, makeAssay())

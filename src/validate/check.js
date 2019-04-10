@@ -12,6 +12,7 @@ const { InvalidArchiveError } = require('../error')
  * subject: optional CheckSubject
  * condition: optional CheckCondition
  * expression: optional string
+ * flags: optional string
  * value: optional string
  * comment: optional string
  */
@@ -49,6 +50,12 @@ function validate (node, i, j) {
     throw new InvalidArchiveError(
       { name: 'InvalidCheckExpression' },
       `Invalid check expression (${i}:${j}): must be string`
+    )
+  }
+  if (node.flags && typeof node.flags !== 'string') {
+    throw new InvalidArchiveError(
+      { name: 'InvalidCheckFlags' },
+      `Invalid check flags (${i}:${j}): must be string`
     )
   }
   if (node.value && typeof node.value !== 'string') {

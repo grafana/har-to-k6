@@ -6,6 +6,7 @@ const { InvalidArchiveError } = require('../../error')
  * expression: required
  * condition: required
  * value: required, empty string allowed
+ * flags: prohibited
  * subject: prohibited except CheckSubject.ResponseBody
  */
 function JSONPathValue (node, i, j, assay) {
@@ -29,6 +30,12 @@ function validate (node, i, j) {
     throw new InvalidArchiveError(
       { name: 'MissingCheckValue' },
       `Missing check value (${i}:${j}): required for JSONPathValue`
+    )
+  }
+  if (!empty(node.flags)) {
+    throw new InvalidArchiveError(
+      { name: 'InvalidCheckFlags' },
+      `Invalid check flags (${i}:${j}): prohibited for JSONPathValue`
     )
   }
   if (!(empty(node.subject) || node.subject === CheckSubject.ResponseBody)) {

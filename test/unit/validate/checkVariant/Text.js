@@ -40,6 +40,18 @@ test('invalid expression', t => {
   }, { name: 'InvalidCheckExpression' })
 })
 
+test('invalid flags', t => {
+  t.throws(() => {
+    Text({
+      type: CheckType.Text,
+      subject: CheckSubject.ResponseHeaders,
+      condition: CheckCondition.Contains,
+      value: 'GET, POST, HEAD',
+      flags: 'i'
+    }, 0, 0, makeAssay())
+  }, { name: 'InvalidCheckFlags' })
+})
+
 test('valid', t => {
   t.notThrows(() => {
     Text({
