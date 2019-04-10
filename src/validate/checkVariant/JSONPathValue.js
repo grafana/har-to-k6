@@ -1,4 +1,5 @@
 const { empty } = require('../../aid')
+const { CheckSubject } = require('../../enum')
 const { InvalidArchiveError } = require('../../error')
 
 /*
@@ -30,7 +31,7 @@ function validate (node, i, j) {
       `Missing check value (${i}:${j}): required for JSONPathValue`
     )
   }
-  if (!empty(node.subject)) {
+  if (!(empty(node.subject) || node.subject === CheckSubject.ResponseBody)) {
     throw new InvalidArchiveError(
       { name: 'InvalidCheckSubject' },
       `Invalid check subject (${i}:${j}): prohibited for JSONPathValue`

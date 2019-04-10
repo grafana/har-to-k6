@@ -50,3 +50,15 @@ test('valid', t => {
     }, 0, 0, makeAssay())
   })
 })
+
+test('valid subject', t => {
+  t.notThrows(() => {
+    JSONPathValue({
+      type: CheckType.JSONPathValue,
+      subject: CheckSubject.ResponseBody,
+      expression: 'user.id',
+      condition: CheckCondition.Equals,
+      value: '578'
+    }, 0, 0, makeAssay())
+  })
+})
