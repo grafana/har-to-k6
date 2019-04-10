@@ -9,6 +9,15 @@ test('missing expression', t => {
   }, { name: 'MissingCheckExpression' })
 })
 
+test('invalid expression', t => {
+  t.throws(() => {
+    JSONPathValue({
+      type: CheckType.JSONPathValue,
+      expression: '$$$'
+    }, 0, 0, makeAssay())
+  }, { name: 'InvalidCheckExpression' })
+})
+
 test('missing condition', t => {
   t.throws(() => {
     JSONPathValue({

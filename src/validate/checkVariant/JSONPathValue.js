@@ -1,9 +1,10 @@
+const jsonpath = require('jsonpath')
 const { empty, nought } = require('../../aid')
 const { CheckSubject } = require('../../enum')
 const { InvalidArchiveError } = require('../../error')
 
 /*
- * expression: required
+ * expression: required, JSONPath
  * condition: required
  * value: required, empty string allowed
  * flags: prohibited
@@ -18,6 +19,14 @@ function validate (node, i, j) {
     throw new InvalidArchiveError(
       { name: 'MissingCheckExpression' },
       `Missing check expression (${i}:${j}): required for JSONPathValue`
+    )
+  }
+  try {
+    jsonpath.parse(node.expression)
+  } catch (error) {
+    throw new InvalidArchiveError(
+      { name: 'InvalidCheckExpression', cause: error },
+      `Invalid check expression (${i}:${j}): not a valid JSONPath`
     )
   }
   if (empty(node.condition)) {
