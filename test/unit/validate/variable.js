@@ -97,6 +97,6 @@ test('valid Regex', t => {
       type: VariableType.Regex,
       expression: 'token=([^\n]+)\n',
       comment: 'Extract session token'
-    })
+    }, 0, 0, makeAssay())
   })
 })

@@ -73,6 +73,6 @@ test.serial('valid full text', t => {
     mimeType: 'text/plain',
     text: 'Message in text',
     comment: 'Send a text body'
-  })
+  }, 0, makeAssay())
   t.true(params.notCalled)
 })
