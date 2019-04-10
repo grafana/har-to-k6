@@ -5,7 +5,7 @@ const { InvalidArchiveError } = require('../../error')
 /*
  * expression: required
  * condition: required
- * value: required
+ * value: required, empty string allowed
  * subject: prohibited except CheckSubject.ResponseBody
  */
 function JSONPathValue (node, i, j, assay) {
