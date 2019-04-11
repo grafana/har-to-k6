@@ -1,9 +1,12 @@
+const creator = require('./creator')
 const entries = require('./entries')
 const pages = require('./pages')
 
 function log (node, result) {
   version(node, result)
-  creator(node, result)
+  if (node.creator) {
+    creator(node.creator, result)
+  }
   browser(node, result)
   comment(node, result)
   if (node.pages) {
@@ -17,27 +20,6 @@ function log (node, result) {
 function version (node, result) {
   const value = node.version || '1.1'
   result.comment.push(`Converted from HAR v${value} archive`)
-}
-
-function creator (node, result) {
-  if (node.creator) {
-    const creator = node.creator
-    const lines = []
-    if (creator.name) {
-      const name = creator.name
-      if (creator.version) {
-        lines.push(`Creator: ${name} ${creator.version}`)
-      } else {
-        lines.push(`Creator: ${name}`)
-      }
-    }
-    if (creator.comment) {
-      lines.push(creator.comment)
-    }
-    if (lines.length) {
-      result.comment.push(lines.join(`\n`))
-    }
-  }
 }
 
 function browser (node, result) {

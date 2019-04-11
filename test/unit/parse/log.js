@@ -2,17 +2,20 @@ import test from 'ava'
 import mockRequire from 'mock-require'
 import sinon from 'sinon'
 import { makeResult } from 'aid'
+const creator = sinon.stub()
 const entries = sinon.stub()
 const pages = sinon.stub()
 let log
 
 test.before(t => {
+  mockRequire('../../../src/parse/creator', creator)
   mockRequire('../../../src/parse/entries', entries)
   mockRequire('../../../src/parse/pages', pages)
   log = require('parse/log')
 })
 
 test.afterEach.always(t => {
+  creator.reset()
   entries.reset()
   pages.reset()
 })
@@ -27,29 +30,6 @@ test.serial('version default', t => {
   const result = makeResult()
   log({}, result)
   t.is(result.comment[0], 'Converted from HAR v1.1 archive')
-})
-
-test.serial('creator name', t => {
-  const result = makeResult()
-  log({ creator: { name: 'WebTracer' } }, result)
-  t.is(result.comment[1], 'Creator: WebTracer')
-})
-
-test.serial('creator version', t => {
-  const result = makeResult()
-  log({ creator: { name: 'WebTracer', version: '2' } }, result)
-  t.is(result.comment[1], 'Creator: WebTracer 2')
-})
-
-test.serial('creator comment', t => {
-  const result = makeResult()
-  log({
-    creator: { name: 'WebTracer', comment: 'Recorded 2015-04-07' }
-  }, result)
-  t.is(result.comment[1], [
-    'Creator: WebTracer',
-    'Recorded 2015-04-07'
-  ].join('\n'))
 })
 
 test.serial('browser name', t => {
