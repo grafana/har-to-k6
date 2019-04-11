@@ -4,14 +4,14 @@ function page (node, i, result) {
     index: node.index,
     entries: []
   }
-  comment(node, spec)
+  if (node.comment) {
+    comment(node.comment, spec)
+  }
   result.pages.set(node.id, spec)
 }
 
-function comment (node, spec) {
-  if (node.comment) {
-    spec.comment = node.comment
-  }
+function comment (value, spec) {
+  spec.comment = value
 }
 
 module.exports = page
