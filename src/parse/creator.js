@@ -1,11 +1,10 @@
 function creator (node, result) {
   const lines = []
   if (node.name) {
-    const name = node.name
     if (node.version) {
-      lines.push(`Creator: ${name} ${node.version}`)
+      lines.push(`Creator: ${node.name} ${node.version}`)
     } else {
-      lines.push(`Creator: ${name}`)
+      lines.push(`Creator: ${node.name}`)
     }
   }
   if (node.comment) {
