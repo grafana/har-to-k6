@@ -14,6 +14,14 @@ test('invalid name', t => {
   }, { name: 'InvalidCookieName' })
 })
 
+test('duplicate name', t => {
+  const assay = makeAssay()
+  cookie({ name: 'session' }, 8, 0, assay)
+  t.throws(() => {
+    cookie({ name: 'session' }, 8, 1, assay)
+  }, { name: 'DuplicateCookieName' })
+})
+
 test('invalid value', t => {
   t.throws(() => {
     cookie({ name: 'session', value: 5 }, 0, 0, makeAssay())

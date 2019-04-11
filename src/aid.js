@@ -17,7 +17,8 @@ function makeAssay () {
   return {
     pageIds: new Set(),
     pageIndices: new Set(),
-    scopeIndices: new Map()
+    scopeIndices: new Map(),
+    requestCookieNames: new Map()
   }
 }
 
