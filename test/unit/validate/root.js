@@ -1,18 +1,8 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeAssay } from 'aid'
-const log = sinon.stub()
-let root
-
-test.before(t => {
-  mockRequire('../../../src/validate/log', log)
-  root = require('validate/root')
-})
-
-test.afterEach.always(t => {
-  log.reset()
-})
+const [ root, { log } ] =
+  isolate(test, 'validate/root', { log: 'validate/log' })
 
 test.serial('missing root', t => {
   t.throws(() => {

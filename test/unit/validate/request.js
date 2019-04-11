@@ -1,29 +1,15 @@
 /* eslint-disable no-template-curly-in-string */
 
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeAssay } from 'aid'
-const cookies = sinon.stub()
-const headers = sinon.stub()
-const postData = sinon.stub()
-const queryString = sinon.stub()
-let request
-
-test.before(t => {
-  mockRequire('../../../src/validate/cookies', cookies)
-  mockRequire('../../../src/validate/headers', headers)
-  mockRequire('../../../src/validate/postData', postData)
-  mockRequire('../../../src/validate/queryString', queryString)
-  request = require('validate/request')
-})
-
-test.afterEach.always(t => {
-  cookies.reset()
-  headers.reset()
-  postData.reset()
-  queryString.reset()
-})
+const [ request, { cookies, headers, postData, queryString } ] =
+  isolate(test, 'validate/request', {
+    cookies: 'validate/cookies',
+    headers: 'validate/headers',
+    postData: 'validate/postData',
+    queryString: 'validate/queryString'
+  })
 
 test.serial('missing method', t => {
   t.throws(() => {

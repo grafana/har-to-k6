@@ -1,18 +1,8 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeAssay } from 'aid'
-const variable = sinon.stub()
-let variables
-
-test.before(t => {
-  mockRequire('../../../src/validate/variable', variable)
-  variables = require('validate/variables')
-})
-
-test.afterEach.always(t => {
-  variable.reset()
-})
+const [ variables, { variable } ] =
+  isolate(test, 'validate/variables', { variable: 'validate/variable' })
 
 test.serial('invalid variable 0', t => {
   t.throws(() => {

@@ -1,18 +1,8 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeAssay } from 'aid'
-const header = sinon.stub()
-let headers
-
-test.before(t => {
-  mockRequire('../../../src/validate/header', header)
-  headers = require('validate/headers')
-})
-
-test.afterEach.always(t => {
-  header.reset()
-})
+const [ headers, { header } ] =
+  isolate(test, 'validate/headers', { header: 'validate/header' })
 
 test.serial('invalid header 0', t => {
   t.throws(() => {

@@ -1,27 +1,13 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeAssay } from 'aid'
-const browser = sinon.stub()
-const creator = sinon.stub()
-const entries = sinon.stub()
-const pages = sinon.stub()
-let log
-
-test.before(t => {
-  mockRequire('../../../src/validate/browser', browser)
-  mockRequire('../../../src/validate/creator', creator)
-  mockRequire('../../../src/validate/entries', entries)
-  mockRequire('../../../src/validate/pages', pages)
-  log = require('validate/log')
-})
-
-test.afterEach.always(t => {
-  browser.reset()
-  creator.reset()
-  entries.reset()
-  pages.reset()
-})
+const [ log, { browser, creator, entries, pages } ] =
+  isolate(test, 'validate/log', {
+    browser: 'validate/browser',
+    creator: 'validate/creator',
+    entries: 'validate/entries',
+    pages: 'validate/pages'
+  })
 
 test.serial('invalid version', t => {
   t.throws(() => {

@@ -1,18 +1,8 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeAssay } from 'aid'
-const page = sinon.stub()
-let pages
-
-test.before(t => {
-  mockRequire('../../../src/validate/page', page)
-  pages = require('validate/pages')
-})
-
-test.afterEach.always(t => {
-  page.reset()
-})
+const [ pages, { page } ] =
+  isolate(test, 'validate/pages', { page: 'validate/page' })
 
 test.serial('invalid page 0', t => {
   t.throws(() => {

@@ -1,24 +1,12 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeAssay } from 'aid'
-const request = sinon.stub()
-const checks = sinon.stub()
-const variables = sinon.stub()
-let entry
-
-test.before(t => {
-  mockRequire('../../../src/validate/request', request)
-  mockRequire('../../../src/validate/checks', checks)
-  mockRequire('../../../src/validate/variables', variables)
-  entry = require('validate/entry')
-})
-
-test.afterEach.always(t => {
-  request.reset()
-  checks.reset()
-  variables.reset()
-})
+const [ entry, { checks, request, variables } ] =
+  isolate(test, 'validate/entry', {
+    checks: 'validate/checks',
+    request: 'validate/request',
+    variables: 'validate/variables'
+  })
 
 test.serial('invalid pageref', t => {
   t.throws(() => {

@@ -1,18 +1,8 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeAssay } from 'aid'
-const cookie = sinon.stub()
-let cookies
-
-test.before(t => {
-  mockRequire('../../../src/validate/cookie', cookie)
-  cookies = require('validate/cookies')
-})
-
-test.afterEach.always(t => {
-  cookie.reset()
-})
+const [ cookies, { cookie } ] =
+  isolate(test, 'validate/cookies', { cookie: 'validate/cookie' })
 
 test.serial('invalid cookie 0', t => {
   t.throws(() => {

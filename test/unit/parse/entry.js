@@ -1,25 +1,13 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeResult } from 'aid'
 import { ExternalScope } from 'sym'
-const checks = sinon.stub()
-const request = sinon.stub()
-const variables = sinon.stub()
-let entry
-
-test.before(t => {
-  mockRequire('../../../src/parse/checks', checks)
-  mockRequire('../../../src/parse/request', request)
-  mockRequire('../../../src/parse/variables', variables)
-  entry = require('parse/entry')
-})
-
-test.afterEach.always(t => {
-  checks.reset()
-  request.reset()
-  variables.reset()
-})
+const [ entry, { checks, request, variables } ] =
+  isolate(test, 'parse/entry', {
+    checks: 'parse/checks',
+    request: 'parse/request',
+    variables: 'parse/variables'
+  })
 
 test.serial('basic', t => {
   const result = makeResult()

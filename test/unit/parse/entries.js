@@ -1,18 +1,8 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeResult } from 'aid'
-const entry = sinon.stub()
-let entries
-
-test.before(t => {
-  mockRequire('../../../src/parse/entry', entry)
-  entries = require('parse/entries')
-})
-
-test.afterEach.always(t => {
-  entry.reset()
-})
+const [ entries, { entry } ] =
+  isolate(test, 'parse/entries', { entry: 'parse/entry' })
 
 test.serial('0', t => {
   const result = makeResult()

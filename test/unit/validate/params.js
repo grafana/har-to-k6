@@ -1,18 +1,8 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeAssay } from 'aid'
-const param = sinon.stub()
-let params
-
-test.before(t => {
-  mockRequire('../../../src/validate/param', param)
-  params = require('validate/params')
-})
-
-test.afterEach.always(t => {
-  param.reset()
-})
+const [ params, { param } ] =
+  isolate(test, 'validate/params', { param: 'validate/param' })
 
 test.serial('invalid param 0', t => {
   t.throws(() => {

@@ -1,27 +1,13 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeResult } from 'aid'
-const browser = sinon.stub()
-const creator = sinon.stub()
-const entries = sinon.stub()
-const pages = sinon.stub()
-let log
-
-test.before(t => {
-  mockRequire('../../../src/parse/browser', browser)
-  mockRequire('../../../src/parse/creator', creator)
-  mockRequire('../../../src/parse/entries', entries)
-  mockRequire('../../../src/parse/pages', pages)
-  log = require('parse/log')
-})
-
-test.afterEach.always(t => {
-  browser.reset()
-  creator.reset()
-  entries.reset()
-  pages.reset()
-})
+const [ log, { entries, pages } ] =
+  isolate(test, 'parse/log', {
+    browser: 'parse/browser',
+    creator: 'parse/creator',
+    entries: 'parse/entries',
+    pages: 'parse/pages'
+  })
 
 test.serial('version explicit', t => {
   const result = makeResult()

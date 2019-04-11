@@ -1,18 +1,8 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
+import isolate from 'helper/isolate'
 import { makeAssay } from 'aid'
-const queryItem = sinon.stub()
-let queryString
-
-test.before(t => {
-  mockRequire('../../../src/validate/queryItem', queryItem)
-  queryString = require('validate/queryString')
-})
-
-test.afterEach.always(t => {
-  queryItem.reset()
-})
+const [ queryString, { queryItem } ] =
+  isolate(test, 'validate/queryString', { queryItem: 'validate/queryItem' })
 
 test.serial('invalid item 0', t => {
   t.throws(() => {

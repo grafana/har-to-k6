@@ -1,23 +1,11 @@
 import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
-const parse = sinon.stub()
-const render = sinon.stub()
-const validate = sinon.stub()
-let harToK6
-
-test.before(t => {
-  mockRequire('../../src/parse', parse)
-  mockRequire('../../src/render', render)
-  mockRequire('../../src/validate', validate)
-  harToK6 = require('index')
-})
-
-test.afterEach.always(t => {
-  parse.reset()
-  render.reset()
-  validate.reset()
-})
+import isolate from 'helper/isolate'
+const [ harToK6, { parse, render, validate } ] =
+  isolate(test, 'index', {
+    parse: 'parse',
+    render: 'render',
+    validate: 'validate'
+  })
 
 test.serial('liHARToK6Script', t => {
   const result = Symbol('result')
