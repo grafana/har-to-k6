@@ -2,7 +2,7 @@ const { empty } = require('../aid')
 const { InvalidArchiveError } = require('../error')
 
 /*
- * name: require string
+ * name: required string
  * value: optional string
  * comment: optional string
  */
