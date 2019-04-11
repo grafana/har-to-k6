@@ -11,7 +11,9 @@ function log (node, result) {
   if (node.browser) {
     browser(node.browser, result)
   }
-  comment(node, result)
+  if (node.comment) {
+    comment(node.comment, result)
+  }
   if (node.pages) {
     pages(node.pages, result)
   }
@@ -25,10 +27,8 @@ function version (node, result) {
   result.comment.push(`Converted from HAR v${value} archive`)
 }
 
-function comment (node, result) {
-  if (node.comment) {
-    result.comment.push(node.comment)
-  }
+function comment (value, result) {
+  result.comment.push(value)
 }
 
 module.exports = log
