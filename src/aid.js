@@ -24,7 +24,8 @@ function makeAssay () {
 function makeResult () {
   return {
     comment: [],
-    pages: new Map()
+    pages: new Map(),
+    scopes: new Map()
   }
 }
 

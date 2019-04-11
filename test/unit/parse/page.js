@@ -7,8 +7,7 @@ test('main', t => {
   page({ id: 'page1', title: 'Page 1', index: 1 }, result)
   t.deepEqual(result.pages, new Map([ [ 'page1', {
     name: 'Page 1',
-    index: 1,
-    entries: []
+    index: 1
   } ] ]))
 })
 
@@ -21,7 +20,6 @@ test('comment', t => {
   t.deepEqual(result.pages, new Map([ [ 'page1', {
     name: 'Page 1',
     index: 1,
-    comment: 'Heavy load',
-    entries: []
+    comment: 'Heavy load'
   } ] ]))
 })

@@ -1,8 +1,7 @@
 function page (node, result) {
   const spec = {
     name: node.title,
-    index: node.index,
-    entries: []
+    index: node.index
   }
   if (node.comment) {
     comment(node.comment, spec)
