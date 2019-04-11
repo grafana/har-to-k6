@@ -28,13 +28,11 @@ test.serial('comment', t => {
 })
 
 test.serial('pages', t => {
-  const result = makeResult()
-  log({ pages: [] }, result)
+  log({ pages: [] }, makeResult())
   t.true(pages.calledOnce)
 })
 
 test.serial('entries', t => {
-  const result = makeResult()
-  log({ entries: [] }, result)
+  log({ entries: [] }, makeResult())
   t.true(entries.calledOnce)
 })
