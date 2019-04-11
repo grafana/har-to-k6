@@ -29,7 +29,8 @@
     "scripts": {
         "lint": "npm-run-all lint-js",
         "lint-js": "standard --verbose | snazzy",
-        "test": "npm-run-all test-unit",
+        "test": "npm-run-all test-unit test-int",
+        "test-int": "cross-env NODE_PATH=src:test ava test/int",
         "test-unit": "cross-env NODE_PATH=src:test ava test/unit",
         "test-hoc": "cross-env NODE_PATH=src:test ava"
     },
@@ -38,6 +39,7 @@
         "is-plain-object": "^2.0.4",
         "iso8601-validator": "^1.0.1",
         "jsonpath": "^1.0.1",
+        "moment": "^2.24.0",
         "verror": "^1.10.0"
     }
 }
