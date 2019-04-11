@@ -1,4 +1,4 @@
-function page (node, i, result) {
+function page (node, result) {
   const spec = {
     name: node.title,
     index: node.index,

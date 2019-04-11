@@ -1,9 +1,8 @@
 const entry = require('./entry')
 
 function entries (node, result) {
-  for (let i = 0; i < node.length; i++) {
-    const item = node[i]
-    entry(item, i, result)
+  for (const item of node) {
+    entry(item, result)
   }
 }
 
