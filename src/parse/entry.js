@@ -8,7 +8,7 @@ function entry (node, result) {
     index: node.index,
     request: {},
     checks: {},
-    variables: {}
+    variables: new Map()
   }
   if (node.comment) {
     comment(node.comment, spec)

@@ -18,7 +18,7 @@ test.serial('basic', t => {
     index: 0,
     request: {},
     checks: {},
-    variables: {}
+    variables: new Map()
   } ]) ] ]))
   t.true(request.calledOnce)
   t.true(checks.notCalled)
