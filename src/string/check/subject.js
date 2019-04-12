@@ -6,7 +6,7 @@ function subject (value) {
     case CheckSubject.ResponseBody:
       return 'body'
     case CheckSubject.ResponseHeaders:
-      return 'headers'
+      return 'header'
     case CheckSubject.HttpStatusCode:
       return 'status'
     default:

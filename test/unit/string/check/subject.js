@@ -8,7 +8,7 @@ test('ResponseBody', t => {
 })
 
 test('ResponseHeaders', t => {
-  t.is(subject(CheckSubject.ResponseHeaders), 'headers')
+  t.is(subject(CheckSubject.ResponseHeaders), 'header')
 })
 
 test('HttpStatusCode', t => {
