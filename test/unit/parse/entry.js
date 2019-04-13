@@ -17,7 +17,7 @@ test.serial('basic', t => {
   t.deepEqual(result.scopes, new Map([ [ ExternalScope, new Set([ {
     index: 0,
     request: {},
-    checks: {},
+    checks: new Map(),
     variables: new Map()
   } ]) ] ]))
   t.true(request.calledOnce)

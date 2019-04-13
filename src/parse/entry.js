@@ -7,7 +7,7 @@ function entry (node, result) {
   const spec = {
     index: node.index,
     request: {},
-    checks: {},
+    checks: new Map(),
     variables: new Map()
   }
   if (node.comment) {
