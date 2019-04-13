@@ -18,6 +18,7 @@ function makeAssay () {
     pageIds: new Set(),
     pageIndices: new Set(),
     scopeIndices: new Map(),
+    requestCheckNames: new Map(),
     requestCookieNames: new Map()
   }
 }

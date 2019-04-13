@@ -75,9 +75,20 @@ test.serial('invalid comment', t => {
   }, { name: 'InvalidComment' })
 })
 
+test.serial('duplicate name', t => {
+  const assay = makeAssay()
+  check({ type: CheckType.JSONPath, expression: '$.token' }, 5, 0, assay)
+  t.throws(() => {
+    check({ type: CheckType.JSONPath, expression: '$.token' }, 5, 1, assay)
+  }, {
+    name: 'DuplicateCheckName',
+    message: 'Duplicate check name (5:1): $.token exists'
+  })
+})
+
 test.serial('valid minimal', t => {
-  check({ type: CheckType.Regex }, 0, 0, makeAssay())
-  t.true(checkVariant.Regex.calledOnce)
+  check({ type: CheckType.JSONPath, expression: '$.token' }, 0, 0, makeAssay())
+  t.true(checkVariant.JSONPath.calledOnce)
 })
 
 test.serial('valid full', t => {

@@ -1,3 +1,4 @@
+const checkName = require('../string/check/name')
 const checkVariant = require('./checkVariant')
 const { empty } = require('../aid')
 const {
@@ -15,10 +16,14 @@ const { InvalidArchiveError } = require('../error')
  * flags: optional string
  * value: optional string
  * comment: optional string
+ *
+ * effective name unique
  */
 function check (node, i, j, assay) {
   validate(node, i, j)
   checkVariant[CheckTypeEncoding.get(node.type)](node, i, j, assay)
+  validateName(node, i, j, assay)
+  name(node, i, assay)
 }
 
 function validate (node, i, j) {
@@ -70,6 +75,25 @@ function validate (node, i, j) {
       `Invalid check comment (${i}:${j}): must be string`
     )
   }
+}
+
+function validateName (node, i, j, assay) {
+  if (
+    assay.requestCheckNames.has(i) &&
+    assay.requestCheckNames.get(i).has(checkName(node))
+  ) {
+    throw new InvalidArchiveError(
+      { name: 'DuplicateCheckName' },
+      `Duplicate check name (${i}:${j}): ${checkName(node)}`
+    )
+  }
+}
+
+function name (node, i, assay) {
+  if (!assay.requestCheckNames.has(i)) {
+    assay.requestCheckNames.set(i, new Set())
+  }
+  assay.requestCheckNames.get(i).add(checkName(node))
 }
 
 module.exports = check
