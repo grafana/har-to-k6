@@ -27,7 +27,7 @@ test.afterEach.always(t => {
   }
 })
 
-test.serial('core', t => {
+test.serial('basic', t => {
   checkName.returns('token exists')
   const spec = makeSpec()
   check({ type: CheckType.JSONPath, expression: 'token' }, spec)
@@ -35,5 +35,23 @@ test.serial('core', t => {
     spec,
     new Map()
       .set('token exists', { type: CheckType.JSONPath })
+  )
+})
+
+test.serial('comment', t => {
+  checkName.returns('token exists')
+  const spec = makeSpec()
+  check({
+    type: CheckType.JSONPath,
+    expression: 'token',
+    comment: 'Verify token returned'
+  }, spec)
+  t.deepEqual(
+    spec,
+    new Map()
+      .set('token exists', {
+        type: CheckType.JSONPath,
+        comment: 'Verify token returned'
+      })
   )
 })

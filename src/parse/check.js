@@ -6,6 +6,9 @@ function check (node, spec) {
   const item = {
     type: node.type
   }
+  if (node.comment) {
+    item.comment = node.comment
+  }
   checkVariant[CheckTypeEncoding.get(node.type)](node, item)
   spec.set(name(node), item)
 }
