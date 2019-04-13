@@ -1,9 +1,9 @@
 import test from 'ava'
-import checkName from 'string/check/name'
+import computed from 'string/check/name/computed'
 import { CheckCondition, CheckSubject, CheckType } from 'enum'
 
 test('JSONPath', t => {
-  const name = checkName({
+  const name = computed({
     type: CheckType.JSONPath,
     expression: '$.result.token'
   })
@@ -11,7 +11,7 @@ test('JSONPath', t => {
 })
 
 test('JSONPathValue', t => {
-  const name = checkName({
+  const name = computed({
     type: CheckType.JSONPathValue,
     expression: '$.user.id',
     condition: CheckCondition.Equals,
@@ -21,7 +21,7 @@ test('JSONPathValue', t => {
 })
 
 test('Regex', t => {
-  const name = checkName({
+  const name = computed({
     type: CheckType.Regex,
     subject: CheckSubject.HttpStatusCode,
     expression: '2\\d\\d'
@@ -30,7 +30,7 @@ test('Regex', t => {
 })
 
 test('Text', t => {
-  const name = checkName({
+  const name = computed({
     type: CheckType.Text,
     subject: CheckSubject.ResponseBody,
     condition: CheckCondition.StartsWith,

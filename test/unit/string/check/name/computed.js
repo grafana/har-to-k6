@@ -2,8 +2,8 @@ import test from 'ava'
 import isolate from 'helper/isolate'
 import { extrinsic } from 'aid'
 import { CheckCondition, CheckSubject, CheckType } from 'enum'
-const [ checkName, { JSONPath, JSONPathValue, Regex, Text } ] =
-  isolate(test, 'string/check/name', {
+const [ computed, { JSONPath, JSONPathValue, Regex, Text } ] =
+  isolate(test, 'string/check/name/computed', {
     JSONPath: 'string/check/name/JSONPath',
     JSONPathValue: 'string/check/name/JSONPathValue',
     Regex: 'string/check/name/Regex',
@@ -13,7 +13,7 @@ const [ checkName, { JSONPath, JSONPathValue, Regex, Text } ] =
 test.serial('JSONPath', t => {
   const result = Symbol('result')
   JSONPath.returns(result)
-  const name = checkName({
+  const name = computed({
     type: CheckType.JSONPath,
     expression: 'result.token'
   })
@@ -23,7 +23,7 @@ test.serial('JSONPath', t => {
 test.serial('JSONPathValue', t => {
   const result = Symbol('result')
   JSONPathValue.returns(result)
-  const name = checkName({
+  const name = computed({
     type: CheckType.JSONPathValue,
     expression: 'user.id',
     condition: CheckCondition.Equals,
@@ -35,7 +35,7 @@ test.serial('JSONPathValue', t => {
 test.serial('Regex', t => {
   const result = Symbol('result')
   Regex.returns(result)
-  const name = checkName({
+  const name = computed({
     type: CheckType.Regex,
     subject: CheckSubject.HttpStatusCode,
     expression: '2\\d\\d'
@@ -46,7 +46,7 @@ test.serial('Regex', t => {
 test.serial('Text', t => {
   const result = Symbol('result')
   Text.returns(result)
-  const name = checkName({
+  const name = computed({
     type: CheckType.Text,
     subject: CheckSubject.ResponseBody,
     condition: CheckCondition.StartsWith,
@@ -57,6 +57,6 @@ test.serial('Text', t => {
 
 test.serial('invalid', t => {
   t.throws(() => {
-    checkName({ type: extrinsic(CheckType) })
+    computed({ type: extrinsic(CheckType) })
   }, { name: 'UnrecognizedCheckType' })
 })
