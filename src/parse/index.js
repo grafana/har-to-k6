@@ -1,3 +1,4 @@
+const flow = require('./flow')
 const root = require('./root')
 const { makeResult } = require('../aid')
 
@@ -9,6 +10,7 @@ const { makeResult } = require('../aid')
 function parse (archive) {
   const result = makeResult()
   root(archive, result)
+  flow(result)
   return result
 }
 

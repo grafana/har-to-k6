@@ -27,7 +27,8 @@ function makeResult () {
   return {
     comment: [],
     pages: new Map(),
-    scopes: new Map()
+    scopes: new Map(),
+    flow: []
   }
 }
 
