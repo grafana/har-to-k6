@@ -8,7 +8,7 @@ const { makeResult } = require('../aid')
  */
 function parse (archive) {
   const result = makeResult()
-  archive(root, result)
+  root(archive, result)
   return result
 }
 
