@@ -7,7 +7,7 @@ const [ root, { imports, logic, options } ] =
     options: 'render/options'
   })
 
-test('basic', t => {
+test.serial('basic', t => {
   root({})
   t.true(imports.calledOnce)
   t.true(options.calledOnce)
