@@ -7,7 +7,7 @@ function groups (result) {
     if (flow[0].id === ExternalScope) {
       flow.shift()
     }
-    const sections = flow.map(item => group(item))
+    const sections = flow.map(item => group(result.pages, item))
     return sections.filter(item => item).join(`\n\n`)
   } else {
     return null
