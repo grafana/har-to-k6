@@ -4,7 +4,6 @@ const entries = require('./entries')
 const pages = require('./pages')
 
 function log (node, result) {
-  version(node, result)
   if (node.creator) {
     creator(node.creator, result)
   }
@@ -20,11 +19,6 @@ function log (node, result) {
   if (node.entries) {
     entries(node.entries, result)
   }
-}
-
-function version (node, result) {
-  const value = node.version || '1.1'
-  result.comment.push(`Converted from HAR v${value} archive`)
 }
 
 function comment (value, result) {
