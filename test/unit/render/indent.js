@@ -16,3 +16,18 @@ third();`)
   second();
   third();`)
 })
+
+test('empty lines', t => {
+  const result = indent('' +
+`first();
+
+second();
+
+third();`)
+  t.is(result, '' +
+`  first();
+
+  second();
+
+  third();`)
+})
