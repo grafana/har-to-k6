@@ -7,7 +7,7 @@ function root (result) {
     imports(result),
     options(result),
     logic(result)
-  ].join(`\n\n`)
+  ].filter(item => item).join(`\n\n`)
 }
 
 module.exports = root
