@@ -9,12 +9,14 @@ function group (pages, scope) {
     const content = entries(scope.entries)
     return [
       header(page),
-      `group(${JSON.stringify(name)}, function() ${block([ content ])});`
+      `group(${JSON.stringify(name)}, function() ${block(content)});`
     ].filter(item => item).join(`\n`)
   } else {
     const name = scope.id
-    const content = entries(scope.entries)
-    return `group(${JSON.stringify(name)}, function() ${block([ content ])});`
+    const content = [
+      entries(scope.entries)
+    ].filter(item => item)
+    return `group(${JSON.stringify(name)}, function() ${block(content)});`
   }
 }
 

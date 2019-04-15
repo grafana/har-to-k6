@@ -7,13 +7,23 @@ const [ group, { block, comment, entries } ] =
     entries: 'render/entries'
   })
 
+test.serial('empty', t => {
+  entries.returns(null)
+  block.returns(`{}`)
+  const pages = new Map()
+  const result = group(pages, { id: 'page1', entries: [] })
+  t.is(result, `group("page1", function() {});`)
+  t.true(entries.calledOnce)
+  t.true(block.calledOnce)
+})
+
 test.serial('implicit', t => {
   entries.returns(`// Entries`)
   block.returns(`{
   // Entries
 }`)
   const pages = new Map()
-  const result = group(pages, { id: 'page1', entries: [] })
+  const result = group(pages, { id: 'page1', entries: [ {} ] })
   t.is(result, `group("page1", function() {
   // Entries
 });`)
@@ -27,7 +37,7 @@ test.serial('explicit', t => {
   // Entries
 }`)
   const pages = new Map().set('page1', { name: 'Page 1', index: 0 })
-  const result = group(pages, { id: 'page1', entries: [] })
+  const result = group(pages, { id: 'page1', entries: [ {} ] })
   t.is(result, `group("Page 1", function() {
   // Entries
 });`)
@@ -41,7 +51,7 @@ test.serial('comment', t => {
   comment.returns(`// Member section`)
   const pages = new Map()
     .set('page1', { name: 'Page 1', index: 0, comment: 'Member section' })
-  const result = group(pages, { id: 'page1', entries: [] })
+  const result = group(pages, { id: 'page1', entries: [ {} ] })
   t.is(result, `// Member section
 group("Page 1", function() {
   // Entries
