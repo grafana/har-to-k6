@@ -21,7 +21,7 @@ test.serial('basic', t => {
     query: new Map(),
     headers: new Map(),
     cookies: new Map(),
-    post: new Map()
+    post: {}
   })
   t.true(queryString.notCalled)
   t.true(headers.notCalled)

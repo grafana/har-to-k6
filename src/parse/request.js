@@ -10,7 +10,7 @@ function request (node, spec) {
     query: new Map(),
     headers: new Map(),
     cookies: new Map(),
-    post: new Map()
+    post: {}
   })
   if (node.comment) {
     comment(node.comment, spec)
