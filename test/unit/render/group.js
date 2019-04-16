@@ -8,11 +8,8 @@ const [ group, { block, comment, entries, string } ] =
     string: 'render/string'
   })
 
-test.beforeEach(t => {
-  string.callsFake(value => JSON.stringify(value))
-})
-
 test.serial('empty', t => {
+  string.returns('"page1"')
   entries.returns(null)
   block.returns(`{}`)
   const pages = new Map()
@@ -23,6 +20,7 @@ test.serial('empty', t => {
 })
 
 test.serial('implicit', t => {
+  string.returns('"page1"')
   entries.returns(`// Entries`)
   block.returns(`{
   // Entries
@@ -37,6 +35,7 @@ test.serial('implicit', t => {
 })
 
 test.serial('explicit', t => {
+  string.returns('"Page 1"')
   entries.returns(`// Entries`)
   block.returns(`{
   // Entries
@@ -49,6 +48,7 @@ test.serial('explicit', t => {
 })
 
 test.serial('comment', t => {
+  string.returns('"Page 1"')
   entries.returns(`// Entries`)
   block.returns(`{
   // Entries
