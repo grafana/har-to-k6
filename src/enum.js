@@ -22,6 +22,12 @@ const CheckType = Object.freeze({
 })
 const CheckTypeEncoding = inverse(CheckType)
 
+const StringSpecies = Object.freeze({
+  Identifier: 0,
+  String: 1,
+  Template: 2
+})
+
 const VariableType = Object.freeze({
   JSONPath: 0,
   Regex: 1
@@ -47,6 +53,7 @@ Object.assign(exports, {
   CheckSubjectEncoding,
   CheckType,
   CheckTypeEncoding,
+  StringSpecies,
   VariableType,
   VariableTypeEncoding
 })
