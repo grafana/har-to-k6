@@ -1,6 +1,7 @@
 const block = require('./block')
 const comment = require('./comment')
 const entries = require('./entries')
+const string = require('./string')
 
 function group (pages, scope) {
   if (pages.has(scope.id)) {
@@ -9,14 +10,14 @@ function group (pages, scope) {
     const content = entries(scope.entries)
     return [
       header(page),
-      `group(${JSON.stringify(name)}, function() ${block(content)});`
+      `group(${string(name)}, function() ${block(content)});`
     ].filter(item => item).join(`\n`)
   } else {
     const name = scope.id
     const content = [
       entries(scope.entries)
     ].filter(item => item)
-    return `group(${JSON.stringify(name)}, function() ${block(content)});`
+    return `group(${string(name)}, function() ${block(content)});`
   }
 }
 

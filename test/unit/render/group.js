@@ -1,11 +1,16 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [ group, { block, comment, entries } ] =
+const [ group, { block, comment, entries, string } ] =
   isolate(test, 'render/group', {
     block: 'render/block',
     comment: 'render/comment',
-    entries: 'render/entries'
+    entries: 'render/entries',
+    string: 'render/string'
   })
+
+test.beforeEach(t => {
+  string.callsFake(value => JSON.stringify(value))
+})
 
 test.serial('empty', t => {
   entries.returns(null)
