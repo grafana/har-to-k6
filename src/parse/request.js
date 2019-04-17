@@ -12,7 +12,7 @@ function request (node, spec) {
     spec.comment = node.comment
   }
   if (node.queryString) {
-    queryString(node.queryString, spec.query)
+    queryString(node.queryString, spec.query, spec.state.query)
   }
   if (node.headers) {
     headers(node.headers, spec.headers)
