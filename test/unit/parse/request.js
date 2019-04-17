@@ -1,5 +1,6 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
+import { requestSpec as makeRequestSpec } from 'make'
 const [ request, { cookies, headers, postData, queryString } ] =
   isolate(test, 'parse/request', {
     cookies: 'parse/cookies',
@@ -8,12 +9,8 @@ const [ request, { cookies, headers, postData, queryString } ] =
     queryString: 'parse/queryString'
   })
 
-function makeSpec () {
-  return {}
-}
-
 test.serial('basic', t => {
-  const spec = makeSpec()
+  const spec = makeRequestSpec()
   request({ method: 'get', url: 'http://example.com' }, spec)
   t.deepEqual(spec, {
     method: 'GET',
@@ -30,7 +27,7 @@ test.serial('basic', t => {
 })
 
 test.serial('comment', t => {
-  const spec = makeSpec()
+  const spec = makeRequestSpec()
   request({
     method: 'GET',
     url: 'http://example.com',
@@ -44,7 +41,7 @@ test.serial('queryString', t => {
     method: 'GET',
     url: 'http://example.com',
     queryString: []
-  }, makeSpec())
+  }, makeRequestSpec())
   t.true(queryString.calledOnce)
 })
 
@@ -53,7 +50,7 @@ test.serial('headers', t => {
     method: 'GET',
     url: 'http://example.com',
     headers: []
-  }, makeSpec())
+  }, makeRequestSpec())
   t.true(headers.calledOnce)
 })
 
@@ -62,7 +59,7 @@ test.serial('cookies', t => {
     method: 'GET',
     url: 'http://example.com',
     cookies: []
-  }, makeSpec())
+  }, makeRequestSpec())
   t.true(cookies.calledOnce)
 })
 
@@ -71,6 +68,6 @@ test.serial('postData', t => {
     method: 'GET',
     url: 'http://example.com',
     postData: {}
-  }, makeSpec())
+  }, makeRequestSpec())
   t.true(postData.calledOnce)
 })

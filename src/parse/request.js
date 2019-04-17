@@ -4,14 +4,8 @@ const postData = require('./postData')
 const queryString = require('./queryString')
 
 function request (node, spec) {
-  Object.assign(spec, {
-    method: node.method.toUpperCase(),
-    address: node.url,
-    query: new Map(),
-    headers: new Map(),
-    cookies: new Map(),
-    post: {}
-  })
+  spec.method = node.method.toUpperCase()
+  spec.address = node.url
   if (node.comment) {
     comment(node.comment, spec)
   }

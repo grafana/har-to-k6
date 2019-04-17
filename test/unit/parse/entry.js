@@ -1,6 +1,6 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-import { result as makeResult } from 'make'
+import { result as makeResult, requestSpec as makeRequestSpec } from 'make'
 import { ExternalScope } from 'sym'
 const [ entry, { checks, request, variables } ] =
   isolate(test, 'parse/entry', {
@@ -16,7 +16,7 @@ test.serial('basic', t => {
   t.is(result.scopes.get(ExternalScope).size, 1)
   t.deepEqual(result.scopes, new Map([ [ ExternalScope, new Set([ {
     index: 0,
-    request: {},
+    request: makeRequestSpec(),
     checks: new Map(),
     variables: new Map()
   } ]) ] ]))

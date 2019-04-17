@@ -8,6 +8,17 @@ function assay () {
   }
 }
 
+function requestSpec () {
+  return {
+    method: null,
+    address: null,
+    query: new Map(),
+    headers: new Map(),
+    cookies: new Map(),
+    post: {}
+  }
+}
+
 function result () {
   return {
     comment: [],
@@ -19,5 +30,6 @@ function result () {
 
 Object.assign(exports, {
   assay,
+  requestSpec,
   result
 })

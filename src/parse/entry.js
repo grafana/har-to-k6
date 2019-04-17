@@ -1,12 +1,13 @@
 const checks = require('./checks')
 const request = require('./request')
 const variables = require('./variables')
+const { requestSpec: makeRequestSpec } = require('../make')
 const { ExternalScope } = require('../sym')
 
 function entry (node, result) {
   const spec = {
     index: node.index,
-    request: {},
+    request: makeRequestSpec(),
     checks: new Map(),
     variables: new Map()
   }
