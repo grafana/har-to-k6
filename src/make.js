@@ -19,6 +19,9 @@ function requestSpec () {
     state: {
       address: {
         variable: false
+      },
+      query: {
+        variable: false
       }
     }
   }
