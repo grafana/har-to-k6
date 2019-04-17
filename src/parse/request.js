@@ -2,10 +2,12 @@ const cookies = require('./cookies')
 const headers = require('./headers')
 const postData = require('./postData')
 const queryString = require('./queryString')
+const { variable } = require('../expression')
 
 function request (node, spec) {
   spec.method = node.method.toUpperCase()
   spec.address = node.url
+  spec.state.address.variable = variable.test(spec.address)
   if (node.comment) {
     comment(node.comment, spec)
   }

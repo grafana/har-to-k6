@@ -15,7 +15,12 @@ function requestSpec () {
     query: new Map(),
     headers: new Map(),
     cookies: new Map(),
-    post: {}
+    post: {},
+    state: {
+      address: {
+        variable: false
+      }
+    }
   }
 }
 

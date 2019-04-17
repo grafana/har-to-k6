@@ -12,18 +12,29 @@ const [ request, { cookies, headers, postData, queryString } ] =
 test.serial('basic', t => {
   const spec = makeRequestSpec()
   request({ method: 'get', url: 'http://example.com' }, spec)
-  t.deepEqual(spec, {
-    method: 'GET',
-    address: 'http://example.com',
-    query: new Map(),
-    headers: new Map(),
-    cookies: new Map(),
-    post: {}
-  })
+  t.is(spec.method, 'GET')
+  t.is(spec.address, 'http://example.com')
+  t.deepEqual(spec.query, new Map())
+  t.deepEqual(spec.headers, new Map())
+  t.deepEqual(spec.cookies, new Map())
+  t.deepEqual(spec.post, {})
   t.true(queryString.notCalled)
   t.true(headers.notCalled)
   t.true(cookies.notCalled)
   t.true(postData.notCalled)
+})
+
+test.serial('address no variable', t => {
+  const spec = makeRequestSpec()
+  request({ method: 'GET', url: 'http://example.com' }, spec)
+  t.false(spec.state.address.variable)
+})
+
+test.serial('address variable', t => {
+  const spec = makeRequestSpec()
+  /* eslint-disable-next-line no-template-curly-in-string */
+  request({ method: 'GET', url: 'http://${host}' }, spec)
+  t.true(spec.state.address.variable)
 })
 
 test.serial('comment', t => {
