@@ -20,6 +20,17 @@ function queryState () {
   }
 }
 
+function requestFactor () {
+  return {
+    method: null,
+    address: null,
+    body: null,
+    headers: null,
+    cookies: null,
+    pre: []
+  }
+}
+
 function requestSpec () {
   return {
     method: null,
@@ -48,6 +59,7 @@ Object.assign(exports, {
   addressState,
   assay,
   queryState,
+  requestFactor,
   requestSpec,
   result
 })
