@@ -4,6 +4,7 @@ const isPlainObject = require('is-plain-object')
 const postData = require('./postData')
 const queryString = require('./queryString')
 const { empty } = require('../aid')
+const { absoluteUrl, variableStart } = require('../expression')
 const { InvalidArchiveError } = require('../error')
 
 /*
@@ -56,7 +57,7 @@ function validate (node, i) {
       `Invalid request url (${i}): must be string`
     )
   }
-  if (!/^(([^:]+):\/\/|\${[^}]*})/.test(node.url)) {
+  if (!(absoluteUrl.test(node.url) || variableStart.test(node.url))) {
     throw new InvalidArchiveError(
       { name: 'InvalidRequestUrl' },
       `Invalid request url (${i}): must be absolute or start with variable`
