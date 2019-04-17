@@ -14,4 +14,5 @@ test('basic', t => {
   spec.address = 'http://example.com'
   fixed(spec, factor)
   t.is(factor.address, '"http://example.com"')
+  t.deepEqual(factor.pre, [])
 })
