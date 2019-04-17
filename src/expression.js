@@ -1,9 +1,9 @@
-const absoluteUrl = /^([^:])+:\/\//
+const absoluteUrl = /^([^:]+):\/\//
 const lineBreak = /\n/
 const multilineCommentEnds = /\*\//g
 const variable = /\${([^}]*)}/
 const variables = /\${([^}]*)}/g
-const variableStart = /^\${([^}])*}/
+const variableStart = /^\${([^}]*)}/
 
 Object.assign(exports, {
   absoluteUrl,
