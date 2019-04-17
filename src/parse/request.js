@@ -2,12 +2,11 @@ const cookies = require('./cookies')
 const headers = require('./headers')
 const postData = require('./postData')
 const queryString = require('./queryString')
-const { variable } = require('../expression')
+const { variable, variableStart } = require('../expression')
 
 function request (node, spec) {
   spec.method = node.method.toUpperCase()
-  spec.address = node.url
-  spec.state.address.variable = variable.test(spec.address)
+  address(node, spec)
   if (node.comment) {
     spec.comment = node.comment
   }
@@ -23,6 +22,12 @@ function request (node, spec) {
   if (node.postData) {
     postData(node.postData, spec.post)
   }
+}
+
+function address (node, spec) {
+  spec.address = node.url
+  spec.state.address.variable = variable.test(spec.address)
+  spec.state.address.variableStart = variableStart.test(spec.address)
 }
 
 module.exports = request

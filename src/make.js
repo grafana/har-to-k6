@@ -1,6 +1,7 @@
 function addressState () {
   return {
-    variable: false
+    variable: false,
+    variableStart: false
   }
 }
 

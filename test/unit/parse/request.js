@@ -28,13 +28,23 @@ test.serial('address static', t => {
   const spec = makeRequestSpec()
   request({ method: 'GET', url: 'http://example.com' }, spec)
   t.false(spec.state.address.variable)
+  t.false(spec.state.address.variableStart)
 })
 
-test.serial('address variable', t => {
+test.serial('address variable inner', t => {
   const spec = makeRequestSpec()
   /* eslint-disable-next-line no-template-curly-in-string */
   request({ method: 'GET', url: 'http://${host}' }, spec)
   t.true(spec.state.address.variable)
+  t.false(spec.state.address.variableStart)
+})
+
+test.serial('address variable start', t => {
+  const spec = makeRequestSpec()
+  /* eslint-disable-next-line no-template-curly-in-string */
+  request({ method: 'GET', url: '${address}' }, spec)
+  t.true(spec.state.address.variable)
+  t.true(spec.state.address.variableStart)
 })
 
 test.serial('comment', t => {
