@@ -1,7 +1,7 @@
 function addressState () {
   return {
-    variable: false,
-    variableStart: false
+    variable: null,
+    variableStart: null
   }
 }
 
@@ -17,7 +17,7 @@ function assay () {
 
 function queryState () {
   return {
-    variable: false
+    variable: null
   }
 }
 

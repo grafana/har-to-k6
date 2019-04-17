@@ -2,9 +2,7 @@ const { variable } = require('../expression')
 
 function queryItem (node, spec, state) {
   const item = {}
-  if (variable.test(node.name)) {
-    state.variable = true
-  }
+  state.variable = variable.test(node.name)
   if (node.value) {
     item.value = node.value
     if (variable.test(item.value)) {
