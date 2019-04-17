@@ -1,14 +1,9 @@
 import test from 'ava'
 import queryItem from 'parse/queryItem'
+import { queryState as makeState } from 'make'
 
 function makeSpec () {
   return new Map()
-}
-
-function makeState () {
-  return {
-    variable: false
-  }
 }
 
 test('minimal', t => {

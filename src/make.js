@@ -14,6 +14,12 @@ function assay () {
   }
 }
 
+function queryState () {
+  return {
+    variable: false
+  }
+}
+
 function requestSpec () {
   return {
     method: null,
@@ -24,9 +30,7 @@ function requestSpec () {
     post: {},
     state: {
       address: addressState(),
-      query: {
-        variable: false
-      }
+      query: queryState()
     }
   }
 }
@@ -43,6 +47,7 @@ function result () {
 Object.assign(exports, {
   addressState,
   assay,
+  queryState,
   requestSpec,
   result
 })
