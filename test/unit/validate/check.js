@@ -2,7 +2,8 @@ import test from 'ava'
 import mockRequire from 'mock-require'
 import sinon from 'sinon'
 import { CheckCondition, CheckSubject, CheckType } from 'enum'
-import { extrinsic, makeAssay } from 'aid'
+import { extrinsic } from 'aid'
+import { assay as makeAssay } from 'make'
 let check
 
 const checkVariant = {}
@@ -87,7 +88,10 @@ test.serial('duplicate name', t => {
 })
 
 test.serial('valid minimal', t => {
-  check({ type: CheckType.JSONPath, expression: '$.token' }, 0, 0, makeAssay())
+  check({
+    type: CheckType.JSONPath,
+    expression: '$.token'
+  }, 0, 0, makeAssay())
   t.true(checkVariant.JSONPath.calledOnce)
 })
 

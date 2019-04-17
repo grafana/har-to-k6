@@ -1,6 +1,6 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-import { makeAssay } from 'aid'
+import { assay as makeAssay } from 'make'
 const [ root, { log } ] =
   isolate(test, 'validate/root', { log: 'validate/log' })
 

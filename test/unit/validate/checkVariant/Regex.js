@@ -1,7 +1,7 @@
 import test from 'ava'
 import Regex from 'validate/checkVariant/Regex'
 import { CheckCondition, CheckSubject, CheckType } from 'enum'
-import { makeAssay } from 'aid'
+import { assay as makeAssay } from 'make'
 
 test('missing subject', t => {
   t.throws(() => {

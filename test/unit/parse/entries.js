@@ -1,6 +1,6 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-import { makeResult } from 'aid'
+import { result as makeResult } from 'make'
 const [ entries, { entry } ] =
   isolate(test, 'parse/entries', { entry: 'parse/entry' })
 

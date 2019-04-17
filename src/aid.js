@@ -13,25 +13,6 @@ function extrinsic (enumeration) {
   return Math.max(...Object.values(enumeration)) + 1
 }
 
-function makeAssay () {
-  return {
-    pageIds: new Set(),
-    pageIndices: new Set(),
-    scopeIndices: new Map(),
-    requestCheckNames: new Map(),
-    requestCookieNames: new Map()
-  }
-}
-
-function makeResult () {
-  return {
-    comment: [],
-    pages: new Map(),
-    scopes: new Map(),
-    flow: []
-  }
-}
-
 function nought (value) {
   return (
     value === undef ||
@@ -42,7 +23,5 @@ function nought (value) {
 Object.assign(exports, {
   empty,
   extrinsic,
-  makeAssay,
-  makeResult,
   nought
 })

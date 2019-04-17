@@ -1,6 +1,6 @@
 import test from 'ava'
 import page from 'parse/page'
-import { makeResult } from 'aid'
+import { result as makeResult } from 'make'
 
 test('main', t => {
   const result = makeResult()

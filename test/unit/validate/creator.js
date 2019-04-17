@@ -1,6 +1,6 @@
 import test from 'ava'
 import creator from 'validate/creator'
-import { makeAssay } from 'aid'
+import { assay as makeAssay } from 'make'
 
 test('invalid name', t => {
   t.throws(() => {

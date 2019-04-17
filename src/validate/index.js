@@ -1,7 +1,7 @@
 const entryIndex = require('./entryIndex')
 const root = require('./root')
 const variableDefined = require('./variableDefined')
-const { makeAssay } = require('../aid')
+const { assay: makeAssay } = require('../make')
 
 /**
  * Validate LI-HAR archive

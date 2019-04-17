@@ -1,6 +1,6 @@
 import test from 'ava'
 import browser from 'parse/browser'
-import { makeResult } from 'aid'
+import { result as makeResult } from 'make'
 
 test('browser name', t => {
   const result = makeResult()

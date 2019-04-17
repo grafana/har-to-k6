@@ -1,6 +1,6 @@
 import test from 'ava'
 import creator from 'parse/creator'
-import { makeResult } from 'aid'
+import { result as makeResult } from 'make'
 
 test('creator name', t => {
   const result = makeResult()

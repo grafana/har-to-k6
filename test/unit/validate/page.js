@@ -1,6 +1,6 @@
 import test from 'ava'
 import page from 'validate/page'
-import { makeAssay } from 'aid'
+import { assay as makeAssay } from 'make'
 
 test('missing id', t => {
   t.throws(() => {

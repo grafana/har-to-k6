@@ -1,6 +1,6 @@
 const flow = require('./flow')
 const root = require('./root')
-const { makeResult } = require('../aid')
+const { result: makeResult } = require('../make')
 
 /*
  * Parse HAR archive

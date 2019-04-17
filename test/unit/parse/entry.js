@@ -1,6 +1,6 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-import { makeResult } from 'aid'
+import { result as makeResult } from 'make'
 import { ExternalScope } from 'sym'
 const [ entry, { checks, request, variables } ] =
   isolate(test, 'parse/entry', {

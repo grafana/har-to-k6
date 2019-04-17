@@ -1,6 +1,6 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-import { makeAssay } from 'aid'
+import { assay as makeAssay } from 'make'
 const [ postData, { params } ] =
   isolate(test, 'validate/postData', { params: 'validate/params' })
 

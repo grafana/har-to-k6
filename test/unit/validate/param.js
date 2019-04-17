@@ -1,6 +1,6 @@
 import test from 'ava'
 import param from 'validate/param'
-import { makeAssay } from 'aid'
+import { assay as makeAssay } from 'make'
 
 test('missing name', t => {
   t.throws(() => {

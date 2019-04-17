@@ -1,6 +1,6 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-import { makeAssay } from 'aid'
+import { assay as makeAssay } from 'make'
 const [ headers, { header } ] =
   isolate(test, 'validate/headers', { header: 'validate/header' })
 

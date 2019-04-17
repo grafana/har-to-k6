@@ -2,7 +2,7 @@
 
 import test from 'ava'
 import isolate from 'helper/isolate'
-import { makeAssay } from 'aid'
+import { assay as makeAssay } from 'make'
 const [ request, { cookies, headers, postData, queryString } ] =
   isolate(test, 'validate/request', {
     cookies: 'validate/cookies',

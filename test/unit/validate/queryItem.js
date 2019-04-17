@@ -1,6 +1,6 @@
 import test from 'ava'
 import queryItem from 'validate/queryItem'
-import { makeAssay } from 'aid'
+import { assay as makeAssay } from 'make'
 
 test('missing name', t => {
   t.throws(() => {

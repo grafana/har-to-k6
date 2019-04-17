@@ -1,7 +1,7 @@
 import test from 'ava'
 import JSONPathValue from 'validate/checkVariant/JSONPathValue'
 import { CheckCondition, CheckSubject, CheckType } from 'enum'
-import { makeAssay } from 'aid'
+import { assay as makeAssay } from 'make'
 
 test('missing expression', t => {
   t.throws(() => {

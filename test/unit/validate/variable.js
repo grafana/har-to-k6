@@ -1,7 +1,8 @@
 import test from 'ava'
 import variable from 'validate/variable'
 import { VariableType } from 'enum'
-import { extrinsic, makeAssay } from 'aid'
+import { extrinsic } from 'aid'
+import { assay as makeAssay } from 'make'
 
 test('missing name', t => {
   t.throws(() => {

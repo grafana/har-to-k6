@@ -1,6 +1,6 @@
 import test from 'ava'
 import flow from 'parse/flow'
-import { makeResult } from 'aid'
+import { result as makeResult } from 'make'
 import { ExternalScope } from 'sym'
 
 function makeEntry (index, method, url) {
