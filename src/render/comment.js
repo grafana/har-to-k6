@@ -1,5 +1,7 @@
+const { lineBreak, multilineCommentEnds } = require('../expression')
+
 function comment (text) {
-  if (/\n/.test(text)) {
+  if (lineBreak.test(text)) {
     return multiline(text)
   } else {
     return `// ${text}`
@@ -19,7 +21,7 @@ function multiline (text) {
 }
 
 function encode (text) {
-  return text.replace(/\*\//g, '* /')
+  return text.replace(multilineCommentEnds, '* /')
 }
 
 module.exports = comment

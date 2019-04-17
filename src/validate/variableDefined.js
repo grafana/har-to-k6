@@ -1,4 +1,5 @@
 const sort = require('../sort')
+const { variables } = require('../expression')
 const { InvalidArchiveError } = require('../error')
 
 /*
@@ -104,7 +105,6 @@ function referenced (string) {
   }
 }
 
-const variables = /\${([^}]+)}/g
 function matchVariables (string) {
   const matches = []
   let match

@@ -1,7 +1,7 @@
-const expression = /\${[^}]*}/
+const { variable } = require('../../expression')
 
 function template (string) {
-  return expression.test(string)
+  return variable.test(string)
 }
 
 module.exports = template
