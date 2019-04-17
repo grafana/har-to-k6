@@ -26,13 +26,12 @@ test.serial('String', t => {
 })
 
 test.serial('Template', t => {
+  /* eslint-disable no-template-curly-in-string */
   stringSpecies.returns(StringSpecies.Template)
-  /* eslint-disable-next-line no-template-curly-in-string */
   template.returns('`${name}`')
-  /* eslint-disable-next-line no-template-curly-in-string */
   const result = key('${name}')
-  /* eslint-disable-next-line no-template-curly-in-string */
   t.is(result, '[`${name}`]')
   t.true(string.notCalled)
   t.true(template.calledOnce)
+  /* eslint-enable no-template-curly-in-string */
 })

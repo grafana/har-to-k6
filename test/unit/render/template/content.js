@@ -24,9 +24,9 @@ test.serial('nonvariable dollar', t => {
 })
 
 test.serial('variable', t => {
+  /* eslint-disable no-template-curly-in-string */
   evaluate.returns('vars["token"]')
-  /* eslint-disable-next-line no-template-curly-in-string */
   const result = content('Authorization: Bearer ${token}')
-  /* eslint-disable-next-line no-template-curly-in-string */
   t.is(result, 'Authorization: Bearer ${vars["token"]}')
+  /* eslint-enable no-template-curly-in-string */
 })
