@@ -1,10 +1,10 @@
-const comment = require('../comment')
+const comment = require('../../comment')
+const main = require('./main')
 
 function header (spec) {
   const text = [
-    spec.comment,
-    spec.request.comment
-  ].filter(item => item).join(`\n`)
+    main(spec)
+  ].filter(item => item).join(`\n\n`)
   if (text) {
     return comment(text)
   } else {
