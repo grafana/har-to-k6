@@ -24,7 +24,7 @@ test.serial('basic', t => {
   t.true(postData.notCalled)
 })
 
-test.serial('address no variable', t => {
+test.serial('address simple', t => {
   const spec = makeRequestSpec()
   request({ method: 'GET', url: 'http://example.com' }, spec)
   t.false(spec.state.address.variable)
