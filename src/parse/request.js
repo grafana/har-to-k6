@@ -9,7 +9,7 @@ function request (node, spec) {
   spec.address = node.url
   spec.state.address.variable = variable.test(spec.address)
   if (node.comment) {
-    comment(node.comment, spec)
+    spec.comment = node.comment
   }
   if (node.queryString) {
     queryString(node.queryString, spec.query)
@@ -23,10 +23,6 @@ function request (node, spec) {
   if (node.postData) {
     postData(node.postData, spec.post)
   }
-}
-
-function comment (value, spec) {
-  spec.comment = value
 }
 
 module.exports = request

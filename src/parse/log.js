@@ -11,7 +11,7 @@ function log (node, result) {
     browser(node.browser, result)
   }
   if (node.comment) {
-    comment(node.comment, result)
+    result.comment.push(node.comment)
   }
   if (node.pages) {
     pages(node.pages, result)
@@ -19,10 +19,6 @@ function log (node, result) {
   if (node.entries) {
     entries(node.entries, result)
   }
-}
-
-function comment (value, result) {
-  result.comment.push(value)
 }
 
 module.exports = log

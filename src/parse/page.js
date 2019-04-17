@@ -4,13 +4,9 @@ function page (node, result) {
     index: node.index
   }
   if (node.comment) {
-    comment(node.comment, spec)
+    spec.comment = node.comment
   }
   result.pages.set(node.id, spec)
-}
-
-function comment (value, spec) {
-  spec.comment = value
 }
 
 module.exports = page

@@ -12,7 +12,7 @@ function entry (node, result) {
     variables: new Map()
   }
   if (node.comment) {
-    comment(node.comment, spec)
+    spec.comment = node.comment
   }
   request(node.request, spec.request)
   if (node.checks) {
@@ -22,10 +22,6 @@ function entry (node, result) {
     variables(node.variables, spec.variables)
   }
   scope(node.pageref, spec, result)
-}
-
-function comment (value, spec) {
-  spec.comment = value
 }
 
 function scope (pageref, spec, result) {
