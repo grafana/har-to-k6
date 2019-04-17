@@ -1,3 +1,9 @@
+function addressState () {
+  return {
+    variable: false
+  }
+}
+
 function assay () {
   return {
     pageIds: new Set(),
@@ -17,9 +23,7 @@ function requestSpec () {
     cookies: new Map(),
     post: {},
     state: {
-      address: {
-        variable: false
-      },
+      address: addressState(),
       query: {
         variable: false
       }
@@ -37,6 +41,7 @@ function result () {
 }
 
 Object.assign(exports, {
+  addressState,
   assay,
   requestSpec,
   result
