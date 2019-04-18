@@ -40,6 +40,7 @@
         "iso8601-validator": "^1.0.1",
         "jsonpath": "^1.0.1",
         "moment": "^2.24.0",
+        "urijs": "^1.19.1",
         "verror": "^1.10.0"
     }
 }
