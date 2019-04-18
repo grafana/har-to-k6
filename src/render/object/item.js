@@ -1,13 +1,14 @@
 const comment = require('../comment')
 const key = require('./key')
+const { lineComment, multilineComment } = require('../../expression')
 
 function item (spec, last) {
   const note = (spec.comment ? comment(spec.comment) : null)
   return (
-    (note && note.substring(0, 2) === '/*' ? `${note}\n` : '') +
+    (note && multilineComment.test(note) ? `${note}\n` : '') +
     `${key(spec)}: ${spec.value}` +
     (last ? '' : ',') +
-    (note && note.substring(0, 2) === '//' ? ` ${note}` : '')
+    (note && lineComment.test(note) ? ` ${note}` : '')
   )
 }
 
