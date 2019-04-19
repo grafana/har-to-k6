@@ -1,16 +1,16 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [ root, { header, imports, logic, options } ] =
+const [ root, { imports, lead, logic, options } ] =
   isolate(test, 'render/root', {
-    header: 'render/header',
     imports: 'render/imports',
+    lead: 'render/lead',
     logic: 'render/logic',
     options: 'render/options'
   })
 
 test.serial('basic', t => {
   root({})
-  t.true(header.calledOnce)
+  t.true(lead.calledOnce)
   t.true(imports.calledOnce)
   t.true(options.calledOnce)
   t.true(logic.calledOnce)

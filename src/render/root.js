@@ -1,11 +1,11 @@
-const header = require('./header')
 const imports = require('./imports')
+const lead = require('./lead')
 const logic = require('./logic')
 const options = require('./options')
 
 function root (result) {
   return [
-    header(result),
+    lead(result),
     imports(result),
     options(result),
     logic(result)
