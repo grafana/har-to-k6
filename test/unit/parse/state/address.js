@@ -1,6 +1,7 @@
 import test from 'ava'
 import address from 'parse/state/address'
 import { requestSpec as makeRequestSpec } from 'make'
+import { AddressSpecies } from 'enum'
 
 test('no variable', t => {
   const spec = makeRequestSpec()
@@ -35,10 +36,7 @@ test('fixed', t => {
   spec.address = 'http://example.com'
   spec.state.query.variable = false
   address(spec)
-  t.true(spec.state.address.fixed)
-  t.false(spec.state.address.constructed)
-  t.false(spec.state.address.resolved)
-  t.false(spec.state.address.runtime)
+  t.is(spec.state.address.species, AddressSpecies.Fixed)
 })
 
 test('constructed', t => {
@@ -47,10 +45,7 @@ test('constructed', t => {
   spec.query.set('search', new Set([ { value: 'kitten' } ]))
   spec.state.query.variable = false
   address(spec)
-  t.true(spec.state.address.constructed)
-  t.false(spec.state.address.fixed)
-  t.false(spec.state.address.resolved)
-  t.false(spec.state.address.runtime)
+  t.is(spec.state.address.species, AddressSpecies.Constructed)
 })
 
 test('resolved', t => {
@@ -59,10 +54,7 @@ test('resolved', t => {
   spec.address = 'http://${host}'
   spec.state.query.variable = false
   address(spec)
-  t.true(spec.state.address.resolved)
-  t.false(spec.state.address.fixed)
-  t.false(spec.state.address.constructed)
-  t.false(spec.state.address.runtime)
+  t.is(spec.state.address.species, AddressSpecies.Resolved)
 })
 
 test('runtime address variable start', t => {
@@ -71,10 +63,7 @@ test('runtime address variable start', t => {
   spec.address = '${location}'
   spec.state.query.variable = false
   address(spec)
-  t.true(spec.state.address.runtime)
-  t.false(spec.state.address.fixed)
-  t.false(spec.state.address.constructed)
-  t.false(spec.state.address.resolved)
+  t.is(spec.state.address.species, AddressSpecies.Runtime)
 })
 
 test('runtime address variable + query', t => {
@@ -84,10 +73,7 @@ test('runtime address variable + query', t => {
   spec.query.set('search', new Set([ { value: 'kitten' } ]))
   spec.state.query.variable = false
   address(spec)
-  t.true(spec.state.address.runtime)
-  t.false(spec.state.address.fixed)
-  t.false(spec.state.address.constructed)
-  t.false(spec.state.address.resolved)
+  t.is(spec.state.address.species, AddressSpecies.Runtime)
 })
 
 test('runtime query variable', t => {
@@ -97,8 +83,5 @@ test('runtime query variable', t => {
   spec.query.set('search', new Set([ { value: '${search}' } ]))
   spec.state.query.variable = true
   address(spec)
-  t.true(spec.state.address.runtime)
-  t.false(spec.state.address.fixed)
-  t.false(spec.state.address.constructed)
-  t.false(spec.state.address.resolved)
+  t.is(spec.state.address.species, AddressSpecies.Runtime)
 })

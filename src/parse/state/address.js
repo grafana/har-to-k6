@@ -1,13 +1,12 @@
 const expr = require('../../expression')
+const { AddressSpecies } = require('../../enum')
 
 // Assumes query state determined
 function address (spec) {
-  spec.state.address.variable = variable(spec)
-  spec.state.address.variableStart = variableStart(spec)
-  spec.state.address.fixed = fixed(spec)
-  spec.state.address.constructed = constructed(spec)
-  spec.state.address.resolved = resolved(spec)
-  spec.state.address.runtime = runtime(spec)
+  const state = spec.state.address
+  state.variable = variable(spec)
+  state.variableStart = variableStart(spec)
+  state.species = species(spec)
 }
 
 /* Contains variable */
@@ -20,12 +19,15 @@ function variableStart (spec) {
   return expr.variableStart.test(spec.address)
 }
 
-/*
- * Fixed string
- *
- * Address without variable
- * No query
- */
+function species (spec) {
+  return (
+    (fixed(spec) && AddressSpecies.Fixed) ||
+    (constructed(spec) && AddressSpecies.Constructed) ||
+    (resolved(spec) && AddressSpecies.Resolved) ||
+    AddressSpecies.Runtime
+  )
+}
+
 function fixed (spec) {
   return !(
     spec.state.address.variable ||
@@ -33,12 +35,6 @@ function fixed (spec) {
   )
 }
 
-/*
- * Constructible at convert time
- *
- * Address without variable
- * Query without variable
- */
 function constructed (spec) {
   return (
     !!spec.query.size &&
@@ -49,13 +45,6 @@ function constructed (spec) {
   )
 }
 
-/*
- * Needs simple variable resolution
- * (runtime resolution, no runtime manipulation)
- *
- * Address with inner variable
- * No query
- */
 function resolved (spec) {
   return (
     spec.state.address.variable &&
@@ -63,22 +52,6 @@ function resolved (spec) {
       spec.state.address.variableStart ||
       !!spec.query.size
     )
-  )
-}
-
-/*
- * Needs runtime manipulation
- *
- * Any of:
- * - Address with variable at start
- * - Address with variable + query
- * - Query with variable
- */
-function runtime (spec) {
-  return !(
-    spec.state.address.fixed ||
-    spec.state.address.constructed ||
-    spec.state.address.resolved
   )
 }
 

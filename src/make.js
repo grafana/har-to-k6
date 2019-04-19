@@ -2,10 +2,7 @@ function addressState () {
   return {
     variable: null,
     variableStart: null,
-    fixed: null,
-    constructed: null,
-    resolved: null,
-    runtime: null
+    species: null
   }
 }
 

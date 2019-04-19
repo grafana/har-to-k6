@@ -2,20 +2,28 @@ const constructed = require('./constructed')
 const fixed = require('./fixed')
 const resolved = require('./resolved')
 const runtime = require('./runtime')
+const { AddressSpecies } = require('../../enum')
+const { UnrecognizedError } = require('../../error')
 
 function address (spec, factor) {
-  if (spec.state.address.fixed) {
-    // Fixed string
-    fixed(spec, factor)
-  } else if (spec.state.address.constructed) {
-    // Constructible at convert time
-    constructed(spec, factor)
-  } else if (spec.state.address.resolved) {
-    // Simple variable resolution needed
-    resolved(spec, factor)
-  } else {
-    // Runtime manipulation needed
-    runtime(spec, factor)
+  switch (spec.state.address.species) {
+    case AddressSpecies.Fixed:
+      fixed(spec, factor)
+      break
+    case AddressSpecies.Constructed:
+      constructed(spec, factor)
+      break
+    case AddressSpecies.Resolved:
+      resolved(spec, factor)
+      break
+    case AddressSpecies.Runtime:
+      runtime(spec, factor)
+      break
+    default:
+      throw new UnrecognizedError(
+        { name: 'UnrecognizedAddressSpecies' },
+        `Unrecognized address species: ${spec.state.address.species}`
+      )
   }
 }
 

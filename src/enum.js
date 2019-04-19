@@ -1,3 +1,40 @@
+const AddressSpecies = Object.freeze({
+  /*
+   * Fixed string
+   *
+   * Address without variable
+   * No query
+   */
+  Fixed: 1,
+
+  /*
+   * Constructible at convert time
+   *
+   * Address without variable
+   * Query without variable
+   */
+  Constructed: 2,
+
+  /*
+   * Needs simple variable resolution
+   * (runtime resolution, no runtime manipulation)
+   *
+   * Address with inner variable
+   * No query
+   */
+  Resolved: 3,
+
+  /*
+   * Needs runtime manipulation
+   *
+   * Any of:
+   * - Address with variable at start
+   * - Address with variable + query
+   * - Query with variable
+   */
+  Runtime: 4
+})
+
 const CheckCondition = Object.freeze({
   Contains: 0,
   NotContains: 1,
@@ -47,6 +84,7 @@ function inverse (items) {
 }
 
 Object.assign(exports, {
+  AddressSpecies,
   CheckCondition,
   CheckConditionEncoding,
   CheckSubject,
