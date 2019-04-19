@@ -6,7 +6,7 @@ function item (spec, last) {
   const note = (spec.comment ? comment(spec.comment) : null)
   return (
     (note && multilineComment.test(note) ? `${note}\n` : '') +
-    `${key(spec)}: ${spec.value}` +
+    `${key(spec.name)}: ${spec.value}` +
     (last ? '' : ',') +
     (note && lineComment.test(note) ? ` ${note}` : '')
   )
