@@ -2,16 +2,15 @@ const constructed = require('./constructed')
 const fixed = require('./fixed')
 const resolved = require('./resolved')
 const runtime = require('./runtime')
-const state = require('../../state')
 
 function address (spec, factor) {
-  if (state.fixedAddress(spec)) {
+  if (spec.state.address.fixed) {
     // Fixed string
     fixed(spec, factor)
-  } else if (state.constructedAddress(spec)) {
+  } else if (spec.state.address.constructed) {
     // Constructible at convert time
     constructed(spec, factor)
-  } else if (state.resolvedAddress(spec)) {
+  } else if (spec.state.address.resolved) {
     // Simple variable resolution needed
     resolved(spec, factor)
   } else {

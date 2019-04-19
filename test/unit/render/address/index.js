@@ -17,6 +17,10 @@ test.serial('fixed', t => {
   spec.state.address.variable = false
   spec.state.address.variableStart = false
   spec.state.query.variable = false
+  spec.state.address.fixed = true
+  spec.state.address.constructed = false
+  spec.state.address.resolved = false
+  spec.state.address.runtime = false
   const factor = makeRequestFactor()
   address(spec, factor)
   t.true(fixed.calledOnce)
@@ -27,6 +31,10 @@ test.serial('constructed', t => {
   spec.state.address.variable = false
   spec.state.address.variableStart = false
   spec.state.query.variable = false
+  spec.state.address.constructed = true
+  spec.state.address.fixed = false
+  spec.state.address.resolved = false
+  spec.state.address.runtime = false
   spec.query.set('search', new Set([ { value: 'kitten' } ]))
   const factor = makeRequestFactor()
   address(spec, factor)
@@ -38,6 +46,10 @@ test.serial('resolved', t => {
   spec.state.address.variable = true
   spec.state.address.variableStart = false
   spec.state.query.variable = false
+  spec.state.address.resolved = true
+  spec.state.address.fixed = false
+  spec.state.address.constructed = false
+  spec.state.address.runtime = false
   const factor = makeRequestFactor()
   address(spec, factor)
   t.true(resolved.calledOnce)
@@ -48,6 +60,10 @@ test.serial('runtime address variable start', t => {
   spec.state.address.variable = true
   spec.state.address.variableStart = true
   spec.state.query.variable = false
+  spec.state.address.runtime = true
+  spec.state.address.fixed = false
+  spec.state.address.constructed = false
+  spec.state.address.resolved = false
   const factor = makeRequestFactor()
   address(spec, factor)
   t.true(runtime.calledOnce)
@@ -58,6 +74,10 @@ test.serial('runtime address variable + query', t => {
   spec.state.address.variable = true
   spec.state.address.variableStart = false
   spec.state.query.variable = false
+  spec.state.address.runtime = true
+  spec.state.address.fixed = false
+  spec.state.address.constructed = false
+  spec.state.address.resolved = false
   spec.query.set('search', new Set([ { value: 'kitten' } ]))
   const factor = makeRequestFactor()
   address(spec, factor)
@@ -69,6 +89,10 @@ test.serial('runtime query variable', t => {
   spec.state.address.variable = false
   spec.state.address.variableStart = false
   spec.state.query.variable = true
+  spec.state.address.runtime = true
+  spec.state.address.fixed = false
+  spec.state.address.constructed = false
+  spec.state.address.resolved = false
   /* eslint-disable-next-line no-template-curly-in-string */
   spec.query.set('search', new Set([ { value: '${search}' } ]))
   const factor = makeRequestFactor()

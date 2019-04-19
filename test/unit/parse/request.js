@@ -1,12 +1,13 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { requestSpec as makeRequestSpec } from 'make'
-const [ request, { cookies, headers, postData, queryString } ] =
+const [ request, { cookies, headers, postData, queryString, state } ] =
   isolate(test, 'parse/request', {
     cookies: 'parse/cookies',
     headers: 'parse/headers',
     postData: 'parse/postData',
-    queryString: 'parse/queryString'
+    queryString: 'parse/queryString',
+    state: 'parse/state/request'
   })
 
 test.serial('basic', t => {
@@ -22,29 +23,7 @@ test.serial('basic', t => {
   t.true(headers.notCalled)
   t.true(cookies.notCalled)
   t.true(postData.notCalled)
-})
-
-test.serial('address static', t => {
-  const spec = makeRequestSpec()
-  request({ method: 'GET', url: 'http://example.com' }, spec)
-  t.false(spec.state.address.variable)
-  t.false(spec.state.address.variableStart)
-})
-
-test.serial('address variable inner', t => {
-  const spec = makeRequestSpec()
-  /* eslint-disable-next-line no-template-curly-in-string */
-  request({ method: 'GET', url: 'http://${host}' }, spec)
-  t.true(spec.state.address.variable)
-  t.false(spec.state.address.variableStart)
-})
-
-test.serial('address variable start', t => {
-  const spec = makeRequestSpec()
-  /* eslint-disable-next-line no-template-curly-in-string */
-  request({ method: 'GET', url: '${address}' }, spec)
-  t.true(spec.state.address.variable)
-  t.true(spec.state.address.variableStart)
+  t.true(state.calledOnce)
 })
 
 test.serial('comment', t => {

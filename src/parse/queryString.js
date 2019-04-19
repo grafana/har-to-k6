@@ -1,8 +1,8 @@
 const queryItem = require('./queryItem')
 
-function queryString (node, spec, state) {
+function queryString (node, spec) {
   for (const item of node) {
-    queryItem(item, spec, state)
+    queryItem(item, spec)
   }
 }
 

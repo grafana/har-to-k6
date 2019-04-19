@@ -2,16 +2,16 @@ const cookies = require('./cookies')
 const headers = require('./headers')
 const postData = require('./postData')
 const queryString = require('./queryString')
-const { variable, variableStart } = require('../expression')
+const state = require('./state/request')
 
 function request (node, spec) {
   spec.method = node.method.toUpperCase()
-  address(node, spec)
+  spec.address = node.url
   if (node.comment) {
     spec.comment = node.comment
   }
   if (node.queryString) {
-    queryString(node.queryString, spec.query, spec.state.query)
+    queryString(node.queryString, spec.query)
   }
   if (node.headers) {
     headers(node.headers, spec.headers)
@@ -22,12 +22,7 @@ function request (node, spec) {
   if (node.postData) {
     postData(node.postData, spec.post)
   }
-}
-
-function address (node, spec) {
-  spec.address = node.url
-  spec.state.address.variable = variable.test(spec.address)
-  spec.state.address.variableStart = variableStart.test(spec.address)
+  state(spec)
 }
 
 module.exports = request

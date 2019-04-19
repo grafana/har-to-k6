@@ -1,7 +1,11 @@
 function addressState () {
   return {
     variable: null,
-    variableStart: null
+    variableStart: null,
+    fixed: null,
+    constructed: null,
+    resolved: null,
+    runtime: null
   }
 }
 
@@ -40,10 +44,14 @@ function requestSpec () {
     headers: new Map(),
     cookies: new Map(),
     post: {},
-    state: {
-      address: addressState(),
-      query: queryState()
-    }
+    state: requestState()
+  }
+}
+
+function requestState () {
+  return {
+    address: addressState(),
+    query: queryState()
   }
 }
 
@@ -62,5 +70,6 @@ Object.assign(exports, {
   queryState,
   requestFactor,
   requestSpec,
+  requestState,
   result
 })
