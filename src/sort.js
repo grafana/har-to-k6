@@ -6,7 +6,12 @@ function index (a, b) {
   return a.index > b.index ? 1 : a.index < b.index ? -1 : 0
 }
 
+function value (a, b) {
+  return a.value > b.value ? 1 : a.value < b.value ? -1 : 0
+}
+
 Object.assign(exports, {
   firstElement,
-  index
+  index,
+  value
 })
