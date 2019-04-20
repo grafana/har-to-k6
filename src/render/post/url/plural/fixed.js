@@ -1,9 +1,11 @@
 const encode = require('form-urlencoded').default
+const string = require('../../../string')
 
 // Multivalue URL encoded post data without variable
 function fixed (params) {
   const spec = specify(params)
-  return encode(spec, { sorted: true })
+  const encoded = encode(spec, { sorted: true })
+  return string(encoded)
 }
 
 function specify (params) {
