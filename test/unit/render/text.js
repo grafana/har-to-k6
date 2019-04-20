@@ -9,7 +9,7 @@ const [ text, { string, template } ] =
 test.serial('string', t => {
   const rendered = Symbol('rendered')
   string.returns(rendered)
-  const result = text('Curioser and curioser')
+  const result = text('Curiouser and curiouser')
   t.is(result, rendered)
   t.true(string.calledOnce)
   t.true(template.notCalled)
