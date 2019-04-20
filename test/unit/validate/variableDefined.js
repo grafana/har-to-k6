@@ -44,6 +44,20 @@ test('undefined queryItem value', t => {
   })
 })
 
+test('undefined header name', t => {
+  t.throws(() => {
+    const headers = [ { name: '${header}', value: '*/*' } ]
+    const entries = [ {
+      index: 0,
+      request: { method: 'GET', url: 'http://example.com', headers }
+    } ]
+    variableDefined({ log: { entries } })
+  }, {
+    name: 'UndefinedVariable',
+    message: 'Header name referenced undefined variable (0:0): header'
+  })
+})
+
 test('undefined header value', t => {
   t.throws(() => {
     const headers = [ { name: 'Allow', value: '${contentType}' } ]
@@ -236,7 +250,8 @@ test('valid references', t => {
     const variables = [
       { name: 'one', type: VariableType.JSONPath, expression: 'one' },
       { name: 'two', type: VariableType.JSONPath, expression: 'two' },
-      { name: 'three', type: VariableType.JSONPath, expression: 'three' }
+      { name: 'three', type: VariableType.JSONPath, expression: 'three' },
+      { name: 'four', type: VariableType.JSONPath, expression: 'four' }
     ]
     const entries = [
       {
@@ -252,7 +267,7 @@ test('valid references', t => {
           method: 'POST',
           url: 'http://${one}${two}',
           queryString: [ { name: '${one}', value: '${two}' } ],
-          headers: [ { name: 'Accept', value: '${three}' } ],
+          headers: [ { name: '${three}', value: '${four}' } ],
           cookies: [ {
             name: '${one}',
             value: '${two}',

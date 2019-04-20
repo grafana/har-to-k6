@@ -6,6 +6,7 @@ const { InvalidArchiveError } = require('../error')
  * url: variables defined
  * queryItem name: variables defined
  * queryItem value: variables defined
+ * header name: variables defined
  * header value: variables defined
  * cookie name: variables defined
  * cookie value: variables defined
@@ -61,6 +62,7 @@ function headers (node, i, defined) {
   if (node) {
     for (let j = 0; j < node.length; j++) {
       const header = node[j]
+      validateString(header.name, i, j, defined, 'Header name')
       validateString(header.value, i, j, defined, 'Header value')
     }
   }
