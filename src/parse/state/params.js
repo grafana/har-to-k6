@@ -2,7 +2,18 @@ const expr = require('../../expression')
 
 function params (spec) {
   const state = spec.state.params
+  state.plural = plural(spec)
   state.variable = variable(spec)
+}
+
+/*
+ * Multivalue param
+ */
+function plural (spec) {
+  return (
+    !!spec.post.params &&
+    !![ ...spec.post.params.values() ].find(items => items.size > 1)
+  )
 }
 
 /*

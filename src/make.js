@@ -18,6 +18,7 @@ function assay () {
 
 function paramsState () {
   return {
+    plural: null,
     variable: null
   }
 }

@@ -5,7 +5,24 @@ import { requestSpec as makeRequestSpec } from 'make'
 test('empty', t => {
   const spec = makeRequestSpec()
   params(spec)
+  t.false(spec.state.params.plural)
   t.false(spec.state.params.variable)
+})
+
+test('singular', t => {
+  const spec = makeRequestSpec()
+  spec.post.params = new Map()
+    .set('search', new Set([ { value: 'kitten' } ]))
+  params(spec)
+  t.false(spec.state.params.plural)
+})
+
+test('plural', t => {
+  const spec = makeRequestSpec()
+  spec.post.params = new Map()
+    .set('search', new Set([ { value: 'kitten' }, { value: 'puppy' } ]))
+  params(spec)
+  t.true(spec.state.params.plural)
 })
 
 test('static', t => {
