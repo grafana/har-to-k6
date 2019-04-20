@@ -59,6 +59,12 @@ const CheckType = Object.freeze({
 })
 const CheckTypeEncoding = inverse(CheckType)
 
+const PostSpecies = Object.freeze({
+  Empty: 1,
+  Unstructured: 2,
+  Structured: 3
+})
+
 const StringSpecies = Object.freeze({
   Identifier: 0,
   String: 1,
@@ -91,6 +97,7 @@ Object.assign(exports, {
   CheckSubjectEncoding,
   CheckType,
   CheckTypeEncoding,
+  PostSpecies,
   StringSpecies,
   VariableType,
   VariableTypeEncoding

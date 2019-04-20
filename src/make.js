@@ -16,6 +16,12 @@ function assay () {
   }
 }
 
+function postState () {
+  return {
+    species: null
+  }
+}
+
 function queryState () {
   return {
     variable: null
@@ -48,7 +54,8 @@ function requestSpec () {
 function requestState () {
   return {
     address: addressState(),
-    query: queryState()
+    query: queryState(),
+    post: postState()
   }
 }
 
@@ -64,6 +71,7 @@ function result () {
 Object.assign(exports, {
   addressState,
   assay,
+  postState,
   queryState,
   requestFactor,
   requestSpec,
