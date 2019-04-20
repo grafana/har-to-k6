@@ -35,6 +35,7 @@
         "test-hoc": "cross-env NODE_PATH=src:test ava"
     },
     "dependencies": {
+        "form-urlencoded": "^3.0.0",
         "is-natural-number": "^4.0.1",
         "is-plain-object": "^2.0.4",
         "iso8601-validator": "^1.0.1",
