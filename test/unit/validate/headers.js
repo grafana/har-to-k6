@@ -22,6 +22,15 @@ test.serial('invalid header 2', t => {
   })
 })
 
+test.serial('multiple Content-Type', t => {
+  t.throws(() => {
+    headers([
+      { name: 'Content-Type' },
+      { name: 'content-type' }
+    ], 0, makeAssay())
+  }, { name: 'MultipleContentType' })
+})
+
 test.serial('valid 0', t => {
   headers([], 0, makeAssay())
   t.true(header.notCalled)
