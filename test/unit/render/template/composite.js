@@ -21,5 +21,5 @@ test.serial('3', t => {
 
 test.serial('empty item', t => {
   content.callsFake(value => value)
-  t.is(composite([ 'GET', '', 'HEAD' ]), '`GET, HEAD`')
+  t.is(composite([ 'GET', '', 'HEAD' ]), '`GET, , HEAD`')
 })

@@ -4,7 +4,6 @@ function composite (items) {
   return [
     '`',
     items
-      .filter(item => item)
       .map(item => content(item))
       .join(', '),
     '`'
