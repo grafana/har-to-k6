@@ -9,6 +9,7 @@ const { InvalidArchiveError } = require('../error')
  * comment: optional string
  *
  * max 1 nonempty params|text
+ * structured data type application/x-www-form-urlencoded|multipart/form-data
  */
 function postData (node, i, assay) {
   validate(node, i)
@@ -52,6 +53,19 @@ function validate (node, i) {
     throw new InvalidArchiveError(
       { name: 'PostDataConflict' },
       `Post data conflict (${i}): specify 1 of params or text`
+    )
+  }
+  if (
+    node.params &&
+    node.params.length &&
+    ![
+      'application/x-www-form-urlencoded',
+      'multipart/form-data'
+    ].includes(node.mimeType)
+  ) {
+    throw new InvalidArchiveError(
+      { name: 'InvalidPostDataType' },
+      `Invalid structured post data MIME type (${i}): ${node.mimeType}`
     )
   }
 }

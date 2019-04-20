@@ -44,16 +44,34 @@ test.serial('content conflict', t => {
   }, { name: 'PostDataConflict' })
 })
 
+test.serial('invalid structured type', t => {
+  t.throws(() => {
+    postData({
+      mimeType: 'text/plain',
+      params: [ {} ]
+    }, 0, makeAssay())
+  }, { name: 'InvalidPostDataType' })
+})
+
 test.serial('valid minimal', t => {
   postData({ mimeType: 'text/plain' })
   t.true(params.notCalled)
 })
 
-test.serial('valid full params', t => {
+test.serial('valid full params form-urlencoded', t => {
+  postData({
+    mimeType: 'application/x-www-form-urlencoded',
+    params: [ {} ],
+    comment: 'Send URL encoded parameters'
+  }, 0, makeAssay())
+  t.true(params.calledOnce)
+})
+
+test.serial('valid full params form-data', t => {
   postData({
     mimeType: 'multipart/form-data',
     params: [ {} ],
-    comment: 'Send a body with parameters'
+    comment: 'Send multipart encoded parameters'
   }, 0, makeAssay())
   t.true(params.calledOnce)
 })
