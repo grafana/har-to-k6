@@ -16,6 +16,12 @@ function assay () {
   }
 }
 
+function paramsState () {
+  return {
+    variable: null
+  }
+}
+
 function postState () {
   return {
     species: null
@@ -55,7 +61,8 @@ function requestState () {
   return {
     address: addressState(),
     query: queryState(),
-    post: postState()
+    post: postState(),
+    params: paramsState()
   }
 }
 
@@ -71,6 +78,7 @@ function result () {
 Object.assign(exports, {
   addressState,
   assay,
+  paramsState,
   postState,
   queryState,
   requestFactor,
