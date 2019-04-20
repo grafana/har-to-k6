@@ -4,6 +4,18 @@ import test from 'ava'
 import variableDefined from 'validate/variableDefined'
 import { VariableType } from 'enum'
 
+test('undefined method', t => {
+  t.throws(() => {
+    const entries = [
+      { index: 0, request: { method: '${method}', url: 'http://example.com' } }
+    ]
+    variableDefined({ log: { entries } })
+  }, {
+    name: 'UndefinedVariable',
+    message: 'Request method referenced undefined variable (0): method'
+  })
+})
+
 test('undefined url', t => {
   t.throws(() => {
     const entries = [
@@ -264,7 +276,7 @@ test('valid references', t => {
         comment: 'Use values',
         index: 1,
         request: {
-          method: 'POST',
+          method: '${one}',
           url: 'http://${one}${two}',
           queryString: [ { name: '${one}', value: '${two}' } ],
           headers: [ { name: '${three}', value: '${four}' } ],

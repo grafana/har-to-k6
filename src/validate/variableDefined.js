@@ -3,6 +3,7 @@ const { variables } = require('../expression')
 const { InvalidArchiveError } = require('../error')
 
 /*
+ * method: variables defined
  * url: variables defined
  * queryItem name: variables defined
  * queryItem value: variables defined
@@ -29,6 +30,7 @@ function variableDefined (archive) {
 }
 
 function validate (request, i, defined) {
+  validateString(request.method, i, null, defined, 'Request method')
   validateString(request.url, i, null, defined, 'Request URL')
   queryString(request.queryString, i, defined)
   headers(request.headers, i, defined)
