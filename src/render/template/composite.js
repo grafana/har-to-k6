@@ -1,11 +1,11 @@
 const content = require('./content')
 
-function composite (items) {
+function composite (items, delimiter = '') {
   return [
     '`',
     items
       .map(item => content(item))
-      .join(', '),
+      .join(delimiter),
     '`'
   ].join('')
 }

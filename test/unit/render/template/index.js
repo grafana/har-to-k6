@@ -17,3 +17,8 @@ test.serial('composite', t => {
   t.true(composite.calledOnce)
   t.true(prime.notCalled)
 })
+
+test.serial('composite delimiter', t => {
+  template([ 'GET', 'POST', 'HEAD' ], ',')
+  t.is(composite.firstCall.args[1], ',')
+})

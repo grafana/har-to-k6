@@ -16,10 +16,15 @@ test.serial('1', t => {
 
 test.serial('3', t => {
   content.callsFake(value => value)
-  t.is(composite([ 'GET', 'POST', 'HEAD' ]), '`GET, POST, HEAD`')
+  t.is(composite([ 'GET', 'POST', 'HEAD' ]), '`GETPOSTHEAD`')
 })
 
 test.serial('empty item', t => {
   content.callsFake(value => value)
-  t.is(composite([ 'GET', '', 'HEAD' ]), '`GET, , HEAD`')
+  t.is(composite([ 'GET', '', 'HEAD' ]), '`GETHEAD`')
+})
+
+test.serial('delimiter', t => {
+  content.callsFake(value => value)
+  t.is(composite([ 'GET', '', 'HEAD' ], ','), '`GET,,HEAD`')
 })
