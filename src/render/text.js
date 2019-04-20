@@ -3,11 +3,11 @@ const template = require('./template')
 const { variable } = require('../expression')
 
 // Render text in simplest possible form
-function text (address) {
-  if (variable.test(address)) {
-    return template(address)
+function text (value) {
+  if (variable.test(value)) {
+    return template(value)
   } else {
-    return string(address)
+    return string(value)
   }
 }
 
