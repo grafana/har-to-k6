@@ -24,8 +24,8 @@ function value (items) {
    * message, by appending each subsequent field-value to the first, each
    * separated by a comma.
    */
-  const combined = items.map(item => item.value || '').join(',')
-  return text(combined)
+  const values = items.map(item => item.value || '')
+  return text(values, ',')
 }
 
 module.exports = header
