@@ -11,8 +11,8 @@ function variable (spec) {
   return !!(
     [ ...spec.query.keys() ].find(name => expr.variable.test(name)) ||
     [ ...spec.query.values() ].find(items => [ ...items ].find(
-      ({ value }) => value && expr.variable.test(value))
-    )
+      ({ value }) => value && expr.variable.test(value)
+    ))
   )
 }
 
