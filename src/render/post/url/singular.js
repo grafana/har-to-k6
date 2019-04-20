@@ -1,4 +1,5 @@
 const object = require('../../object')
+const text = require('../../text')
 
 function singular (params) {
   const entries = []
@@ -13,7 +14,7 @@ function singular (params) {
 function entry (name, item) {
   const result = { name }
   if (item.value) {
-    result.value = item.value
+    result.value = text(item.value)
   }
   if (item.comment || item.contentType || item.fileName) {
     result.comment = comment(item)

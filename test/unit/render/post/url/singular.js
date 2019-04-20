@@ -32,7 +32,7 @@ test.serial('value', t => {
     .set('search', new Set([ { value: 'kitten' } ]))
   singular(spec)
   t.deepEqual(object.firstCall.args[0], [
-    { name: 'search', value: 'kitten' }
+    { name: 'search', value: '"kitten"' }
   ])
 })
 
