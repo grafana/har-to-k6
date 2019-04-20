@@ -95,6 +95,28 @@ test.serial('invalid comment', t => {
   }, { name: 'InvalidComment' })
 })
 
+test.serial('inconsistent Content-Type', t => {
+  t.throws(() => {
+    request({
+      method: 'GET',
+      url: 'http://example.com',
+      headers: [ { name: 'Content-Type', value: 'text/plain' } ],
+      postData: { mimeType: 'text/csv' }
+    }, 0, makeAssay())
+  }, { name: 'InconsistentContentType' })
+})
+
+test.serial('consistent Content-Type', t => {
+  t.notThrows(() => {
+    request({
+      method: 'GET',
+      url: 'http://example.com',
+      headers: [ { name: 'Content-Type', value: 'text/csv; charset=utf-8' } ],
+      postData: { mimeType: 'text/csv' }
+    }, 0, makeAssay())
+  })
+})
+
 test.serial('valid http url', t => {
   request({ method: 'GET', url: 'http://example.com' }, 0, makeAssay())
   t.true(queryString.notCalled)

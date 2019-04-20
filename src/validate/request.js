@@ -15,6 +15,8 @@ const { InvalidArchiveError } = require('../error')
  * cookies: optional array
  * postData: optional object
  * comment: optional string
+ *
+ * header Content-Type congruent with postData.mimeType
  */
 function request (node, i, assay) {
   validate(node, i)
@@ -30,6 +32,7 @@ function request (node, i, assay) {
   if (node.postData) {
     postData(node.postData, i, assay)
   }
+  relation(node, i)
 }
 
 function validate (node, i) {
@@ -93,6 +96,29 @@ function validate (node, i) {
       `Invalid request comment (${i}): must be string`
     )
   }
+}
+
+function relation (node, i) {
+  if (
+    node.headers &&
+    node.postData &&
+    node.headers.findIndex(findContentType) !== -1
+  ) {
+    const header = node.headers.find(findContentType)
+    const headerType = header.value ? header.value.split(';')[0] : ''
+    const postType = node.postData.mimeType
+    if (headerType !== postType) {
+      throw new InvalidArchiveError(
+        { name: 'InconsistentContentType' },
+        `Inconsistent post content type (${i}): ` +
+          `'${headerType}' vs '${postType}'`
+      )
+    }
+  }
+}
+
+function findContentType (header) {
+  return header.name.toLowerCase() === 'content-type'
 }
 
 module.exports = request
