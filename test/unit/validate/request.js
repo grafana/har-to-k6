@@ -1,5 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
-
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { assay as makeAssay } from 'make'
@@ -122,6 +120,7 @@ test.serial('valid ftp url', t => {
 })
 
 test.serial('valid variable url', t => {
+  /* eslint-disable-next-line no-template-curly-in-string */
   request({ method: 'GET', url: '${base}/index.html' }, 0, makeAssay())
   t.true(queryString.notCalled)
   t.true(headers.notCalled)
