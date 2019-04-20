@@ -1,6 +1,6 @@
-const object = require('../object')
+const object = require('../../object')
 
-function url (params) {
+function singular (params) {
   const entries = []
   for (const [ name, items ] of params) {
     for (const item of items) {
@@ -35,4 +35,4 @@ function comment (item) {
   return sections.join('\n')
 }
 
-module.exports = url
+module.exports = singular

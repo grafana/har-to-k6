@@ -1,14 +1,14 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [ url, { object } ] =
-  isolate(test, 'render/post/url', { object: 'render/object' })
+const [ singular, { object } ] =
+  isolate(test, 'render/post/url/singular', { object: 'render/object' })
 
 test.serial('basic', t => {
   const rendered = Symbol('rendered')
   object.returns(rendered)
   const spec = new Map()
     .set('search', new Set([ {} ]))
-  const result = url(spec)
+  const result = singular(spec)
   t.is(result, rendered)
   t.true(object.calledOnce)
   t.deepEqual(object.firstCall.args[0], [ { name: 'search' } ])
@@ -19,7 +19,7 @@ test.serial('multiple', t => {
     .set('search', new Set([ {} ]))
     .set('filter', new Set([ {} ]))
     .set('order', new Set([ {} ]))
-  url(spec)
+  singular(spec)
   t.deepEqual(object.firstCall.args[0], [
     { name: 'search' },
     { name: 'filter' },
@@ -30,7 +30,7 @@ test.serial('multiple', t => {
 test.serial('value', t => {
   const spec = new Map()
     .set('search', new Set([ { value: 'kitten' } ]))
-  url(spec)
+  singular(spec)
   t.deepEqual(object.firstCall.args[0], [
     { name: 'search', value: 'kitten' }
   ])
@@ -39,7 +39,7 @@ test.serial('value', t => {
 test.serial('comment', t => {
   const spec = new Map()
     .set('session', new Set([ { comment: 'Start fresh session' } ]))
-  url(spec)
+  singular(spec)
   t.deepEqual(object.firstCall.args[0], [
     { name: 'session', comment: 'Start fresh session' }
   ])
@@ -48,7 +48,7 @@ test.serial('comment', t => {
 test.serial('content type', t => {
   const spec = new Map()
     .set('data', new Set([ { contentType: 'text/csv' } ]))
-  url(spec)
+  singular(spec)
   t.deepEqual(object.firstCall.args[0], [
     { name: 'data', comment: 'Content type: text/csv' }
   ])
@@ -57,7 +57,7 @@ test.serial('content type', t => {
 test.serial('file name', t => {
   const spec = new Map()
     .set('data', new Set([ { fileName: 'data.csv' } ]))
-  url(spec)
+  singular(spec)
   t.deepEqual(object.firstCall.args[0], [
     { name: 'data', comment: 'File name: data.csv' }
   ])
@@ -70,7 +70,7 @@ test.serial('full comment', t => {
       contentType: 'text/csv',
       fileName: 'data.csv'
     } ]))
-  url(spec)
+  singular(spec)
   t.deepEqual(object.firstCall.args[0], [ {
     name: 'data',
     comment: '' +
