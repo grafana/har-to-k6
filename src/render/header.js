@@ -1,4 +1,5 @@
 const note = require('./note')
+const text = require('./text')
 
 function header (name, items) {
   items = [ ...items ]
@@ -23,7 +24,8 @@ function value (items) {
    * message, by appending each subsequent field-value to the first, each
    * separated by a comma.
    */
-  return items.map(item => item.value || '').join(',')
+  const combined = items.map(item => item.value || '').join(',')
+  return text(combined)
 }
 
 module.exports = header
