@@ -1,7 +1,10 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [ singular, { object } ] =
-  isolate(test, 'render/post/url/singular', { object: 'render/object' })
+const [ singular, { object, text } ] =
+  isolate(test, 'render/post/url/singular', {
+    object: 'render/object',
+    text: 'render/text'
+  })
 
 test.serial('basic', t => {
   const rendered = Symbol('rendered')
@@ -28,6 +31,7 @@ test.serial('multiple', t => {
 })
 
 test.serial('value', t => {
+  text.returns('"kitten"')
   const spec = new Map()
     .set('search', new Set([ { value: 'kitten' } ]))
   singular(spec)
