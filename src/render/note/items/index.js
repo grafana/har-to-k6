@@ -1,7 +1,7 @@
 const labeled = require('./labeled')
 const unlabeled = require('./unlabeled')
 
-// Combined note for value set
+// Combined note for item set
 function note (items) {
   const comments = items.filter(item => item.comment)
   if (!comments.length) {
