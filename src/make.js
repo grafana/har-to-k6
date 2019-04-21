@@ -42,6 +42,7 @@ function requestFactor () {
     body: null,
     headers: null,
     cookies: null,
+    options: null,
     pre: []
   }
 }
