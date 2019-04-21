@@ -59,6 +59,11 @@ const CheckType = Object.freeze({
 })
 const CheckTypeEncoding = inverse(CheckType)
 
+const CommentLocation = Object.freeze({
+  Top: 0,
+  Suffix: 1
+})
+
 const PostSpecies = Object.freeze({
   Empty: 1,
   Unstructured: 2,
@@ -97,6 +102,7 @@ Object.assign(exports, {
   CheckSubjectEncoding,
   CheckType,
   CheckTypeEncoding,
+  CommentLocation,
   PostSpecies,
   StringSpecies,
   VariableType,
