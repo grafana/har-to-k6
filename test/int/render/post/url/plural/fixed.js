@@ -55,6 +55,7 @@ test.serial('comment', t => {
     ]))
   const result = fixed(params)
   t.deepEqual(note.firstCall.args[0], params)
+  t.is(comment.firstCall.args[0], '-search- Find kittens')
   t.is(result, '' +
 `// -search- Find kittens
 "search=kitten"`)
