@@ -1,4 +1,4 @@
-const note = require('../../../note')
+const note = require('../../../note/items')
 const object = require('../../../object')
 const text = require('../../../text')
 

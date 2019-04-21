@@ -1,5 +1,5 @@
-const sort = require('../../sort')
-const { lineBreak } = require('../../expression')
+const sort = require('../../../sort')
+const { lineBreak } = require('../../../expression')
 
 function labeled (items) {
   if (items.length) {

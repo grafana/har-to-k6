@@ -2,7 +2,7 @@ import test from 'ava'
 import isolate from 'helper/isolate'
 const [ header, { note, text } ] =
   isolate(test, 'render/header', {
-    note: 'render/note',
+    note: 'render/note/items',
     text: 'render/text'
   })
 

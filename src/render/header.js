@@ -1,4 +1,4 @@
-const note = require('./note')
+const note = require('./note/items')
 const text = require('./text')
 
 function header (name, items) {

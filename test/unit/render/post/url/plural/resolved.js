@@ -2,7 +2,7 @@ import test from 'ava'
 import isolate from 'helper/isolate'
 const [ resolved, { note, object, text } ] =
   isolate(test, 'render/post/url/plural/resolved', {
-    note: 'render/note',
+    note: 'render/note/items',
     object: 'render/object',
     text: 'render/text'
   })

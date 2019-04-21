@@ -1,5 +1,5 @@
 import test from 'ava'
-import unlabeled from 'render/note/unlabeled'
+import unlabeled from 'render/note/items/unlabeled'
 
 test('empty', t => {
   const result = unlabeled([])

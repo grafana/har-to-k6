@@ -1,4 +1,4 @@
-const { lineBreak } = require('../../expression')
+const { lineBreak } = require('../../../expression')
 
 function unlabeled (items) {
   if (items.length) {

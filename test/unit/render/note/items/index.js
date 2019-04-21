@@ -1,9 +1,9 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 const [ note, { labeled, unlabeled } ] =
-  isolate(test, 'render/note', {
-    labeled: 'render/note/labeled',
-    unlabeled: 'render/note/unlabeled'
+  isolate(test, 'render/note/items', {
+    labeled: 'render/note/items/labeled',
+    unlabeled: 'render/note/items/unlabeled'
   })
 
 test.serial('empty', t => {
