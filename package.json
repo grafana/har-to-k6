@@ -17,6 +17,17 @@
         "lib": "src"
     },
     "main": "src/index",
+    "dependencies": {
+        "emailjs-mime-builder": "^2.0.5",
+        "form-urlencoded": "^3.0.0",
+        "is-natural-number": "^4.0.1",
+        "is-plain-object": "^2.0.4",
+        "iso8601-validator": "^1.0.1",
+        "jsonpath": "^1.0.1",
+        "moment": "^2.24.0",
+        "urijs": "^1.19.1",
+        "verror": "^1.10.0"
+    },
     "devDependencies": {
         "ava": "^1.4.1",
         "cross-env": "^5.2.0",
@@ -33,16 +44,5 @@
         "test-int": "cross-env NODE_PATH=src:test ava test/int",
         "test-unit": "cross-env NODE_PATH=src:test ava test/unit",
         "test-hoc": "cross-env NODE_PATH=src:test ava"
-    },
-    "dependencies": {
-        "emailjs-mime-builder": "^2.0.5",
-        "form-urlencoded": "^3.0.0",
-        "is-natural-number": "^4.0.1",
-        "is-plain-object": "^2.0.4",
-        "iso8601-validator": "^1.0.1",
-        "jsonpath": "^1.0.1",
-        "moment": "^2.24.0",
-        "urijs": "^1.19.1",
-        "verror": "^1.10.0"
     }
 }
