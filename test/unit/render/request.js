@@ -81,7 +81,6 @@ test.serial('headers', t => {
   Accept: "*/*" // Accept everything
 }`)
   object.returns('options')
-  indent.returns('  args')
   post.returns(null)
   cookies.returns(null)
   const spec = makeRequestSpec()
@@ -92,15 +91,8 @@ test.serial('headers', t => {
   spec.state.params.variable = false
   const result = request(spec)
   t.is(result, '' +
-`response = http.request(
-  args
-);`)
+`response = http.request("GET", "http://example.com", null, options);`)
   t.deepEqual(headers.firstCall.args[0], spec.headers)
-  t.is(indent.firstCall.args[0], '' +
-`"GET",
-"http://example.com",
-null,
-options`)
   t.deepEqual(object.firstCall.args[0], [
     {
       name: 'headers',
@@ -122,7 +114,6 @@ test.serial('cookies', t => {
   theme: "aqua" // Exercise prerelease theme
 }`)
   object.returns('options')
-  indent.returns('  args')
   post.returns(null)
   headers.returns(null)
   const spec = makeRequestSpec()
@@ -133,15 +124,8 @@ test.serial('cookies', t => {
   spec.state.params.variable = false
   const result = request(spec)
   t.is(result, '' +
-`response = http.request(
-  args
-);`)
+`response = http.request("GET", "http://example.com", null, options);`)
   t.deepEqual(cookies.firstCall.args[0], spec.cookies)
-  t.is(indent.firstCall.args[0], '' +
-`"GET",
-"http://example.com",
-null,
-options`)
   t.deepEqual(object.firstCall.args[0], [
     {
       name: 'cookies',

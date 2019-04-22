@@ -92,7 +92,7 @@ function args (factor) {
 }
 
 function execute (args) {
-  if (args.length === 2) {
+  if (compact(args)) {
     const list = args.join(`, `)
     return `response = http.request(${list});`
   } else {
@@ -102,6 +102,13 @@ function execute (args) {
 ${indent(list)}
 );`
   }
+}
+
+function compact (args) {
+  return (
+    args.length === 2 ||
+    args[2] === 'null'
+  )
 }
 
 module.exports = request
