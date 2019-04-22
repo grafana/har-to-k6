@@ -21,8 +21,19 @@ function request (node, spec) {
   }
   if (node.postData) {
     postData(node.postData, spec.post)
+    contentType(node.postData.mimeType, spec.headers)
   }
   state(spec)
+}
+
+// Fallback to content type from postData
+// Preserves explicit header which potentially has more information
+function contentType (mimeType, headers) {
+  if (!headers.has('Content-Type')) {
+    const item = { value: mimeType }
+    const items = new Set([ item ])
+    headers.set('Content-Type', items)
+  }
 }
 
 module.exports = request
