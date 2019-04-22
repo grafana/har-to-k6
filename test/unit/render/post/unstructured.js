@@ -5,7 +5,8 @@ const [ unstructured, { text } ] =
 
 test.serial('empty', t => {
   text.returns('""')
-  const result = unstructured({})
+  const post = {}
+  const result = unstructured({ post })
   t.is(result, '""')
   t.true(text.calledOnce)
   t.is(text.firstCall.args[0], '')
@@ -13,7 +14,8 @@ test.serial('empty', t => {
 
 test.serial('nonempty', t => {
   text.returns('"Good post"')
-  const result = unstructured({ text: 'Good post' })
+  const post = { value: 'Good post' }
+  const result = unstructured({ post })
   t.is(result, '"Good post"')
   t.true(text.calledOnce)
   t.is(text.firstCall.args[0], 'Good post')
