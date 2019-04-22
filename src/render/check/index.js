@@ -1,5 +1,5 @@
 const variant = require('./variant')
-const { CheckType } = require('../enum')
+const { CheckType } = require('../../enum')
 const { UnrecognizedError } = require('../error')
 
 function check (name, spec) {
