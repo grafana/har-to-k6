@@ -34,7 +34,10 @@ test.serial('basic', t => {
   t.deepEqual(
     spec,
     new Map()
-      .set('token exists', { type: CheckType.JSONPath })
+      .set('token exists', {
+        type: CheckType.JSONPath,
+        state: { negated: false, plural: false }
+      })
   )
 })
 
@@ -51,7 +54,8 @@ test.serial('comment', t => {
     new Map()
       .set('token exists', {
         type: CheckType.JSONPath,
-        comment: 'Verify token returned'
+        comment: 'Verify token returned',
+        state: { negated: false, plural: false }
       })
   )
 })

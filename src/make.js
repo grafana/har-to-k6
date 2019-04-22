@@ -16,6 +16,13 @@ function assay () {
   }
 }
 
+function checkState () {
+  return {
+    negated: null,
+    plural: null
+  }
+}
+
 function paramsState () {
   return {
     plural: null,
@@ -80,6 +87,7 @@ function result () {
 Object.assign(exports, {
   addressState,
   assay,
+  checkState,
   paramsState,
   postState,
   queryState,
