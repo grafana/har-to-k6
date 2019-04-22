@@ -1,15 +1,16 @@
 const { CheckType, PostSpecies, VariableType } = require('../enum')
 
 function imports (archive, result) {
-  if (archive.entries) {
+  if (archive.log.entries) {
     result.imports.http = true
-    if (archive.entries.find(entry => entry.pageref)) {
+    const entries = archive.log.entries
+    if (entries.find(entry => entry.pageref)) {
       result.imports.group = true
     }
-    if (archive.entries.find(entry => entry.checks && entry.checks.length)) {
+    if (entries.find(entry => entry.checks && entry.checks.length)) {
       result.imports.check = true
     }
-    if (archive.entries.find(jsonPathEntry)) {
+    if (entries.find(jsonPathEntry)) {
       result.imports.jsonpath = true
     }
     if (result.flow.find(formUrlEncodeGroup)) {
