@@ -23,6 +23,17 @@ function checkState () {
   }
 }
 
+function imports () {
+  return {
+    group: false,
+    check: false,
+    http: false,
+    jsonpath: false,
+    formUrlEncode: false,
+    MimeBuilder: false
+  }
+}
+
 function paramsState () {
   return {
     plural: null,
@@ -80,7 +91,8 @@ function result () {
     comment: [],
     pages: new Map(),
     scopes: new Map(),
-    flow: []
+    flow: [],
+    imports: imports()
   }
 }
 
@@ -88,6 +100,7 @@ Object.assign(exports, {
   addressState,
   assay,
   checkState,
+  imports,
   paramsState,
   postState,
   queryState,
