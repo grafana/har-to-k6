@@ -7,16 +7,14 @@ function group (pages, scope) {
   if (pages.has(scope.id)) {
     const page = pages.get(scope.id)
     const name = page.name || scope.id
-    const content = entries(scope.entries)
+    const content = [ entries(scope.entries) ]
     return [
       header(page),
       `group(${string(name)}, function() ${block(content)});`
     ].filter(item => item).join(`\n`)
   } else {
     const name = scope.id
-    const content = [
-      entries(scope.entries)
-    ].filter(item => item)
+    const content = [ entries(scope.entries) ]
     return `group(${string(name)}, function() ${block(content)});`
   }
 }
