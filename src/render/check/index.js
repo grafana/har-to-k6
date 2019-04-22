@@ -1,6 +1,6 @@
 const variant = require('./variant')
 const { CheckType } = require('../../enum')
-const { UnrecognizedError } = require('../error')
+const { UnrecognizedError } = require('../../error')
 
 function check (name, spec) {
   switch (spec.type) {
