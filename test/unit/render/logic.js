@@ -1,16 +1,20 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [ logic, { block, external, groups } ] =
+const [ logic, { block, declares, external, groups, variableSpace } ] =
   isolate(test, 'render/logic', {
     block: 'render/block',
+    declares: 'render/declares',
     external: 'render/external',
-    groups: 'render/groups'
+    groups: 'render/groups',
+    variableSpace: 'render/variableSpace'
   })
 
 test.serial('empty', t => {
   block.returns('{}')
   const result = logic({})
   t.is(result, 'export default function() {}')
+  t.true(declares.calledOnce)
+  t.true(variableSpace.calledOnce)
   t.true(external.calledOnce)
   t.true(groups.calledOnce)
   t.true(block.calledOnce)
@@ -26,6 +30,8 @@ test.serial('external', t => {
   t.is(result, `export default function() {
   // External entries
 }`)
+  t.true(declares.calledOnce)
+  t.true(variableSpace.calledOnce)
   t.true(external.calledOnce)
   t.true(groups.calledOnce)
   t.true(block.calledOnce)
@@ -41,6 +47,8 @@ test.serial('groups', t => {
   t.is(result, `export default function() {
   // Groups
 }`)
+  t.true(declares.calledOnce)
+  t.true(variableSpace.calledOnce)
   t.true(external.calledOnce)
   t.true(groups.calledOnce)
   t.true(block.calledOnce)
