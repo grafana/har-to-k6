@@ -4,7 +4,7 @@ const object = require('./object')
 function checks (spec) {
   if (spec.size) {
     const entries = [ ...spec ].map(([ name, item ]) => check(name, item))
-    return object(entries)
+    return `check(response, ${object(entries)});`
   } else {
     return null
   }
