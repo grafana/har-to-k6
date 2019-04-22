@@ -92,7 +92,8 @@ function result () {
     pages: new Map(),
     scopes: new Map(),
     flow: [],
-    imports: imports()
+    imports: imports(),
+    declares: new Set()
   }
 }
 

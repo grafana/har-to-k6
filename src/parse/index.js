@@ -1,3 +1,4 @@
+const declares = require('./declares')
 const flow = require('./flow')
 const imports = require('./imports')
 const root = require('./root')
@@ -13,6 +14,7 @@ function parse (archive) {
   root(archive, result)
   flow(result)
   imports(archive, result)
+  declares(archive, result)
   return result
 }
 
