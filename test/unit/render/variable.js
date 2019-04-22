@@ -33,7 +33,7 @@ test.serial('JSONPath', t => {
   t.is(text.firstCall.args[0], 'token')
   t.is(
     result,
-    `vars["token"] = jsonpath.query(response.json(), "$.token");`
+    `vars["token"] = jsonpath.query(response.json(), "$.token")[0];`
   )
 })
 

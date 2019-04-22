@@ -34,7 +34,7 @@ function logic (name, { type, expression }) {
 }
 
 function JSONPath (name, expression) {
-  const extract = `jsonpath.query(response.json(), ${string(expression)})`
+  const extract = `jsonpath.query(response.json(), ${string(expression)})[0]`
   return `vars[${text(name)}] = ${extract};`
 }
 
