@@ -8,7 +8,7 @@ async function liHARToK6Script (archive) {
   const result = parse(archive)
   return {
     main: render(result),
-    compat: await compat(result.imports)
+    compat: await compat(result)
   }
 }
 

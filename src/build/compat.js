@@ -4,7 +4,7 @@ const indent = require('../render/indent')
 const string = require('../render/string')
 const tmp = require('tmp')
 
-async function compat (imports) {
+async function compat ({ imports }) {
   if (any(imports)) {
     const addend = analyze(imports)
     const entry = index(addend)
