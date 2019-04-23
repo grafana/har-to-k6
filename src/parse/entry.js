@@ -1,16 +1,13 @@
 const checks = require('./checks')
 const request = require('./request')
+const state = require('./state/entry')
 const variables = require('./variables')
-const { requestSpec: makeRequestSpec } = require('../make')
+const { entrySpec: makeEntrySpec } = require('../make')
 const { ExternalScope } = require('../sym')
 
 function entry (node, result) {
-  const spec = {
-    index: node.index,
-    request: makeRequestSpec(),
-    checks: new Map(),
-    variables: new Map()
-  }
+  const spec = makeEntrySpec()
+  spec.index = node.index
   if (node.comment) {
     spec.comment = node.comment
   }
@@ -21,6 +18,7 @@ function entry (node, result) {
   if (node.variables) {
     variables(node.variables, spec.variables)
   }
+  state(spec)
   scope(node.pageref, spec, result)
 }
 

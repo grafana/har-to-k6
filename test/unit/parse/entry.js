@@ -18,7 +18,8 @@ test.serial('basic', t => {
     index: 0,
     request: makeRequestSpec(),
     checks: new Map(),
-    variables: new Map()
+    variables: new Map(),
+    state: { expanded: true }
   } ]) ] ]))
   t.true(request.calledOnce)
   t.true(checks.notCalled)

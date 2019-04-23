@@ -23,6 +23,22 @@ function checkState () {
   }
 }
 
+function entrySpec () {
+  return {
+    index: null,
+    request: requestSpec(),
+    checks: new Map(),
+    variables: new Map(),
+    state: entryState()
+  }
+}
+
+function entryState () {
+  return {
+    expanded: null
+  }
+}
+
 function imports () {
   return {
     group: false,
@@ -101,6 +117,8 @@ Object.assign(exports, {
   addressState,
   assay,
   checkState,
+  entrySpec,
+  entryState,
   imports,
   paramsState,
   postState,
