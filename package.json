@@ -17,8 +17,11 @@
         "lib": "src"
     },
     "main": "src/index",
+    "bin": "bin/har-to-k6.js",
     "dependencies": {
         "browserify": "^16.2.3",
+        "caporal": "^1.1.0",
+        "chalk": "^2.4.2",
         "emailjs-mime-builder": "^2.0.5",
         "form-urlencoded": "^3.0.0",
         "is-natural-number": "^4.0.1",
@@ -26,6 +29,7 @@
         "iso8601-validator": "^1.0.1",
         "jsonpath": "^1.0.1",
         "moment": "^2.24.0",
+        "pkginfo": "^0.4.1",
         "prettier": "^1.17.0",
         "tinyify": "^2.5.0",
         "tmp": "^0.1.0",
