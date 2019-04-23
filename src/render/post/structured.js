@@ -5,11 +5,9 @@ const { UnrecognizedError } = require('../../error')
 function structured (spec) {
   switch (spec.post.type) {
     case 'application/x-www-form-urlencoded':
-      url(spec)
-      break
+      return url(spec)
     case 'multipart/form-data':
-      multipart(spec)
-      break
+      return multipart(spec)
     default:
       throw new UnrecognizedError(
         { name: 'UnrecognizedStructuredPostType' },
