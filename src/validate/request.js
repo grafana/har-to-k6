@@ -3,7 +3,7 @@ const headers = require('./headers')
 const isPlainObject = require('is-plain-object')
 const postData = require('./postData')
 const queryString = require('./queryString')
-const { empty } = require('../aid')
+const { empty, emptyObject } = require('../aid')
 const { absoluteUrl, variableStart } = require('../expression')
 const { InvalidArchiveError } = require('../error')
 
@@ -16,6 +16,7 @@ const { InvalidArchiveError } = require('../error')
  * postData: optional object
  * comment: optional string
  *
+ * no postData with method GET
  * header Content-Type congruent with postData.mimeType
  */
 function request (node, i, assay) {
@@ -99,6 +100,16 @@ function validate (node, i) {
 }
 
 function relation (node, i) {
+  if (
+    node.method.toUpperCase() === 'GET' &&
+    node.postData &&
+    !emptyObject(node.postData)
+  ) {
+    throw new InvalidArchiveError(
+      { name: 'InvalidRequestData' },
+      `Invalid request postData (${i}): prohibited for GET request`
+    )
+  }
   if (
     node.headers &&
     node.postData &&
