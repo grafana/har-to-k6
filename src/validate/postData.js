@@ -1,5 +1,5 @@
 const params = require('./params')
-const { empty } = require('../aid')
+const { empty, emptyObject } = require('../aid')
 const { InvalidArchiveError } = require('../error')
 
 /*
@@ -12,9 +12,11 @@ const { InvalidArchiveError } = require('../error')
  * structured data type application/x-www-form-urlencoded|multipart/form-data
  */
 function postData (node, i, assay) {
-  validate(node, i)
-  if (node.params) {
-    params(node.params, i, assay)
+  if (!emptyObject(node)) {
+    validate(node, i)
+    if (node.params) {
+      params(node.params, i, assay)
+    }
   }
 }
 

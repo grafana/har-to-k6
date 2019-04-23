@@ -3,6 +3,7 @@ const headers = require('./headers')
 const postData = require('./postData')
 const queryString = require('./queryString')
 const state = require('./state/request')
+const { emptyObject } = require('../aid')
 
 function request (node, spec) {
   spec.method = node.method.toUpperCase()
@@ -19,7 +20,7 @@ function request (node, spec) {
   if (node.cookies) {
     cookies(node.cookies, spec.cookies)
   }
-  if (node.postData) {
+  if (node.postData && !emptyObject(node.postData)) {
     postData(node.postData, spec.post)
     contentType(node.postData.mimeType, spec.headers)
   }

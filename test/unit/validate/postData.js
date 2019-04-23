@@ -4,9 +4,15 @@ import { assay as makeAssay } from 'make'
 const [ postData, { params } ] =
   isolate(test, 'validate/postData', { params: 'validate/params' })
 
+test.serial('empty', t => {
+  t.notThrows(() => {
+    postData({}, 0, makeAssay())
+  })
+})
+
 test.serial('missing type', t => {
   t.throws(() => {
-    postData({}, 0, makeAssay())
+    postData({ text: 'Message in text' }, 0, makeAssay())
   }, { name: 'MissingPostDataType' })
 })
 

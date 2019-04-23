@@ -67,7 +67,16 @@ test.serial('postData', t => {
   request({
     method: 'GET',
     url: 'http://example.com',
-    postData: {}
+    postData: { mimeType: 'text/plain' }
   }, makeRequestSpec())
   t.true(postData.calledOnce)
+})
+
+test.serial('postData empty', t => {
+  request({
+    method: 'GET',
+    url: 'http://example.com',
+    postData: {}
+  }, makeRequestSpec())
+  t.true(postData.notCalled)
 })

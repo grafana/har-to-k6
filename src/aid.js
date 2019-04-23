@@ -8,6 +8,10 @@ function empty (value) {
   )
 }
 
+function emptyObject (value) {
+  return !Object.keys(value).length
+}
+
 // Produce valid encoding not used by enumeration
 function extrinsic (enumeration) {
   return Math.max(...Object.values(enumeration)) + 1
@@ -22,6 +26,7 @@ function nought (value) {
 
 Object.assign(exports, {
   empty,
+  emptyObject,
   extrinsic,
   nought
 })
