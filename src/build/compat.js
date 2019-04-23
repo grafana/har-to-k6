@@ -2,6 +2,7 @@ const browserify = require('browserify')
 const fs = require('fs')
 const indent = require('../render/indent')
 const string = require('../render/string')
+const tinyify = require('tinyify')
 const tmp = require('tmp')
 
 async function compat ({ imports }) {
@@ -110,7 +111,7 @@ async function stageIndex (dir, index) {
 async function bundle (dir) {
   return new Promise((resolve, reject) => {
     const bundler = browserify(`${dir}/index.js`, { standalone: 'Compat' })
-    bundler.plugin('tinyify', { flat: false })
+    bundler.plugin(tinyify, { flat: false })
     bundler.bundle((error, buffer) => {
       if (error) {
         reject(error)
