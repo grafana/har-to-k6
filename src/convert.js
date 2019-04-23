@@ -1,11 +1,15 @@
+const compat = require('./build/compat')
 const parse = require('./parse')
 const render = require('./render')
 const validate = require('./validate')
 
-function liHARToK6Script (archive) {
+async function liHARToK6Script (archive) {
   validate(archive)
   const result = parse(archive)
-  return render(result)
+  return {
+    main: render(result),
+    compat: await compat(result.imports)
+  }
 }
 
 module.exports = liHARToK6Script

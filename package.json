@@ -18,6 +18,7 @@
     },
     "main": "src/index",
     "dependencies": {
+        "browserify": "^16.2.3",
         "emailjs-mime-builder": "^2.0.5",
         "form-urlencoded": "^3.0.0",
         "is-natural-number": "^4.0.1",
@@ -25,6 +26,8 @@
         "iso8601-validator": "^1.0.1",
         "jsonpath": "^1.0.1",
         "moment": "^2.24.0",
+        "tinyify": "^2.5.0",
+        "tmp": "^0.1.0",
         "urijs": "^1.19.1",
         "verror": "^1.10.0"
     },
