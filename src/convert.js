@@ -3,7 +3,7 @@ const parse = require('./parse')
 const render = require('./render')
 const validate = require('./validate')
 
-async function liHARToK6Script (archive) {
+async function convert (archive) {
   validate(archive)
   const result = parse(archive)
   return {
@@ -12,4 +12,4 @@ async function liHARToK6Script (archive) {
   }
 }
 
-module.exports = liHARToK6Script
+module.exports = convert
