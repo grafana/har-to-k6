@@ -2,9 +2,24 @@
 
 Convert LI-HAR to k6 script.
 
-## Usage
+## CLI Usage
 
-Install with npm:
+Install globally:
+
+```shell
+npm install --global har-to-k6
+```
+
+Use `har-to-k6` to convert. If a compatibility layer is generated it will be
+written to `compat.js` next to your k6 script.
+
+```shell
+har-to-k6 archive.har -o loadtest.js
+```
+
+## API Usage
+
+Install to your package:
 
 ```shell
 npm install --save har-to-k6
