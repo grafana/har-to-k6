@@ -19,7 +19,7 @@ function logic (spec) {
 function body (spec) {
   const expression = string(spec.expression)
   const subject = `jsonpath.query(response.json(), ${expression})`
-  const content = `!!${subject}.length;`
+  const content = `return !!${subject}.length;`
   return '' +
 `{
 ${indent(content)}

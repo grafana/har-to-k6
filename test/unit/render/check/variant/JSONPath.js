@@ -27,6 +27,6 @@ indented
   t.is(string.firstCall.args[0], '$.token')
   t.is(
     indent.firstCall.args[0],
-    `!!jsonpath.query(response.json(), expression).length;`
+    `return !!jsonpath.query(response.json(), expression).length;`
   )
 })
