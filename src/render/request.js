@@ -16,13 +16,24 @@ function request (spec) {
 
 function analyze (spec) {
   const factor = makeRequestFactor()
+  factor.call = call(spec)
   factor.method = method(spec)
   address(spec, factor)
   body(spec, factor)
   factor.headers = headers(spec.headers)
   factor.cookies = cookies(spec.cookies)
   factor.options = options(factor)
+  factor.args = args(factor)
+  factor.compact = compact(factor)
   return factor
+}
+
+function call (spec) {
+  if (shortcut.has(spec.method)) {
+    return shortcut.get(spec.method)
+  } else {
+    return 'request'
+  }
 }
 
 function method (spec) {
@@ -56,6 +67,31 @@ function options (factor) {
   }
 }
 
+function args (factor) {
+  const items = []
+  if (factor.call === 'request') {
+    items.push(factor.method)
+  }
+  items.push(factor.address)
+  if (factor.body) {
+    items.push(factor.body)
+  } else if (factor.options) {
+    // Body argument placeholder necessary
+    items.push(`null`)
+  }
+  if (factor.options) {
+    items.push(factor.options)
+  }
+  return items
+}
+
+function compact (factor) {
+  return (
+    factor.args.length === 1 ||
+    factor.args[1] === 'null'
+  )
+}
+
 function render (factor) {
   return [
     pre(factor),
@@ -72,43 +108,25 @@ function pre (factor) {
 }
 
 function main (factor) {
-  return execute(args(factor))
-}
-
-function args (factor) {
-  const items = []
-  items.push(factor.method)
-  items.push(factor.address)
-  if (factor.body) {
-    items.push(factor.body)
-  } else if (factor.options) {
-    // Body argument placeholder necessary
-    items.push(`null`)
-  }
-  if (factor.options) {
-    items.push(factor.options)
-  }
-  return items
-}
-
-function execute (args) {
-  if (compact(args)) {
-    const list = args.join(`, `)
-    return `response = http.request(${list});`
+  if (factor.compact) {
+    const list = factor.args.join(`, `)
+    return `response = http.${factor.call}(${list});`
   } else {
-    const list = args.join(`,\n`)
+    const list = factor.args.join(`,\n`)
     return '' +
-`response = http.request(
+`response = http.${factor.call}(
 ${indent(list)}
 );`
   }
 }
 
-function compact (args) {
-  return (
-    args.length === 2 ||
-    args[2] === 'null'
-  )
-}
+// HTTP method to k6 shortcut method
+const shortcut = new Map()
+  .set('DELETE', 'del')
+  .set('GET', 'get')
+  .set('OPTIONS', 'options')
+  .set('PATCH', 'patch')
+  .set('POST', 'post')
+  .set('PUT', 'put')
 
 module.exports = request

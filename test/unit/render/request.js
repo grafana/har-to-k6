@@ -36,7 +36,7 @@ test.serial('minimal', t => {
   spec.state.post.species = PostSpecies.Empty
   spec.state.params.variable = false
   const result = request(spec)
-  t.is(result, `response = http.request("GET", "http://example.com");`)
+  t.is(result, `response = http.get("http://example.com");`)
   t.true(address.calledOnce)
   t.true(post.calledOnce)
   t.true(postMultipartResolvedPre.notCalled)
@@ -61,13 +61,12 @@ test.serial('body', t => {
   spec.state.params.variable = false
   const result = request(spec)
   t.is(result, '' +
-`response = http.request(
+`response = http.post(
   args
 );`)
   t.deepEqual(post.firstCall.args[0], spec)
   t.is(indent.firstCall.args[0], '' +
-`"POST",
-"http://example.com",
+`"http://example.com",
 "search=kitten"`)
 })
 
@@ -91,7 +90,7 @@ test.serial('headers', t => {
   spec.state.params.variable = false
   const result = request(spec)
   t.is(result, '' +
-`response = http.request("GET", "http://example.com", null, options);`)
+`response = http.get("http://example.com", null, options);`)
   t.deepEqual(headers.firstCall.args[0], spec.headers)
   t.deepEqual(object.firstCall.args[0], [
     {
@@ -124,7 +123,7 @@ test.serial('cookies', t => {
   spec.state.params.variable = false
   const result = request(spec)
   t.is(result, '' +
-`response = http.request("GET", "http://example.com", null, options);`)
+`response = http.get("http://example.com", null, options);`)
   t.deepEqual(cookies.firstCall.args[0], spec.cookies)
   t.deepEqual(object.firstCall.args[0], [
     {
