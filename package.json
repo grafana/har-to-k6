@@ -26,6 +26,7 @@
         "iso8601-validator": "^1.0.1",
         "jsonpath": "^1.0.1",
         "moment": "^2.24.0",
+        "prettier": "^1.17.0",
         "tinyify": "^2.5.0",
         "tmp": "^0.1.0",
         "urijs": "^1.19.1",
