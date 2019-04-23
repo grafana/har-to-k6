@@ -18,10 +18,10 @@ const fs = require("fs");
 const { liHARToK6Script } = require("har-to-k6");
 
 async function run () {
-    const archive = readArchive();
-    const { main, compat } = await liHARToK6Script(archive);
-    fs.writeFileSync('./load-test.js', main)
-    fs.writeFileSync('./compat.js', compat)
+  const archive = readArchive();
+  const { main, compat } = await liHARToK6Script(archive);
+  fs.writeFileSync('./load-test.js', main)
+  fs.writeFileSync('./compat.js', compat)
 }
 ```
 
@@ -33,13 +33,13 @@ const { InvalidArchiveError, validate } = require("har-to-k6");
 
 const archive = readArchive();
 try {
-    validate(archive);
+  validate(archive);
 } catch (error) {
-    if (error instanceof InvalidArchiveError) {
-        // Handle invalid archive
-    } else {
-        throw error
-    }
+  if (error instanceof InvalidArchiveError) {
+    // Handle invalid archive
+  } else {
+    throw error
+  }
 }
 ```
 
