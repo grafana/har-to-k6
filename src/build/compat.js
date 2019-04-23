@@ -48,7 +48,7 @@ function direct (imports) {
 function indirect (imports) {
   const addend = new Map()
   if (imports.formUrlEncode) {
-    addend.set('formUrlEncode', 'form-urlencode')
+    addend.set('formUrlEncode', 'form-urlencoded')
   }
   if (imports.MimeBuilder) {
     addend.set('MimeBuilder', 'emailjs-mime-builder')
