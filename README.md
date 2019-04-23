@@ -20,9 +20,9 @@ const { liHARToK6Script } = require("har-to-k6");
 async function run () {
   const archive = readArchive();
   const { main, compat } = await liHARToK6Script(archive);
-  fs.writeFileSync('./load-test.js', main);
+  fs.writeFileSync("./load-test.js", main);
   if (compat) {
-    fs.writeFileSync('./compat.js', compat);
+    fs.writeFileSync("./compat.js", compat);
   }
 }
 ```
