@@ -99,7 +99,7 @@ function inform (error, log) {
   log.error(`${summarize(error)}:`)
   const source = cause(error)
   log.error(chalk.red(source.message))
-  log.debug(source)
+  log.debug(source.stack)
 }
 
 function summarize (error) {
