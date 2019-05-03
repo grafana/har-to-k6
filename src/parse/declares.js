@@ -1,13 +1,19 @@
-const { AddressSpecies, PostSpecies, VariableType } = require('../enum')
+const {
+  AddressSpecies,
+  FlowItemType,
+  PostSpecies,
+  VariableType
+} = require('../enum')
+const { UnrecognizedError } = require('../error')
 
 function declares (archive, result) {
   if (archive.log.entries) {
     result.declares.add('response')
     const entries = archive.log.entries
-    if (result.flow.find(addressGroup)) {
+    if (result.flow.find(addressFlowItem)) {
       result.declares.add('address')
     }
-    if (result.flow.find(bodyGroup)) {
+    if (result.flow.find(bodyFlowItem)) {
       result.declares.add('body')
     }
     if (entries.find(matchEntry)) {
@@ -16,16 +22,36 @@ function declares (archive, result) {
   }
 }
 
-function addressGroup (group) {
-  return group.entries.find(addressEntry)
+function addressFlowItem (item) {
+  switch (item.type) {
+    case FlowItemType.External:
+      return addressEntry(item.entry)
+    case FlowItemType.Group:
+      return item.entries.find(addressEntry)
+    default:
+      throw new UnrecognizedError(
+        { name: 'UnrecognizedFlowItemType' },
+        `Unrecognized flow item type: ${item.type}`
+      )
+  }
 }
 
 function addressEntry ({ request }) {
   return (request.state.address.species === AddressSpecies.Runtime)
 }
 
-function bodyGroup (group) {
-  return group.entries.find(bodyEntry)
+function bodyFlowItem (item) {
+  switch (item.type) {
+    case FlowItemType.External:
+      return bodyEntry(item.entry)
+    case FlowItemType.Group:
+      return item.entries.find(bodyEntry)
+    default:
+      throw new UnrecognizedError(
+        { name: 'UnrecognizedFlowItemType' },
+        `Unrecognized flow item type: ${item.type}`
+      )
+  }
 }
 
 function bodyEntry ({ request }) {

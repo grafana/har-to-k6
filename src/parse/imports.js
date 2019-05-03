@@ -1,4 +1,10 @@
-const { CheckType, PostSpecies, VariableType } = require('../enum')
+const {
+  CheckType,
+  FlowItemType,
+  PostSpecies,
+  VariableType
+} = require('../enum')
+const { UnrecognizedError } = require('../error')
 
 function imports (archive, result) {
   if (archive.log.entries) {
@@ -13,10 +19,10 @@ function imports (archive, result) {
     if (entries.find(jsonPathEntry)) {
       result.imports.jsonpath = true
     }
-    if (result.flow.find(formUrlEncodeGroup)) {
+    if (result.flow.find(formUrlEncodeFlowItem)) {
       result.imports.formUrlEncode = true
     }
-    if (result.flow.find(MimeBuilderGroup)) {
+    if (result.flow.find(MimeBuilderFlowItem)) {
       result.imports.MimeBuilder = true
     }
   }
@@ -40,8 +46,18 @@ function jsonPathCheck (check) {
   ].includes(check.type)
 }
 
-function formUrlEncodeGroup (group) {
-  return group.entries.find(formUrlEncodeEntry)
+function formUrlEncodeFlowItem (item) {
+  switch (item.type) {
+    case FlowItemType.External:
+      return formUrlEncodeEntry(item.entry)
+    case FlowItemType.Group:
+      return item.entries.find(formUrlEncodeEntry)
+    default:
+      throw new UnrecognizedError(
+        { name: 'UnrecognizedFlowItemType' },
+        `Unrecognized flow item type: ${item.type}`
+      )
+  }
 }
 
 function formUrlEncodeEntry ({ request }) {
@@ -53,8 +69,18 @@ function formUrlEncodeEntry ({ request }) {
   )
 }
 
-function MimeBuilderGroup (group) {
-  return group.entries.find(MimeBuilderEntry)
+function MimeBuilderFlowItem (item) {
+  switch (item.type) {
+    case FlowItemType.External:
+      return MimeBuilderEntry(item.entry)
+    case FlowItemType.Group:
+      return item.entries.find(MimeBuilderEntry)
+    default:
+      throw new UnrecognizedError(
+        { name: 'UnrecognizedFlowItemType' },
+        `Unrecognized flow item type: ${item.type}`
+      )
+  }
 }
 
 function MimeBuilderEntry ({ request }) {
