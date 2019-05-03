@@ -14,66 +14,38 @@ test.serial('invalid pageref', t => {
   }, { name: 'InvalidEntryPageref' })
 })
 
-test.serial('missing index', t => {
-  t.throws(() => {
-    entry({}, 0, makeAssay())
-  }, { name: 'MissingEntryIndex' })
-})
-
-test.serial('invalid index', t => {
-  t.throws(() => {
-    entry({ index: 'two' }, 0, makeAssay())
-  }, { name: 'InvalidEntryIndex' })
-})
-
-test.serial('duplicate index external', t => {
-  const assay = makeAssay()
-  entry({ index: 3, request: {} }, 0, assay)
-  t.throws(() => {
-    entry({ index: 3, request: {} }, 1, assay)
-  }, { name: 'DuplicateEntryIndex' })
-})
-
-test.serial('duplicate index page', t => {
-  const assay = makeAssay()
-  entry({ index: 3, request: {}, pageref: 'page1' }, 0, assay)
-  t.throws(() => {
-    entry({ index: 3, request: {}, pageref: 'page1' }, 1, assay)
-  }, { name: 'DuplicateEntryIndex' })
-})
-
 test.serial('missing request', t => {
   t.throws(() => {
-    entry({ index: 0 }, 0, makeAssay())
+    entry({}, 0, makeAssay())
   }, { name: 'MissingEntryRequest' })
 })
 
 test.serial('invalid request', t => {
   t.throws(() => {
-    entry({ index: 0, request: 5 }, 0, makeAssay())
+    entry({ request: 5 }, 0, makeAssay())
   }, { name: 'InvalidEntryRequest' })
 })
 
 test.serial('invalid checks', t => {
   t.throws(() => {
-    entry({ index: 0, request: {}, checks: 5 }, 0, makeAssay())
+    entry({ request: {}, checks: 5 }, 0, makeAssay())
   }, { name: 'InvalidEntryChecks' })
 })
 
 test.serial('invalid variables', t => {
   t.throws(() => {
-    entry({ index: 0, request: {}, variables: 5 }, 0, makeAssay())
+    entry({ request: {}, variables: 5 }, 0, makeAssay())
   }, { name: 'InvalidEntryVariables' })
 })
 
 test.serial('invalid comment', t => {
   t.throws(() => {
-    entry({ index: 0, request: {}, comment: 5 }, 0, makeAssay())
+    entry({ request: {}, comment: 5 }, 0, makeAssay())
   }, { name: 'InvalidComment' })
 })
 
 test.serial('valid minimal', t => {
-  entry({ index: 0, request: {} }, 0, makeAssay())
+  entry({ request: {} }, 0, makeAssay())
   t.true(request.calledOnce)
   t.true(checks.notCalled)
   t.true(variables.notCalled)
@@ -81,7 +53,6 @@ test.serial('valid minimal', t => {
 
 test.serial('valid maximal', t => {
   entry({
-    index: 0,
     request: {},
     pageref: 'page1',
     checks: [],

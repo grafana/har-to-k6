@@ -1,11 +1,10 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [ logic, { block, declares, external, groups, variableSpace } ] =
+const [ logic, { block, declares, flow, variableSpace } ] =
   isolate(test, 'render/logic', {
     block: 'render/block',
     declares: 'render/declares',
-    external: 'render/external',
-    groups: 'render/groups',
+    flow: 'render/flow',
     variableSpace: 'render/variableSpace'
   })
 
@@ -15,42 +14,25 @@ test.serial('empty', t => {
   t.is(result, 'export default function() {}')
   t.true(declares.calledOnce)
   t.true(variableSpace.calledOnce)
-  t.true(external.calledOnce)
-  t.true(groups.calledOnce)
+  t.true(flow.calledOnce)
   t.true(block.calledOnce)
   t.deepEqual(block.firstCall.args[0], [])
 })
 
-test.serial('external', t => {
-  external.returns(`// External entries`)
-  block.returns(`{
-  // External entries
+test.serial('nonempty', t => {
+  flow.returns(`// Flow`)
+  block.returns('' +
+`{
+  // Flow
 }`)
   const result = logic({})
-  t.is(result, `export default function() {
-  // External entries
+  t.is(result, '' +
+`export default function() {
+  // Flow
 }`)
   t.true(declares.calledOnce)
   t.true(variableSpace.calledOnce)
-  t.true(external.calledOnce)
-  t.true(groups.calledOnce)
+  t.true(flow.calledOnce)
   t.true(block.calledOnce)
-  t.deepEqual(block.firstCall.args[0], [ '// External entries' ])
-})
-
-test.serial('groups', t => {
-  groups.returns(`// Groups`)
-  block.returns(`{
-  // Groups
-}`)
-  const result = logic({})
-  t.is(result, `export default function() {
-  // Groups
-}`)
-  t.true(declares.calledOnce)
-  t.true(variableSpace.calledOnce)
-  t.true(external.calledOnce)
-  t.true(groups.calledOnce)
-  t.true(block.calledOnce)
-  t.deepEqual(block.firstCall.args[0], [ '// Groups' ])
+  t.deepEqual(block.firstCall.args[0], [ `// Flow` ])
 })

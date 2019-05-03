@@ -9,8 +9,6 @@ function addressState () {
 function assay () {
   return {
     pageIds: new Set(),
-    pageIndices: new Set(),
-    scopeIndices: new Map(),
     requestCheckNames: new Map(),
     requestCookieNames: new Map()
   }
@@ -25,7 +23,7 @@ function checkState () {
 
 function entrySpec () {
   return {
-    index: null,
+    page: null,
     request: requestSpec(),
     checks: new Map(),
     variables: new Map(),
@@ -106,7 +104,7 @@ function result () {
   return {
     comment: [],
     pages: new Map(),
-    scopes: new Map(),
+    entries: [],
     flow: [],
     imports: imports(),
     declares: new Set()

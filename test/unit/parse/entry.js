@@ -1,7 +1,6 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { result as makeResult, requestSpec as makeRequestSpec } from 'make'
-import { ExternalScope } from 'sym'
 const [ entry, { checks, request, variables } ] =
   isolate(test, 'parse/entry', {
     checks: 'parse/checks',
@@ -11,34 +10,37 @@ const [ entry, { checks, request, variables } ] =
 
 test.serial('basic', t => {
   const result = makeResult()
-  entry({ index: 0, request: {} }, result)
-  t.true(result.scopes.has(ExternalScope))
-  t.is(result.scopes.get(ExternalScope).size, 1)
-  t.deepEqual(result.scopes, new Map([ [ ExternalScope, new Set([ {
-    index: 0,
+  entry({}, result)
+  t.deepEqual(result.entries, [ {
+    page: null,
     request: makeRequestSpec(),
     checks: new Map(),
     variables: new Map(),
     state: { expanded: true }
-  } ]) ] ]))
+  } ])
   t.true(request.calledOnce)
   t.true(checks.notCalled)
   t.true(variables.notCalled)
 })
 
+test.serial('page', t => {
+  const result = makeResult()
+  entry({ pageref: 'page1' }, result)
+  t.is(result.entries[0].page, 'page1')
+})
+
 test.serial('comment', t => {
   const result = makeResult()
-  entry({ index: 0, request: {}, comment: 'Test home page' }, result)
-  const spec = [ ...result.scopes.get(ExternalScope) ][0]
-  t.is(spec.comment, 'Test home page')
+  entry({ comment: 'Test home page' }, result)
+  t.is(result.entries[0].comment, 'Test home page')
 })
 
 test.serial('checks', t => {
-  entry({ index: 0, request: {}, checks: [] }, makeResult())
+  entry({ checks: [] }, makeResult())
   t.true(checks.calledOnce)
 })
 
 test.serial('variables', t => {
-  entry({ index: 0, request: {}, variables: [] }, makeResult())
+  entry({ variables: [] }, makeResult())
   t.true(variables.calledOnce)
 })

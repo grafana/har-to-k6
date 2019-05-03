@@ -7,7 +7,7 @@ import { VariableType } from 'enum'
 test('undefined method', t => {
   t.throws(() => {
     const entries = [
-      { index: 0, request: { method: '${method}', url: 'http://example.com' } }
+      { request: { method: '${method}', url: 'http://example.com' } }
     ]
     variableDefined({ log: { entries } })
   }, {
@@ -19,7 +19,7 @@ test('undefined method', t => {
 test('undefined url', t => {
   t.throws(() => {
     const entries = [
-      { index: 0, request: { method: 'GET', url: 'example.com/${path}' } }
+      { request: { method: 'GET', url: 'example.com/${path}' } }
     ]
     variableDefined({ log: { entries } })
   }, {
@@ -32,7 +32,6 @@ test('undefined queryItem name', t => {
   t.throws(() => {
     const queryString = [ { name: '${key}' } ]
     const entries = [ {
-      index: 0,
       request: { method: 'GET', url: 'http://example.com', queryString }
     } ]
     variableDefined({ log: { entries } })
@@ -46,7 +45,6 @@ test('undefined queryItem value', t => {
   t.throws(() => {
     const queryString = [ { name: 'search', value: '${search}' } ]
     const entries = [ {
-      index: 0,
       request: { method: 'GET', url: 'http://example.com', queryString }
     } ]
     variableDefined({ log: { entries } })
@@ -60,7 +58,6 @@ test('undefined header name', t => {
   t.throws(() => {
     const headers = [ { name: '${header}', value: '*/*' } ]
     const entries = [ {
-      index: 0,
       request: { method: 'GET', url: 'http://example.com', headers }
     } ]
     variableDefined({ log: { entries } })
@@ -74,7 +71,6 @@ test('undefined header value', t => {
   t.throws(() => {
     const headers = [ { name: 'Allow', value: '${contentType}' } ]
     const entries = [ {
-      index: 0,
       request: { method: 'GET', url: 'http://example.com', headers }
     } ]
     variableDefined({ log: { entries } })
@@ -88,7 +84,6 @@ test('undefined cookie name', t => {
   t.throws(() => {
     const cookies = [ { name: '${cookie}' } ]
     const entries = [ {
-      index: 0,
       request: { method: 'GET', url: 'http://example.com', cookies }
     } ]
     variableDefined({ log: { entries } })
@@ -102,7 +97,6 @@ test('undefined cookie value', t => {
   t.throws(() => {
     const cookies = [ { name: 'session', value: '${session}' } ]
     const entries = [ {
-      index: 0,
       request: { method: 'GET', url: 'http://example.com', cookies }
     } ]
     variableDefined({ log: { entries } })
@@ -116,7 +110,6 @@ test('undefined cookie path', t => {
   t.throws(() => {
     const cookies = [ { name: 'theme', path: '${path}' } ]
     const entries = [ {
-      index: 0,
       request: { method: 'GET', url: 'http://example.com', cookies }
     } ]
     variableDefined({ log: { entries } })
@@ -130,7 +123,6 @@ test('undefined cookie domain', t => {
   t.throws(() => {
     const cookies = [ { name: 'theme', domain: '${host}' } ]
     const entries = [ {
-      index: 0,
       request: { method: 'GET', url: 'http://example.com', cookies }
     } ]
     variableDefined({ log: { entries } })
@@ -144,7 +136,6 @@ test('undefined post text', t => {
   t.throws(() => {
     const postData = { mimeType: 'text/plain', text: '${body}' }
     const entries = [ {
-      index: 0,
       request: { method: 'POST', url: 'http://example.com', postData }
     } ]
     variableDefined({ log: { entries } })
@@ -159,7 +150,6 @@ test('undefined param name', t => {
     const params = [ { name: '${param}' } ]
     const postData = { mimeType: 'text/plain', params }
     const entries = [ {
-      index: 0,
       request: { method: 'POST', url: 'http://example.com', postData }
     } ]
     variableDefined({ log: { entries } })
@@ -174,7 +164,6 @@ test('undefined param value', t => {
     const params = [ { name: 'search', value: '${search}' } ]
     const postData = { mimeType: 'text/plain', params }
     const entries = [ {
-      index: 0,
       request: { method: 'POST', url: 'http://example.com', postData }
     } ]
     variableDefined({ log: { entries } })
@@ -189,7 +178,6 @@ test('undefined param file name', t => {
     const params = [ { name: 'data', fileName: '${file}' } ]
     const postData = { mimeType: 'text/csv', params }
     const entries = [ {
-      index: 0,
       request: { method: 'POST', url: 'http://example.com', postData }
     } ]
     variableDefined({ log: { entries } })
@@ -204,7 +192,6 @@ test('undefined param type', t => {
     const params = [ { name: 'data', contentType: '${type}' } ]
     const postData = { mimeType: 'text/csv', params }
     const entries = [ {
-      index: 0,
       request: { method: 'POST', url: 'http://example.com', postData }
     } ]
     variableDefined({ log: { entries } })
@@ -223,13 +210,11 @@ test('undefined after defined', t => {
     const entries = [
       {
         comment: 'Get credentials',
-        index: 0,
         request: { method: 'POST', url: 'http://example.com/login' },
         variables
       },
       {
         comment: 'Authenticated request',
-        index: 1,
         request: {
           method: 'POST',
           url: 'http://example.com/member',
@@ -251,7 +236,7 @@ test('undefined after defined', t => {
 test('valid no references', t => {
   t.notThrows(() => {
     const entries = [
-      { index: 0, request: { method: 'GET', url: 'http://example.com' } }
+      { request: { method: 'GET', url: 'http://example.com' } }
     ]
     variableDefined({ log: { entries } })
   })
@@ -268,13 +253,11 @@ test('valid references', t => {
     const entries = [
       {
         comment: 'Get values',
-        index: 0,
         request: { method: 'GET', url: 'http://example.com/values' },
         variables
       },
       {
         comment: 'Use values',
-        index: 1,
         request: {
           method: '${one}',
           url: 'http://${one}${two}',

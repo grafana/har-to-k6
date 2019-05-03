@@ -1,14 +1,11 @@
 const checks = require('./checks')
-const isNaturalNumber = require('is-natural-number')
 const isPlainObject = require('is-plain-object')
 const request = require('./request')
 const variables = require('./variables')
 const { empty } = require('../aid')
-const { ExternalScope } = require('../sym')
 const { InvalidArchiveError } = require('../error')
 
 /*
- * index: required nonnegative integer, scopewide unique
  * request: required object
  * pageref: optional string
  * checks: optional array
@@ -16,8 +13,7 @@ const { InvalidArchiveError } = require('../error')
  * comment: optional string
  */
 function entry (node, i, assay) {
-  validate(node, i, assay)
-  index(node, assay)
+  validate(node, i)
   request(node.request, i, assay)
   if (node.checks) {
     checks(node.checks, i, assay)
@@ -27,30 +23,11 @@ function entry (node, i, assay) {
   }
 }
 
-function validate (node, i, assay) {
+function validate (node, i) {
   if (!empty(node.pageref) && typeof node.pageref !== 'string') {
     throw new InvalidArchiveError(
       { name: 'InvalidEntryPageref' },
       `Invalid entry pageref (${i})`
-    )
-  }
-  if (empty(node.index)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingEntryIndex' },
-      `Missing entry index (${i})`
-    )
-  }
-  if (!isNaturalNumber(node.index, { includeZero: true })) {
-    throw new InvalidArchiveError(
-      { name: 'InvalidEntryIndex' },
-      `Invalid entry index (${i}): must be nonnegative integer`
-    )
-  }
-  const scope = assay.scopeIndices.get(scopeKey(node))
-  if (scope && scope.has(node.index)) {
-    throw new InvalidArchiveError(
-      { name: 'DuplicateEntryIndex' },
-      `Duplicate entry index (${i}): ${node.index}`
     )
   }
   if (empty(node.request)) {
@@ -83,18 +60,6 @@ function validate (node, i, assay) {
       `Invalid entry comment (${i}): must be string`
     )
   }
-}
-
-function scopeKey (node) {
-  return (node.pageref || ExternalScope)
-}
-
-function index (node, assay) {
-  const key = scopeKey(node)
-  if (!assay.scopeIndices.has(key)) {
-    assay.scopeIndices.set(key, new Set())
-  }
-  assay.scopeIndices.get(key).add(node.index)
 }
 
 module.exports = entry

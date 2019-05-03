@@ -64,6 +64,11 @@ const CommentLocation = Object.freeze({
   Suffix: 1
 })
 
+const FlowItemType = Object.freeze({
+  External: 0,
+  Group: 1
+})
+
 const PostSpecies = Object.freeze({
   Empty: 1,
   Unstructured: 2,
@@ -103,6 +108,7 @@ Object.assign(exports, {
   CheckType,
   CheckTypeEncoding,
   CommentLocation,
+  FlowItemType,
   PostSpecies,
   StringSpecies,
   VariableType,

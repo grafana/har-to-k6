@@ -10,7 +10,6 @@ const [ entry, { checks, request, variables } ] =
 test.serial('minimal', t => {
   request.returns(`// Request`)
   const result = entry({
-    index: 0,
     request: {},
     checks: new Map(),
     variables: new Map()
@@ -22,7 +21,6 @@ test.serial('checks', t => {
   request.returns(`// Request`)
   checks.returns(`// Checks`)
   const result = entry({
-    index: 0,
     request: {},
     checks: new Map().set('token exists', {}),
     variables: new Map()
@@ -36,7 +34,6 @@ test.serial('variables', t => {
   request.returns(`// Request`)
   variables.returns(`// Variables`)
   const result = entry({
-    index: 0,
     request: {},
     checks: new Map(),
     variables: new Map().set('token', {})
@@ -51,7 +48,6 @@ test.serial('checks variables', t => {
   checks.returns(`// Checks`)
   variables.returns(`// Variables`)
   const result = entry({
-    index: 0,
     request: {},
     checks: new Map().set('token exists', {}),
     variables: new Map().set('token', {})

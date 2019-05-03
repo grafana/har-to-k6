@@ -3,7 +3,6 @@ import main from 'render/entry/header/main'
 
 test('empty', t => {
   const result = main({
-    index: 0,
     request: {},
     checks: new Map(),
     variables: new Map()
@@ -13,7 +12,6 @@ test('empty', t => {
 
 test('entry', t => {
   const result = main({
-    index: 0,
     request: {},
     checks: new Map(),
     variables: new Map(),
@@ -24,7 +22,6 @@ test('entry', t => {
 
 test('request', t => {
   const result = main({
-    index: 0,
     request: { comment: 'Perform log in' },
     checks: new Map(),
     variables: new Map()
@@ -34,7 +31,6 @@ test('request', t => {
 
 test('entry request', t => {
   const result = main({
-    index: 0,
     request: { comment: 'Authenticate with test credentials' },
     checks: new Map(),
     variables: new Map(),

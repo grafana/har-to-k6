@@ -1,67 +1,42 @@
-const sort = require('../sort')
-const { ExternalScope } = require('../sym')
+const { FlowItemType } = require('../enum')
 
 // Resolve control flow
 function flow (result) {
-  const classes = classifyScopes(result.pages, result.scopes)
-  orderScopes(result.pages, classes)
-  const scopeFlow = flattenScopes(classes)
-  const groups = groupEntries(result.scopes, scopeFlow)
-  orderEntries(groups)
-  result.flow.push(...groups)
+  const processed = new Set()
+  for (const entry of result.entries) {
+    item(entry, result, processed, result.flow)
+  }
 }
 
-function classifyScopes (pages, scopes) {
-  const classes = {
-    external: [],
-    explicit: [],
-    implicit: []
+function item (entry, result, processed, items) {
+  if (entry.page) {
+    grouped(entry.page, result, processed, items)
+  } else {
+    external(entry, items)
   }
-  for (const key of scopes.keys()) {
-    if (key === ExternalScope) {
-      classes.external.push(key)
-    } else if (pages.has(key)) {
-      classes.explicit.push(key)
-    } else {
-      classes.implicit.push(key)
+}
+
+function external (entry, items) {
+  const item = {
+    type: FlowItemType.External,
+    entry
+  }
+  items.push(item)
+}
+
+function grouped (page, result, processed, items) {
+  if (!processed.has(page)) {
+    processed.add(page)
+    const entries = result.entries.filter(entry => entry.page === page)
+    const item = {
+      type: FlowItemType.Group,
+      id: page,
+      entries
     }
-  }
-  return classes
-}
-
-function orderScopes (pages, classes) {
-  classes.explicit.sort((a, b) => {
-    a = pages.get(a).index
-    b = pages.get(b).index
-    return a > b ? 1 : a < b ? -1 : 0
-  })
-  classes.implicit.sort()
-}
-
-function flattenScopes (classes) {
-  return [
-    ...classes.external,
-    ...classes.explicit,
-    ...classes.implicit
-  ]
-}
-
-function groupEntries (scopes, scopeFlow) {
-  const groups = []
-  for (const id of scopeFlow) {
-    const scope = scopes.get(id)
-    const group = {
-      id,
-      entries: [ ...scope ]
+    if (result.pages.has(page)) {
+      item.page = result.pages.get(page)
     }
-    groups.push(group)
-  }
-  return groups
-}
-
-function orderEntries (groups) {
-  for (const group of groups) {
-    group.entries.sort(sort.index)
+    items.push(item)
   }
 }
 

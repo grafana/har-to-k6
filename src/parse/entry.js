@@ -3,11 +3,12 @@ const request = require('./request')
 const state = require('./state/entry')
 const variables = require('./variables')
 const { entrySpec: makeEntrySpec } = require('../make')
-const { ExternalScope } = require('../sym')
 
 function entry (node, result) {
   const spec = makeEntrySpec()
-  spec.index = node.index
+  if (node.pageref) {
+    spec.page = node.pageref
+  }
   if (node.comment) {
     spec.comment = node.comment
   }
@@ -19,15 +20,7 @@ function entry (node, result) {
     variables(node.variables, spec.variables)
   }
   state(spec)
-  scope(node.pageref, spec, result)
-}
-
-function scope (pageref, spec, result) {
-  const key = pageref || ExternalScope
-  if (!result.scopes.has(key)) {
-    result.scopes.set(key, new Set())
-  }
-  result.scopes.get(key).add(spec)
+  result.entries.push(spec)
 }
 
 module.exports = entry

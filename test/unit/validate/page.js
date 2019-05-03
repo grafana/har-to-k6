@@ -16,7 +16,7 @@ test('invalid id', t => {
 
 test('duplicate id', t => {
   const assay = makeAssay()
-  page({ id: 'page1', title: 'Page 1', index: 0 }, 0, assay)
+  page({ id: 'page1', title: 'Page 1' }, 0, assay)
   t.throws(() => {
     page({ id: 'page1' }, 1, assay)
   }, { name: 'DuplicatePageId' })
@@ -34,35 +34,15 @@ test('invalid title', t => {
   }, { name: 'InvalidPageTitle' })
 })
 
-test('missing index', t => {
-  t.throws(() => {
-    page({ id: 'page1', title: 'Page 1' }, 0, makeAssay())
-  }, { name: 'MissingPageIndex' })
-})
-
-test('invalid index', t => {
-  t.throws(() => {
-    page({ id: 'page1', title: 'Page 1', index: 'two' }, 0, makeAssay())
-  }, { name: 'InvalidPageIndex' })
-})
-
-test('duplicate index', t => {
-  const assay = makeAssay()
-  page({ id: 'page1', title: 'Page 1', index: 0 }, 0, assay)
-  t.throws(() => {
-    page({ id: 'page2', title: 'Page 2', index: 0 }, 1, assay)
-  }, { name: 'DuplicatePageIndex' })
-})
-
 test('invalid comment', t => {
   t.throws(() => {
     const assay = makeAssay()
-    page({ id: 'page1', title: 'Page 1', index: 0, comment: 5 }, 0, assay)
+    page({ id: 'page1', title: 'Page 1', comment: 5 }, 0, assay)
   }, { name: 'InvalidComment' })
 })
 
 test('valid', t => {
   t.notThrows(() => {
-    page({ id: 'page1', title: 'Page 1', index: 0 }, 0, makeAssay())
+    page({ id: 'page1', title: 'Page 1' }, 0, makeAssay())
   })
 })

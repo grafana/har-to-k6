@@ -1,79 +1,132 @@
 import test from 'ava'
 import flow from 'parse/flow'
+import { FlowItemType } from 'enum'
 import { result as makeResult } from 'make'
-import { ExternalScope } from 'sym'
 
-function makeEntry (index, method, url) {
-  return {
-    index,
-    request: {
-      method,
-      address: url,
-      query: new Map(),
-      headers: new Map(),
-      cookies: new Map(),
-      post: new Map()
+test('1 external', t => {
+  const result = makeResult()
+  result.entries.push({ page: null })
+  flow(result)
+  t.deepEqual(result.flow, [
+    { type: FlowItemType.External, entry: { page: null } }
+  ])
+})
+
+test('3 external', t => {
+  const result = makeResult()
+  result.entries.push({ page: null })
+  result.entries.push({ page: null })
+  result.entries.push({ page: null })
+  flow(result)
+  t.deepEqual(result.flow, [
+    { type: FlowItemType.External, entry: { page: null } },
+    { type: FlowItemType.External, entry: { page: null } },
+    { type: FlowItemType.External, entry: { page: null } }
+  ])
+})
+
+test('1 group', t => {
+  const result = makeResult()
+  result.entries.push({ page: 'page1' })
+  result.entries.push({ page: 'page1' })
+  result.entries.push({ page: 'page1' })
+  flow(result)
+  t.deepEqual(result.flow, [
+    {
+      type: FlowItemType.Group,
+      id: 'page1',
+      entries: [
+        { page: 'page1' },
+        { page: 'page1' },
+        { page: 'page1' }
+      ]
+    }
+  ])
+})
+
+test('3 groups', t => {
+  const result = makeResult()
+  result.entries.push({ page: 'page1' })
+  result.entries.push({ page: 'page1' })
+  result.entries.push({ page: 'page1' })
+  result.entries.push({ page: 'page2' })
+  result.entries.push({ page: 'page3' })
+  result.entries.push({ page: 'page3' })
+  flow(result)
+  t.deepEqual(result.flow, [
+    {
+      type: FlowItemType.Group,
+      id: 'page1',
+      entries: [
+        { page: 'page1' },
+        { page: 'page1' },
+        { page: 'page1' }
+      ]
     },
-    checks: new Map(),
-    variables: new Map()
-  }
-}
-
-function makeEntries (count) {
-  const entries = []
-  for (let i = 0; i < count; i++) {
-    const entry = makeEntry(i, 'GET', `http://${i}.example.com`)
-    entries.push(entry)
-  }
-  return entries
-}
-
-test('external', t => {
-  const entries = makeEntries(3)
-  const result = makeResult()
-  result.scopes.set(ExternalScope, new Set([
-    entries[0], entries[2], entries[1]
-  ]))
-  flow(result)
-  t.deepEqual(result.flow, [
-    { id: ExternalScope, entries: [ entries[0], entries[1], entries[2] ] }
-  ])
-})
-
-test('explicit', t => {
-  const entries = makeEntries(3)
-  const result = makeResult()
-  result.pages.set('page1', { name: 'Page 1', index: 0 })
-  result.scopes.set('page1', new Set([ entries[0], entries[2], entries[1] ]))
-  flow(result)
-  t.deepEqual(result.flow, [
-    { id: 'page1', entries: [ entries[0], entries[1], entries[2] ] }
-  ])
-})
-
-test('implicit', t => {
-  const entries = makeEntries(3)
-  const result = makeResult()
-  result.scopes.set('page1', new Set([ entries[0], entries[2], entries[1] ]))
-  flow(result)
-  t.deepEqual(result.flow, [
-    { id: 'page1', entries: [ entries[0], entries[1], entries[2] ] }
+    {
+      type: FlowItemType.Group,
+      id: 'page2',
+      entries: [
+        { page: 'page2' }
+      ]
+    },
+    {
+      type: FlowItemType.Group,
+      id: 'page3',
+      entries: [
+        { page: 'page3' },
+        { page: 'page3' }
+      ]
+    }
   ])
 })
 
 test('mixed', t => {
-  const entries = makeEntries(3 * 3)
   const result = makeResult()
-  result.pages.set('page1', { name: 'Page 1', index: 0 })
-  result.scopes.set('page2', new Set([ entries[3], entries[5], entries[4] ]))
-  result.scopes.set(ExternalScope, new Set([
-    entries[6], entries[8], entries[7]
-  ]))
-  result.scopes.set('page1', new Set([ entries[0], entries[2], entries[1] ]))
+  result.entries.push({ page: null })
+  result.entries.push({ page: 'page1' })
+  result.entries.push({ page: 'page1' })
+  result.entries.push({ page: null })
+  result.entries.push({ page: null })
+  result.entries.push({ page: 'page2' })
   flow(result)
   t.deepEqual(result.flow, [
-    { id: ExternalScope, entries: [ entries[6], entries[7], entries[8] ] },
-    { id: 'page1', entries: [ entries[0], entries[1], entries[2] ] },
-    { id: 'page2', entries: [ entries[3], entries[4], entries[5] ] }
+    { type: FlowItemType.External, entry: { page: null } },
+    {
+      type: FlowItemType.Group,
+      id: 'page1',
+      entries: [
+        { page: 'page1' },
+        { page: 'page1' }
+      ]
+    },
+    { type: FlowItemType.External, entry: { page: null } },
+    { type: FlowItemType.External, entry: { page: null } },
+    {
+      type: FlowItemType.Group,
+      id: 'page2',
+      entries: [ { page: 'page2' } ]
+    }
+  ])
+})
+
+test('split group', t => {
+  const result = makeResult()
+  result.entries.push({ page: 'page1' })
+  result.entries.push({ page: null })
+  result.entries.push({ page: 'page1' })
+  result.entries.push({ page: 'page1' })
+  flow(result)
+  t.deepEqual(result.flow, [
+    {
+      type: FlowItemType.Group,
+      id: 'page1',
+      entries: [
+        { page: 'page1' },
+        { page: 'page1' },
+        { page: 'page1' }
+      ]
+    },
+    { type: FlowItemType.External, entry: { page: null } }
   ])
 })
