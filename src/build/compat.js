@@ -1,3 +1,4 @@
+const any = require('./any')
 const bundle = require('./bundle')
 const index = require('./index')
 
@@ -9,14 +10,6 @@ async function compat ({ imports }) {
   } else {
     return null
   }
-}
-
-function any (imports) {
-  return (
-    imports.jsonpath ||
-    imports.formUrlEncode ||
-    imports.MimeBuilder
-  )
 }
 
 function analyze (imports) {
