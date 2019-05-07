@@ -1,22 +1,12 @@
-const browserify = require('browserify')
-const fs = require('fs')
+const bundle = require('./bundle')
 const indent = require('../render/indent')
 const string = require('../render/string')
-const tinyify = require('tinyify')
-const tmp = require('tmp')
 
 async function compat ({ imports }) {
   if (any(imports)) {
     const addend = analyze(imports)
     const entry = index(addend)
-    const [ dir, cleanup ] = await directory()
-    try {
-      await stageModules(dir)
-      await stageIndex(dir, entry)
-      return bundle(dir)
-    } finally {
-      cleanup()
-    }
+    return bundle(entry)
   } else {
     return null
   }
@@ -69,58 +59,6 @@ function index (addend) {
 `Object.assign(exports, {
 ${indent(content)}
 })`
-}
-
-async function directory () {
-  return new Promise((resolve, reject) => {
-    tmp.dir((error, path, cleanup) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve([ path, cleanup ])
-      }
-    })
-  })
-}
-
-async function stageModules (dir) {
-  return new Promise((resolve, reject) => {
-    const target = `${__dirname}/../../node_modules`
-    fs.symlink(target, `${dir}/node_modules`, error => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve()
-      }
-    })
-  })
-}
-
-async function stageIndex (dir, index) {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(`${dir}/index.js`, index, error => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve()
-      }
-    })
-  })
-}
-
-async function bundle (dir) {
-  return new Promise((resolve, reject) => {
-    const bundler = browserify(`${dir}/index.js`, { standalone: 'Compat' })
-    bundler.plugin(tinyify, { flat: false })
-    bundler.bundle((error, buffer) => {
-      if (error) {
-        reject(error)
-      } else {
-        const string = buffer.toString('utf8')
-        resolve(string)
-      }
-    })
-  })
 }
 
 module.exports = compat
