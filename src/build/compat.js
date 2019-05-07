@@ -1,12 +1,18 @@
 const any = require('./any')
 const bundle = require('./bundle')
 const entry = require('./entry')
+const stage = require('./stage')
 
 async function compat ({ imports }) {
   if (any(imports)) {
     const addend = analyze(imports)
     const index = entry(addend)
-    return bundle(index)
+    const [ path, cleanup ] = await stage(index)
+    try {
+      return bundle(path, 'Compat')
+    } finally {
+      cleanup()
+    }
   } else {
     return null
   }
