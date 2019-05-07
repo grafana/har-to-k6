@@ -1,12 +1,12 @@
 const indent = require('../render/indent')
 const string = require('../render/string')
 
-function index (addend) {
+function index ({ direct = new Map(), indirect = new Map() }) {
   const entries = []
-  for (const [ expose, name ] of addend.direct) {
+  for (const [ expose, name ] of direct) {
     entries.push(`${expose}: require(${string(name)})`)
   }
-  for (const [ expose, name ] of addend.indirect) {
+  for (const [ expose, name ] of indirect) {
     entries.push(`${expose}: require(${string(name)}).default`)
   }
   const content = entries.join(`,\n`)
