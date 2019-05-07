@@ -1,12 +1,12 @@
 const any = require('./any')
 const bundle = require('./bundle')
-const index = require('./index')
+const entry = require('./entry')
 
 async function compat ({ imports }) {
   if (any(imports)) {
     const addend = analyze(imports)
-    const entry = index(addend)
-    return bundle(entry)
+    const index = entry(addend)
+    return bundle(index)
   } else {
     return null
   }

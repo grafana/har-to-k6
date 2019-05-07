@@ -1,7 +1,7 @@
 const indent = require('../render/indent')
 const string = require('../render/string')
 
-function index ({ direct = new Map(), indirect = new Map() }) {
+function entry ({ direct = new Map(), indirect = new Map() }) {
   const entries = []
   for (const [ expose, name ] of direct) {
     entries.push(`${expose}: require(${string(name)})`)
@@ -16,4 +16,4 @@ ${indent(content)}
 })`
 }
 
-module.exports = index
+module.exports = entry
