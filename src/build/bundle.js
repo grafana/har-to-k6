@@ -1,18 +1,26 @@
 const browserify = require('browserify')
-const tinyify = require('tinyify')
+const bundleCollapser = require('bundle-collapser/plugin')
+const concatStream = require('concat-stream')
+const envify = require('envify')
+const minifyStream = require('minify-stream')
+const shakeify = require('common-shakeify')
+const uglifyify = require('uglifyify')
 
 async function bundle (id, expose) {
   return new Promise((resolve, reject) => {
     const bundler = browserify(id, { standalone: expose })
-    bundler.plugin(tinyify, { flat: false })
-    bundler.bundle((error, buffer) => {
-      if (error) {
-        reject(error)
-      } else {
-        const string = buffer.toString('utf8')
-        resolve(string)
-      }
+    bundler.transform(envify, { global: true })
+    bundler.transform(uglifyify, { global: true })
+    bundler.plugin(shakeify)
+    bundler.plugin(bundleCollapser)
+    const gather = concatStream(buffer => {
+      const string = buffer.toString('utf8')
+      resolve(string)
     })
+    gather.on('error', reject)
+    bundler.bundle()
+      .pipe(minifyStream({ sourceMap: false }))
+      .pipe(gather)
   })
 }
 
