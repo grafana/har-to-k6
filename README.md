@@ -60,6 +60,47 @@ try {
 }
 ```
 
+## Browser Usage
+
+`har-to-k6` can be bundled for use in the browser. This exposes the standard
+API under `harToK6`.
+
+Clone the repository:
+
+```shell
+git clone https://github.com/loadimpact/har-to-k6
+cd har-to-k6
+```
+
+Run the script to produce a bundle. It takes a minute to build and optimize:
+
+```shell
+npm run bundle
+```
+
+Load `build/harToK6.js` into your HTML page:
+
+```html
+<html>
+  <head>
+    <title>HAR Converter</title>
+    <script src="harToK6.js"></script>
+    <script src="index.js"></script>
+  </head>
+</html>
+```
+
+The API is available:
+
+```js
+async function run () {
+    const archive = readArchive();
+    harToK6.validate(archive);
+    const { main, compat } = await harToK6.liHARToK6Script(archive);
+    displayResult(main, compat);
+}
+```
+
 ## Specification
 
 This is a specification describing the following:
