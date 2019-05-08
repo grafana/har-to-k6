@@ -18,6 +18,10 @@
     },
     "main": "src/index",
     "bin": "bin/har-to-k6.js",
+    "browser": {
+        "./src/build/compat": "./browser/build/compat",
+        "./src/render/prettify": "./browser/render/prettify"
+    },
     "dependencies": {
         "browserify": "^16.2.3",
         "bundle-collapser": "^1.3.0",
@@ -52,6 +56,8 @@
         "standard": "^12.0.1"
     },
     "scripts": {
+        "bundle": "node script/bundle.js",
+        "lint": "npm-run-all lint-js",
         "lint-js": "standard --verbose | snazzy",
         "test": "npm-run-all test-unit test-int",
         "test-int": "cross-env NODE_PATH=src:test ava test/int",
