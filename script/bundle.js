@@ -71,5 +71,5 @@ function renderCompats (compats) {
 }
 
 function outputResult (result) {
-  fs.writeFileSync('build/harToK6.js', result)
+  fs.writeFileSync('build/har-to-k6.js', result)
 }

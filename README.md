@@ -78,13 +78,13 @@ Run the script to produce a bundle. It takes a minute to build and optimize:
 npm run bundle
 ```
 
-Load `build/harToK6.js` into your HTML page:
+Load `build/har-to-k6.js` into your HTML page:
 
 ```html
 <html>
   <head>
     <title>HAR Converter</title>
-    <script src="harToK6.js"></script>
+    <script src="har-to-k6.js"></script>
     <script src="index.js"></script>
   </head>
 </html>
