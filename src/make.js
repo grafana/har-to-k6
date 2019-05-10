@@ -70,6 +70,7 @@ function queryState () {
 function requestFactor () {
   return {
     method: null,
+    capacity: null,
     address: null,
     body: null,
     headers: null,

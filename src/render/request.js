@@ -18,6 +18,7 @@ function analyze (spec) {
   const factor = makeRequestFactor()
   factor.call = call(spec)
   factor.method = method(spec)
+  factor.capacity = capacity(spec)
   address(spec, factor)
   body(spec, factor)
   factor.headers = headers(spec.headers)
@@ -38,6 +39,10 @@ function call (spec) {
 
 function method (spec) {
   return text(spec.method)
+}
+
+function capacity (spec) {
+  return spec.method !== 'GET'
 }
 
 function body (spec, factor) {
@@ -75,7 +80,7 @@ function args (factor) {
   items.push(factor.address)
   if (factor.body) {
     items.push(factor.body)
-  } else if (factor.options) {
+  } else if (factor.capacity && factor.options) {
     // Body argument placeholder necessary
     items.push(`null`)
   }
@@ -87,6 +92,7 @@ function args (factor) {
 
 function compact (factor) {
   return (
+    !factor.capacity ||
     factor.args.length === 1 ||
     factor.args[1] === 'null'
   )
