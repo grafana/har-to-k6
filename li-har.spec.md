@@ -1,10 +1,9 @@
 # LI-HAR config format
 The specification describes a JSON config format to act as a static representation of a K6 script.  
 The proposed format is an extension of [HAR 1.2](http://www.softwareishard.com/blog/har-12-spec/)  
-fields deviating from the HAR spec are:
+Items deviating from the HAR spec are:
 
-- [page.index](#pages)
-- [entry.index](#Entries)
+- `entries` list order is significant.
 - [checks](#checks)
 - [variables](#variables)
 
@@ -26,12 +25,10 @@ fields deviating from the HAR spec are:
 ## Pages
 This object represents list of pages/groups.  
 Pages are a way to couple entries together. Pages can be referenced from an entry via the _pageref_ property and need to match the page objects _id_.  
-The index property specifies the order in which the pages/groups should be executed.
 ```javascript
 {
   pages: [
     {
-      index: 0,
       id: "group_0",
       title: "Group 0"
     }
@@ -41,7 +38,6 @@ The index property specifies the order in which the pages/groups should be execu
 
 ```javascript
 type Page = {
-  index: Integer, // Used to determine the execution order of pages/groups
   id: String, // Unique identifier referenceable from entry.pageref
   title: String // Name or description of the page/group
 }
@@ -49,13 +45,18 @@ type Page = {
 
 
 ## Entries
-This object represents an array with all HTTP requests that should be executed sorted by `index`. However the reader application should always make sure the array is sorted.  
+This object represents an array with all HTTP requests that should be executed,
+presented in execution order.
+
+Entries and groups are executed in the order presented in the `entries` list.
+An entry without a `pageref` is executed outside any group in list order.
+Groups are ordered to the location of their first entry. If the entries of a
+group are split they're moved to the location of the first entry in list order.
 
 ```javascript
 {
   entries: [
     {
-      index: 0,
       request: {},
       comment: "",
       pageref: "page_0",
@@ -69,7 +70,6 @@ This object represents an array with all HTTP requests that should be executed s
 Optional properties are denoted with "?"
 ```javascript
 type Entry = {
-  index: Integer, // Used to determine the execution order of requests
   request: Array, // Detailed info about the request
   comment?: String, // Used as a name or description of the request
   pageref?: String, // Reference to a page/group
@@ -82,13 +82,8 @@ type Entry = {
 
 ### Pageref
 `pageref` is a property that specified which _[page](#pages)_ a given entry belongs to. Two entries specifying the same pageref should always end up in the same _[K6 group](https://docs.k6.io/docs/tags-and-groups)_.  
-If only some entries specify _pageref_ the following order criterion should be implemented:  
-1. group.index
-2. entry.index
 
 The same order criterion applies in the case of not specifying a _pageref_ or specifying a _pageref_ that does not match any of the _[page](#pages)_ objects ids will
-
-The index property specified on the entry applies within the group (only if a pageref is specified).
 
 
 #### Example
@@ -99,19 +94,16 @@ The index property specified on the entry applies within the group (only if a pa
 {
   pages: [
     {
-      index: 0,
       id: "group_0",
       title: "Group 0",
     },
     {
-      index: 1,
       id: "group_1",
       title: "Group 1",
     } 
   ],
   entries: [
     {
-      index: 0,
       pageref: "group_0",
       request: {
         method: "POST",
@@ -119,7 +111,6 @@ The index property specified on the entry applies within the group (only if a pa
       }
     },
     {
-      index: 1,
       pageref: "group_0",
       request: {
         method: "GET",
@@ -128,7 +119,6 @@ The index property specified on the entry applies within the group (only if a pa
     }
     },
     {
-      index: 0,
       pageref: "group_1",
       request: {
         method: "GET",
@@ -137,7 +127,6 @@ The index property specified on the entry applies within the group (only if a pa
     }
     },
     {
-      index: 1,
       pageref: "group_1",
       request: {
         method: "POST",
@@ -467,7 +456,7 @@ check(res, {
 
 List of variables, if any (embedded in [_entry_](#entries) object).  
 The object defines instructions for data that should be extracted from the responseBody and be reusable in subsequent requests.  
-The variable should be referenceable in entries with a higher _index_ than the entry which the variable definition is embedded in.  
+The variable should be referenceable in subsequent entries.
 Properties that can reference variables are _[headers](#headers)_, _[postData](#postdata)_, _[url](#url)_ and _[queryString](#querystring)_.  
 A variable named `access_token` is referenced as `${access_token}`.
 
