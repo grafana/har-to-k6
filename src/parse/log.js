@@ -2,8 +2,12 @@ const browser = require('./browser')
 const creator = require('./creator')
 const entries = require('./entries')
 const pages = require('./pages')
+const options = require('./options')
 
 function log (node, result) {
+  if (node.options) {
+    options(node.options, result)
+  }
   if (node.creator) {
     creator(node.creator, result)
   }
