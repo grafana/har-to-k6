@@ -22,6 +22,38 @@ Items deviating from the HAR spec are:
 3. [Examples](#examples)
 
 
+## Options
+Options allow you to configure how K6 will behave during test execution, duration, execution mode etc.
+
+```javascript
+type Options = {
+  request: Array, // Detailed info about the request
+  comment?: String, // Used as a name or description of the request
+  pageref?: String, // Reference to a page/group
+  checks?: Check, // List of check objects
+  variables?: Variable // List of variable objects
+}
+
+type Options = {
+  duration?: String // Specifying the total duration a test run should be run for.
+
+  // OneOf [
+  //   (OneOf[vus, rps, iteration], duration),
+  //   stages
+  // ]
+  vus?: Integer // Specifying the number of VUs to run concurrently. If you'd like more control look at the stages option.
+  rps?: Integer
+  iterations?: Integer
+
+  stages?: Stage // A list of Stage objects that specify the target number of VUs to ramp up or down to for a specific period.
+}
+
+type Stage = {
+  duration: String // Specifying the total duration a test run should be run for.
+  target: Integet // Specify the target number of VUs to ramp up or down to for a specific period
+}
+```
+
 ## Pages
 This object represents list of pages/groups.  
 Pages are a way to couple entries together. Pages can be referenced from an entry via the _pageref_ property and need to match the page objects _id_.  
