@@ -3,7 +3,7 @@ function options (result) {
     ...result.options
   }
 
-  return `export const options = ${JSON.stringify(obj)}`
+  return `export const options = ${JSON.stringify(obj)};`
 }
 
 module.exports = options
