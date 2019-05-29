@@ -1,11 +1,12 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { assay as makeAssay } from 'make'
-const [ log, { browser, creator, entries, pages } ] =
+const [ log, { browser, creator, entries, pages, options } ] =
   isolate(test, 'validate/log', {
     browser: 'validate/browser',
     creator: 'validate/creator',
     entries: 'validate/entries',
+    options: 'validate/options',
     pages: 'validate/pages'
   })
 
@@ -19,6 +20,12 @@ test.serial('invalid creator', t => {
   t.throws(() => {
     log({ creator: 5 }, makeAssay())
   }, { name: 'InvalidCreator' })
+})
+
+test.serial('invalid options', t => {
+  t.throws(() => {
+    log({ options: 5 }, makeAssay())
+  }, { name: 'InvalidOptions' })
 })
 
 test.serial('invalid browser', t => {
@@ -51,6 +58,7 @@ test.serial('valid empty', t => {
   t.true(browser.notCalled)
   t.true(pages.notCalled)
   t.true(entries.notCalled)
+  t.true(options.notCalled)
 })
 
 test.serial('valid full', t => {
@@ -58,6 +66,7 @@ test.serial('valid full', t => {
     version: '1.2',
     creator: {},
     browser: {},
+    options: {},
     comment: 'High load',
     pages: [],
     entries: []
@@ -66,4 +75,5 @@ test.serial('valid full', t => {
   t.true(browser.calledOnce)
   t.true(pages.calledOnce)
   t.true(entries.calledOnce)
+  t.true(options.calledOnce)
 })

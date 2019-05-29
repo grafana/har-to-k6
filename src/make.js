@@ -31,13 +31,6 @@ function entrySpec () {
   }
 }
 
-function stageSpec () {
-  return {
-    duration: null,
-    target: null
-  }
-}
-
 function entryState () {
   return {
     expanded: null
@@ -111,7 +104,7 @@ function requestState () {
 function result () {
   return {
     comment: [],
-    options: new Map(),
+    options: {},
     pages: new Map(),
     entries: [],
     flow: [],
@@ -133,6 +126,5 @@ Object.assign(exports, {
   requestFactor,
   requestSpec,
   requestState,
-  result,
-  stageSpec
+  result
 })

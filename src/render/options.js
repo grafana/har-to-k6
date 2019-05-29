@@ -1,9 +1,7 @@
 function options (result) {
-  const obj = {};
-
-  for (const [key, value] of result.options) {
-    obj[key] = value
-  }
+  const obj = {
+    ...result.options
+  };
 
   return `export const options = ${JSON.stringify(obj)}`;
 }
