@@ -15,7 +15,7 @@ async function bundle (id, expose) {
       output: { 'ascii_only': true }
     })
     bundler.plugin(shakeify)
-    bundler.plugin(bundleCollapser)
+    // bundler.plugin(bundleCollapser)
     const gather = concatStream(buffer => {
       const string = buffer.toString('utf8')
       resolve(string)

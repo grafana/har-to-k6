@@ -104,6 +104,7 @@ function requestState () {
 function result () {
   return {
     comment: [],
+    options: {},
     pages: new Map(),
     entries: [],
     flow: [],

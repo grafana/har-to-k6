@@ -1,12 +1,13 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { result as makeResult } from 'make'
-const [ log, { browser, creator, entries, pages } ] =
+const [ log, { browser, creator, entries, pages, options } ] =
   isolate(test, 'parse/log', {
     browser: 'parse/browser',
     creator: 'parse/creator',
     entries: 'parse/entries',
-    pages: 'parse/pages'
+    pages: 'parse/pages',
+    options: 'parse/options'
   })
 
 test.serial('comment', t => {
@@ -18,6 +19,11 @@ test.serial('comment', t => {
 test.serial('creator', t => {
   log({ creator: {} }, makeResult())
   t.true(creator.calledOnce)
+})
+
+test.serial('options', t => {
+  log({ options: {} }, makeResult())
+  t.true(options.calledOnce)
 })
 
 test.serial('browser', t => {

@@ -1,6 +1,7 @@
 const browser = require('./browser')
 const creator = require('./creator')
 const entries = require('./entries')
+const options = require('./options')
 const isPlainObject = require('is-plain-object')
 const pages = require('./pages')
 const { InvalidArchiveError } = require('../error')
@@ -15,6 +16,9 @@ const { InvalidArchiveError } = require('../error')
  */
 function log (node, assay) {
   validate(node)
+  if (node.options) {
+    options(node.options, assay)
+  }
   if (node.creator) {
     creator(node.creator, assay)
   }
@@ -30,6 +34,12 @@ function log (node, assay) {
 }
 
 function validate (node) {
+  if (node.options && !isPlainObject(node.options)) {
+    throw new InvalidArchiveError(
+      { name: 'InvalidOptions' },
+      'Invalid options: must be object'
+    )
+  }
   if (node.version && typeof node.version !== 'string') {
     throw new InvalidArchiveError(
       { name: 'InvalidVersion' },

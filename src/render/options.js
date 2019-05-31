@@ -1,5 +1,9 @@
 function options (result) {
-  return null
+  const obj = {
+    ...result.options
+  }
+
+  return `export const options = ${JSON.stringify(obj)};`
 }
 
 module.exports = options
