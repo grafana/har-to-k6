@@ -3,56 +3,54 @@ The specification describes a JSON config format to act as a static representati
 The proposed format is an extension of [HAR 1.2](http://www.softwareishard.com/blog/har-12-spec/)  
 Items deviating from the HAR spec are:
 
+- [options](#options)
 - `entries` list order is significant.
 - [checks](#checks)
 - [variables](#variables)
 
 
 ## Table of Contents
-1. [Pages](#pages)
-2. [Entries](#entries)  
-2.1 [PageRef](#pageref)  
-2.2 [Request](#request)  
-&nbsp;&nbsp;&nbsp;&nbsp;2.2.1 [Url](#url)  
-&nbsp;&nbsp;&nbsp;&nbsp;2.2.2 [Headers](#headers)  
-&nbsp;&nbsp;&nbsp;&nbsp;2.2.3 [QueryString](#querystring)  
-&nbsp;&nbsp;&nbsp;&nbsp;2.2.4 [PostData](#postdata)  
-2.3 [Checks](#checks)  
-2.4 [Variables](#variables)
-3. [Examples](#examples)
+1. [Log](#log)
+2. [Options](#options)
+3. [Pages](#pages)
+4. [Entries](#entries)  
+4.1 [PageRef](#pageref)  
+4.2 [Request](#request)  
+&nbsp;&nbsp;&nbsp;&nbsp;4.2.1 [Url](#url)  
+&nbsp;&nbsp;&nbsp;&nbsp;4.2.2 [Headers](#headers)  
+&nbsp;&nbsp;&nbsp;&nbsp;4.2.3 [QueryString](#querystring)  
+&nbsp;&nbsp;&nbsp;&nbsp;4.2.4 [PostData](#postdata)  
+4.3 [Checks](#checks)  
+4.4 [Variables](#variables)
+5. [Examples](#examples)
+
+
+
+## Log
+This object represents the root of exported data.  
+
+```javascript
+type Log = {
+  version: String // Version number of the format
+  creator: String // Name and version info of the log creator application
+  options?: JSONObject // K6 configuration object
+  pages?: Array // List of exported pages
+  entries?: Array // List of exported requests
+  comment?: Check // A comment provided by the user or the application
+}
+```
 
 
 ## Options
-Options allow you to configure how K6 will behave during test execution, duration, execution mode etc.
-
+Options allow you to configure how K6 will behave during test execution, duration, execution mode etc.  
+If any (embedded in [_log_](#log) object).   
 ```javascript
 type Options = {
-  request: Array, // Detailed info about the request
-  comment?: String, // Used as a name or description of the request
-  pageref?: String, // Reference to a page/group
-  checks?: Check, // List of check objects
-  variables?: Variable // List of variable objects
-}
-
-type Options = {
-  duration?: String // Specifying the total duration a test run should be run for.
-
-  // OneOf [
-  //   (OneOf[vus, rps, iteration], duration),
-  //   stages
-  // ]
-  vus?: Integer // Specifying the number of VUs to run concurrently. If you'd like more control look at the stages option.
-  rps?: Integer
-  iterations?: Integer
-
-  stages?: Stage // A list of Stage objects that specify the target number of VUs to ramp up or down to for a specific period.
-}
-
-type Stage = {
-  duration: String // Specifying the total duration a test run should be run for.
-  target: Integet // Specify the target number of VUs to ramp up or down to for a specific period
+  // ... see K6 docs
 }
 ```
+[K6 options docs](https://docs.k6.io/docs/options)
+
 
 ## Pages
 This object represents list of pages/groups.  
