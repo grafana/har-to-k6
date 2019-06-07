@@ -34,20 +34,27 @@ function http (spec, lines) {
   }
 }
 
+// NOTE: Update mappings when remote lib is up.
+const K6_JS_LIBS = (() => {
+  const BASE_URL = 'lib.k6.io';
+  return {
+    jsonpath: `import jsonpath from "${BASE_URL}/jsonpath/2.0.1/index.js"`,
+    formUrlEncoded: `import formUrlEncoded from "${BASE_URL}/form-urlencoded/1.0.0/index.js"`,
+    mimeBuilder: `import MimeBuilder from "${BASE_URL}/mimebuilder/4.0.0/main.js"`,
+  }
+})();
+
 function compat (spec, lines) {
   if (spec.formUrlEncode || spec.jsonpath || spec.MimeBuilder) {
-    const items = []
     if (spec.formUrlEncode) {
-      items.push('formUrlEncode')
+      lines.push(K6_JS_LIBS.formUrlEncoded)
     }
     if (spec.jsonpath) {
-      items.push('jsonpath')
+      lines.push(K6_JS_LIBS.jsonpath)
     }
     if (spec.MimeBuilder) {
-      items.push('MimeBuilder')
+      lines.push(K6_JS_LIBS.mimeBuilder)
     }
-    const content = items.join(`, `)
-    lines.push(`import { ${content} } from "./compat.js";`)
   }
 }
 
