@@ -5,7 +5,7 @@ const { lineBreak } = require('../../expression')
 // Combined note for map of item set
 function note (map) {
   const comments = [ ...map ]
-    .map(([ name, items ]) => [ name, itemsNote(items) ])
+    .map(([ name, items ]) => [ name, itemsNote([...items]) ])
     .filter(([ , comment ]) => comment)
     .sort(sort.firstElement)
   if (comments.length) {
