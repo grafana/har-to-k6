@@ -18,10 +18,6 @@
     },
     "main": "src/index",
     "bin": "bin/har-to-k6.js",
-    "browser": {
-        "./src/build/compat": "./browser/build/compat",
-        "./src/render/prettify": "./browser/render/prettify"
-    },
     "dependencies": {
         "browserify": "^16.2.3",
         "bundle-collapser": "^1.3.0",

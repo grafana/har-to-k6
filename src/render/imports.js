@@ -3,7 +3,7 @@ function imports (spec) {
     const lines = []
     k6(spec, lines)
     http(spec, lines)
-    compat(spec, lines)
+    k6JsLibs(spec, lines)
     return lines.join(`\n`)
   } else {
     return null
@@ -44,8 +44,12 @@ const K6_JS_LIBS = (() => {
   }
 })();
 
-function compat (spec, lines) {
+function k6JsLibs (spec, lines) {
   if (spec.formUrlEncode || spec.jsonpath || spec.MimeBuilder) {
+    if (lines.length > 0) {
+      lines.push('\n')
+    }
+
     if (spec.formUrlEncode) {
       lines.push(K6_JS_LIBS.formUrlEncoded)
     }

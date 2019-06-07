@@ -4,7 +4,6 @@ const chalk = require('chalk')
 const convert = require('../src/convert')
 const fs = require('fs')
 const io = require('caporal')
-const path = require('path')
 const pkginfo = require('pkginfo')
 const { HarToK6Error } = require('../src/error')
 
@@ -37,9 +36,9 @@ async function run (arg, opt, log) {
     start(arg.archive, log)
     const json = read(arg.archive)
     const archive = parse(json)
-    const { main, compat } = await transform(archive)
-    write(main, compat, opt.output)
-    success(opt.output, compat, log)
+    const { main } = await transform(archive)
+    write(main, opt.output)
+    success(opt.output, log)
   } catch (error) {
     inform(error, log)
   }
@@ -73,26 +72,16 @@ async function transform (archive) {
   }
 }
 
-function write (main, compat, output) {
+function write (main, output) {
   try {
     fs.writeFileSync(output, main)
-    if (compat) {
-      fs.writeFileSync(
-        path.join(path.dirname(output), 'compat.js'),
-        compat
-      )
-    }
   } catch (error) {
     throw new CommandLineError({ name: 'WriteError', cause: error })
   }
 }
 
-function success (output, compat, log) {
+function success (output, log) {
   log.info(chalk.green(`Wrote k6 script to '${output}'`))
-  if (compat) {
-    const location = path.join(path.dirname(output), 'compat.js')
-    log.info(chalk.green(`Wrote compatibility layer to '${location}'`))
-  }
 }
 
 function inform (error, log) {

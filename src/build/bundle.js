@@ -1,5 +1,4 @@
 const browserify = require('browserify')
-const bundleCollapser = require('bundle-collapser/plugin')
 const concatStream = require('concat-stream')
 const envify = require('envify')
 const minifyStream = require('minify-stream')
@@ -15,7 +14,6 @@ async function bundle (id, expose) {
       output: { 'ascii_only': true }
     })
     bundler.plugin(shakeify)
-    // bundler.plugin(bundleCollapser)
     const gather = concatStream(buffer => {
       const string = buffer.toString('utf8')
       resolve(string)
