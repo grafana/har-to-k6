@@ -10,7 +10,7 @@ const [ resolved, { note, object, text } ] =
 test.serial('result', t => {
   object.returns('{}')
   const result = resolved(new Map())
-  t.is(result, `formUrlEncode({})`)
+  t.is(result, `new URLSearchParams({}).toString()`)
 })
 
 test.serial('singular', t => {

@@ -31,7 +31,6 @@
         "concat-stream": "^2.0.0",
         "emailjs-mime-builder": "^2.0.5",
         "envify": "^4.1.0",
-        "form-urlencoded": "^3.0.0",
         "fs-extra": "^7.0.1",
         "is-natural-number": "^4.0.1",
         "is-plain-object": "^2.0.4",

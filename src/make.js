@@ -43,7 +43,6 @@ function imports () {
     check: false,
     http: false,
     jsonpath: false,
-    formUrlEncode: false,
     MimeBuilder: false
   }
 }

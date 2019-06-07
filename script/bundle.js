@@ -27,7 +27,6 @@ async function buildCompats () {
     })),
     0b010: await constructed(entry({
       indirect: new Map()
-        .set('formUrlEncode', 'form-urlencoded')
     })),
     0b100: await constructed(entry({
       indirect: new Map()
@@ -37,7 +36,6 @@ async function buildCompats () {
       direct: new Map()
         .set('jsonpath', 'jsonpath'),
       indirect: new Map()
-        .set('formUrlEncode', 'form-urlencoded')
     })),
     0b101: await constructed(entry({
       direct: new Map()
@@ -47,14 +45,12 @@ async function buildCompats () {
     })),
     0b110: await constructed(entry({
       indirect: new Map()
-        .set('formUrlEncode', 'form-urlencoded')
         .set('MimeBuilder', 'emailjs-mime-builder')
     })),
     0b111: await constructed(entry({
       direct: new Map()
         .set('jsonpath', 'jsonpath'),
       indirect: new Map()
-        .set('formUrlEncode', 'form-urlencoded')
         .set('MimeBuilder', 'emailjs-mime-builder')
     }))
   }

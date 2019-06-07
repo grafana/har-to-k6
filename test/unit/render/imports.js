@@ -25,12 +25,11 @@ test('http', t => {
 test('compat', t => {
   const spec = makeImports()
   spec.jsonpath = true
-  spec.formUrlEncode = true
   spec.MimeBuilder = true
   const result = imports(spec)
   t.is(
     result,
-    `import { formUrlEncode, jsonpath, MimeBuilder } from "./compat.js";`
+    `import { jsonpath, MimeBuilder } from "./compat.js";`
   )
 })
 
@@ -40,11 +39,10 @@ test('combined', t => {
   spec.check = true
   spec.http = true
   spec.jsonpath = true
-  spec.formUrlEncode = true
   spec.MimeBuilder = true
   const result = imports(spec)
   t.is(result, '' +
 `import { check, group } from "k6";
 import http from "k6/http";
-import { formUrlEncode, jsonpath, MimeBuilder } from "./compat.js";`)
+import { jsonpath, MimeBuilder } from "./compat.js";`)
 })

@@ -19,9 +19,6 @@ function imports (archive, result) {
     if (entries.find(jsonPathEntry)) {
       result.imports.jsonpath = true
     }
-    if (result.flow.find(formUrlEncodeFlowItem)) {
-      result.imports.formUrlEncode = true
-    }
     if (result.flow.find(MimeBuilderFlowItem)) {
       result.imports.MimeBuilder = true
     }
@@ -44,29 +41,6 @@ function jsonPathCheck (check) {
     CheckType.JSONPath,
     CheckType.JSONPathValue
   ].includes(check.type)
-}
-
-function formUrlEncodeFlowItem (item) {
-  switch (item.type) {
-    case FlowItemType.External:
-      return formUrlEncodeEntry(item.entry)
-    case FlowItemType.Group:
-      return item.entries.find(formUrlEncodeEntry)
-    default:
-      throw new UnrecognizedError(
-        { name: 'UnrecognizedFlowItemType' },
-        `Unrecognized flow item type: ${item.type}`
-      )
-  }
-}
-
-function formUrlEncodeEntry ({ request }) {
-  return (
-    request.state.post.species === PostSpecies.Structured &&
-    request.post.type === 'application/x-www-form-urlencoded' &&
-    request.state.params.plural &&
-    request.state.params.variable
-  )
 }
 
 function MimeBuilderFlowItem (item) {

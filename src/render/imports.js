@@ -35,11 +35,8 @@ function http (spec, lines) {
 }
 
 function compat (spec, lines) {
-  if (spec.formUrlEncode || spec.jsonpath || spec.MimeBuilder) {
+  if (spec.jsonpath || spec.MimeBuilder) {
     const items = []
-    if (spec.formUrlEncode) {
-      items.push('formUrlEncode')
-    }
     if (spec.jsonpath) {
       items.push('jsonpath')
     }

@@ -15,9 +15,6 @@ function mask (imports) {
   if (imports.jsonpath) {
     result = result | 0b001
   }
-  if (imports.formUrlEncode) {
-    result = result | 0b010
-  }
   if (imports.MimeBuilder) {
     result = result | 0b100
   }
