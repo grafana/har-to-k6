@@ -13,4 +13,4 @@ Major components under `src/` are:
 * `parse/` - Parse an LI-HAR archive. Produces a structure for use in
   rendering.
 * `render/` - Render k6 script. Uses `parse` output.
-* `build/` - Build compatibility layer.
+* `build/` - Build browser bundle.

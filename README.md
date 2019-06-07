@@ -10,8 +10,7 @@ Install globally:
 npm install --global har-to-k6
 ```
 
-Use `har-to-k6` to convert. If a compatibility layer is generated it will be
-written to `compat.js` next to your k6 script.
+Use `har-to-k6` to convert.
 
 ```shell
 har-to-k6 archive.har -o loadtest.js
@@ -25,8 +24,7 @@ Install to your package:
 npm install --save har-to-k6
 ```
 
-Use `liHARToK6Script()` to convert. If a compatibility layer is returned place
-it in `compat.js` next to the output script:
+Use `liHARToK6Script()` to convert.
 
 ```js
 const fs = require("fs");
@@ -34,11 +32,8 @@ const { liHARToK6Script } = require("har-to-k6");
 
 async function run () {
   const archive = readArchive();
-  const { main, compat } = await liHARToK6Script(archive);
+  const { main } = await liHARToK6Script(archive);
   fs.writeFileSync("./load-test.js", main);
-  if (compat) {
-    fs.writeFileSync("./compat.js", compat);
-  }
 }
 ```
 
@@ -96,8 +91,8 @@ The API is available:
 async function run () {
     const archive = readArchive();
     harToK6.validate(archive);
-    const { main, compat } = await harToK6.liHARToK6Script(archive);
-    displayResult(main, compat);
+    const { main } = await harToK6.liHARToK6Script(archive);
+    displayResult(main);
 }
 ```
 
