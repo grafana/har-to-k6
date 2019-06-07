@@ -22,6 +22,7 @@ test('http', t => {
   t.is(result, `import http from "k6/http";`)
 })
 
+// TODO: update when K6 remote js lib is up.
 test('compat', t => {
   const spec = makeImports()
   spec.jsonpath = true
@@ -34,6 +35,7 @@ test('compat', t => {
   )
 })
 
+// TODO: update when K6 remote js lib is up.
 test('combined', t => {
   const spec = makeImports()
   spec.group = true
