@@ -37,9 +37,9 @@ function http (spec, lines) {
 const K6_JS_LIBS = (() => {
   const BASE_URL = 'jslib.k6.io';
   return {
-    jsonpath: `import jsonpath from "${BASE_URL}/jsonpath/2.0.1/index.js"`,
-    formUrlEncoded: `import formUrlEncoded from "${BASE_URL}/form-urlencoded/1.0.0/index.js"`,
-    mimeBuilder: `import MimeBuilder from "${BASE_URL}/mimebuilder/4.0.0/main.js"`,
+    jsonpath: `import jsonpath from "${BASE_URL}/jsonpath/1.0.2/index.js"`,
+    formUrlEncoded: `import formUrlEncoded from "${BASE_URL}/form-urlencoded/3.0.0/index.js"`
+    // mimeBuilder: `import MimeBuilder from "${BASE_URL}/mimebuilder/4.0.0/main.js"`,
   }
 })();
 
@@ -55,9 +55,9 @@ function k6JsLibs (spec, lines) {
     if (spec.jsonpath) {
       lines.push(K6_JS_LIBS.jsonpath)
     }
-    if (spec.MimeBuilder) {
-      lines.push(K6_JS_LIBS.mimeBuilder)
-    }
+    // if (spec.MimeBuilder) {
+    //   lines.push(K6_JS_LIBS.mimeBuilder)
+    // }
   }
 }
 

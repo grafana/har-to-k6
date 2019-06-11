@@ -1,4 +1,4 @@
-const multipart = require('./multipart')
+// const multipart = require('./multipart')
 const url = require('./url')
 const { UnrecognizedError } = require('../../error')
 
@@ -6,8 +6,9 @@ function structured (spec) {
   switch (spec.post.type) {
     case 'application/x-www-form-urlencoded':
       return url(spec)
-    case 'multipart/form-data':
-      return multipart(spec)
+    // NOTE: Not supported yet..
+    // case 'multipart/form-data':
+      // return multipart(spec)
     default:
       throw new UnrecognizedError(
         { name: 'UnrecognizedStructuredPostType' },
