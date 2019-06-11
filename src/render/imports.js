@@ -34,9 +34,8 @@ function http (spec, lines) {
   }
 }
 
-// NOTE: Update mappings when remote lib is up.
 const K6_JS_LIBS = (() => {
-  const BASE_URL = 'lib.k6.io';
+  const BASE_URL = 'jslib.k6.io';
   return {
     jsonpath: `import jsonpath from "${BASE_URL}/jsonpath/2.0.1/index.js"`,
     formUrlEncoded: `import formUrlEncoded from "${BASE_URL}/form-urlencoded/1.0.0/index.js"`,
