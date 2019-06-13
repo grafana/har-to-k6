@@ -57,29 +57,28 @@ try {
 
 ## Browser Usage
 
-`har-to-k6` can be bundled for use in the browser. This exposes the standard
+`har-to-k6` can be ran in the browser. This exposes the standard
 API under `harToK6`.
 
-Clone the repository:
 
-```shell
-git clone https://github.com/loadimpact/har-to-k6
-cd har-to-k6
+Import it as a ES module like
+```javascript
+import { liHARToK6Script } from "har-to-k6";
+```
+Or CJS style
+```javascript
+const { liHARToK6Script } = require("har-to-k6");
 ```
 
-Run the script to produce a bundle. It takes a minute to build and optimize:
+Or via script tag
 
-```shell
-npm run bundle
-```
-
-Load `build/har-to-k6.js` into your HTML page:
+Load `standalone.js` into your HTML page:
 
 ```html
 <html>
   <head>
     <title>HAR Converter</title>
-    <script src="har-to-k6.js"></script>
+    <script src="standalone.js"></script>
     <script src="index.js"></script>
   </head>
 </html>
