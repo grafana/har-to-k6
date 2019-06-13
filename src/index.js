@@ -1,7 +1,5 @@
-const error = require('./error')
-
-Object.assign(exports, error)
-Object.assign(exports, {
+module.exports = {
+  ...require('./error'),
   liHARToK6Script: require('./convert'),
   validate: require('./validate')
-})
+}

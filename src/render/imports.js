@@ -3,7 +3,7 @@ function imports (spec) {
     const lines = []
     k6(spec, lines)
     http(spec, lines)
-    compat(spec, lines)
+    k6JsLibs(spec, lines)
     return lines.join(`\n`)
   } else {
     return null
@@ -34,20 +34,30 @@ function http (spec, lines) {
   }
 }
 
-function compat (spec, lines) {
+const K6_JS_LIBS = (() => {
+  const BASE_URL = 'jslib.k6.io';
+  return {
+    jsonpath: `import jsonpath from "${BASE_URL}/jsonpath/1.0.2/index.js"`,
+    formurlencoded: `import formurlencoded from "${BASE_URL}/form-urlencoded/3.0.0/index.js"`
+    // mimeBuilder: `import MimeBuilder from "${BASE_URL}/mimebuilder/4.0.0/main.js"`,
+  }
+})();
+
+function k6JsLibs (spec, lines) {
   if (spec.formUrlEncode || spec.jsonpath || spec.MimeBuilder) {
-    const items = []
+    if (lines.length > 0) {
+      lines.push('\n')
+    }
+
     if (spec.formUrlEncode) {
-      items.push('formUrlEncode')
+      lines.push(K6_JS_LIBS.formurlencoded)
     }
     if (spec.jsonpath) {
-      items.push('jsonpath')
+      lines.push(K6_JS_LIBS.jsonpath)
     }
-    if (spec.MimeBuilder) {
-      items.push('MimeBuilder')
-    }
-    const content = items.join(`, `)
-    lines.push(`import { ${content} } from "./compat.js";`)
+    // if (spec.MimeBuilder) {
+    //   lines.push(K6_JS_LIBS.mimeBuilder)
+    // }
   }
 }
 

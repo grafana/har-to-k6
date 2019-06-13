@@ -5,7 +5,7 @@ const text = require('../../../text')
 // Multivalue URL encoded post data with variable
 function resolved (params) {
   const spec = specify(params)
-  return `formUrlEncode(${spec})`
+  return `formurlencoded(${spec})`
 }
 
 function specify (params) {
