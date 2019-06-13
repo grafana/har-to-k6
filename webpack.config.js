@@ -5,8 +5,8 @@ module.exports = {
   node: { fs: 'empty' },
   mode: 'production',
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'har-to-k6.js',
+    path: path.resolve(__dirname),
+    filename: 'standalone.js',
     library: 'harToK6',
     libraryTarget: 'umd'
   }
