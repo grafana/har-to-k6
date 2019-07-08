@@ -31,7 +31,8 @@ test('compat', t => {
   const result = imports(spec)
   t.is(
     result,
-    `import { formUrlEncode, jsonpath, MimeBuilder } from "./compat.js";`
+    `import formurlencoded from "jslib.k6.io/form-urlencoded/3.0.0/index.js"
+import jsonpath from "jslib.k6.io/jsonpath/1.0.2/index.js"`
   )
 })
 
@@ -48,5 +49,8 @@ test('combined', t => {
   t.is(result, '' +
 `import { check, group } from "k6";
 import http from "k6/http";
-import { formUrlEncode, jsonpath, MimeBuilder } from "./compat.js";`)
+
+
+import formurlencoded from "jslib.k6.io/form-urlencoded/3.0.0/index.js"
+import jsonpath from "jslib.k6.io/jsonpath/1.0.2/index.js"`)
 })
