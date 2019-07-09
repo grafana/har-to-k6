@@ -43,6 +43,7 @@
     "devDependencies": {
         "ava": "^1.4.1",
         "cross-env": "^5.2.0",
+        "husky": "^3.0.0",
         "mock-require": "^3.0.3",
         "npm-run-all": "^4.1.5",
         "sinon": "^7.3.1",
@@ -59,5 +60,16 @@
         "test-int": "cross-env NODE_PATH=src:test ava test/int",
         "test-unit": "cross-env NODE_PATH=src:test ava test/unit",
         "test-hoc": "cross-env NODE_PATH=src:test ava"
+    },
+    "standard": {
+        "ignore": [
+            "standalone.js"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run lint-js",
+            "pre-push": "npm-run-all test bundle"
+        }
     }
 }

@@ -35,13 +35,13 @@ function http (spec, lines) {
 }
 
 const K6_JS_LIBS = (() => {
-  const BASE_URL = 'jslib.k6.io';
+  const BASE_URL = 'jslib.k6.io'
   return {
     jsonpath: `import jsonpath from "${BASE_URL}/jsonpath/1.0.2/index.js"`,
     formurlencoded: `import formurlencoded from "${BASE_URL}/form-urlencoded/3.0.0/index.js"`
     // mimeBuilder: `import MimeBuilder from "${BASE_URL}/mimebuilder/4.0.0/main.js"`,
   }
-})();
+})()
 
 function k6JsLibs (spec, lines) {
   if (spec.formUrlEncode || spec.jsonpath || spec.MimeBuilder) {
