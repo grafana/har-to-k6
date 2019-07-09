@@ -125,3 +125,6 @@ This is a specification describing the following:
 - [LI-HAR to K6 CLI tool](cli-tool.spec.md) - a Node.js CLI tool exposing an
   interface for converting a given [_LI-HAR_](li-har.spec.md) to a
   [_K6 script_](https://docs.k6.io/docs)
+
+## Credits
+Thanks to [bookmoons](https://github.com/bookmoons) for creating this tool 🎉
