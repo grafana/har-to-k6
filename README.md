@@ -1,24 +1,39 @@
 # har-to-k6
 
-Convert LI-HAR to k6 script.
+Convert [LI-HAR](li-har.spec.md) and [HAR](https://w3c.github.io/web-performance/specs/HAR/Overview.html) to [K6 script](https://docs.k6.io/docs).
+
+* [CLI usage](#cli-usage)
+* [API usage](#api-usage)
+
+
+
 
 ## CLI Usage
 
-Install globally:
 
+__Install Globally__ - preferably using [nvm](https://github.com/creationix/nvm) (at least on Unix/Linux systems to avoid filesystem permission issues when using sudo):
 ```shell
 npm install --global har-to-k6
 ```
 
+__Locally__ - into node_modules
+```shell
+npm install har-to-k6
+```
+__Note__: that this will require you to run the converter with `node node_modules/har-to-k6/bin/har-to-k6.js ...`
+
+###  Convert
 Use `har-to-k6` to convert.
 
 ```shell
 har-to-k6 archive.har -o loadtest.js
 ```
 
+------------
+
 ## API Usage
 
-Install to your package:
+__Install__
 
 ```shell
 npm install --save har-to-k6
@@ -61,16 +76,16 @@ try {
 API under `harToK6`.
 
 
-Import it as a ES module like
+Importing as ES module
 ```javascript
 import { liHARToK6Script } from "har-to-k6";
 ```
-Or CJS style
+CJS style
 ```javascript
 const { liHARToK6Script } = require("har-to-k6");
 ```
 
-Or via script tag
+Script tag
 
 Load `standalone.js` into your HTML page:
 

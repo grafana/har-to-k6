@@ -16,6 +16,9 @@
     "directories": {
         "lib": "src"
     },
+    "homepage": "https://github.com/loadimpact/har-to-k6",
+    "repository": "github:loadimpact/har-to-k6",
+    "bugs": "https://github.com/loadimpact/har-to-k6/issues",
     "browser": "standalone.js",
     "main": "src/index.js",
     "bin": "bin/har-to-k6.js",
