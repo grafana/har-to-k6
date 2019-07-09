@@ -16,11 +16,16 @@ __Install Globally__ - preferably using [nvm](https://github.com/creationix/nvm)
 npm install --global har-to-k6
 ```
 
-__Locally__ - into node_modules
+__Locally__ - into node_modules\
+__Note__: that this will require you to run the converter with `node node_modules/.bin/har-to-k6 ...`
 ```shell
 npm install har-to-k6
 ```
-__Note__: that this will require you to run the converter with `node node_modules/har-to-k6/bin/har-to-k6.js ...`
+
+__Npx__
+```shell
+npx har-to-k6 archive.har -o loadtest.js
+```
 
 ###  Convert
 Use `har-to-k6` to convert.
@@ -29,7 +34,6 @@ Use `har-to-k6` to convert.
 har-to-k6 archive.har -o loadtest.js
 ```
 
-------------
 
 ## API Usage
 
