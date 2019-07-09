@@ -34,5 +34,5 @@ test.serial('nonempty', t => {
   t.true(variableSpace.calledOnce)
   t.true(flow.calledOnce)
   t.true(block.calledOnce)
-  t.deepEqual(block.firstCall.args[0], [ `// Flow`, `sleep(1);`])
+  t.deepEqual(block.firstCall.args[0], [`// Flow`, `sleep(1);`])
 })
