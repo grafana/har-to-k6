@@ -7,7 +7,9 @@ function logic (result) {
   const content = [
     declares(result.declares),
     variableSpace(result),
-    flow(result)
+    flow(result),
+    // FIXME: Integrate sleep better
+    `sleep(1);`
   ].filter(item => item)
   return `export default function() ${block(content)}`
 }
