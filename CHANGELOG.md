@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2019-07-10
+
+### Fixed
+Missing sleep import.
+
 ## [0.1.1] - 2019-07-09
 
 ### Added
@@ -19,5 +24,6 @@ Broken positional arg in caporal resulting in broken `har-to-k6` command.
 - Initial release
 
 [Unreleased]: https://github.com/loadimpact/har-to-k6/compare/v0.1.1...HEAD
+[0.1.2]: https://github.com/loadimpact/har-to-k6/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/loadimpact/har-to-k6/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.1.0
