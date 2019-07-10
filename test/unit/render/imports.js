@@ -12,14 +12,14 @@ test('k6', t => {
   spec.group = true
   spec.check = true
   const result = imports(spec)
-  t.is(result, `import { check, group } from "k6";`)
+  t.is(result, `import { sleep, check, group } from "k6";`)
 })
 
 test('http', t => {
   const spec = makeImports()
   spec.http = true
   const result = imports(spec)
-  t.is(result, `import http from "k6/http";`)
+  t.is(result, `import { sleep } from "k6";\nimport http from "k6/http";`)
 })
 
 // TODO: update when K6 remote js lib is up.
@@ -31,7 +31,10 @@ test('compat', t => {
   const result = imports(spec)
   t.is(
     result,
-    `import formurlencoded from "jslib.k6.io/form-urlencoded/3.0.0/index.js"
+    `import { sleep } from "k6";
+
+
+import formurlencoded from "jslib.k6.io/form-urlencoded/3.0.0/index.js"
 import jsonpath from "jslib.k6.io/jsonpath/1.0.2/index.js"`
   )
 })
@@ -47,7 +50,7 @@ test('combined', t => {
   spec.MimeBuilder = true
   const result = imports(spec)
   t.is(result, '' +
-`import { check, group } from "k6";
+`import { sleep, check, group } from "k6";
 import http from "k6/http";
 
 

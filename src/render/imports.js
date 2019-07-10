@@ -15,17 +15,19 @@ function any (spec) {
 }
 
 function k6 (spec, lines) {
+  const items = ['sleep']
+
   if (spec.check || spec.group) {
-    const items = []
     if (spec.check) {
       items.push('check')
     }
     if (spec.group) {
       items.push('group')
     }
-    const content = items.join(`, `)
-    lines.push(`import { ${content} } from "k6";`)
   }
+
+  const content = items.join(`, `)
+  lines.push(`import { ${content} } from "k6";`)
 }
 
 function http (spec, lines) {
