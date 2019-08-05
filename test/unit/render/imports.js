@@ -34,8 +34,8 @@ test('compat', t => {
     `import { sleep } from "k6";
 
 
-import formurlencoded from "jslib.k6.io/form-urlencoded/3.0.0/index.js"
-import jsonpath from "jslib.k6.io/jsonpath/1.0.2/index.js"`
+import formurlencoded from "https://jslib.k6.io/form-urlencoded/3.0.0/index.js"
+import jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"`
   )
 })
 
@@ -54,6 +54,6 @@ test('combined', t => {
 import http from "k6/http";
 
 
-import formurlencoded from "jslib.k6.io/form-urlencoded/3.0.0/index.js"
-import jsonpath from "jslib.k6.io/jsonpath/1.0.2/index.js"`)
+import formurlencoded from "https://jslib.k6.io/form-urlencoded/3.0.0/index.js"
+import jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"`)
 })
