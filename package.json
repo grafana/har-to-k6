@@ -37,7 +37,7 @@
         "pkginfo": "^0.4.1",
         "prettier": "^1.17.0",
         "tmp": "^0.1.0",
-        "urijs": "^1.19.1",
+        "urijs": "1.19.1",
         "verror": "^1.10.0"
     },
     "devDependencies": {
