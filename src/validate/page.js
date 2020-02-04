@@ -29,13 +29,7 @@ function validate (node, i, assay) {
       `Duplicate page identifier (${i}): ${node.id}`
     )
   }
-  if (empty(node.title)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingPageTitle' },
-      `Missing page title (${i})`
-    )
-  }
-  if (typeof node.title !== 'string') {
+  if (!empty(node.title) && typeof node.title !== 'string') {
     throw new InvalidArchiveError(
       { name: 'InvalidPageTitle' },
       `Invalid page title (${i}): must be string`

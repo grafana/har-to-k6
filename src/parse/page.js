@@ -1,7 +1,13 @@
 function page (node, result) {
+  const nameParts = []
+
+  node.id && nameParts.push(node.id)
+  node.title && nameParts.push(node.title)
+
   const spec = {
-    name: node.title
+    name: nameParts.join(' - ')
   }
+
   if (node.comment) {
     spec.comment = node.comment
   }

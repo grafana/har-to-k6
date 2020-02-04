@@ -22,12 +22,6 @@ test('duplicate id', t => {
   }, { name: 'DuplicatePageId' })
 })
 
-test('missing title', t => {
-  t.throws(() => {
-    page({ id: 'page1' }, 0, makeAssay())
-  }, { name: 'MissingPageTitle' })
-})
-
 test('invalid title', t => {
   t.throws(() => {
     page({ id: 'page1', title: 5 }, 0, makeAssay())
