@@ -34,6 +34,12 @@ test.serial('params', t => {
   t.true(params.calledOnce)
 })
 
+test.serial('allows chartset in mimeType', t => {
+  const spec = makeSpec()
+  postData({ mimeType: 'text/plain;charset=UTF-8', text: 'Great post' }, spec)
+  t.deepEqual(spec, { type: 'text/plain;charset=UTF-8', value: 'Great post' })
+})
+
 test.serial('comment', t => {
   const spec = makeSpec()
   postData({ mimeType: 'text/plain', comment: 'Test post body' }, spec)

@@ -34,3 +34,13 @@ test('comment', t => {
       .set('Authorization', new Set([ { comment: 'Test authentication' } ]))
   )
 })
+
+test('value with charset', t => {
+  const spec = makeSpec()
+  header({ name: 'Content-Type', value: 'text/plain;charset=UTF-8' }, spec)
+  t.deepEqual(
+    spec,
+    new Map()
+      .set('Content-Type', new Set([ { value: 'text/plain;charset=UTF-8' } ]))
+  )
+})

@@ -117,7 +117,7 @@ function relation (node, i) {
   ) {
     const header = node.headers.find(findContentType)
     const headerType = header.value ? header.value.split(';')[0] : ''
-    const postType = node.postData.mimeType
+    const postType = node.postData.mimeType ? node.postData.mimeType.split(';')[0] : ''
     if (headerType !== postType) {
       throw new InvalidArchiveError(
         { name: 'InconsistentContentType' },

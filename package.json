@@ -59,7 +59,8 @@
         "test": "npm-run-all test-unit test-int",
         "test-int": "cross-env NODE_PATH=src:test ava test/int",
         "test-unit": "cross-env NODE_PATH=src:test ava test/unit",
-        "test-hoc": "cross-env NODE_PATH=src:test ava"
+        "test-hoc": "cross-env NODE_PATH=src:test ava",
+        "test-only": "cross-env NODE_PATH=src:test ava"
     },
     "standard": {
         "ignore": [
