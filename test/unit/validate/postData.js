@@ -40,16 +40,6 @@ test.serial('invalid comment', t => {
   }, { name: 'InvalidComment' })
 })
 
-test.serial('content conflict', t => {
-  t.throws(() => {
-    postData({
-      mimeType: 'text/plain',
-      params: [ {} ],
-      text: 'Message in text'
-    }, 0, makeAssay())
-  }, { name: 'PostDataConflict' })
-})
-
 test.serial('invalid structured type', t => {
   t.throws(() => {
     postData({
