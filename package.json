@@ -70,7 +70,7 @@
     "husky": {
         "hooks": {
             "pre-commit": "npm run lint-js",
-            "pre-push": "npm-run-all lint-js test bundle"
+            "pre-push": "npm-run-all lint-js test"
         }
     }
 }
