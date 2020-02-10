@@ -1,5 +1,10 @@
 function header (node, spec) {
   const item = {}
+
+  if (node.name && node.name.startsWith(':')) {
+    return
+  }
+
   if (node.value) {
     item.value = node.value
   }
