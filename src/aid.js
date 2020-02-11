@@ -24,8 +24,18 @@ function nought (value) {
   )
 }
 
+function isBlacklistedHeader (headerName = '') {
+  const HEADERS_BLACKLIST = ['Content-Length']
+  const [name] = headerName.split(';')
+
+  return HEADERS_BLACKLIST.some(
+    blacklistedHeader => name.toLowerCase() === blacklistedHeader.toLowerCase()
+  )
+}
+
 Object.assign(exports, {
   empty,
+  isBlacklistedHeader,
   emptyObject,
   extrinsic,
   nought
