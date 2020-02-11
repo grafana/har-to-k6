@@ -1,4 +1,3 @@
-const cookies = require('./cookies')
 const headers = require('./headers')
 const postData = require('./postData')
 const queryString = require('./queryString')
@@ -16,9 +15,6 @@ function request (node, spec) {
   }
   if (node.headers) {
     headers(node.headers, spec.headers)
-  }
-  if (node.cookies) {
-    cookies(node.cookies, spec.cookies)
   }
   if (node.postData && !emptyObject(node.postData)) {
     postData(node.postData, spec.post)

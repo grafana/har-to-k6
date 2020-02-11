@@ -54,15 +54,6 @@ test.serial('headers', t => {
   t.true(headers.calledOnce)
 })
 
-test.serial('cookies', t => {
-  request({
-    method: 'GET',
-    url: 'http://example.com',
-    cookies: []
-  }, makeRequestSpec())
-  t.true(cookies.calledOnce)
-})
-
 test.serial('postData', t => {
   request({
     method: 'GET',

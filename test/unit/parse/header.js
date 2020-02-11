@@ -49,3 +49,9 @@ test(':pseudo headers are not included', t => {
   header({ name: ':pseudo', value: 'test' }, spec)
   t.deepEqual(spec, new Map())
 })
+
+test('Content-Length header is removed', t => {
+  const spec = makeSpec()
+  header({ name: 'Content-Length', value: '41' }, spec)
+  t.deepEqual(spec, new Map())
+})
