@@ -49,6 +49,28 @@ test.serial('invalid structured type', t => {
   }, { name: 'InvalidPostDataType' })
 })
 
+test.serial('invalid postData combination', t => {
+  t.throws(() => {
+    postData({
+      mimeType: 'application/x-www-form-urlencoded',
+      params: [ { name: 'foo', value: 1 } ],
+      text: 'bar=2'
+    }, 0, makeAssay())
+  }, { name: 'PostDataConflict' })
+})
+
+test.serial('valid postData combination', t => {
+  postData({
+    mimeType: 'application/x-www-form-urlencoded',
+    params: [
+      { name: 'foo', value: 1 },
+      { name: 'bar', value: 2 }
+    ],
+    text: 'foo=1&bar=2'
+  })
+  t.true(params.calledOnce)
+})
+
 test.serial('valid minimal', t => {
   postData({ mimeType: 'text/plain' })
   t.true(params.notCalled)
