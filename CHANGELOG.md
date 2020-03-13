@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2020-03-13
+
+### Changed
+- Less strict validation for postData
+- Prioritize postData.params over postData.text
+
+### Added
+- Run babel on standalone bundle
+
 ## [0.1.5] - 2020-02-17
 
 ### Fixed
@@ -41,7 +50,8 @@ Broken positional arg in caporal resulting in broken `har-to-k6` command.
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/loadimpact/har-to-k6/compare/v0.1.5...HEAD
+[Unreleased]: https://github.com/loadimpact/har-to-k6/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/loadimpact/har-to-k6/compare/v0.1.5...v0.2.0
 [0.1.5]: https://github.com/loadimpact/har-to-k6/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/loadimpact/har-to-k6/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/loadimpact/har-to-k6/compare/v0.1.2...v0.1.3
