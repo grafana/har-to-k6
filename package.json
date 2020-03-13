@@ -69,5 +69,8 @@
         "ignore": [
             "standalone.js"
         ]
+    },
+    "husky": {
+        "pre-push": "yarn lint-js && yarn test"
     }
 }
