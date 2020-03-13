@@ -30,3 +30,17 @@ jobs:
       run: yarn test
     - name: Build docker image
       run: docker build . -t har-to-k6:latest
+    - name: Publish on DockerHub
+      run: |
+        echo '${{ secrets.DOCKERHUB_PASSWORD }}' | \
+          docker login \
+            --username ${{ secrets.DOCKERHUB_USERNAME }} \
+            --password-stdin
+        STAMP=$(date +'%Y-%m-%d')
+        docker build . -t loadimpact/har-to-k6:latest
+        docker tag \
+          loadimpact/har-to-k6:latest \
+          loadimpact/har-to-k6:$STAMP
+        docker push
+          loadimpact/har-to-k6:latest \
+          loadimpact/har-to-k6:$STAMP
