@@ -71,6 +71,8 @@
         ]
     },
     "husky": {
-        "pre-push": "yarn lint-js && yarn test"
+        "hooks": {
+            "pre-push": "yarn lint-js && yarn test"
+        }
     }
 }
