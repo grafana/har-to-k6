@@ -33,10 +33,15 @@ function isBlacklistedHeader (headerName = '') {
   )
 }
 
-Object.assign(exports, {
+function seralizeURLSearchParams (postDataParams = []) {
+  return postDataParams.map(({ name, value }) => [name, value].join('=')).join('&')
+}
+
+module.exports = {
+  seralizeURLSearchParams,
   empty,
   isBlacklistedHeader,
   emptyObject,
   extrinsic,
   nought
-})
+}
