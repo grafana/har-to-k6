@@ -1,0 +1,30 @@
+name: CI - PR & Scheduled
+
+on:
+  pull_request: {}
+  schedule:
+    - cron: "0 0 */1 * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/cache@v1
+      env:
+        cache-name: node-modules
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Install dependencies
+      run: yarn
+    - name: Lint
+      run: yarn lint
+    - name: Bundle
+      run: yarn bundle
+    - name: Test
+      run: yarn test
