@@ -41,6 +41,5 @@ jobs:
         docker tag \
           loadimpact/har-to-k6:latest \
           loadimpact/har-to-k6:$STAMP
-        docker push
-          loadimpact/har-to-k6:latest \
-          loadimpact/har-to-k6:$STAMP
+        docker push loadimpact/har-to-k6:latest
+        docker push loadimpact/har-to-k6:$STAMP
