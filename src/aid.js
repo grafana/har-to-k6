@@ -12,6 +12,10 @@ function emptyObject (value) {
   return !Object.keys(value).length
 }
 
+function isString (x) {
+  return Object.prototype.toString.call(x) === '[object String]'
+}
+
 // Produce valid encoding not used by enumeration
 function extrinsic (enumeration) {
   return Math.max(...Object.values(enumeration)) + 1
@@ -42,6 +46,7 @@ module.exports = {
   empty,
   isBlacklistedHeader,
   emptyObject,
+  isString,
   extrinsic,
   nought
 }

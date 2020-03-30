@@ -40,6 +40,16 @@ test.serial('value', t => {
   ])
 })
 
+test.serial('empty value', t => {
+  text.returns('""')
+  const spec = new Map()
+    .set('search', new Set([ { value: '' } ]))
+  singular(spec)
+  t.deepEqual(object.firstCall.args[0], [
+    { name: 'search', value: '""' }
+  ])
+})
+
 test.serial('comment', t => {
   const spec = new Map()
     .set('session', new Set([ { comment: 'Start fresh session' } ]))

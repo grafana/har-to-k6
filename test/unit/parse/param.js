@@ -25,6 +25,16 @@ test('value', t => {
   )
 })
 
+test('empty value', t => {
+  const spec = makeSpec()
+  param({ name: 'search', value: '' }, spec)
+  t.deepEqual(
+    spec,
+    new Map()
+      .set('search', new Set([ { value: '' } ]))
+  )
+})
+
 test('fileName', t => {
   const spec = makeSpec()
   param({ name: 'data', fileName: 'data.csv' }, spec)
