@@ -1,6 +1,8 @@
+const { isString } = require('../aid') 
+
 function param (node, spec) {
   const item = {}
-  if (node.hasOwnProperty('value')) {
+  if (isString(node.value)) {
     item.value = node.value
   }
   if (node.fileName) {
