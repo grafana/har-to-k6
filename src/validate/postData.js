@@ -76,7 +76,7 @@ function validate (node, i) {
     ![
       'application/x-www-form-urlencoded',
       'multipart/form-data'
-    ].includes(node.mimeType)
+    ].includes(node.mimeType.split(';')[0])
   ) {
     throw new InvalidArchiveError(
       { name: 'InvalidPostDataType' },

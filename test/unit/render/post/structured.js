@@ -15,10 +15,10 @@ test.serial('url', t => {
   t.true(multipart.notCalled)
 })
 
-// test.serial('multipart', t => {
-//   const spec = makeRequestSpec()
-//   spec.post.type = 'multipart/form-data'
-//   structured(spec)
-//   t.true(multipart.calledOnce)
-//   t.true(url.notCalled)
-// })
+test.serial('multipart', t => {
+  const spec = makeRequestSpec()
+  spec.post.type = 'multipart/form-data'
+  structured(spec)
+  t.true(multipart.calledOnce)
+  t.true(url.notCalled)
+})

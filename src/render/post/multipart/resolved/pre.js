@@ -28,6 +28,7 @@ function entry (name, item) {
   logic.push('' +
 `body.createChild(${args.join(`, `)})
   .setHeader("Content-Disposition", ${disposition(name)})
+  .setHeader("Content-Transfer-Encoding", "${item.fileName ? 'base64' : 'quoted-printable'}")
   .setContent(${value(item)});`)
   return logic.join(`\n`)
 }

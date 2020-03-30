@@ -21,6 +21,10 @@ function request (node, spec) {
     contentType(node.postData.mimeType, spec.headers)
   }
   state(spec)
+
+  if (spec.state.post.boundary) {
+    addBoundary(spec.state.post.boundary, spec.headers)
+  }
 }
 
 // Fallback to content type from postData
@@ -28,8 +32,24 @@ function request (node, spec) {
 function contentType (mimeType, headers) {
   if (!headers.has('Content-Type')) {
     const item = { value: mimeType }
-    const items = new Set([ item ])
+    const items = new Set([item])
     headers.set('Content-Type', items)
+  }
+}
+
+function addBoundary (boundary, headers) {
+  if (headers.has('Content-Type')) {
+    const items = [...headers.get('Content-Type').values()]
+    const newItems = items.map(item => {
+      const value = item.value.split(';')[0]
+      if (value === 'multipart/form-data') {
+        return { value: `${value}; boundary=${boundary}` }
+      }
+
+      return item
+    })
+
+    headers.set('Content-Type', new Set(newItems))
   }
 }
 

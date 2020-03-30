@@ -4,19 +4,25 @@ const note = require('../../note/map')
 const string = require('../../string')
 
 // Multipart encoded post data without variable
-function fixed (params) {
-  return [
-    description(params),
-    value(params)
-  ].filter(item => item).join(`\n`)
+function fixed (spec) {
+  return [description(spec.post.params), value(spec.post.params, spec.state.post.boundary)]
+    .filter(item => item)
+    .join(`\n`)
 }
 
-function value (params) {
+function value (params, boundary) {
   const message = new MimeBuilder('multipart/form-data')
-  for (const [ name, items ] of params) {
+
+  if (boundary) {
+    message.boundary = boundary
+  }
+
+  for (const [name, items] of params) {
     for (const item of items) {
-      message.createChild(item.contentType, { filename: item.fileName })
+      message
+        .createChild(item.contentType, { filename: item.fileName })
         .setHeader('Content-Disposition', `form-data; name=${name}`)
+        .setHeader('Content-Transfer-Encoding', item.fileName ? 'base64' : 'quoted-printable')
         .setContent(item.value || '')
     }
   }
