@@ -13,7 +13,7 @@ function emptyObject (value) {
 }
 
 function isString (x) {
-  return Object.prototype.toString.call(x) === '[object String]';
+  return Object.prototype.toString.call(x) === '[object String]'
 }
 
 // Produce valid encoding not used by enumeration

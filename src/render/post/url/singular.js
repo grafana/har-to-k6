@@ -1,4 +1,4 @@
-const { isString } = require('../../../aid') 
+const { isString } = require('../../../aid')
 const object = require('../../object')
 const text = require('../../text')
 

@@ -1,4 +1,4 @@
-const { isString } = require('../aid') 
+const { isString } = require('../aid')
 
 function param (node, spec) {
   const item = {}
