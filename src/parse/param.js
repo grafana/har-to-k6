@@ -1,6 +1,6 @@
 function param (node, spec) {
   const item = {}
-  if (node.value) {
+  if (node.hasOwnProperty('value')) {
     item.value = node.value
   }
   if (node.fileName) {

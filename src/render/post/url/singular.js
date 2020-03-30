@@ -13,7 +13,7 @@ function singular (params) {
 
 function entry (name, item) {
   const result = { name }
-  if (item.value) {
+  if (item.hasOwnProperty('value')) {
     result.value = text(item.value)
   }
   if (item.comment || item.contentType || item.fileName) {
