@@ -54,6 +54,21 @@ test.serial('headers', t => {
   t.true(headers.calledOnce)
 })
 
+test.serial('headers boundary', t => {
+  const spec = makeRequestSpec()
+  spec.state.post.boundary = 'foobar'
+  spec.headers = new Map().set('Content-Type', new Set([{ value: 'multipart/form-data' }]))
+  request(
+    {
+      method: 'POST',
+      url: 'http://example.com',
+      headers: [{ name: 'Content-Type', value: 'multipart/form-data' }],
+    },
+    spec
+  )
+  t.is([...spec.headers.get('Content-Type')][0].value, 'multipart/form-data; boundary=foobar')
+})
+
 test.serial('postData', t => {
   request({
     method: 'GET',
