@@ -5,7 +5,7 @@ import { requestSpec as makeRequestSpec } from 'make'
 const [fixed, { comment, note, string }] = isolate(test, 'render/post/multipart/fixed', {
   comment: 'render/comment',
   note: 'render/note/map',
-  string: 'render/string',
+  string: 'render/string'
 })
 
 test.serial('result', t => {

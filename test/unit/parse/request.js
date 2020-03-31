@@ -62,7 +62,7 @@ test.serial('headers boundary', t => {
     {
       method: 'POST',
       url: 'http://example.com',
-      headers: [{ name: 'Content-Type', value: 'multipart/form-data' }],
+      headers: [{ name: 'Content-Type', value: 'multipart/form-data' }]
     },
     spec
   )
