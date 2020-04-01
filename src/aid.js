@@ -28,6 +28,16 @@ function nought (value) {
   )
 }
 
+function parseContentType(str = '') {
+  const [mimeType, ...rest] = str.split(';').map(s => s.trim())
+  const params = Object.fromEntries(rest.map(s => s.split('=')))
+
+  return {
+    ...params,
+    mimeType,
+  }
+}
+
 function isBlacklistedHeader (headerName = '') {
   const HEADERS_BLACKLIST = ['Content-Length']
   const [name] = headerName.split(';')
@@ -48,5 +58,6 @@ module.exports = {
   emptyObject,
   isString,
   extrinsic,
-  nought
+  nought,
+  parseContentType
 }
