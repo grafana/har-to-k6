@@ -28,13 +28,13 @@ function nought (value) {
   )
 }
 
-function parseContentType(str = '') {
+function parseContentType (str = '') {
   const [mimeType, ...rest] = str.split(';').map(s => s.trim())
   const params = Object.fromEntries(rest.map(s => s.split('=')))
 
   return {
     ...params,
-    mimeType,
+    mimeType
   }
 }
 
