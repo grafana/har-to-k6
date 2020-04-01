@@ -1,9 +1,10 @@
 const multipart = require('./multipart')
 const url = require('./url')
 const { UnrecognizedError } = require('../../error')
+const { getContentTypeValue } = require('../../aid')
 
 function structured (spec) {
-  switch (spec.post.type.split(';')[0]) {
+  switch (getContentTypeValue(spec.post.type)) {
     case 'application/x-www-form-urlencoded':
       return url(spec)
     case 'multipart/form-data':

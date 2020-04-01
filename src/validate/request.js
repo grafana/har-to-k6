@@ -3,7 +3,7 @@ const headers = require('./headers')
 const isPlainObject = require('is-plain-object')
 const postData = require('./postData')
 const queryString = require('./queryString')
-const { empty, emptyObject } = require('../aid')
+const { empty, emptyObject, getContentTypeValue } = require('../aid')
 const { absoluteUrl, variableStart } = require('../expression')
 const { InvalidArchiveError } = require('../error')
 
@@ -116,8 +116,8 @@ function relation (node, i) {
     node.headers.findIndex(findContentType) !== -1
   ) {
     const header = node.headers.find(findContentType)
-    const headerType = header.value ? header.value.split(';')[0] : ''
-    const postType = node.postData.mimeType ? node.postData.mimeType.split(';')[0] : ''
+    const headerType = getContentTypeValue(header.value)
+    const postType = getContentTypeValue(node.postData.mimeType)
     if (headerType !== postType) {
       throw new InvalidArchiveError(
         { name: 'InconsistentContentType' },

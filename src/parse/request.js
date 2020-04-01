@@ -2,7 +2,7 @@ const headers = require('./headers')
 const postData = require('./postData')
 const queryString = require('./queryString')
 const state = require('./state/request')
-const { emptyObject } = require('../aid')
+const { emptyObject, getContentTypeValue } = require('../aid')
 
 function request (node, spec) {
   spec.method = node.method.toUpperCase()
@@ -41,7 +41,7 @@ function addBoundary (boundary, headers) {
   if (headers.has('Content-Type')) {
     const items = [...headers.get('Content-Type').values()]
     const newItems = items.map(item => {
-      const value = item.value.split(';')[0]
+      const value = getContentTypeValue(item.value)
       if (value === 'multipart/form-data') {
         return { value: `${value}; boundary=${boundary}` }
       }

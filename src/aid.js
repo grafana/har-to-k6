@@ -38,6 +38,10 @@ function parseContentType (str = '') {
   }
 }
 
+function getContentTypeValue (str = '') {
+  return str.split(';')[0]
+}
+
 function isBlacklistedHeader (headerName = '') {
   const HEADERS_BLACKLIST = ['Content-Length']
   const [name] = headerName.split(';')
@@ -59,5 +63,6 @@ module.exports = {
   isString,
   extrinsic,
   nought,
-  parseContentType
+  parseContentType,
+  getContentTypeValue
 }
