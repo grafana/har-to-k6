@@ -24,3 +24,19 @@ test('structured', t => {
   post(spec)
   t.is(spec.state.post.species, PostSpecies.Structured)
 })
+
+test('generated boundary', t => {
+  const spec = makeRequestSpec()
+  spec.post.type = 'multipart/form-data'
+  spec.post.params = [ {}, {}, {} ]
+  post(spec)
+  t.not(spec.state.post.boundary, null)
+})
+
+test('existing boundary is respected', t => {
+  const spec = makeRequestSpec()
+  spec.post.type = 'multipart/form-data; boundary=----someKindOfLongBoundary'
+  spec.post.params = [ {}, {}, {} ]
+  post(spec)
+  t.is(spec.state.post.boundary, '----someKindOfLongBoundary')
+})

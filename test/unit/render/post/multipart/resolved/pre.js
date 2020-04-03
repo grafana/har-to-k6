@@ -15,6 +15,7 @@ test.serial('minimal', t => {
 `body = new MimeBuilder("multipart/form-data");
 body.createChild()
   .setHeader("Content-Disposition", "form-data; name=search")
+  .setHeader("Content-Transfer-Encoding", "quoted-printable")
   .setContent("");`)
 })
 
@@ -29,12 +30,15 @@ test.serial('3', t => {
 `body = new MimeBuilder("multipart/form-data");
 body.createChild()
   .setHeader("Content-Disposition", "form-data; name=search")
+  .setHeader("Content-Transfer-Encoding", "quoted-printable")
   .setContent("kitten");
 body.createChild()
   .setHeader("Content-Disposition", "form-data; name=filter")
+  .setHeader("Content-Transfer-Encoding", "quoted-printable")
   .setContent("cute");
 body.createChild()
   .setHeader("Content-Disposition", "form-data; name=order")
+  .setHeader("Content-Transfer-Encoding", "quoted-printable")
   .setContent("cuteness");`)
 })
 
@@ -51,6 +55,7 @@ test.serial('file', t => {
 `body = new MimeBuilder("multipart/form-data");
 body.createChild("text/csv", { filename: "data.csv" })
   .setHeader("Content-Disposition", "form-data; name=data")
+  .setHeader("Content-Transfer-Encoding", "base64")
   .setContent("first,second,third\\none,two,three");`)
 })
 
@@ -65,5 +70,6 @@ test.serial('comment', t => {
 // Find kittens
 body.createChild()
   .setHeader("Content-Disposition", "form-data; name=search")
+  .setHeader("Content-Transfer-Encoding", "quoted-printable")
   .setContent("kitten");`)
 })

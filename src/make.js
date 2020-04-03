@@ -57,7 +57,8 @@ function paramsState () {
 
 function postState () {
   return {
-    species: null
+    species: null,
+    boundary: null
   }
 }
 

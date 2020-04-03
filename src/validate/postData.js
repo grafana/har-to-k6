@@ -1,5 +1,5 @@
 const params = require('./params')
-const { empty, emptyObject, seralizeURLSearchParams } = require('../aid')
+const { empty, emptyObject, seralizeURLSearchParams, getContentTypeValue } = require('../aid')
 const { InvalidArchiveError } = require('../error')
 
 /*
@@ -76,7 +76,7 @@ function validate (node, i) {
     ![
       'application/x-www-form-urlencoded',
       'multipart/form-data'
-    ].includes(node.mimeType)
+    ].includes(getContentTypeValue(node.mimeType))
   ) {
     throw new InvalidArchiveError(
       { name: 'InvalidPostDataType' },
