@@ -22,6 +22,7 @@ const { InvalidArchiveError } = require('../error')
 function variableDefined (archive) {
   const entries = orderEntries(archive)
   const defined = new Set()
+
   for (let i = 0; i < entries.length; i++) {
     const entry = entries[i]
     validate(entry.request, i, defined)
@@ -127,15 +128,33 @@ function define (entry, defined) {
   }
 }
 
-function orderEntries (archive) {
-  const pages = extractPages(archive.log.pages)
-  const entries = archive.log.entries || []
-  const external = entries.filter(entry => !entry.pageref).sort(sort.index)
-  const explicit = orderExplicit(entries, pages)
-  const implicit = orderImplicit(entries, pages)
-  return [ ...external, ...explicit, ...implicit ]
+function zipGroups (entries) {
+  const groupedEntries = entries.reduce((result, entry) => {
+    if (entry.pageref) {
+      if (!result.has(entry.pageref)) {
+        result.set(entry.pageref, [])
+      }
+
+      result.set(entry.pageref, [...result.get(entry.pageref), entry])
+    } else {
+      result.set(entry)
+    }
+
+    return result
+  }, new Map())
+
+  return [...groupedEntries.entries()].flatMap(([item, children]) => children || item)
 }
 
+function orderEntries (archive) {
+  const entries = archive.log.entries || []
+
+  // No matter if entry is external, page is explicit or implicit the order of entries are always respected
+  // order should be the same order as the rendered output.
+  return zipGroups(entries)
+}
+
+// eslint-disable-next-line no-unused-vars
 function extractPages (pages) {
   if (pages) {
     return new Map(pages.map(page => [ page.id, page.index ]))
@@ -144,6 +163,7 @@ function extractPages (pages) {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 function orderExplicit (entries, pages) {
   const unordered = entries.filter(entry => pages.has(entry.pageref))
   const groups = groupEntries(unordered)
@@ -151,6 +171,7 @@ function orderExplicit (entries, pages) {
   return expand(orderedGroups)
 }
 
+// eslint-disable-next-line no-unused-vars
 function orderImplicit (entries, pages) {
   const unordered = entries
     .filter(entry => entry.pageref && !pages.has(entry.pageref))
