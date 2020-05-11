@@ -12,6 +12,19 @@ function emptyObject (value) {
   return !Object.keys(value).length
 }
 
+function objectFromEntries (entries) {
+  if (Object.fromEntries) {
+    return Object.fromEntries(entries)
+  }
+
+  return entries.reduce((obj, [key, val]) => {
+    return {
+      ...obj,
+      [key]: val
+    }
+  }, {})
+}
+
 function isString (x) {
   return Object.prototype.toString.call(x) === '[object String]'
 }
@@ -30,7 +43,7 @@ function nought (value) {
 
 function parseContentType (str = '') {
   const [mimeType, ...rest] = str.split(';').map(s => s.trim())
-  const params = Object.fromEntries(rest.map(s => s.split('=')))
+  const params = objectFromEntries(rest.map(s => s.split('=')))
 
   return {
     ...params,
