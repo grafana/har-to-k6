@@ -5,7 +5,7 @@ const Text = require('./Text')
 const { CheckType } = require('../../../enum')
 const { UnrecognizedError } = require('../../../error')
 
-function computed (node) {
+function computed(node) {
   switch (node.type) {
     case CheckType.JSONPath:
       return JSONPath(node)

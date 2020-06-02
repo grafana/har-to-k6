@@ -6,29 +6,20 @@ const { InvalidArchiveError } = require('../error')
  * root: required object
  * log: required object
  */
-function root (node, assay) {
+function root(node, assay) {
   validate(node)
   log(node.log, assay)
 }
 
-function validate (node) {
+function validate(node) {
   if (!isPlainObject(node)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingRoot' },
-      'Missing root node'
-    )
+    throw new InvalidArchiveError({ name: 'MissingRoot' }, 'Missing root node')
   }
   if (!('log' in node)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingLog' },
-      'Missing log section'
-    )
+    throw new InvalidArchiveError({ name: 'MissingLog' }, 'Missing log section')
   }
   if (!isPlainObject(node.log)) {
-    throw new InvalidArchiveError(
-      { name: 'InvalidLog' },
-      'Invalid log section: must be object'
-    )
+    throw new InvalidArchiveError({ name: 'InvalidLog' }, 'Invalid log section: must be object')
   }
 }
 

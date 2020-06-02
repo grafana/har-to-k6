@@ -5,11 +5,11 @@ const { InvalidArchiveError } = require('../error')
  * version: optional string
  * comment: optional string
  */
-function creator (node, assay) {
+function creator(node) {
   validate(node)
 }
 
-function validate (node) {
+function validate(node) {
   if (node.name && typeof node.name !== 'string') {
     throw new InvalidArchiveError(
       { name: 'InvalidCreatorName' },

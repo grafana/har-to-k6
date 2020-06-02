@@ -1,11 +1,11 @@
-function page (node, result) {
+function page(node, result) {
   const nameParts = []
 
   node.id && nameParts.push(node.id)
   node.title && nameParts.push(node.title)
 
   const spec = {
-    name: nameParts.join(' - ')
+    name: nameParts.join(' - '),
   }
 
   if (node.comment) {

@@ -15,5 +15,5 @@ Object.assign(exports, {
   multilineCommentEnds,
   variable,
   variables,
-  variableStart
+  variableStart,
 })

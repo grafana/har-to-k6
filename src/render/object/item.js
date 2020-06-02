@@ -3,8 +3,8 @@ const key = require('./key')
 const { CommentLocation } = require('../../enum')
 const { lineBreak, multilineComment } = require('../../expression')
 
-function item (spec, last) {
-  const note = (spec.comment ? comment(spec.comment) : null)
+function item(spec, last) {
+  const note = spec.comment ? comment(spec.comment) : null
   const location = locate(spec, note)
   return (
     (note && location === CommentLocation.Top ? `${note}\n` : '') +
@@ -14,11 +14,11 @@ function item (spec, last) {
   )
 }
 
-function locate (spec, note) {
+function locate(spec, note) {
   if (
     (note && multilineComment.test(note)) ||
     lineBreak.test(spec.value) ||
-    (2 + spec.name.length + 2 + spec.value.length) > 50
+    2 + spec.name.length + 2 + spec.value.length > 50
   ) {
     /*
      * Any of:

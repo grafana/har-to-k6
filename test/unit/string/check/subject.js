@@ -3,20 +3,23 @@ import subject from 'string/check/subject'
 import { extrinsic } from 'aid'
 import { CheckSubject } from 'enum'
 
-test('ResponseBody', t => {
+test('ResponseBody', (t) => {
   t.is(subject(CheckSubject.ResponseBody), 'body')
 })
 
-test('ResponseHeaders', t => {
+test('ResponseHeaders', (t) => {
   t.is(subject(CheckSubject.ResponseHeaders), 'header')
 })
 
-test('HttpStatusCode', t => {
+test('HttpStatusCode', (t) => {
   t.is(subject(CheckSubject.HttpStatusCode), 'status')
 })
 
-test('invalid', t => {
-  t.throws(() => {
-    subject(extrinsic(CheckSubject))
-  }, { name: 'UnrecognizedCheckSubject' })
+test('invalid', (t) => {
+  t.throws(
+    () => {
+      subject(extrinsic(CheckSubject))
+    },
+    { name: 'UnrecognizedCheckSubject' }
+  )
 })

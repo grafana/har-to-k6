@@ -8,16 +8,13 @@ const { InvalidArchiveError } = require('../error')
  * contentType: optional string
  * comment: optional string
  */
-function param (node, i, j, assay) {
+function param(node, i, j) {
   validate(node, i, j)
 }
 
-function validate (node, i, j) {
+function validate(node, i, j) {
   if (empty(node.name)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingParamName' },
-      `Missing param name (${i}:${j})`
-    )
+    throw new InvalidArchiveError({ name: 'MissingParamName' }, `Missing param name (${i}:${j})`)
   }
   if (typeof node.name !== 'string') {
     throw new InvalidArchiveError(

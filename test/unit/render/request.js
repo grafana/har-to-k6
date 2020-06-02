@@ -2,16 +2,10 @@ import test from 'ava'
 import isolate from 'helper/isolate'
 import { requestSpec as makeRequestSpec } from 'make'
 import { PostSpecies } from 'enum'
-const [ request, {
-  address,
-  cookies,
-  headers,
-  indent,
-  object,
-  post,
-  postMultipartResolvedPre,
-  text
-} ] = isolate(test, 'render/request', {
+const [
+  request,
+  { address, cookies, headers, indent, object, post, postMultipartResolvedPre, text },
+] = isolate(test, 'render/request', {
   address: 'render/address',
   cookies: 'render/cookies',
   headers: 'render/headers',
@@ -19,10 +13,10 @@ const [ request, {
   object: 'render/object',
   post: 'render/post',
   postMultipartResolvedPre: 'render/post/multipart/resolved/pre',
-  text: 'render/text'
+  text: 'render/text',
 })
 
-test.serial('minimal', t => {
+test.serial('minimal', (t) => {
   text.withArgs('GET').returns('"GET"')
   address.callsFake((spec, factor) => {
     factor.address = '"http://example.com"'
@@ -44,7 +38,7 @@ test.serial('minimal', t => {
   t.true(cookies.calledOnce)
 })
 
-test.serial('body', t => {
+test.serial('body', (t) => {
   text.withArgs('POST').returns('"POST"')
   address.callsFake((spec, factor) => {
     factor.address = '"http://example.com"'
@@ -60,92 +54,104 @@ test.serial('body', t => {
   spec.state.post.species = PostSpecies.Unstructured
   spec.state.params.variable = false
   const result = request(spec)
-  t.is(result, '' +
-`response = http.post(
+  t.is(
+    result,
+    '' +
+      `response = http.post(
   args
-);`)
+);`
+  )
   t.deepEqual(post.firstCall.args[0], spec)
-  t.is(indent.firstCall.args[0], '' +
-`"http://example.com",
-"search=kitten"`)
+  t.is(
+    indent.firstCall.args[0],
+    '' +
+      `"http://example.com",
+"search=kitten"`
+  )
 })
 
-test.serial('headers', t => {
+test.serial('headers', (t) => {
   text.withArgs('GET').returns('"GET"')
   address.callsFake((spec, factor) => {
     factor.address = '"http://example.com"'
   })
-  headers.returns('' +
-`{
+  headers.returns(
+    '' +
+      `{
   Accept: "*/*" // Accept everything
-}`)
+}`
+  )
   object.returns('options')
   post.returns(null)
   cookies.returns(null)
   const spec = makeRequestSpec()
   spec.method = 'GET'
   spec.address = 'http://example.com'
-  spec.headers.set('Accept', new Set([ { value: '*/*' } ]))
+  spec.headers.set('Accept', new Set([{ value: '*/*' }]))
   spec.state.post.species = PostSpecies.Empty
   spec.state.params.variable = false
   const result = request(spec)
-  t.is(result, '' +
-`response = http.get("http://example.com", options);`)
+  t.is(result, '' + `response = http.get("http://example.com", options);`)
   t.deepEqual(headers.firstCall.args[0], spec.headers)
   t.deepEqual(object.firstCall.args[0], [
     {
       name: 'headers',
-      value: '' +
-`{
+      value:
+        '' +
+        `{
   Accept: "*/*" // Accept everything
-}`
-    }
+}`,
+    },
   ])
 })
 
-test.serial('cookies', t => {
+test.serial('cookies', (t) => {
   text.withArgs('GET').returns('"GET"')
   address.callsFake((spec, factor) => {
     factor.address = '"http://example.com"'
   })
-  cookies.returns('' +
-`{
+  cookies.returns(
+    '' +
+      `{
   theme: "aqua" // Exercise prerelease theme
-}`)
+}`
+  )
   object.returns('options')
   post.returns(null)
   headers.returns(null)
   const spec = makeRequestSpec()
   spec.method = 'GET'
   spec.address = 'http://example.com'
-  spec.cookies.set('theme', new Set([ { value: 'aqua' } ]))
+  spec.cookies.set('theme', new Set([{ value: 'aqua' }]))
   spec.state.post.species = PostSpecies.Empty
   spec.state.params.variable = false
   const result = request(spec)
-  t.is(result, '' +
-`response = http.get("http://example.com", options);`)
+  t.is(result, '' + `response = http.get("http://example.com", options);`)
   t.deepEqual(cookies.firstCall.args[0], spec.cookies)
   t.deepEqual(object.firstCall.args[0], [
     {
       name: 'cookies',
-      value: '' +
-`{
+      value:
+        '' +
+        `{
   theme: "aqua" // Exercise prerelease theme
-}`
-    }
+}`,
+    },
   ])
 })
 
-test.serial('empty body + options', t => {
+test.serial('empty body + options', (t) => {
   text.withArgs('POST').returns('"POST"')
   address.callsFake((spec, factor) => {
     factor.address = '"http://example.com"'
   })
   post.returns(null)
-  headers.returns('' +
-`{
+  headers.returns(
+    '' +
+      `{
   Accept: "*/*" // Accept everything
-}`)
+}`
+  )
   object.returns('options')
   cookies.returns(null)
   const spec = makeRequestSpec()

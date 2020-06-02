@@ -10,11 +10,11 @@ const { InvalidArchiveError } = require('../../error')
  * flags: prohibited
  * subject: prohibited except CheckSubject.ResponseBody
  */
-function JSONPathValue (node, i, j, assay) {
+function JSONPathValue(node, i, j) {
   validate(node, i, j)
 }
 
-function validate (node, i, j) {
+function validate(node, i, j) {
   if (empty(node.expression)) {
     throw new InvalidArchiveError(
       { name: 'MissingCheckExpression' },

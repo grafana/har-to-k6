@@ -1,6 +1,6 @@
 const { isBlacklistedHeader } = require('../aid')
 
-function header (node, spec) {
+function header(node, spec) {
   const item = {}
 
   if (node.name && node.name[0] === ':') {

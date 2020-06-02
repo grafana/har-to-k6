@@ -3,7 +3,7 @@ const unstructured = require('./unstructured')
 const { PostSpecies } = require('../../enum')
 const { UnrecognizedError } = require('../../error')
 
-function post (spec) {
+function post(spec) {
   switch (spec.state.post.species) {
     case PostSpecies.Empty:
       return null

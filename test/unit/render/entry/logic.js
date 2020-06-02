@@ -1,59 +1,67 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [ entry, { checks, request, variables } ] =
-  isolate(test, 'render/entry/logic', {
-    checks: 'render/checks',
-    request: 'render/request',
-    variables: 'render/variables'
-  })
+const [entry, { checks, request, variables }] = isolate(test, 'render/entry/logic', {
+  checks: 'render/checks',
+  request: 'render/request',
+  variables: 'render/variables',
+})
 
-test.serial('minimal', t => {
+test.serial('minimal', (t) => {
   request.returns(`// Request`)
   const result = entry({
     request: {},
     checks: new Map(),
-    variables: new Map()
+    variables: new Map(),
   })
   t.is(result, `// Request`)
 })
 
-test.serial('checks', t => {
+test.serial('checks', (t) => {
   request.returns(`// Request`)
   checks.returns(`// Checks`)
   const result = entry({
     request: {},
     checks: new Map().set('token exists', {}),
-    variables: new Map()
+    variables: new Map(),
   })
-  t.is(result, '' +
-`// Request
-// Checks`)
+  t.is(
+    result,
+    '' +
+      `// Request
+// Checks`
+  )
 })
 
-test.serial('variables', t => {
+test.serial('variables', (t) => {
   request.returns(`// Request`)
   variables.returns(`// Variables`)
   const result = entry({
     request: {},
     checks: new Map(),
-    variables: new Map().set('token', {})
+    variables: new Map().set('token', {}),
   })
-  t.is(result, '' +
-`// Request
-// Variables`)
+  t.is(
+    result,
+    '' +
+      `// Request
+// Variables`
+  )
 })
 
-test.serial('checks variables', t => {
+test.serial('checks variables', (t) => {
   request.returns(`// Request`)
   checks.returns(`// Checks`)
   variables.returns(`// Variables`)
   const result = entry({
     request: {},
     checks: new Map().set('token exists', {}),
-    variables: new Map().set('token', {})
+    variables: new Map().set('token', {}),
   })
-  t.is(result, '' +
-`// Request
+  t.is(
+    result,
+    '' +
+      `// Request
 // Checks
-// Variables`)
+// Variables`
+  )
 })

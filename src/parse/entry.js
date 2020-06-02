@@ -4,7 +4,7 @@ const state = require('./state/entry')
 const variables = require('./variables')
 const { entrySpec: makeEntrySpec } = require('../make')
 
-function entry (node, result) {
+function entry(node, result) {
   const spec = makeEntrySpec()
   if (node.pageref) {
     spec.page = node.pageref

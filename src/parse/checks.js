@@ -1,6 +1,6 @@
 const check = require('./check')
 
-function checks (node, spec) {
+function checks(node, spec) {
   for (const item of node) {
     check(item, spec)
   }

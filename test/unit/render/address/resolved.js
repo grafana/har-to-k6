@@ -1,13 +1,11 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-import {
-  requestFactor as makeRequestFactor,
-  requestSpec as makeRequestSpec
-} from 'make'
-const [ resolved, { template } ] =
-  isolate(test, 'render/address/resolved', { template: 'render/template' })
+import { requestFactor as makeRequestFactor, requestSpec as makeRequestSpec } from 'make'
+const [resolved, { template }] = isolate(test, 'render/address/resolved', {
+  template: 'render/template',
+})
 
-test('basic', t => {
+test('basic', (t) => {
   /* eslint-disable no-template-curly-in-string */
   template.returns('`http://${vars["host"]}`')
   const factor = makeRequestFactor()

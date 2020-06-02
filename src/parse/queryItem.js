@@ -1,4 +1,4 @@
-function queryItem (node, spec) {
+function queryItem(node, spec) {
   const item = {}
   if (node.value) {
     item.value = node.value

@@ -1,19 +1,19 @@
 const text = require('./text')
 
-function cookie (name, spec) {
+function cookie(name, spec) {
   return {
     name,
     value: value(spec),
-    comment: note(spec)
+    comment: note(spec),
   }
 }
 
-function value (spec) {
+function value(spec) {
   return text(spec.value || '')
 }
 
-function note (spec) {
-  return (spec.comment || null)
+function note(spec) {
+  return spec.comment || null
 }
 
 module.exports = cookie

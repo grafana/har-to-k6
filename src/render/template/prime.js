@@ -1,6 +1,6 @@
 const content = require('./content')
 
-function prime (value) {
+function prime(value) {
   return `\`${content(value)}\``
 }
 

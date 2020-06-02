@@ -5,7 +5,7 @@ const runtime = require('./runtime')
 const { AddressSpecies } = require('../../enum')
 const { UnrecognizedError } = require('../../error')
 
-function address (spec, factor) {
+function address(spec, factor) {
   switch (spec.state.address.species) {
     case AddressSpecies.Fixed:
       fixed(spec, factor)

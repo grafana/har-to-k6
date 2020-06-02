@@ -1,29 +1,30 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [ queryString, { queryItem } ] =
-  isolate(test, 'parse/queryString', { queryItem: 'parse/queryItem' })
+const [queryString, { queryItem }] = isolate(test, 'parse/queryString', {
+  queryItem: 'parse/queryItem',
+})
 
-function makeSpec () {
+function makeSpec() {
   return new Map()
 }
 
-function makeState () {
+function makeState() {
   return {
-    variable: false
+    variable: false,
   }
 }
 
-test.serial('empty', t => {
+test.serial('empty', (t) => {
   queryString([], makeSpec(), makeState())
   t.true(queryItem.notCalled)
 })
 
-test.serial('1', t => {
-  queryString([ {} ], makeSpec(), makeState())
+test.serial('1', (t) => {
+  queryString([{}], makeSpec(), makeState())
   t.true(queryItem.calledOnce)
 })
 
-test.serial('3', t => {
-  queryString([ {}, {}, {} ], makeSpec(), makeState())
+test.serial('3', (t) => {
+  queryString([{}, {}, {}], makeSpec(), makeState())
   t.true(queryItem.calledThrice)
 })

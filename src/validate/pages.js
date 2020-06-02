@@ -5,7 +5,7 @@ const { InvalidArchiveError } = require('../error')
 /*
  * [i]: object
  */
-function pages (node, assay) {
+function pages(node, assay) {
   validate(node)
   for (let i = 0; i < node.length; i++) {
     const item = node[i]
@@ -13,14 +13,11 @@ function pages (node, assay) {
   }
 }
 
-function validate (node) {
+function validate(node) {
   for (let i = 0; i < node.length; i++) {
     const item = node[i]
     if (!isPlainObject(item)) {
-      throw new InvalidArchiveError(
-        { name: 'InvalidPage' },
-        `Invalid page (${i}): must be object`
-      )
+      throw new InvalidArchiveError({ name: 'InvalidPage' }, `Invalid page (${i}): must be object`)
     }
   }
 }

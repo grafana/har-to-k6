@@ -1,4 +1,4 @@
-function Regex (node, item) {
+function Regex(node, item) {
   item.subject = node.subject
   item.expression = node.expression
   if (node.flags) {

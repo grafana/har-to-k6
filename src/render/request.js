@@ -9,12 +9,12 @@ const text = require('./text')
 const { requestFactor: makeRequestFactor } = require('../make')
 const { PostSpecies } = require('../enum')
 
-function request (spec) {
+function request(spec) {
   const factor = analyze(spec)
   return render(factor)
 }
 
-function analyze (spec) {
+function analyze(spec) {
   const factor = makeRequestFactor()
   factor.call = call(spec)
   factor.method = method(spec)
@@ -29,7 +29,7 @@ function analyze (spec) {
   return factor
 }
 
-function call (spec) {
+function call(spec) {
   if (shortcut.has(spec.method)) {
     return shortcut.get(spec.method)
   } else {
@@ -37,15 +37,15 @@ function call (spec) {
   }
 }
 
-function method (spec) {
+function method(spec) {
   return text(spec.method)
 }
 
-function capacity (spec) {
+function capacity(spec) {
   return spec.method !== 'GET'
 }
 
-function body (spec, factor) {
+function body(spec, factor) {
   factor.body = post(spec)
   if (
     spec.state.post.species === PostSpecies.Structured &&
@@ -57,7 +57,7 @@ function body (spec, factor) {
   }
 }
 
-function options (factor) {
+function options(factor) {
   if (factor.headers || factor.cookies) {
     const entries = []
     if (factor.headers) {
@@ -72,7 +72,7 @@ function options (factor) {
   }
 }
 
-function args (factor) {
+function args(factor) {
   const items = []
   if (factor.call === 'request') {
     items.push(factor.method)
@@ -90,22 +90,15 @@ function args (factor) {
   return items
 }
 
-function compact (factor) {
-  return (
-    !factor.capacity ||
-    factor.args.length === 1 ||
-    factor.args[1] === 'null'
-  )
+function compact(factor) {
+  return !factor.capacity || factor.args.length === 1 || factor.args[1] === 'null'
 }
 
-function render (factor) {
-  return [
-    pre(factor),
-    main(factor)
-  ].filter(item => item).join(`\n`)
+function render(factor) {
+  return [pre(factor), main(factor)].filter((item) => item).join(`\n`)
 }
 
-function pre (factor) {
+function pre(factor) {
   if (factor.pre.length) {
     return factor.pre.join(`\n`)
   } else {
@@ -113,16 +106,18 @@ function pre (factor) {
   }
 }
 
-function main (factor) {
+function main(factor) {
   if (factor.compact) {
     const list = factor.args.join(`, `)
     return `response = http.${factor.call}(${list});`
   } else {
     const list = factor.args.join(`,\n`)
-    return '' +
-`response = http.${factor.call}(
+    return (
+      '' +
+      `response = http.${factor.call}(
 ${indent(list)}
 );`
+    )
   }
 }
 

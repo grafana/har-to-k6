@@ -1,5 +1,7 @@
 const path = require('path')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
+/** @type {import('webpack').Configuration } */
 module.exports = {
   entry: './src/index.js',
   node: { fs: 'empty' },
@@ -8,8 +10,15 @@ module.exports = {
     path: path.resolve(__dirname),
     filename: 'standalone.js',
     library: 'harToK6',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
+  plugins: [
+    process.env.BUNDLE_ANALYSIS &&
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        reportFilename: path.join(__dirname, process.env.BUNDLE_ANALYSIS),
+      }),
+  ].filter((a) => a),
   module: {
     rules: [
       {
@@ -18,10 +27,10 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      }
-    ]
-  }
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+    ],
+  },
 }

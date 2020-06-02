@@ -1,6 +1,6 @@
 const indent = require('./indent')
 
-function block (sections) {
+function block(sections) {
   if (sections.length) {
     const content = sections.join(`\n\n`)
     return `{

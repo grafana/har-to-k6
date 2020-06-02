@@ -1,10 +1,8 @@
 const variable = require('./variable')
 
-function variables (spec) {
+function variables(spec) {
   if (spec.size) {
-    return [ ...spec ]
-      .map(([ name, item ]) => variable(name, item))
-      .join(`\n`)
+    return [...spec].map(([name, item]) => variable(name, item)).join(`\n`)
   } else {
     return null
   }

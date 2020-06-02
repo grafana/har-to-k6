@@ -1,74 +1,74 @@
-function addressState () {
+function addressState() {
   return {
     variable: null,
     variableStart: null,
-    species: null
+    species: null,
   }
 }
 
-function assay () {
+function assay() {
   return {
     pageIds: new Set(),
     requestCheckNames: new Map(),
-    requestCookieNames: new Map()
+    requestCookieNames: new Map(),
   }
 }
 
-function checkState () {
+function checkState() {
   return {
     negated: null,
-    plural: null
+    plural: null,
   }
 }
 
-function entrySpec () {
+function entrySpec() {
   return {
     page: null,
     request: requestSpec(),
     checks: new Map(),
     variables: new Map(),
-    state: entryState()
+    state: entryState(),
   }
 }
 
-function entryState () {
+function entryState() {
   return {
-    expanded: null
+    expanded: null,
   }
 }
 
-function imports () {
+function imports() {
   return {
     group: false,
     check: false,
     http: false,
     jsonpath: false,
     formUrlEncode: false,
-    MimeBuilder: false
+    MimeBuilder: false,
   }
 }
 
-function paramsState () {
+function paramsState() {
   return {
     plural: null,
-    variable: null
+    variable: null,
   }
 }
 
-function postState () {
+function postState() {
   return {
     species: null,
-    boundary: null
+    boundary: null,
   }
 }
 
-function queryState () {
+function queryState() {
   return {
-    variable: null
+    variable: null,
   }
 }
 
-function requestFactor () {
+function requestFactor() {
   return {
     method: null,
     capacity: null,
@@ -77,11 +77,11 @@ function requestFactor () {
     headers: null,
     cookies: null,
     options: null,
-    pre: []
+    pre: [],
   }
 }
 
-function requestSpec () {
+function requestSpec() {
   return {
     method: null,
     address: null,
@@ -89,20 +89,20 @@ function requestSpec () {
     headers: new Map(),
     cookies: new Map(),
     post: {},
-    state: requestState()
+    state: requestState(),
   }
 }
 
-function requestState () {
+function requestState() {
   return {
     address: addressState(),
     query: queryState(),
     post: postState(),
-    params: paramsState()
+    params: paramsState(),
   }
 }
 
-function result () {
+function result() {
   return {
     comment: [],
     options: {},
@@ -110,7 +110,7 @@ function result () {
     entries: [],
     flow: [],
     imports: imports(),
-    declares: new Set()
+    declares: new Set(),
   }
 }
 
@@ -127,5 +127,5 @@ Object.assign(exports, {
   requestFactor,
   requestSpec,
   requestState,
-  result
+  result,
 })

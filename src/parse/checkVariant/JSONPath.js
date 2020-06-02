@@ -1,4 +1,4 @@
-function JSONPath (node, item) {
+function JSONPath(node, item) {
   item.expression = node.expression
 }
 

@@ -2,9 +2,9 @@ const { isString } = require('../../../aid')
 const object = require('../../object')
 const text = require('../../text')
 
-function singular (params) {
+function singular(params) {
   const entries = []
-  for (const [ name, items ] of params) {
+  for (const [name, items] of params) {
     for (const item of items) {
       entries.push(entry(name, item))
     }
@@ -12,7 +12,7 @@ function singular (params) {
   return object(entries)
 }
 
-function entry (name, item) {
+function entry(name, item) {
   const result = { name }
   if (isString(item.value)) {
     result.value = text(item.value)
@@ -23,7 +23,7 @@ function entry (name, item) {
   return result
 }
 
-function comment (item) {
+function comment(item) {
   const sections = []
   if (item.comment) {
     sections.push(item.comment)

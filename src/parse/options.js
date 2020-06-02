@@ -1,6 +1,6 @@
-function options (node, result) {
+function options(node, result) {
   result.options = {
-    ...node
+    ...node,
   }
 }
 

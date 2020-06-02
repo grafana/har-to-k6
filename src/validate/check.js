@@ -1,11 +1,7 @@
 const checkName = require('../string/check/name')
 const checkVariant = require('./checkVariant')
 const { empty } = require('../aid')
-const {
-  CheckConditionEncoding,
-  CheckSubjectEncoding,
-  CheckTypeEncoding
-} = require('../enum')
+const { CheckConditionEncoding, CheckSubjectEncoding, CheckTypeEncoding } = require('../enum')
 const { InvalidArchiveError } = require('../error')
 
 /*
@@ -19,19 +15,16 @@ const { InvalidArchiveError } = require('../error')
  *
  * effective name unique
  */
-function check (node, i, j, assay) {
+function check(node, i, j, assay) {
   validate(node, i, j)
   checkVariant[CheckTypeEncoding.get(node.type)](node, i, j, assay)
   validateName(node, i, j, assay)
   name(node, i, assay)
 }
 
-function validate (node, i, j) {
+function validate(node, i, j) {
   if (empty(node.type)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingCheckType' },
-      `Missing check type (${i}:${j})`
-    )
+    throw new InvalidArchiveError({ name: 'MissingCheckType' }, `Missing check type (${i}:${j})`)
   }
   if (!CheckTypeEncoding.has(node.type)) {
     throw new InvalidArchiveError(
@@ -77,11 +70,8 @@ function validate (node, i, j) {
   }
 }
 
-function validateName (node, i, j, assay) {
-  if (
-    assay.requestCheckNames.has(i) &&
-    assay.requestCheckNames.get(i).has(checkName(node))
-  ) {
+function validateName(node, i, j, assay) {
+  if (assay.requestCheckNames.has(i) && assay.requestCheckNames.get(i).has(checkName(node))) {
     throw new InvalidArchiveError(
       { name: 'DuplicateCheckName' },
       `Duplicate check name (${i}:${j}): ${checkName(node)}`
@@ -89,7 +79,7 @@ function validateName (node, i, j, assay) {
   }
 }
 
-function name (node, i, assay) {
+function name(node, i, assay) {
   if (!assay.requestCheckNames.has(i)) {
     assay.requestCheckNames.set(i, new Set())
   }

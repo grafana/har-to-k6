@@ -1,6 +1,6 @@
 const cookie = require('./cookie')
 
-function cookies (node, spec) {
+function cookies(node, spec) {
   for (const item of node) {
     cookie(item, spec)
   }

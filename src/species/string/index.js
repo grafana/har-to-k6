@@ -2,7 +2,7 @@ const identifier = require('./identifier')
 const template = require('./template')
 const { StringSpecies } = require('../../enum')
 
-function string (value) {
+function string(value) {
   if (template(value)) {
     return StringSpecies.Template
   } else if (identifier(value)) {

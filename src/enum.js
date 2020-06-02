@@ -32,7 +32,7 @@ const AddressSpecies = Object.freeze({
    * - Address with variable + query
    * - Query with variable
    */
-  Runtime: 4
+  Runtime: 4,
 })
 
 const CheckCondition = Object.freeze({
@@ -40,14 +40,14 @@ const CheckCondition = Object.freeze({
   NotContains: 1,
   Equals: 2,
   StartsWith: 3,
-  EndsWith: 4
+  EndsWith: 4,
 })
 const CheckConditionEncoding = inverse(CheckCondition)
 
 const CheckSubject = Object.freeze({
   ResponseBody: 0,
   ResponseHeaders: 1,
-  HttpStatusCode: 2
+  HttpStatusCode: 2,
 })
 const CheckSubjectEncoding = inverse(CheckSubject)
 
@@ -55,39 +55,39 @@ const CheckType = Object.freeze({
   Text: 0,
   JSONPathValue: 1,
   JSONPath: 2,
-  Regex: 3
+  Regex: 3,
 })
 const CheckTypeEncoding = inverse(CheckType)
 
 const CommentLocation = Object.freeze({
   Top: 0,
-  Suffix: 1
+  Suffix: 1,
 })
 
 const FlowItemType = Object.freeze({
   External: 0,
-  Group: 1
+  Group: 1,
 })
 
 const PostSpecies = Object.freeze({
   Empty: 1,
   Unstructured: 2,
-  Structured: 3
+  Structured: 3,
 })
 
 const StringSpecies = Object.freeze({
   Identifier: 0,
   String: 1,
-  Template: 2
+  Template: 2,
 })
 
 const VariableType = Object.freeze({
   JSONPath: 0,
-  Regex: 1
+  Regex: 1,
 })
 const VariableTypeEncoding = inverse(VariableType)
 
-function inverse (items) {
+function inverse(items) {
   const map = new Map()
   for (const key of Object.keys(items)) {
     const encoding = items[key]
@@ -112,5 +112,5 @@ Object.assign(exports, {
   PostSpecies,
   StringSpecies,
   VariableType,
-  VariableTypeEncoding
+  VariableTypeEncoding,
 })

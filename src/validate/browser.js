@@ -1,10 +1,10 @@
 const { InvalidArchiveError } = require('../error')
 
-function browser (node, assay) {
+function browser(node) {
   validate(node)
 }
 
-function validate (node) {
+function validate(node) {
   if (node.name && typeof node.name !== 'string') {
     throw new InvalidArchiveError(
       { name: 'InvalidBrowserName' },

@@ -1,5 +1,5 @@
 // Request argument
-function arg () {
+function arg() {
   return `body.build()`
 }
 

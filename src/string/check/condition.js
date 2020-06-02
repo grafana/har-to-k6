@@ -1,7 +1,7 @@
 const { CheckCondition } = require('../../enum')
 const { UnrecognizedError } = require('../../error')
 
-function condition (value) {
+function condition(value) {
   switch (value) {
     case CheckCondition.Contains:
       return 'contains'

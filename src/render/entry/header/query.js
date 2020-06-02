@@ -1,19 +1,17 @@
 const { lineBreak } = require('../../../expression')
 
-function query (spec) {
+function query(spec) {
   const state = spec.state
-  if (
-    !state.address.variable &&
-    spec.query.size &&
-    !state.query.variable
-  ) {
+  if (!state.address.variable && spec.query.size && !state.query.variable) {
     // Query string constructed at convert time
     // Comments shifted to header
-    const notes = [ ...spec.query ].map(group).filter(item => item)
+    const notes = [...spec.query].map(group).filter((item) => item)
     if (notes.length) {
-      return '' +
-`Query string notes:
+      return (
+        '' +
+        `Query string notes:
 ${notes.join('\n')}`
+      )
     } else {
       return null
     }
@@ -22,11 +20,9 @@ ${notes.join('\n')}`
   }
 }
 
-function group ([ name, items ]) {
-  const plural = (items.size > 1)
-  const notes = [ ...items ]
-    .map((item, i) => value(name, item, plural, i))
-    .filter(item => item)
+function group([name, items]) {
+  const plural = items.size > 1
+  const notes = [...items].map((item, i) => value(name, item, plural, i)).filter((item) => item)
   if (notes.length) {
     return notes.join('\n')
   } else {
@@ -34,12 +30,14 @@ function group ([ name, items ]) {
   }
 }
 
-function value (name, item, plural, i) {
+function value(name, item, plural, i) {
   if (item.comment) {
     if (lineBreak.test(item.comment)) {
-      return '' +
-`${label(name, plural, i)}:
+      return (
+        '' +
+        `${label(name, plural, i)}:
 ${item.comment}`
+      )
     } else {
       return `${label(name, plural, i)}: ${item.comment}`
     }
@@ -48,7 +46,7 @@ ${item.comment}`
   }
 }
 
-function label (name, plural, i) {
+function label(name, plural, i) {
   if (plural) {
     return `${name}[${i}]`
   } else {

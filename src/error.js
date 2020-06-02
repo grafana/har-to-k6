@@ -7,5 +7,5 @@ class UnrecognizedError extends HarToK6Error {}
 Object.assign(exports, {
   HarToK6Error,
   InvalidArchiveError,
-  UnrecognizedError
+  UnrecognizedError,
 })

@@ -4,13 +4,13 @@ const note = require('../../note/map')
 const string = require('../../string')
 
 // Multipart encoded post data without variable
-function fixed (spec) {
+function fixed(spec) {
   return [description(spec.post.params), value(spec.post.params, spec.state.post.boundary)]
-    .filter(item => item)
+    .filter((item) => item)
     .join(`\n`)
 }
 
-function value (params, boundary) {
+function value(params, boundary) {
   const message = new MimeBuilder('multipart/form-data')
 
   if (boundary) {
@@ -30,7 +30,7 @@ function value (params, boundary) {
   return string(encoded)
 }
 
-function description (params) {
+function description(params) {
   const content = note(params)
   if (content) {
     return comment(content)

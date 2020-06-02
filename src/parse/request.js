@@ -4,7 +4,7 @@ const queryString = require('./queryString')
 const state = require('./state/request')
 const { emptyObject, getContentTypeValue } = require('../aid')
 
-function request (node, spec) {
+function request(node, spec) {
   spec.method = node.method.toUpperCase()
   spec.address = node.url
   if (node.comment) {
@@ -29,7 +29,7 @@ function request (node, spec) {
 
 // Fallback to content type from postData
 // Preserves explicit header which potentially has more information
-function contentType (mimeType, headers) {
+function contentType(mimeType, headers) {
   if (!headers.has('Content-Type')) {
     const item = { value: mimeType }
     const items = new Set([item])
@@ -37,10 +37,10 @@ function contentType (mimeType, headers) {
   }
 }
 
-function addBoundary (boundary, headers) {
+function addBoundary(boundary, headers) {
   if (headers.has('Content-Type')) {
     const items = [...headers.get('Content-Type').values()]
-    const newItems = items.map(item => {
+    const newItems = items.map((item) => {
       const value = getContentTypeValue(item.value)
       if (value === 'multipart/form-data') {
         return { value: `${value}; boundary=${boundary}` }

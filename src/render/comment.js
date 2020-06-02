@@ -1,6 +1,6 @@
 const { lineBreak, multilineCommentEnds } = require('../expression')
 
-function comment (text) {
+function comment(text) {
   if (lineBreak.test(text)) {
     return multiline(text)
   } else {
@@ -8,7 +8,7 @@ function comment (text) {
   }
 }
 
-function multiline (text) {
+function multiline(text) {
   const lines = []
   lines.push(`/*`)
   for (const raw of text.split('\n')) {
@@ -20,7 +20,7 @@ function multiline (text) {
   return lines.join(`\n`)
 }
 
-function encode (text) {
+function encode(text) {
   return text.replace(multilineCommentEnds, '* /')
 }
 

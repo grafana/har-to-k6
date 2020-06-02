@@ -12,17 +12,14 @@ const { InvalidArchiveError } = require('../error')
  * secure: optional boolean
  * comment: optional string
  */
-function cookie (node, i, j, assay) {
+function cookie(node, i, j, assay) {
   validate(node, i, j, assay)
   name(node.name, i, assay)
 }
 
-function validate (node, i, j, assay) {
+function validate(node, i, j, assay) {
   if (empty(node.name)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingCookieName' },
-      `Missing cookie name (${i}:${j})`
-    )
+    throw new InvalidArchiveError({ name: 'MissingCookieName' }, `Missing cookie name (${i}:${j})`)
   }
   if (typeof node.name !== 'string') {
     throw new InvalidArchiveError(
@@ -30,10 +27,7 @@ function validate (node, i, j, assay) {
       `Invalid cookie name (${i}:${j}): must be string`
     )
   }
-  if (
-    assay.requestCookieNames.has(i) &&
-    assay.requestCookieNames.get(i).has(node.name)
-  ) {
+  if (assay.requestCookieNames.has(i) && assay.requestCookieNames.get(i).has(node.name)) {
     throw new InvalidArchiveError(
       { name: 'DuplicateCookieName' },
       `Duplicate cookie name (${i}:${j}): ${node.name}`
@@ -92,7 +86,7 @@ function validate (node, i, j, assay) {
   }
 }
 
-function name (value, i, assay) {
+function name(value, i, assay) {
   if (!assay.requestCookieNames.has(i)) {
     assay.requestCookieNames.set(i, new Set())
   }

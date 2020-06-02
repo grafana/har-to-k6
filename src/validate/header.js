@@ -6,16 +6,13 @@ const { InvalidArchiveError } = require('../error')
  * value: optional string
  * comment: optional string
  */
-function header (node, i, j, assay) {
+function header(node, i, j) {
   validate(node, i, j)
 }
 
-function validate (node, i, j) {
+function validate(node, i, j) {
   if (empty(node.name)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingHeaderName' },
-      `Missing header name (${i}:${j})`
-    )
+    throw new InvalidArchiveError({ name: 'MissingHeaderName' }, `Missing header name (${i}:${j})`)
   }
   if (typeof node.name !== 'string') {
     throw new InvalidArchiveError(

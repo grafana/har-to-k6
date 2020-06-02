@@ -2,10 +2,10 @@ const indent = require('../../indent')
 const string = require('../../string')
 const subject = require('../subject')
 
-function Regex (name, spec) {
+function Regex(name, spec) {
   const item = {
     name,
-    value: logic(spec)
+    value: logic(spec),
   }
   if (spec.comment) {
     item.comment = spec.comment
@@ -13,21 +13,21 @@ function Regex (name, spec) {
   return item
 }
 
-function logic (spec) {
+function logic(spec) {
   const factor = {
     subject: subject(spec.subject),
     expression: expression(spec),
-    flags: flags(spec)
+    flags: flags(spec),
   }
   factor.body = body(spec, factor)
   return `response => ${factor.body}`
 }
 
-function expression (spec) {
+function expression(spec) {
   return string(spec.expression)
 }
 
-function flags (spec) {
+function flags(spec) {
   if (spec.flags) {
     return string(spec.flags)
   } else {
@@ -35,7 +35,7 @@ function flags (spec) {
   }
 }
 
-function body (spec, factor) {
+function body(spec, factor) {
   if (spec.state.plural) {
     return plural(factor)
   } else {
@@ -43,28 +43,34 @@ function body (spec, factor) {
   }
 }
 
-function singular (factor) {
-  const content = '' +
-`const expr = new RegExp(${args(factor)});
+function singular(factor) {
+  const content =
+    '' +
+    `const expr = new RegExp(${args(factor)});
 return expr.test(${factor.subject});`
-  return '' +
-`{
+  return (
+    '' +
+    `{
 ${indent(content)}
 }`
+  )
 }
 
-function plural (factor) {
-  const content = '' +
-`const values = ${factor.subject};
+function plural(factor) {
+  const content =
+    '' +
+    `const values = ${factor.subject};
 const expr = new RegExp(${args(factor)});
 return !!values.find(value => expr.test(value));`
-  return '' +
-`{
+  return (
+    '' +
+    `{
 ${indent(content)}
 }`
+  )
 }
 
-function args (factor) {
+function args(factor) {
   const items = []
   items.push(factor.expression)
   if (factor.flags) {

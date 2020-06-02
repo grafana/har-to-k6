@@ -5,7 +5,7 @@ const { InvalidArchiveError } = require('../error')
 /*
  * [j]: object
  */
-function cookies (node, i, assay) {
+function cookies(node, i, assay) {
   validate(node, i)
   for (let j = 0; j < node.length; j++) {
     const item = node[j]
@@ -13,7 +13,7 @@ function cookies (node, i, assay) {
   }
 }
 
-function validate (node, i) {
+function validate(node, i) {
   for (let j = 0; j < node.length; j++) {
     const item = node[j]
     if (!isPlainObject(item)) {

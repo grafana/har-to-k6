@@ -13,25 +13,21 @@ pkginfo(module, 'version')
 const version = module.exports.version
 delete module.exports.version
 
-io
-  .version(version)
+io.version(version)
   .description('Convert LI-HAR to k6 script')
   .option('-o, --output <output>', 'Output file', output, 'loadtest.js')
   .argument('<archive>', 'LI-HAR archive to convert')
   .action(run)
 io.parse(process.argv)
 
-function output (value) {
-  if (
-    fs.existsSync(value) &&
-    fs.lstatSync(value).isDirectory()
-  ) {
+function output(value) {
+  if (fs.existsSync(value) && fs.lstatSync(value).isDirectory()) {
     throw new Error(`Cannot overwrite directory '${value}'`)
   }
   return value
 }
 
-async function run (arg, opt, log) {
+async function run(arg, opt, log) {
   try {
     start(arg.archive, log)
     const json = read(arg.archive)
@@ -44,11 +40,11 @@ async function run (arg, opt, log) {
   }
 }
 
-function start (file, log) {
+function start(file, log) {
   log.info(chalk.green(`Converting '${file}'`))
 }
 
-function read (file) {
+function read(file) {
   try {
     return fs.readFileSync(file, { encoding: 'utf8' })
   } catch (error) {
@@ -56,7 +52,7 @@ function read (file) {
   }
 }
 
-function parse (json) {
+function parse(json) {
   try {
     return JSON.parse(json)
   } catch (error) {
@@ -64,7 +60,7 @@ function parse (json) {
   }
 }
 
-async function transform (archive) {
+async function transform(archive) {
   try {
     return await convert(archive)
   } catch (error) {
@@ -72,7 +68,7 @@ async function transform (archive) {
   }
 }
 
-function write (main, output) {
+function write(main, output) {
   try {
     fs.writeFileSync(output, main)
   } catch (error) {
@@ -80,18 +76,18 @@ function write (main, output) {
   }
 }
 
-function success (output, log) {
+function success(output, log) {
   log.info(chalk.green(`Wrote k6 script to '${output}'`))
 }
 
-function inform (error, log) {
+function inform(error, log) {
   log.error(`${summarize(error)}:`)
   const source = cause(error)
   log.error(chalk.red(source.message))
   log.debug(source.stack)
 }
 
-function summarize (error) {
+function summarize(error) {
   if (error instanceof CommandLineError) {
     switch (error.name) {
       case 'ReadError':
@@ -110,7 +106,7 @@ function summarize (error) {
   }
 }
 
-function cause (error) {
+function cause(error) {
   if (error instanceof CommandLineError) {
     return error.cause()
   } else {
