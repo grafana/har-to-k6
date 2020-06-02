@@ -44,8 +44,11 @@
         "@babel/core": "^7.4.3",
         "@babel/preset-env": "^7.8.4",
         "ava": "^1.4.1",
+        "babel-eslint": "^10.1.0",
         "babel-loader": "^8.0.6",
         "cross-env": "^5.2.0",
+        "eslint": "^7.1.0",
+        "eslint-config-prettier": "^6.11.0",
         "husky": "^4.2.3",
         "mock-require": "^3.0.3",
         "npm-run-all": "^4.1.5",
@@ -58,11 +61,32 @@
     "scripts": {
         "bundle": "./node_modules/.bin/webpack --config webpack.config.js",
         "analyze": "BUNDLE_ANALYSIS=\"reports/commit_$(git rev-parse --short HEAD).html\" ./node_modules/.bin/webpack --config webpack.config.js",
+        "lint": "eslint .",
         "test": "npm-run-all test-unit test-int",
         "test-int": "cross-env NODE_PATH=src:test ava test/int",
         "test-unit": "cross-env NODE_PATH=src:test ava test/unit",
         "test-hoc": "cross-env NODE_PATH=src:test ava",
         "test-only": "cross-env NODE_PATH=src:test ava"
+    },
+    "eslintConfig": {
+        "env": {
+            "browser": true,
+            "node": true,
+            "es6": true
+        },
+        "extends": [
+            "eslint:recommended",
+            "prettier"
+        ],
+        "parser": "babel-eslint",
+        "parserOptions": {
+            "ecmaVersion": 2019,
+            "sourceType": "module"
+        },
+        "ignorePatterns": [
+            "node_modules/",
+            "standalone.js"
+        ]
     },
     "prettier": {
         "trailingComma": "es5",
