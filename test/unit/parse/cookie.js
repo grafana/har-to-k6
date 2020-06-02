@@ -9,7 +9,7 @@ function makeSpec() {
   return new Map()
 }
 
-test.before((t) => {
+test.before(() => {
   mockRequire('../../../src/format', format)
   mockRequire('moment', moment)
   cookie = require('parse/cookie')

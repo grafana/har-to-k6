@@ -5,7 +5,7 @@ const { InvalidArchiveError } = require('../error')
  * version: optional string
  * comment: optional string
  */
-function creator(node, assay) {
+function creator(node) {
   validate(node)
 }
 

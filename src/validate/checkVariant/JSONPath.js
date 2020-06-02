@@ -10,7 +10,7 @@ const { InvalidArchiveError } = require('../../error')
  * flags: prohibited
  * subject: prohibited except CheckSubject.ResponseBody
  */
-function JSONPath(node, i, j, assay) {
+function JSONPath(node, i, j) {
   validate(node, i, j)
 }
 

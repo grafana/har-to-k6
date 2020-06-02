@@ -6,7 +6,7 @@ const { InvalidArchiveError } = require('../error')
  * value: optional string
  * comment: optional string
  */
-function queryItem(node, i, j, assay) {
+function queryItem(node, i, j) {
   validate(node, i, j)
 }
 

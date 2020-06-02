@@ -8,7 +8,7 @@ const { InvalidArchiveError } = require('../../error')
  * expression: prohibited
  * flags: prohibited
  */
-function Text(node, i, j, assay) {
+function Text(node, i, j) {
   validate(node, i, j)
 }
 

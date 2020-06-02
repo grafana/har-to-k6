@@ -7,7 +7,7 @@ const { InvalidArchiveError } = require('../../error')
  * condition: prohibited
  * value: prohibited
  */
-function Regex(node, i, j, assay) {
+function Regex(node, i, j) {
   validate(node, i, j)
 }
 

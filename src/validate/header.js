@@ -6,7 +6,7 @@ const { InvalidArchiveError } = require('../error')
  * value: optional string
  * comment: optional string
  */
-function header(node, i, j, assay) {
+function header(node, i, j) {
   validate(node, i, j)
 }
 

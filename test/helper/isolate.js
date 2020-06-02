@@ -9,7 +9,7 @@ function isolate(test, unit, external) {
     mockRequire(`../../src/${path}`, stub)
     stubs[name] = stub
   }
-  test.afterEach.always((t) => {
+  test.afterEach.always(() => {
     for (const key of Object.keys(stubs)) {
       stubs[key].reset()
     }

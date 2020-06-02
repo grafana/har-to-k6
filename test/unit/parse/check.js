@@ -14,13 +14,13 @@ function makeSpec() {
   return new Map()
 }
 
-test.before((t) => {
+test.before(() => {
   mockRequire('../../../src/string/check/name', checkName)
   mockRequire('../../../src/parse/checkVariant', checkVariant)
   check = require('parse/check')
 })
 
-test.afterEach.always((t) => {
+test.afterEach.always(() => {
   checkName.reset()
   for (const name of Object.keys(checkVariant)) {
     checkVariant[name].reset()

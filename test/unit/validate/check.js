@@ -11,12 +11,12 @@ for (const name of Object.keys(CheckType)) {
   checkVariant[name] = sinon.stub()
 }
 
-test.before((t) => {
+test.before(() => {
   mockRequire('../../../src/validate/checkVariant', checkVariant)
   check = require('validate/check')
 })
 
-test.afterEach.always((t) => {
+test.afterEach.always(() => {
   for (const name of Object.keys(checkVariant)) {
     checkVariant[name].reset()
   }

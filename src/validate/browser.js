@@ -1,6 +1,6 @@
 const { InvalidArchiveError } = require('../error')
 
-function browser(node, assay) {
+function browser(node) {
   validate(node)
 }
 
