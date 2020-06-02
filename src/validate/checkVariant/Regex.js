@@ -7,11 +7,11 @@ const { InvalidArchiveError } = require('../../error')
  * condition: prohibited
  * value: prohibited
  */
-function Regex (node, i, j, assay) {
+function Regex(node, i, j, assay) {
   validate(node, i, j)
 }
 
-function validate (node, i, j) {
+function validate(node, i, j) {
   if (empty(node.subject)) {
     throw new InvalidArchiveError(
       { name: 'MissingCheckSubject' },

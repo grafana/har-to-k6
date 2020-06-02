@@ -19,7 +19,7 @@ const { InvalidArchiveError } = require('../error')
  * no postData with method GET
  * header Content-Type congruent with postData.mimeType
  */
-function request (node, i, assay) {
+function request(node, i, assay) {
   validate(node, i)
   if (node.queryString) {
     queryString(node.queryString, i, assay)
@@ -36,12 +36,9 @@ function request (node, i, assay) {
   relation(node, i)
 }
 
-function validate (node, i) {
+function validate(node, i) {
   if (empty(node.method)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingRequestMethod' },
-      `Missing request method (${i})`
-    )
+    throw new InvalidArchiveError({ name: 'MissingRequestMethod' }, `Missing request method (${i})`)
   }
   if (typeof node.method !== 'string') {
     throw new InvalidArchiveError(
@@ -50,10 +47,7 @@ function validate (node, i) {
     )
   }
   if (empty(node.url)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingRequestUrl' },
-      `Missing request url (${i})`
-    )
+    throw new InvalidArchiveError({ name: 'MissingRequestUrl' }, `Missing request url (${i})`)
   }
   if (typeof node.url !== 'string') {
     throw new InvalidArchiveError(
@@ -99,36 +93,27 @@ function validate (node, i) {
   }
 }
 
-function relation (node, i) {
-  if (
-    node.method.toUpperCase() === 'GET' &&
-    node.postData &&
-    !emptyObject(node.postData)
-  ) {
+function relation(node, i) {
+  if (node.method.toUpperCase() === 'GET' && node.postData && !emptyObject(node.postData)) {
     throw new InvalidArchiveError(
       { name: 'InvalidRequestData' },
       `Invalid request postData (${i}): prohibited for GET request`
     )
   }
-  if (
-    node.headers &&
-    node.postData &&
-    node.headers.findIndex(findContentType) !== -1
-  ) {
+  if (node.headers && node.postData && node.headers.findIndex(findContentType) !== -1) {
     const header = node.headers.find(findContentType)
     const headerType = getContentTypeValue(header.value)
     const postType = getContentTypeValue(node.postData.mimeType)
     if (headerType !== postType) {
       throw new InvalidArchiveError(
         { name: 'InconsistentContentType' },
-        `Inconsistent post content type (${i}): ` +
-          `'${headerType}' vs '${postType}'`
+        `Inconsistent post content type (${i}): ` + `'${headerType}' vs '${postType}'`
       )
     }
   }
 }
 
-function findContentType (header) {
+function findContentType(header) {
   return header.name.toLowerCase() === 'content-type'
 }
 

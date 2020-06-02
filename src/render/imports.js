@@ -1,4 +1,4 @@
-function imports (spec) {
+function imports(spec) {
   if (any(spec)) {
     const lines = []
     k6(spec, lines)
@@ -10,11 +10,11 @@ function imports (spec) {
   }
 }
 
-function any (spec) {
-  return Object.values(spec).find(value => value)
+function any(spec) {
+  return Object.values(spec).find((value) => value)
 }
 
-function k6 (spec, lines) {
+function k6(spec, lines) {
   const items = ['sleep']
 
   if (spec.check || spec.group) {
@@ -30,7 +30,7 @@ function k6 (spec, lines) {
   lines.push(`import { ${content} } from "k6";`)
 }
 
-function http (spec, lines) {
+function http(spec, lines) {
   if (spec.http) {
     lines.push(`import http from "k6/http";`)
   }
@@ -40,12 +40,12 @@ const K6_JS_LIBS = (() => {
   const BASE_URL = 'https://jslib.k6.io'
   return {
     jsonpath: `import jsonpath from "${BASE_URL}/jsonpath/1.0.2/index.js"`,
-    formurlencoded: `import formurlencoded from "${BASE_URL}/form-urlencoded/3.0.0/index.js"`
+    formurlencoded: `import formurlencoded from "${BASE_URL}/form-urlencoded/3.0.0/index.js"`,
     // mimeBuilder: `import MimeBuilder from "${BASE_URL}/mimebuilder/4.0.0/main.js"`,
   }
 })()
 
-function k6JsLibs (spec, lines) {
+function k6JsLibs(spec, lines) {
   if (spec.formUrlEncode || spec.jsonpath || spec.MimeBuilder) {
     if (lines.length > 0) {
       lines.push('\n')

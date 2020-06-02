@@ -3,10 +3,10 @@ import isolate from 'helper/isolate'
 import { requestSpec as makeRequestSpec } from 'make'
 const [multipart, { fixed, resolved }] = isolate(test, 'render/post/multipart', {
   fixed: 'render/post/multipart/fixed',
-  resolved: 'render/post/multipart/resolved/arg'
+  resolved: 'render/post/multipart/resolved/arg',
 })
 
-test.serial('fixed', t => {
+test.serial('fixed', (t) => {
   const spec = makeRequestSpec()
   spec.state.params.variable = false
   multipart(spec)
@@ -14,7 +14,7 @@ test.serial('fixed', t => {
   t.true(resolved.notCalled)
 })
 
-test.serial('resolved', t => {
+test.serial('resolved', (t) => {
   t.throws(
     () => {
       const spec = makeRequestSpec()

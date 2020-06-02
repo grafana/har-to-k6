@@ -1,16 +1,16 @@
 const note = require('./note/items')
 const text = require('./text')
 
-function header (name, items) {
-  items = [ ...items ]
+function header(name, items) {
+  items = [...items]
   return {
     name,
     value: value(items),
-    comment: note(items)
+    comment: note(items),
   }
 }
 
-function value (items) {
+function value(items) {
   /*
    * Concatenate values comma separated
    *
@@ -24,7 +24,7 @@ function value (items) {
    * message, by appending each subsequent field-value to the first, each
    * separated by a comma.
    */
-  const values = items.map(item => item.value || '')
+  const values = items.map((item) => item.value || '')
   return text(values, ',')
 }
 

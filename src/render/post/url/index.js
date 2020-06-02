@@ -1,7 +1,7 @@
 const plural = require('./plural')
 const singular = require('./singular')
 
-function url (spec) {
+function url(spec) {
   if (spec.state.params.plural) {
     return plural(spec)
   } else {

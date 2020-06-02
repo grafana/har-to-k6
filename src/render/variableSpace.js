@@ -1,7 +1,7 @@
 const { FlowItemType } = require('../enum')
 const { UnrecognizedError } = require('../error')
 
-function variableSpace (result) {
+function variableSpace(result) {
   if (result.flow.find(variableFlowItem)) {
     return `const vars = {};`
   } else {
@@ -9,7 +9,7 @@ function variableSpace (result) {
   }
 }
 
-function variableFlowItem (item) {
+function variableFlowItem(item) {
   switch (item.type) {
     case FlowItemType.External:
       return variableEntry(item.entry)
@@ -23,7 +23,7 @@ function variableFlowItem (item) {
   }
 }
 
-function variableEntry (entry) {
+function variableEntry(entry) {
   return entry.variables.size
 }
 

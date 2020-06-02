@@ -8,7 +8,7 @@ const { assay: makeAssay } = require('../make')
  * @return {undefined} If valid.
  * @throws {InvalidArchiveError} If invalid.
  */
-function validate (archive) {
+function validate(archive) {
   root(archive, makeAssay())
   if (archive.log.entries) {
     variableDefined(archive)

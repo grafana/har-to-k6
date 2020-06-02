@@ -1,4 +1,4 @@
-function identifier (string) {
+function identifier(string) {
   return expression.test(string)
 }
 

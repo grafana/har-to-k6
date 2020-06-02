@@ -1,4 +1,4 @@
-function creator (node, result) {
+function creator(node, result) {
   const lines = []
   if (node.name) {
     if (node.version) {

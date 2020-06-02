@@ -3,16 +3,16 @@ const group = require('./group')
 const { FlowItemType } = require('../enum')
 const { UnrecognizedError } = require('../error')
 
-function flow (result) {
+function flow(result) {
   if (result.flow.length) {
-    const sections = result.flow.map(spec => item(spec))
+    const sections = result.flow.map((spec) => item(spec))
     return sections.join(`\n\n`)
   } else {
     return null
   }
 }
 
-function item (spec) {
+function item(spec) {
   switch (spec.type) {
     case FlowItemType.External:
       return entry(spec.entry)

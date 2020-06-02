@@ -1,8 +1,7 @@
-function options (node) {
+function options(node) {
   validate(node)
 }
 
-function validate (node) {
-}
+function validate(node) {}
 
 module.exports = options

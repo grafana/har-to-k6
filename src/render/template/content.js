@@ -1,11 +1,10 @@
 const evaluate = require('../evaluate')
 
-function content (value) {
-  return value
-    .replace(/[\\`]|\$(?!{)|\${(?=[^}]*$)|\${([^}]*)}/g, replace)
+function content(value) {
+  return value.replace(/[\\`]|\$(?!{)|\${(?=[^}]*$)|\${([^}]*)}/g, replace)
 }
 
-function replace (match) {
+function replace(match) {
   if (match[0] === '\\') {
     // Escape
     return '\\\\'

@@ -1,6 +1,6 @@
 const params = require('./params')
 
-function postData (node, spec) {
+function postData(node, spec) {
   spec.type = node.mimeType
 
   if (node.params && node.params.length) {

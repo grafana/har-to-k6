@@ -1,4 +1,4 @@
-function composite (items, delimiter = '') {
+function composite(items, delimiter = '') {
   return JSON.stringify(items.join(delimiter))
 }
 

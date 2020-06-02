@@ -2,11 +2,11 @@ const stringSpecies = require('../../species/string')
 const { StringSpecies } = require('../../enum')
 const { UnrecognizedError } = require('../../error')
 
-function order (items) {
+function order(items) {
   items.sort(sort)
 }
 
-function sort (a, b) {
+function sort(a, b) {
   const aSpecies = stringSpecies(a.key)
   const bSpecies = stringSpecies(b.key)
   if (aSpecies === bSpecies) {

@@ -1,13 +1,15 @@
 const indent = require('../indent')
 const items = require('./items')
 
-function object (specs) {
+function object(specs) {
   const content = items(specs)
   if (content) {
-    return '' +
-`{
+    return (
+      '' +
+      `{
 ${indent(content)}
 }`
+    )
   } else {
     return `{}`
   }

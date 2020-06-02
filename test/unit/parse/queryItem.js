@@ -2,36 +2,24 @@ import test from 'ava'
 import queryItem from 'parse/queryItem'
 import { queryState as makeState } from 'make'
 
-function makeSpec () {
+function makeSpec() {
   return new Map()
 }
 
-test('minimal', t => {
+test('minimal', (t) => {
   const spec = makeSpec()
   queryItem({ name: 'search' }, spec, makeState())
-  t.deepEqual(
-    spec,
-    new Map()
-      .set('search', new Set([ {} ]))
-  )
+  t.deepEqual(spec, new Map().set('search', new Set([{}])))
 })
 
-test('value', t => {
+test('value', (t) => {
   const spec = makeSpec()
   queryItem({ name: 'search', value: 'kittens' }, spec, makeState())
-  t.deepEqual(
-    spec,
-    new Map()
-      .set('search', new Set([ { value: 'kittens' } ]))
-  )
+  t.deepEqual(spec, new Map().set('search', new Set([{ value: 'kittens' }])))
 })
 
-test('comment', t => {
+test('comment', (t) => {
   const spec = makeSpec()
   queryItem({ name: 'search', comment: 'Test a search' }, spec, makeState())
-  t.deepEqual(
-    spec,
-    new Map()
-      .set('search', new Set([ { comment: 'Test a search' } ]))
-  )
+  t.deepEqual(spec, new Map().set('search', new Set([{ comment: 'Test a search' }])))
 })

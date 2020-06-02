@@ -4,10 +4,10 @@ const state = require('./state/check')
 const { checkState: makeCheckState } = require('../make')
 const { CheckTypeEncoding } = require('../enum')
 
-function check (node, spec) {
+function check(node, spec) {
   const item = {
     type: node.type,
-    state: makeCheckState()
+    state: makeCheckState(),
   }
   if (node.comment) {
     item.comment = node.comment

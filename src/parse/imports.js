@@ -1,19 +1,14 @@
-const {
-  CheckType,
-  FlowItemType,
-  PostSpecies,
-  VariableType
-} = require('../enum')
+const { CheckType, FlowItemType, PostSpecies, VariableType } = require('../enum')
 const { UnrecognizedError } = require('../error')
 
-function imports (archive, result) {
+function imports(archive, result) {
   if (archive.log.entries) {
     result.imports.http = true
     const entries = archive.log.entries
-    if (entries.find(entry => entry.pageref)) {
+    if (entries.find((entry) => entry.pageref)) {
       result.imports.group = true
     }
-    if (entries.find(entry => entry.checks && entry.checks.length)) {
+    if (entries.find((entry) => entry.checks && entry.checks.length)) {
       result.imports.check = true
     }
     if (entries.find(jsonPathEntry)) {
@@ -28,25 +23,22 @@ function imports (archive, result) {
   }
 }
 
-function jsonPathEntry (entry) {
+function jsonPathEntry(entry) {
   return (
     (entry.variables && entry.variables.find(jsonPathVariable)) ||
     (entry.checks && entry.checks.find(jsonPathCheck))
   )
 }
 
-function jsonPathVariable (variable) {
+function jsonPathVariable(variable) {
   return variable.type === VariableType.JSONPath
 }
 
-function jsonPathCheck (check) {
-  return [
-    CheckType.JSONPath,
-    CheckType.JSONPathValue
-  ].includes(check.type)
+function jsonPathCheck(check) {
+  return [CheckType.JSONPath, CheckType.JSONPathValue].includes(check.type)
 }
 
-function formUrlEncodeFlowItem (item) {
+function formUrlEncodeFlowItem(item) {
   switch (item.type) {
     case FlowItemType.External:
       return formUrlEncodeEntry(item.entry)
@@ -60,7 +52,7 @@ function formUrlEncodeFlowItem (item) {
   }
 }
 
-function formUrlEncodeEntry ({ request }) {
+function formUrlEncodeEntry({ request }) {
   return (
     request.state.post.species === PostSpecies.Structured &&
     request.post.type === 'application/x-www-form-urlencoded' &&
@@ -69,7 +61,7 @@ function formUrlEncodeEntry ({ request }) {
   )
 }
 
-function MimeBuilderFlowItem (item) {
+function MimeBuilderFlowItem(item) {
   switch (item.type) {
     case FlowItemType.External:
       return MimeBuilderEntry(item.entry)
@@ -83,7 +75,7 @@ function MimeBuilderFlowItem (item) {
   }
 }
 
-function MimeBuilderEntry ({ request }) {
+function MimeBuilderEntry({ request }) {
   return (
     request.state.post.species === PostSpecies.Structured &&
     request.post.type === 'multipart/form-data' &&

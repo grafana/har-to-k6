@@ -5,17 +5,14 @@ const { InvalidArchiveError } = require('../error')
  * id: required unique string
  * title: required string
  */
-function page (node, i, assay) {
+function page(node, i, assay) {
   validate(node, i, assay)
   assay.pageIds.add(node.id)
 }
 
-function validate (node, i, assay) {
+function validate(node, i, assay) {
   if (empty(node.id)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingPageId' },
-      `Missing page identifier (${i})`
-    )
+    throw new InvalidArchiveError({ name: 'MissingPageId' }, `Missing page identifier (${i})`)
   }
   if (typeof node.id !== 'string') {
     throw new InvalidArchiveError(

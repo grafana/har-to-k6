@@ -1,7 +1,7 @@
 const format = require('../format')
 const moment = require('moment')
 
-function cookie (node, spec) {
+function cookie(node, spec) {
   const item = {}
   if (node.value) {
     item.value = node.value
@@ -27,7 +27,7 @@ function cookie (node, spec) {
   spec.set(node.name, item)
 }
 
-function expires (value, item) {
+function expires(value, item) {
   const time = moment(value, moment.ISO_8601)
   time.utc()
   item.expires = format.date.http(time)

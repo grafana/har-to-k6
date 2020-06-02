@@ -12,7 +12,7 @@ const { InvalidArchiveError } = require('../error')
  * variables: optional array
  * comment: optional string
  */
-function entry (node, i, assay) {
+function entry(node, i, assay) {
   validate(node, i)
   request(node.request, i, assay)
   if (node.checks) {
@@ -23,18 +23,12 @@ function entry (node, i, assay) {
   }
 }
 
-function validate (node, i) {
+function validate(node, i) {
   if (!empty(node.pageref) && typeof node.pageref !== 'string') {
-    throw new InvalidArchiveError(
-      { name: 'InvalidEntryPageref' },
-      `Invalid entry pageref (${i})`
-    )
+    throw new InvalidArchiveError({ name: 'InvalidEntryPageref' }, `Invalid entry pageref (${i})`)
   }
   if (empty(node.request)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingEntryRequest' },
-      `Missing entry request (${i})`
-    )
+    throw new InvalidArchiveError({ name: 'MissingEntryRequest' }, `Missing entry request (${i})`)
   }
   if (!isPlainObject(node.request)) {
     throw new InvalidArchiveError(

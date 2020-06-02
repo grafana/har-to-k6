@@ -19,7 +19,7 @@ const { InvalidArchiveError } = require('../error')
  * param fileName: variables defined
  * param contentType: variables defined
  */
-function variableDefined (archive) {
+function variableDefined(archive) {
   const entries = orderEntries(archive)
   const defined = new Set()
 
@@ -30,7 +30,7 @@ function variableDefined (archive) {
   }
 }
 
-function validate (request, i, defined) {
+function validate(request, i, defined) {
   validateString(request.method, i, null, defined, 'Request method')
   validateString(request.url, i, null, defined, 'Request URL')
   queryString(request.queryString, i, defined)
@@ -39,7 +39,7 @@ function validate (request, i, defined) {
   postData(request.postData, i, defined)
 }
 
-function validateString (value, i, j, defined, property) {
+function validateString(value, i, j, defined, property) {
   for (const name of referenced(value)) {
     if (!defined.has(name)) {
       const index = `${i}${j !== null ? `:${j}` : ''}`
@@ -51,7 +51,7 @@ function validateString (value, i, j, defined, property) {
   }
 }
 
-function queryString (node, i, defined) {
+function queryString(node, i, defined) {
   if (node) {
     for (let j = 0; j < node.length; j++) {
       const queryItem = node[j]
@@ -61,7 +61,7 @@ function queryString (node, i, defined) {
   }
 }
 
-function headers (node, i, defined) {
+function headers(node, i, defined) {
   if (node) {
     for (let j = 0; j < node.length; j++) {
       const header = node[j]
@@ -71,7 +71,7 @@ function headers (node, i, defined) {
   }
 }
 
-function cookies (node, i, defined) {
+function cookies(node, i, defined) {
   if (node) {
     for (let j = 0; j < node.length; j++) {
       const cookie = node[j]
@@ -83,14 +83,14 @@ function cookies (node, i, defined) {
   }
 }
 
-function postData (node, i, defined) {
+function postData(node, i, defined) {
   if (node) {
     validateString(node.text, i, null, defined, 'Post text')
     params(node.params, i, defined)
   }
 }
 
-function params (node, i, defined) {
+function params(node, i, defined) {
   if (node) {
     for (let j = 0; j < node.length; j++) {
       const param = node[j]
@@ -102,15 +102,15 @@ function params (node, i, defined) {
   }
 }
 
-function referenced (string) {
+function referenced(string) {
   if (string) {
-    return matchVariables(string).map(match => match[1])
+    return matchVariables(string).map((match) => match[1])
   } else {
     return []
   }
 }
 
-function matchVariables (string) {
+function matchVariables(string) {
   const matches = []
   let match
   while ((match = variables.exec(string)) !== null) {
@@ -120,7 +120,7 @@ function matchVariables (string) {
   return matches
 }
 
-function define (entry, defined) {
+function define(entry, defined) {
   if (entry.variables) {
     for (const variable of entry.variables) {
       defined.add(variable.name)
@@ -128,7 +128,7 @@ function define (entry, defined) {
   }
 }
 
-function zipGroups (entries) {
+function zipGroups(entries) {
   const groupedEntries = entries.reduce((result, entry) => {
     if (entry.pageref) {
       if (!result.has(entry.pageref)) {
@@ -146,7 +146,7 @@ function zipGroups (entries) {
   return [...groupedEntries.entries()].flatMap(([item, children]) => children || item)
 }
 
-function orderEntries (archive) {
+function orderEntries(archive) {
   const entries = archive.log.entries || []
 
   // No matter if entry is external, page is explicit or implicit the order of entries are always respected
@@ -155,32 +155,31 @@ function orderEntries (archive) {
 }
 
 // eslint-disable-next-line no-unused-vars
-function extractPages (pages) {
+function extractPages(pages) {
   if (pages) {
-    return new Map(pages.map(page => [ page.id, page.index ]))
+    return new Map(pages.map((page) => [page.id, page.index]))
   } else {
     return new Map()
   }
 }
 
 // eslint-disable-next-line no-unused-vars
-function orderExplicit (entries, pages) {
-  const unordered = entries.filter(entry => pages.has(entry.pageref))
+function orderExplicit(entries, pages) {
+  const unordered = entries.filter((entry) => pages.has(entry.pageref))
   const groups = groupEntries(unordered)
   const orderedGroups = orderGroupsByIndex(groups, pages)
   return expand(orderedGroups)
 }
 
 // eslint-disable-next-line no-unused-vars
-function orderImplicit (entries, pages) {
-  const unordered = entries
-    .filter(entry => entry.pageref && !pages.has(entry.pageref))
+function orderImplicit(entries, pages) {
+  const unordered = entries.filter((entry) => entry.pageref && !pages.has(entry.pageref))
   const groups = groupEntries(unordered)
   const orderedGroups = orderGroupsByName(groups)
   return expand(orderedGroups)
 }
 
-function groupEntries (entries) {
+function groupEntries(entries) {
   const groups = new Map()
   for (const entry of entries) {
     if (!groups.has(entry.pageref)) {
@@ -194,20 +193,18 @@ function groupEntries (entries) {
   return groups
 }
 
-function orderGroupsByIndex (groups, pages) {
-  return [ ...groups ]
-    .map(group => [ pages.get(group[0]), group[1] ])
+function orderGroupsByIndex(groups, pages) {
+  return [...groups]
+    .map((group) => [pages.get(group[0]), group[1]])
     .sort(sort.firstElement)
-    .map(group => group[1])
+    .map((group) => group[1])
 }
 
-function orderGroupsByName (groups) {
-  return [ ...groups ]
-    .sort(sort.firstElement)
-    .map(group => group[1])
+function orderGroupsByName(groups) {
+  return [...groups].sort(sort.firstElement).map((group) => group[1])
 }
 
-function expand (grouped) {
+function expand(grouped) {
   const expanded = []
   for (const group of grouped) {
     expanded.push(...group)

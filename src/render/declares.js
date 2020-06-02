@@ -1,6 +1,6 @@
-function declares (spec) {
+function declares(spec) {
   if (spec.size) {
-    const content = [ ...spec ].sort().join(`, `)
+    const content = [...spec].sort().join(`, `)
     return `let ${content};`
   } else {
     return null

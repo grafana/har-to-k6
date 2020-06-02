@@ -1,6 +1,6 @@
 const { PostSpecies } = require('../../enum')
 
-function entry (spec) {
+function entry(spec) {
   spec.state.expanded = expanded(spec)
 }
 
@@ -12,11 +12,9 @@ function entry (spec) {
  * - Has check.
  * - Has variable extraction.
  */
-function expanded (spec) {
+function expanded(spec) {
   return (
-    spec.request.state.post.species !== PostSpecies.Empty ||
-    spec.checks.size ||
-    spec.variables.size
+    spec.request.state.post.species !== PostSpecies.Empty || spec.checks.size || spec.variables.size
   )
 }
 

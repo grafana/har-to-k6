@@ -1,6 +1,6 @@
 const { variable } = require('../../expression')
 
-function template (string) {
+function template(string) {
   return variable.test(string)
 }
 

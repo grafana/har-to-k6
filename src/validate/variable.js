@@ -9,11 +9,11 @@ const { InvalidArchiveError } = require('../error')
  * expression: required string
  * comment: optional string
  */
-function variable (node, i, j, assay) {
+function variable(node, i, j, assay) {
   validate(node, i, j)
 }
 
-function validate (node, i, j) {
+function validate(node, i, j) {
   if (empty(node.name)) {
     throw new InvalidArchiveError(
       { name: 'MissingVariableName' },

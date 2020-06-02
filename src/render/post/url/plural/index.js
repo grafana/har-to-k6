@@ -1,7 +1,7 @@
 const fixed = require('./fixed')
 const resolved = require('./resolved')
 
-function plural (spec) {
+function plural(spec) {
   if (spec.state.params.variable) {
     return resolved(spec.post.params)
   } else {

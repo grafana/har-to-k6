@@ -5,7 +5,7 @@ const { InvalidArchiveError } = require('../error')
 /*
  * [i]: object
  */
-function entries (node, assay) {
+function entries(node, assay) {
   validate(node)
   for (let i = 0; i < node.length; i++) {
     const item = node[i]
@@ -13,7 +13,7 @@ function entries (node, assay) {
   }
 }
 
-function validate (node) {
+function validate(node) {
   for (let i = 0; i < node.length; i++) {
     const item = node[i]
     if (!isPlainObject(item)) {

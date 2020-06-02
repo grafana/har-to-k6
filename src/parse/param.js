@@ -1,6 +1,6 @@
 const { isString } = require('../aid')
 
-function param (node, spec) {
+function param(node, spec) {
   const item = {}
   if (isString(node.value)) {
     item.value = node.value

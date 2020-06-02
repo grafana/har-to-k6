@@ -1,6 +1,6 @@
-function options (result) {
+function options(result) {
   const obj = {
-    ...result.options
+    ...result.options,
   }
 
   return `export const options = ${JSON.stringify(obj)};`

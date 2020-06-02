@@ -14,7 +14,7 @@ const { InvalidArchiveError } = require('../error')
  * pages: optional array
  * entries: optional array
  */
-function log (node, assay) {
+function log(node, assay) {
   validate(node)
   if (node.options) {
     options(node.options, assay)
@@ -33,18 +33,12 @@ function log (node, assay) {
   }
 }
 
-function validate (node) {
+function validate(node) {
   if (node.options && !isPlainObject(node.options)) {
-    throw new InvalidArchiveError(
-      { name: 'InvalidOptions' },
-      'Invalid options: must be object'
-    )
+    throw new InvalidArchiveError({ name: 'InvalidOptions' }, 'Invalid options: must be object')
   }
   if (node.version && typeof node.version !== 'string') {
-    throw new InvalidArchiveError(
-      { name: 'InvalidVersion' },
-      'Invalid version: must be string'
-    )
+    throw new InvalidArchiveError({ name: 'InvalidVersion' }, 'Invalid version: must be string')
   }
   if (node.creator && !isPlainObject(node.creator)) {
     throw new InvalidArchiveError(
@@ -59,16 +53,10 @@ function validate (node) {
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
-    throw new InvalidArchiveError(
-      { name: 'InvalidComment' },
-      'Invalid log.comment: must be string'
-    )
+    throw new InvalidArchiveError({ name: 'InvalidComment' }, 'Invalid log.comment: must be string')
   }
   if (node.pages && !Array.isArray(node.pages)) {
-    throw new InvalidArchiveError(
-      { name: 'InvalidPages' },
-      'Invalid pages section: must be array'
-    )
+    throw new InvalidArchiveError({ name: 'InvalidPages' }, 'Invalid pages section: must be array')
   }
   if (node.entries && !Array.isArray(node.entries)) {
     throw new InvalidArchiveError(

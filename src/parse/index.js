@@ -9,7 +9,7 @@ const { result: makeResult } = require('../make')
  *
  * Assumes valid archive.
  */
-function parse (archive) {
+function parse(archive) {
   const result = makeResult()
   root(archive, result)
   flow(result)

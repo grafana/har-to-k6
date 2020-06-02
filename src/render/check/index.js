@@ -2,7 +2,7 @@ const variant = require('./variant')
 const { CheckType } = require('../../enum')
 const { UnrecognizedError } = require('../../error')
 
-function check (name, spec) {
+function check(name, spec) {
   switch (spec.type) {
     case CheckType.Text:
       return variant.Text(name, spec)

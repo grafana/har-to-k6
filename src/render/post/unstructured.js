@@ -1,6 +1,6 @@
 const text = require('../text')
 
-function unstructured (spec) {
+function unstructured(spec) {
   return text(spec.post.value || '')
 }
 

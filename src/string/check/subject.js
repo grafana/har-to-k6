@@ -1,7 +1,7 @@
 const { CheckSubject } = require('../../enum')
 const { UnrecognizedError } = require('../../error')
 
-function subject (value) {
+function subject(value) {
   switch (value) {
     case CheckSubject.ResponseBody:
       return 'body'

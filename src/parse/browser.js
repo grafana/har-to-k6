@@ -1,4 +1,4 @@
-function browser (node, result) {
+function browser(node, result) {
   const lines = []
   if (node.name) {
     if (node.version) {

@@ -1,12 +1,7 @@
-const {
-  AddressSpecies,
-  FlowItemType,
-  PostSpecies,
-  VariableType
-} = require('../enum')
+const { AddressSpecies, FlowItemType, PostSpecies, VariableType } = require('../enum')
 const { UnrecognizedError } = require('../error')
 
-function declares (archive, result) {
+function declares(archive, result) {
   if (archive.log.entries) {
     result.declares.add('response')
     const entries = archive.log.entries
@@ -22,7 +17,7 @@ function declares (archive, result) {
   }
 }
 
-function addressFlowItem (item) {
+function addressFlowItem(item) {
   switch (item.type) {
     case FlowItemType.External:
       return addressEntry(item.entry)
@@ -36,11 +31,11 @@ function addressFlowItem (item) {
   }
 }
 
-function addressEntry ({ request }) {
-  return (request.state.address.species === AddressSpecies.Runtime)
+function addressEntry({ request }) {
+  return request.state.address.species === AddressSpecies.Runtime
 }
 
-function bodyFlowItem (item) {
+function bodyFlowItem(item) {
   switch (item.type) {
     case FlowItemType.External:
       return bodyEntry(item.entry)
@@ -54,7 +49,7 @@ function bodyFlowItem (item) {
   }
 }
 
-function bodyEntry ({ request }) {
+function bodyEntry({ request }) {
   return (
     request.state.post.species === PostSpecies.Structured &&
     request.post.type === 'multipart/form-data' &&
@@ -62,15 +57,12 @@ function bodyEntry ({ request }) {
   )
 }
 
-function matchEntry (entry) {
-  return (
-    entry.variables &&
-    entry.variables.find(matchVariable)
-  )
+function matchEntry(entry) {
+  return entry.variables && entry.variables.find(matchVariable)
 }
 
-function matchVariable (variable) {
-  return (variable.type === VariableType.Regex)
+function matchVariable(variable) {
+  return variable.type === VariableType.Regex
 }
 
 module.exports = declares

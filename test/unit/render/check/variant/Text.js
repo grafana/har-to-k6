@@ -2,20 +2,19 @@ import test from 'ava'
 import isolate from 'helper/isolate'
 import { CheckCondition, CheckSubject } from 'enum'
 import { checkState as makeCheckState } from 'make'
-const [ Text, { comparison, indent, string, subject } ] =
-  isolate(test, 'render/check/variant/Text', {
-    comparison: 'render/check/comparison',
-    indent: 'render/indent',
-    string: 'render/string',
-    subject: 'render/check/subject'
-  })
+const [Text, { comparison, indent, string, subject }] = isolate(test, 'render/check/variant/Text', {
+  comparison: 'render/check/comparison',
+  indent: 'render/indent',
+  string: 'render/string',
+  subject: 'render/check/subject',
+})
 
-test.serial('subject', t => {
+test.serial('subject', (t) => {
   const spec = {
     subject: CheckSubject.ResponseBody,
     condition: CheckCondition.Contains,
     value: 'Logged in',
-    state: makeCheckState()
+    state: makeCheckState(),
   }
   spec.state.negated = false
   spec.state.plural = false
@@ -24,13 +23,13 @@ test.serial('subject', t => {
   t.is(subject.firstCall.args[0], CheckSubject.ResponseBody)
 })
 
-test.serial('comparison', t => {
+test.serial('comparison', (t) => {
   string.returns('"Logged in"')
   const spec = {
     subject: CheckSubject.ResponseBody,
     condition: CheckCondition.Contains,
     value: 'Logged in',
-    state: makeCheckState()
+    state: makeCheckState(),
   }
   spec.state.negated = false
   spec.state.plural = false
@@ -41,25 +40,25 @@ test.serial('comparison', t => {
   t.is(string.firstCall.args[0], 'Logged in')
 })
 
-test.serial('positive singular', t => {
+test.serial('positive singular', (t) => {
   subject.returns('subject')
   comparison.returns('comparison')
   const spec = {
     subject: CheckSubject.ResponseBody,
     condition: CheckCondition.Contains,
     value: 'Logged in',
-    state: makeCheckState()
+    state: makeCheckState(),
   }
   spec.state.negated = false
   spec.state.plural = false
   const result = Text('body contains Logged in', spec)
   t.deepEqual(result, {
     name: 'body contains Logged in',
-    value: 'response => subjectcomparison'
+    value: 'response => subjectcomparison',
   })
 })
 
-test.serial('positive plural', t => {
+test.serial('positive plural', (t) => {
   subject.returns('subject')
   comparison.returns('comparison')
   indent.returns('indented')
@@ -67,42 +66,46 @@ test.serial('positive plural', t => {
     subject: CheckSubject.ResponseHeaders,
     condition: CheckCondition.Equals,
     value: 'Content-Type: text/html',
-    state: makeCheckState()
+    state: makeCheckState(),
   }
   spec.state.negated = false
   spec.state.plural = true
   const result = Text('header equals Content-Type: text/html', spec)
   t.deepEqual(result, {
     name: 'header equals Content-Type: text/html',
-    value: '' +
-`response => {
+    value:
+      '' +
+      `response => {
 indented
-}`
+}`,
   })
-  t.is(indent.firstCall.args[0], '' +
-`const values = subject;
-return !!values.find(value => valuecomparison);`)
+  t.is(
+    indent.firstCall.args[0],
+    '' +
+      `const values = subject;
+return !!values.find(value => valuecomparison);`
+  )
 })
 
-test.serial('negative singular', t => {
+test.serial('negative singular', (t) => {
   subject.returns('subject')
   comparison.returns('comparison')
   const spec = {
     subject: CheckSubject.ResponseBody,
     condition: CheckCondition.NotContains,
     value: 'Login failed',
-    state: makeCheckState()
+    state: makeCheckState(),
   }
   spec.state.negated = true
   spec.state.plural = false
   const result = Text('body does not contain Login failed', spec)
   t.deepEqual(result, {
     name: 'body does not contain Login failed',
-    value: 'response => !subjectcomparison'
+    value: 'response => !subjectcomparison',
   })
 })
 
-test.serial('negative plural', t => {
+test.serial('negative plural', (t) => {
   subject.returns('subject')
   comparison.returns('comparison')
   indent.returns('indented')
@@ -110,19 +113,23 @@ test.serial('negative plural', t => {
     subject: CheckSubject.ResponseHeaders,
     condition: CheckCondition.NotContains,
     value: 'text/csv',
-    state: makeCheckState()
+    state: makeCheckState(),
   }
   spec.state.negated = true
   spec.state.plural = true
   const result = Text('header does not contain text/csv', spec)
   t.deepEqual(result, {
     name: 'header does not contain text/csv',
-    value: '' +
-`response => {
+    value:
+      '' +
+      `response => {
 indented
-}`
+}`,
   })
-  t.is(indent.firstCall.args[0], '' +
-`const values = subject;
-return !values.find(value => valuecomparison);`)
+  t.is(
+    indent.firstCall.args[0],
+    '' +
+      `const values = subject;
+return !values.find(value => valuecomparison);`
+  )
 })

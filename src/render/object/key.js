@@ -4,7 +4,7 @@ const template = require('../template')
 const { StringSpecies } = require('../../enum')
 const { UnrecognizedError } = require('../../error')
 
-function key (value) {
+function key(value) {
   switch (stringSpecies(value)) {
     case StringSpecies.Identifier:
       return value

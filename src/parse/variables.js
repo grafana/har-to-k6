@@ -1,6 +1,6 @@
 const variable = require('./variable')
 
-function variables (node, spec) {
+function variables(node, spec) {
   for (const item of node) {
     variable(item, spec)
   }

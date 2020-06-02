@@ -3,10 +3,10 @@ const sort = require('../../sort')
 const { lineBreak } = require('../../expression')
 
 // Combined note for map of item set
-function note (map) {
-  const comments = [ ...map ]
-    .map(([ name, items ]) => [ name, itemsNote([...items]) ])
-    .filter(([ , comment ]) => comment)
+function note(map) {
+  const comments = [...map]
+    .map(([name, items]) => [name, itemsNote([...items])])
+    .filter(([, comment]) => comment)
     .sort(sort.firstElement)
   if (comments.length) {
     if (multiline(comments)) {
@@ -19,23 +19,19 @@ function note (map) {
   }
 }
 
-function multiline (comments) {
-  return !!comments.find(([ , comment ]) => lineBreak.test(comment))
+function multiline(comments) {
+  return !!comments.find(([, comment]) => lineBreak.test(comment))
 }
 
-function compact (comments) {
-  return comments
-    .map(([ name, comment ]) => `-${name}- ${comment}`)
-    .join('\n')
+function compact(comments) {
+  return comments.map(([name, comment]) => `-${name}- ${comment}`).join('\n')
 }
 
-function spread (comments) {
-  return comments
-    .map(([ name, comment ]) => section(name, comment))
-    .join('\n\n')
+function spread(comments) {
+  return comments.map(([name, comment]) => section(name, comment)).join('\n\n')
 }
 
-function section (name, comment) {
+function section(name, comment) {
   if (lineBreak.test(comment)) {
     return `-${name}-\n${comment}`
   } else {

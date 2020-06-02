@@ -2,7 +2,7 @@ const fixed = require('./fixed')
 const resolved = require('./resolved/arg')
 const { UnrecognizedError } = require('../../../error')
 
-function multipart (spec) {
+function multipart(spec) {
   if (spec.state.params.variable) {
     // Throw error here until emails-js-builder has runtime support via jslib.
     throw new UnrecognizedError(

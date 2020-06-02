@@ -2,22 +2,35 @@ import test from 'ava'
 import page from 'parse/page'
 import { result as makeResult } from 'make'
 
-test('main', t => {
+test('main', (t) => {
   const result = makeResult()
   page({ id: 'page1', title: 'Page 1' }, result)
-  t.deepEqual(result.pages, new Map([ [ 'page1', {
-    name: 'page1 - Page 1'
-  } ] ]))
+  t.deepEqual(
+    result.pages,
+    new Map([
+      [
+        'page1',
+        {
+          name: 'page1 - Page 1',
+        },
+      ],
+    ])
+  )
 })
 
-test('comment', t => {
+test('comment', (t) => {
   const result = makeResult()
-  page(
-    { id: 'page1', title: 'Page 1', comment: 'Heavy load' },
-    result
+  page({ id: 'page1', title: 'Page 1', comment: 'Heavy load' }, result)
+  t.deepEqual(
+    result.pages,
+    new Map([
+      [
+        'page1',
+        {
+          name: 'page1 - Page 1',
+          comment: 'Heavy load',
+        },
+      ],
+    ])
   )
-  t.deepEqual(result.pages, new Map([ [ 'page1', {
-    name: 'page1 - Page 1',
-    comment: 'Heavy load'
-  } ] ]))
 })

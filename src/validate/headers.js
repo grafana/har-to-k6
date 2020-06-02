@@ -7,7 +7,7 @@ const { InvalidArchiveError } = require('../error')
  *
  * max 1 Content-Type
  */
-function headers (node, i, assay) {
+function headers(node, i, assay) {
   validate(node, i)
   for (let j = 0; j < node.length; j++) {
     const item = node[j]
@@ -16,7 +16,7 @@ function headers (node, i, assay) {
   relation(node, i)
 }
 
-function validate (node, i) {
+function validate(node, i) {
   for (let j = 0; j < node.length; j++) {
     const item = node[j]
     if (!isPlainObject(item)) {
@@ -28,7 +28,7 @@ function validate (node, i) {
   }
 }
 
-function relation (node, i) {
+function relation(node, i) {
   if (node.reduce(countContentType, 0) > 1) {
     throw new InvalidArchiveError(
       { name: 'MultipleContentType' },
@@ -37,7 +37,7 @@ function relation (node, i) {
   }
 }
 
-function countContentType (count, header) {
+function countContentType(count, header) {
   if (header.name && header.name.toLowerCase() === 'content-type') {
     return count + 1
   } else {

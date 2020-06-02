@@ -1,6 +1,6 @@
 const computed = require('./computed')
 
-function name (node) {
+function name(node) {
   return computed(node)
 }
 

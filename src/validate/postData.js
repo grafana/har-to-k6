@@ -11,7 +11,7 @@ const { InvalidArchiveError } = require('../error')
  * max 1 nonempty params|text
  * structured data type application/x-www-form-urlencoded|multipart/form-data
  */
-function postData (node, i, assay) {
+function postData(node, i, assay) {
   if (!emptyObject(node)) {
     validate(node, i)
     if (node.params) {
@@ -20,7 +20,7 @@ function postData (node, i, assay) {
   }
 }
 
-function validate (node, i) {
+function validate(node, i) {
   if (empty(node.mimeType)) {
     throw new InvalidArchiveError(
       { name: 'MissingPostDataType' },
@@ -73,10 +73,9 @@ function validate (node, i) {
   if (
     node.params &&
     node.params.length &&
-    ![
-      'application/x-www-form-urlencoded',
-      'multipart/form-data'
-    ].includes(getContentTypeValue(node.mimeType))
+    !['application/x-www-form-urlencoded', 'multipart/form-data'].includes(
+      getContentTypeValue(node.mimeType)
+    )
   ) {
     throw new InvalidArchiveError(
       { name: 'InvalidPostDataType' },

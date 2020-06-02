@@ -1,4 +1,4 @@
-function prime (value) {
+function prime(value) {
   return JSON.stringify(value)
 }
 

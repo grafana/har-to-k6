@@ -3,25 +3,25 @@ const object = require('../../../object')
 const text = require('../../../text')
 
 // Multivalue URL encoded post data with variable
-function resolved (params) {
+function resolved(params) {
   const spec = specify(params)
   return `formurlencoded(${spec})`
 }
 
-function specify (params) {
+function specify(params) {
   const entries = []
-  for (const [ name, items ] of params) {
+  for (const [name, items] of params) {
     if (items.size === 1) {
-      const item = [ ...items ][0]
+      const item = [...items][0]
       entries.push(singular(name, item))
     } else {
-      entries.push(plural(name, [ ...items ]))
+      entries.push(plural(name, [...items]))
     }
   }
   return object(entries)
 }
 
-function singular (name, item) {
+function singular(name, item) {
   const entry = { name }
   if (item.value) {
     entry.value = text(item.value)
@@ -32,14 +32,14 @@ function singular (name, item) {
   return entry
 }
 
-function plural (name, items) {
+function plural(name, items) {
   const entry = { name }
-  const values = items.map(item => item.value)
+  const values = items.map((item) => item.value)
   if (values.length) {
-    const content = values.map(value => text(value)).join(', ')
+    const content = values.map((value) => text(value)).join(', ')
     entry.value = `[ ${content} ]`
   }
-  if (items.find(item => item.comment)) {
+  if (items.find((item) => item.comment)) {
     entry.comment = note(items)
   }
   return entry

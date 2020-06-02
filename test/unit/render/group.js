@@ -1,29 +1,28 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { FlowItemType } from 'enum'
-const [ group, { block, comment, entries, string } ] =
-  isolate(test, 'render/group', {
-    block: 'render/block',
-    comment: 'render/comment',
-    entries: 'render/entries',
-    string: 'render/string'
-  })
+const [group, { block, comment, entries, string }] = isolate(test, 'render/group', {
+  block: 'render/block',
+  comment: 'render/comment',
+  entries: 'render/entries',
+  string: 'render/string',
+})
 
-test.serial('empty', t => {
+test.serial('empty', (t) => {
   string.returns('"page1"')
   entries.returns(null)
   block.returns(`{}`)
   const result = group({
     type: FlowItemType.Group,
     id: 'page1',
-    entries: []
+    entries: [],
   })
   t.is(result, `group("page1", function() {});`)
   t.true(entries.calledOnce)
   t.true(block.calledOnce)
 })
 
-test.serial('implicit', t => {
+test.serial('implicit', (t) => {
   string.returns('"page1"')
   entries.returns(`// Entries`)
   block.returns(`{
@@ -32,16 +31,19 @@ test.serial('implicit', t => {
   const result = group({
     type: FlowItemType.Group,
     id: 'page1',
-    entries: [ {} ]
+    entries: [{}],
   })
-  t.is(result, `group("page1", function() {
+  t.is(
+    result,
+    `group("page1", function() {
   // Entries
-});`)
+});`
+  )
   t.true(entries.calledOnce)
   t.true(block.calledOnce)
 })
 
-test.serial('explicit', t => {
+test.serial('explicit', (t) => {
   string.returns('"Page 1"')
   entries.returns(`// Entries`)
   block.returns(`{
@@ -50,15 +52,18 @@ test.serial('explicit', t => {
   const result = group({
     type: FlowItemType.Group,
     id: 'page1',
-    entries: [ {} ],
-    page: { name: 'Page 1' }
+    entries: [{}],
+    page: { name: 'Page 1' },
   })
-  t.is(result, `group("Page 1", function() {
+  t.is(
+    result,
+    `group("Page 1", function() {
   // Entries
-});`)
+});`
+  )
 })
 
-test.serial('comment', t => {
+test.serial('comment', (t) => {
   string.returns('"Page 1"')
   entries.returns(`// Entries`)
   block.returns(`{
@@ -68,11 +73,14 @@ test.serial('comment', t => {
   const result = group({
     type: FlowItemType.Group,
     id: 'page1',
-    entries: [ {} ],
-    page: { name: 'Page 1', comment: 'Member section' }
+    entries: [{}],
+    page: { name: 'Page 1', comment: 'Member section' },
   })
-  t.is(result, `// Member section
+  t.is(
+    result,
+    `// Member section
 group("Page 1", function() {
   // Entries
-});`)
+});`
+  )
 })
