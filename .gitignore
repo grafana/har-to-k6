@@ -19,6 +19,7 @@ bower_components/*
 /dist
 /tmp
 /build
+/reports
 
 # dependencies
 /node_modules
