@@ -422,7 +422,17 @@ type CheckConditionVariant =
   | NotContains = 1
   | Equals = 2
   | StartsWith = 3
-  | EndsWith = 4;
+  | EndsWith = 4
+  | TypeOf = 5;
+
+type TypeCheckLiterals =
+  | "number"
+  | "string"
+  | "boolean"
+  | "object"
+  | "array"
+  | "null"
+  | "undefined"
 ```
 
 ### HAR example
@@ -430,7 +440,12 @@ type CheckConditionVariant =
 Some fields wont always be present, for example condition and value does not make sense when check is of type _Regex_.  
 Check type `JSONPathValue` and `JSONPath` should assume `CheckSubjectVariant.ResponseBody`.
 
-_NOTE: Consider adding a property __name__ or __description__ that can be used as the K6 check name._
+When the `condition` of a check is `TypeOf` then the `value` is expected to be one of the literals listed in the
+`TypeCheckLiterals`. They correspond to the types available in JavaScript, with the addition of `"null"` and
+`"array"` types.
+
+_NOTE: Consider adding a property **name** or **description** that can be used as the K6 check name._
+
 ```javascript
 {
   checks: [
@@ -456,10 +471,29 @@ _NOTE: Consider adding a property __name__ or __description__ that can be used a
       type: 3,
       subject: 0,
       expression: "[0-9]+(\s{1})?%"
+    },
+    {
+      type: 1,
+      expression: "user.phoneNumber"
+      condition: 5,
+      value: "string"
+    }, 
+    {
+      type: 1,
+      expression: "user.password"
+      condition: 5,
+      value: "undefined"
+    },
+    {
+      type: 1,
+      expression: "user.addresses"
+      condition: 5,
+      value: "array"
     }
   ]
 }
 ```
+ 
 ### Generated K6 script
 The above config would generate
 
@@ -479,6 +513,18 @@ check(res, {
 check(res, {
   "body matches [0-9]+(\s{1})?%": (r) => /[0-9]+(\s{1})?%/.test(r.body)
 });
+
+check(res, {
+  "user.phoneNumber is a string": (r) => typeof user.phoneNumber === "string"
+});
+
+check(res, {
+  "user.password is undefined": (r) => typeof user.phoneNumber === "undefined"
+});
+
+check(res, {
+  "user.addresses is an array": (r) => Array.isArray(user.addresses)
+}); 
 ```
 
 
