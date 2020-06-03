@@ -1,45 +1,50 @@
-name: CI - Release
+name: Release
 
 on:
   push:
-    branches:
-      - master
-
+    tags:
+      - v*
 jobs:
-  release:
+  build-on-tag:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v1
-        env:
-          cache-name: node-modules
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 12.xs
+        uses: actions/setup-node@v1
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+
       - name: Install dependencies
-        run: yarn
+        run: yarn install
+
       - name: Lint
         run: yarn lint
-      - name: Bundle
-        run: yarn bundle
+
       - name: Test
         run: yarn test
+
+      - name: Bundle
+        run: yarn bundle
+
+      - name: Publish to NPM
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
+
       - name: Build docker image
-        run: docker build . -t har-to-k6:latest
-      - name: Publish on DockerHub
         run: |
           echo '${{ secrets.DOCKERHUB_PASSWORD }}' | \
-            docker login \
-              --username ${{ secrets.DOCKERHUB_USERNAME }} \
-              --password-stdin
-          STAMP=$(date +'%Y-%m-%d')
-          docker build . -t loadimpact/har-to-k6:latest
+          docker login \
+            --username ${{ secrets.DOCKERHUB_USERNAME }} \
+            --password-stdin
+          export tag=${GITHUB_REF/refs\/tags\/v/}
+          docker build . -t loadimpact/har-to-k6:$tag
           docker tag \
-            loadimpact/har-to-k6:latest \
-            loadimpact/har-to-k6:$STAMP
+            loadimpact/har-to-k6:$tag \
+            loadimpact/har-to-k6:latest
+          docker push loadimpact/har-to-k6$tag
           docker push loadimpact/har-to-k6:latest
-          docker push loadimpact/har-to-k6:$STAMP
