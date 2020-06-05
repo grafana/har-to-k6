@@ -1,4 +1,3 @@
-const { empty } = require('../aid')
 const { InvalidArchiveError } = require('../error')
 
 /*
@@ -11,12 +10,6 @@ function queryItem(node, i, j) {
 }
 
 function validate(node, i, j) {
-  if (empty(node.name)) {
-    throw new InvalidArchiveError(
-      { name: 'MissingQueryItemName' },
-      `Missing query item name (${i}:${j})`
-    )
-  }
   if (typeof node.name !== 'string') {
     throw new InvalidArchiveError(
       { name: 'InvalidQueryItemName' },
