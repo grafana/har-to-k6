@@ -2,15 +2,6 @@ import test from 'ava'
 import queryItem from 'validate/queryItem'
 import { assay as makeAssay } from 'make'
 
-test('missing name', (t) => {
-  t.throws(
-    () => {
-      queryItem({}, 0, 0, makeAssay())
-    },
-    { name: 'MissingQueryItemName' }
-  )
-})
-
 test('invalid name', (t) => {
   t.throws(
     () => {
