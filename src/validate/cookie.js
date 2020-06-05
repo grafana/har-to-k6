@@ -17,6 +17,7 @@ function cookie(node, i, j, assay) {
   name(node.name, i, assay)
 }
 
+// eslint-disable-next-line no-unused-vars
 function validate(node, i, j, assay) {
   if (empty(node.name)) {
     throw new InvalidArchiveError({ name: 'MissingCookieName' }, `Missing cookie name (${i}:${j})`)
@@ -25,12 +26,6 @@ function validate(node, i, j, assay) {
     throw new InvalidArchiveError(
       { name: 'InvalidCookieName' },
       `Invalid cookie name (${i}:${j}): must be string`
-    )
-  }
-  if (assay.requestCookieNames.has(i) && assay.requestCookieNames.get(i).has(node.name)) {
-    throw new InvalidArchiveError(
-      { name: 'DuplicateCookieName' },
-      `Duplicate cookie name (${i}:${j}): ${node.name}`
     )
   }
   if (node.value && typeof node.value !== 'string') {
