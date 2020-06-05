@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2020-06-05
+
+### Fixed
+- Empty name queryString item throws validation error.
+- Make cookie validation less strict.
+
 ## [0.3.1] - 2020-05-28
 
 ### Fixed
@@ -63,7 +69,8 @@ Broken positional arg in caporal resulting in broken `har-to-k6` command.
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/loadimpact/har-to-k6/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/loadimpact/har-to-k6/compare/v0.3.2...HEAD
+[0.3.2]: https://github.com/loadimpact/har-to-k6/compare/v0.2.0...v0.3.2
 [0.3.1]: https://github.com/loadimpact/har-to-k6/compare/v0.2.0...v0.3.1
 [0.3.0]: https://github.com/loadimpact/har-to-k6/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/loadimpact/har-to-k6/compare/v0.1.5...v0.2.0
