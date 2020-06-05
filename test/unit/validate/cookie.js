@@ -20,17 +20,6 @@ test('invalid name', (t) => {
   )
 })
 
-test('duplicate name', (t) => {
-  const assay = makeAssay()
-  cookie({ name: 'session' }, 8, 0, assay)
-  t.throws(
-    () => {
-      cookie({ name: 'session' }, 8, 1, assay)
-    },
-    { name: 'DuplicateCookieName' }
-  )
-})
-
 test('invalid value', (t) => {
   t.throws(
     () => {
