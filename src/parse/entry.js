@@ -2,6 +2,7 @@ const checks = require('./checks')
 const request = require('./request')
 const state = require('./state/entry')
 const variables = require('./variables')
+const sleep = require('./sleep')
 const { entrySpec: makeEntrySpec } = require('../make')
 
 function entry(node, result) {
@@ -11,6 +12,9 @@ function entry(node, result) {
   }
   if (node.comment) {
     spec.comment = node.comment
+  }
+  if (node.sleep) {
+    spec.sleep = sleep(node.sleep)
   }
   request(node.request, spec.request)
   if (node.checks) {
