@@ -19,6 +19,9 @@
     "homepage": "https://github.com/loadimpact/har-to-k6",
     "repository": "github:loadimpact/har-to-k6",
     "bugs": "https://github.com/loadimpact/har-to-k6/issues",
+    "engines": {
+        "node": ">=11.0.0"
+    },
     "browser": "standalone.js",
     "main": "src/index.js",
     "bin": "bin/har-to-k6.js",
