@@ -2,7 +2,7 @@ function sleep(spec) {
   if (spec) {
     const valueInSec = Number((spec / 1000).toPrecision(5))
 
-    return `sleep(${valueInSec})`
+    return `sleep(${valueInSec});`
   }
 
   return ''

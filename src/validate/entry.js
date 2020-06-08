@@ -2,6 +2,7 @@ const checks = require('./checks')
 const isPlainObject = require('is-plain-object')
 const request = require('./request')
 const variables = require('./variables')
+const sleep = require('./sleep')
 const { empty } = require('../aid')
 const { InvalidArchiveError } = require('../error')
 
@@ -21,14 +22,23 @@ function entry(node, i, assay) {
   if (node.variables) {
     variables(node.variables, i, assay)
   }
+  if (node.sleep) {
+    sleep(node.sleep, i, assay)
+  }
 }
 
 function validate(node, i) {
   if (!empty(node.pageref) && typeof node.pageref !== 'string') {
-    throw new InvalidArchiveError({ name: 'InvalidEntryPageref' }, `Invalid entry pageref (${i})`)
+    throw new InvalidArchiveError(
+      { name: 'InvalidEntryPageref' },
+      `Invalid entry pageref (${i})`
+    )
   }
   if (empty(node.request)) {
-    throw new InvalidArchiveError({ name: 'MissingEntryRequest' }, `Missing entry request (${i})`)
+    throw new InvalidArchiveError(
+      { name: 'MissingEntryRequest' },
+      `Missing entry request (${i})`
+    )
   }
   if (!isPlainObject(node.request)) {
     throw new InvalidArchiveError(

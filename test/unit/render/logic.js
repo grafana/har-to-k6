@@ -1,16 +1,20 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [logic, { block, declares, flow, variableSpace }] = isolate(test, 'render/logic', {
-  block: 'render/block',
-  declares: 'render/declares',
-  flow: 'render/flow',
-  variableSpace: 'render/variableSpace',
-})
+const [logic, { block, declares, flow, variableSpace }] = isolate(
+  test,
+  'render/logic',
+  {
+    block: 'render/block',
+    declares: 'render/declares',
+    flow: 'render/flow',
+    variableSpace: 'render/variableSpace',
+  }
+)
 
 test.serial('empty', (t) => {
   block.returns('{}')
   const result = logic({})
-  t.is(result, 'export default function() {}')
+  t.is(result, 'export default function main() {}')
   t.true(declares.calledOnce)
   t.true(variableSpace.calledOnce)
   t.true(flow.calledOnce)
