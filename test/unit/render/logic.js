@@ -19,7 +19,9 @@ test.serial('empty', (t) => {
   t.true(variableSpace.calledOnce)
   t.true(flow.calledOnce)
   t.true(block.calledOnce)
-  t.deepEqual(block.firstCall.args[0], [`sleep(1);`])
+  t.deepEqual(block.firstCall.args[0], [
+    `// Automatically added sleep\nsleep(1);`,
+  ])
 })
 
 test.serial('nonempty', (t) => {
@@ -34,7 +36,7 @@ test.serial('nonempty', (t) => {
   t.is(
     result,
     '' +
-      `export default function() {
+      `export default function main() {
   // Flow
 }`
   )
@@ -42,5 +44,8 @@ test.serial('nonempty', (t) => {
   t.true(variableSpace.calledOnce)
   t.true(flow.calledOnce)
   t.true(block.calledOnce)
-  t.deepEqual(block.firstCall.args[0], [`// Flow`, `sleep(1);`])
+  t.deepEqual(block.firstCall.args[0], [
+    `// Flow`,
+    `// Automatically added sleep\nsleep(1);`,
+  ])
 })

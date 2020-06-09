@@ -46,6 +46,12 @@ function validate(node, i) {
       `Invalid entry request (${i}): must be object`
     )
   }
+  if (node.sleep && !Array.isArray(node.sleep)) {
+    throw new InvalidArchiveError(
+      { name: 'InvalidEntrySleep' },
+      `Invalid entry sleep (${i}): must be array`
+    )
+  }
   if (node.checks && !Array.isArray(node.checks)) {
     throw new InvalidArchiveError(
       { name: 'InvalidEntryChecks' },

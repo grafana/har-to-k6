@@ -1,40 +1,14 @@
-// import test from 'ava'
-// import variable from 'parse/variable'
-// import { VariableType } from 'enum'
+import test from 'ava'
+import sleep from 'parse/sleep'
 
-// function makeSpec () {
-//   return new Map()
-// }
+test('does not mutate during parse', (t) => {
+  const result = [
+    { before: 0 },
+    { before: 0.2 },
+    { after: 3000 },
+    { after: 4000 },
+  ]
 
-// test('minimal', t => {
-//   const spec = makeSpec()
-//   variable({
-//     name: 'token',
-//     type: VariableType.JSONPath,
-//     expression: 'token'
-//   }, spec)
-//   t.deepEqual(
-//     spec,
-//     new Map()
-//       .set('token', { type: VariableType.JSONPath, expression: 'token' })
-//   )
-// })
-
-// test('comment', t => {
-//   const spec = makeSpec()
-//   variable({
-//     name: 'token',
-//     type: VariableType.JSONPath,
-//     expression: 'token',
-//     comment: 'Extract authorization token'
-//   }, spec)
-//   t.deepEqual(
-//     spec,
-//     new Map()
-//       .set('token', {
-//         type: VariableType.JSONPath,
-//         expression: 'token',
-//         comment: 'Extract authorization token'
-//       })
-//   )
-// })
+  const spec = sleep(result)
+  t.deepEqual(spec, result)
+})
