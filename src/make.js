@@ -24,6 +24,7 @@ function checkState() {
 function entrySpec() {
   return {
     page: null,
+    sleep: null,
     request: requestSpec(),
     checks: new Map(),
     variables: new Map(),
@@ -39,6 +40,7 @@ function entryState() {
 
 function imports() {
   return {
+    sleep: false,
     group: false,
     check: false,
     http: false,

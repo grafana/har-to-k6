@@ -1,10 +1,14 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [entry, { checks, request, variables }] = isolate(test, 'render/entry/logic', {
-  checks: 'render/checks',
-  request: 'render/request',
-  variables: 'render/variables',
-})
+const [entry, { checks, request, variables }] = isolate(
+  test,
+  'render/entry/logic',
+  {
+    checks: 'render/checks',
+    request: 'render/request',
+    variables: 'render/variables',
+  }
+)
 
 test.serial('minimal', (t) => {
   request.returns(`// Request`)
@@ -49,6 +53,24 @@ test.serial('variables', (t) => {
 })
 
 test.serial('checks variables', (t) => {
+  request.returns(`// Request`)
+  checks.returns(`// Checks`)
+  variables.returns(`// Variables`)
+  const result = entry({
+    request: {},
+    checks: new Map().set('token exists', {}),
+    variables: new Map().set('token', {}),
+  })
+  t.is(
+    result,
+    '' +
+      `// Request
+// Checks
+// Variables`
+  )
+})
+
+test.serial('sleep', (t) => {
   request.returns(`// Request`)
   checks.returns(`// Checks`)
   variables.returns(`// Variables`)

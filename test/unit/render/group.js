@@ -1,12 +1,16 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { FlowItemType } from 'enum'
-const [group, { block, comment, entries, string }] = isolate(test, 'render/group', {
-  block: 'render/block',
-  comment: 'render/comment',
-  entries: 'render/entries',
-  string: 'render/string',
-})
+const [group, { block, comment, entries, string }] = isolate(
+  test,
+  'render/group',
+  {
+    block: 'render/block',
+    comment: 'render/comment',
+    entries: 'render/entries',
+    string: 'render/string',
+  }
+)
 
 test.serial('empty', (t) => {
   string.returns('"page1"')

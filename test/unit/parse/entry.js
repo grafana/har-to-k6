@@ -1,11 +1,16 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { result as makeResult, requestSpec as makeRequestSpec } from 'make'
-const [entry, { checks, request, variables }] = isolate(test, 'parse/entry', {
-  checks: 'parse/checks',
-  request: 'parse/request',
-  variables: 'parse/variables',
-})
+const [entry, { checks, request, variables, sleep }] = isolate(
+  test,
+  'parse/entry',
+  {
+    checks: 'parse/checks',
+    request: 'parse/request',
+    variables: 'parse/variables',
+    sleep: 'parse/sleep',
+  }
+)
 
 test.serial('basic', (t) => {
   const result = makeResult()
@@ -16,6 +21,7 @@ test.serial('basic', (t) => {
       request: makeRequestSpec(),
       checks: new Map(),
       variables: new Map(),
+      sleep: null,
       state: { expanded: true },
     },
   ])
@@ -44,4 +50,9 @@ test.serial('checks', (t) => {
 test.serial('variables', (t) => {
   entry({ variables: [] }, makeResult())
   t.true(variables.calledOnce)
+})
+
+test.serial('sleep', (t) => {
+  entry({ sleep: 1200 }, makeResult())
+  t.true(sleep.calledOnce)
 })

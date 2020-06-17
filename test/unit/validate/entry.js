@@ -1,11 +1,15 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { assay as makeAssay } from 'make'
-const [entry, { checks, request, variables }] = isolate(test, 'validate/entry', {
-  checks: 'validate/checks',
-  request: 'validate/request',
-  variables: 'validate/variables',
-})
+const [entry, { checks, request, variables }] = isolate(
+  test,
+  'validate/entry',
+  {
+    checks: 'validate/checks',
+    request: 'validate/request',
+    variables: 'validate/variables',
+  }
+)
 
 test.serial('invalid pageref', (t) => {
   t.throws(
@@ -49,6 +53,15 @@ test.serial('invalid variables', (t) => {
       entry({ request: {}, variables: 5 }, 0, makeAssay())
     },
     { name: 'InvalidEntryVariables' }
+  )
+})
+
+test('invalid sleep', (t) => {
+  t.throws(
+    () => {
+      entry({ request: {}, sleep: {} }, 0, makeAssay())
+    },
+    { name: 'InvalidEntrySleep' }
   )
 })
 

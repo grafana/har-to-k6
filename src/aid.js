@@ -53,18 +53,26 @@ function isBlacklistedHeader(headerName = '') {
   const [name] = headerName.split(';')
 
   return HEADERS_BLACKLIST.some(
-    (blacklistedHeader) => name.toLowerCase() === blacklistedHeader.toLowerCase()
+    (blacklistedHeader) =>
+      name.toLowerCase() === blacklistedHeader.toLowerCase()
   )
 }
 
 function seralizeURLSearchParams(postDataParams = []) {
-  return postDataParams.map(({ name, value }) => [name, value].join('=')).join('&')
+  return postDataParams
+    .map(({ name, value }) => [name, value].join('='))
+    .join('&')
+}
+
+function isObject(value) {
+  return value && typeof value === 'object' && value.constructor === Object
 }
 
 module.exports = {
   seralizeURLSearchParams,
   empty,
   isBlacklistedHeader,
+  isObject,
   emptyObject,
   isString,
   extrinsic,

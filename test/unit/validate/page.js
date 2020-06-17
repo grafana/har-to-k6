@@ -40,6 +40,15 @@ test('invalid title', (t) => {
   )
 })
 
+test('invalid sleep', (t) => {
+  t.throws(
+    () => {
+      page({ id: 'page1', title: 'Page 1', sleep: {} }, 0, makeAssay())
+    },
+    { name: 'InvalidPageSleep' }
+  )
+})
+
 test('invalid comment', (t) => {
   t.throws(
     () => {

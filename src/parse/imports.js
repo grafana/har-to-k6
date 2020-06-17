@@ -1,10 +1,17 @@
-const { CheckType, FlowItemType, PostSpecies, VariableType } = require('../enum')
+const {
+  CheckType,
+  FlowItemType,
+  PostSpecies,
+  VariableType,
+} = require('../enum')
 const { UnrecognizedError } = require('../error')
 
 function imports(archive, result) {
   if (archive.log.entries) {
     result.imports.http = true
+    result.imports.sleep = true
     const entries = archive.log.entries
+
     if (entries.find((entry) => entry.pageref)) {
       result.imports.group = true
     }

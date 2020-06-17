@@ -1,3 +1,5 @@
+const sleep = require('./sleep')
+
 function page(node, result) {
   const nameParts = []
 
@@ -11,6 +13,11 @@ function page(node, result) {
   if (node.comment) {
     spec.comment = node.comment
   }
+
+  if (node.sleep) {
+    spec.sleep = sleep(node.sleep)
+  }
+
   result.pages.set(node.id, spec)
 }
 

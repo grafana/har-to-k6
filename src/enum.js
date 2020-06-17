@@ -35,6 +35,11 @@ const AddressSpecies = Object.freeze({
   Runtime: 4,
 })
 
+const SleepPlacement = Object.freeze({
+  Before: 'before',
+  After: 'after',
+})
+
 const CheckCondition = Object.freeze({
   Contains: 0,
   NotContains: 1,
@@ -101,6 +106,7 @@ function inverse(items) {
 
 Object.assign(exports, {
   AddressSpecies,
+  SleepPlacement,
   CheckCondition,
   CheckConditionEncoding,
   CheckSubject,

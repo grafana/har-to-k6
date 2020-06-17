@@ -15,9 +15,12 @@ function any(spec) {
 }
 
 function k6(spec, lines) {
-  const items = ['sleep']
+  const items = []
 
-  if (spec.check || spec.group) {
+  if (spec.check || spec.group || spec.sleep) {
+    if (spec.sleep) {
+      items.push('sleep')
+    }
     if (spec.check) {
       items.push('check')
     }
@@ -27,7 +30,9 @@ function k6(spec, lines) {
   }
 
   const content = items.join(`, `)
-  lines.push(`import { ${content} } from "k6";`)
+  if (items.length > 0) {
+    lines.push(`import { ${content} } from "k6";`)
+  }
 }
 
 function http(spec, lines) {
