@@ -1,7 +1,9 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { assay as makeAssay } from 'make'
-const [postData, { params }] = isolate(test, 'validate/postData', { params: 'validate/params' })
+const [postData, { params }] = isolate(test, 'validate/postData', {
+  params: 'validate/params',
+})
 
 test.serial('empty', (t) => {
   t.notThrows(() => {
@@ -93,8 +95,9 @@ test.serial('valid postData combination', (t) => {
     params: [
       { name: 'foo', value: 1 },
       { name: 'bar', value: 2 },
+      { name: 'baz', value: 'шеллы' },
     ],
-    text: 'foo=1&bar=2',
+    text: 'foo=1&bar=2&baz=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B',
   })
   t.true(params.calledOnce)
 })

@@ -60,7 +60,10 @@ function isBlacklistedHeader(headerName = '') {
 
 function seralizeURLSearchParams(postDataParams = []) {
   return postDataParams
-    .map(({ name, value }) => [name, value].join('='))
+    .map(
+      ({ name, value }) =>
+        `${encodeURIComponent(name)}=${encodeURIComponent(value)}`
+    )
     .join('&')
 }
 
