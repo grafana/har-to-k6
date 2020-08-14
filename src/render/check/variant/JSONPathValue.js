@@ -1,48 +1,51 @@
-const comparison = require('../comparison')
-const indent = require('../../indent')
-const string = require('../../string')
+const { CheckCondition } = require('../../../enum')
+const { UnrecognizedError } = require('../../../error')
 
-function JSONPathValue(name, spec) {
-  const item = {
+const { js, from } = require('../../../codegen')
+
+function predicate({ condition, value }) {
+  switch (condition) {
+    case CheckCondition.Contains:
+      return js`values => values.includes(${value})`
+
+    case CheckCondition.NotContains:
+      return js`values => !values.includes(${value})`
+
+    case CheckCondition.Equals:
+      return js`value => value === ${value}`
+
+    case CheckCondition.StartsWith:
+      return js`value => value.startsWith(${value})`
+
+    case CheckCondition.EndsWith:
+      return js`value => value.endsWith(${value})`
+
+    case CheckCondition.TypeOf:
+      if (value === 'array') {
+        return js`value => Array.isArray(value)`
+      }
+
+      return js`value => typeof value === ${value}`
+
+    default:
+      throw new UnrecognizedError(
+        { name: 'UnrecognizedCheckCondition' },
+        `Unrecognized check condition: ${condition}`
+      )
+  }
+}
+
+const template = js`
+  response => jsonpath.query(response.json(), ${from('expression')})
+    .some(${predicate})
+`
+
+function JSONPathValue(name, { comment, condition, expression, value, state }) {
+  return {
     name,
-    value: logic(spec),
+    comment,
+    value: template({ condition, expression, value, negated: state.negated }),
   }
-  if (spec.comment) {
-    item.comment = spec.comment
-  }
-  return item
-}
-
-function logic(spec) {
-  const factor = {
-    subject: subject(spec),
-    comparison: comparison(spec.condition, value(spec)),
-    negated: spec.state.negated,
-  }
-  factor.body = body(factor)
-  return `response => ${factor.body}`
-}
-
-function subject(spec) {
-  return `jsonpath.query(response.json(), ${string(spec.expression)})`
-}
-
-function value(spec) {
-  return string(spec.value)
-}
-
-function body(factor) {
-  const cast = factor.negated ? '!' : '!!'
-  const content =
-    '' +
-    `const values = ${factor.subject};
-return ${cast}values.find(value => value${factor.comparison});`
-  return (
-    '' +
-    `{
-${indent(content)}
-}`
-  )
 }
 
 module.exports = JSONPathValue

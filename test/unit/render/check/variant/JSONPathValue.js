@@ -1,88 +1,132 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { checkState as makeCheckState } from 'make'
-import { CheckCondition } from 'enum'
-const [JSONPathValue, { comparison, indent, string }] = isolate(
-  test,
-  'render/check/variant/JSONPathValue',
-  {
-    comparison: 'render/check/comparison',
-    indent: 'render/indent',
-    string: 'render/string',
-  }
-)
+const test = require('ava')
 
-test.serial('comparison', (t) => {
-  string.onSecondCall().returns('"LoggedIn"')
-  const spec = {
-    expression: '$.result',
-    condition: CheckCondition.Equals,
-    value: 'LoggedIn',
-    state: makeCheckState(),
-  }
-  spec.state.negated = false
-  spec.state.plural = true
-  JSONPathValue('$.result equals LoggedIn', spec)
-  t.true(comparison.calledOnce)
-  t.is(comparison.firstCall.args[0], CheckCondition.Equals)
-  t.is(comparison.firstCall.args[1], '"LoggedIn"')
-  t.is(string.secondCall.args[0], 'LoggedIn')
+const { parse } = require('helper/parse.js')
+
+const JSONPathValue = require('render/check/variant/JSONPathValue')
+const { CheckCondition } = require('enum')
+
+test('generates strict equality check when check condition is Equals', (t) => {
+  const result = parse(
+    JSONPathValue('check name', {
+      expression: '$.value',
+      condition: CheckCondition.Equals,
+      value: 'True',
+      state: { negated: false },
+    })
+  )
+
+  const expected = parse(`
+    response => jsonpath.query(response.json(), "$.value")
+      .some(value => value === "True")
+  `)
+
+  t.deepEqual(result, expected)
 })
 
-test.serial('positive', (t) => {
-  string.onFirstCall().returns('expression')
-  comparison.returns('comparison')
-  indent.returns('indented')
-  const spec = {
-    expression: '$.result',
-    condition: CheckCondition.Equals,
-    value: 'LoggedIn',
-    state: makeCheckState(),
-  }
-  spec.state.negated = false
-  spec.state.plural = true
-  const result = JSONPathValue('$.result equals LoggedIn', spec)
-  t.deepEqual(result, {
-    name: '$.result equals LoggedIn',
-    value:
-      '' +
-      `response => {
-indented
-}`,
-  })
-  t.is(
-    indent.firstCall.args[0],
-    '' +
-      `const values = jsonpath.query(response.json(), expression);
-return !!values.find(value => valuecomparison);`
+test('checks if value is a member of list when check condition is Contains', (t) => {
+  const result = parse(
+    JSONPathValue('check name', {
+      expression: '$.value',
+      condition: CheckCondition.Contains,
+      value: '200 OK',
+      state: { negated: false },
+    })
   )
+
+  const expected = parse(`
+    response => jsonpath.query(response.json(), "$.value")
+      .some(values => values.includes("200 OK"))
+  `)
+
+  t.deepEqual(result, expected)
 })
 
-test.serial('negative', (t) => {
-  string.onFirstCall().returns('expression')
-  comparison.returns('comparison')
-  indent.returns('indented')
-  const spec = {
-    expression: '$.result',
-    condition: CheckCondition.NotContains,
-    value: 'Error',
-    state: makeCheckState(),
-  }
-  spec.state.negated = true
-  spec.state.plural = true
-  const result = JSONPathValue('$.result does not contain Error', spec)
-  t.deepEqual(result, {
-    name: '$.result does not contain Error',
-    value:
-      '' +
-      `response => {
-indented
-}`,
-  })
-  t.is(
-    indent.firstCall.args[0],
-    '' +
-      `const values = jsonpath.query(response.json(), expression);
-return !values.find(value => valuecomparison);`
+test('checks if value is not a member of list when check condition is NotContains', (t) => {
+  const result = parse(
+    JSONPathValue('check name', {
+      expression: '$.value',
+      condition: CheckCondition.Contains,
+      value: '200 OK',
+      state: { negated: false },
+    })
   )
+
+  const expected = parse(`
+    response => jsonpath.query(response.json(), "$.value")
+      .some(values => values.includes("200 OK"))
+  `)
+
+  t.deepEqual(result, expected)
+})
+
+test('checks if value starts with value when check condition is StartsWith', (t) => {
+  const result = parse(
+    JSONPathValue('check name', {
+      expression: '$.value',
+      condition: CheckCondition.StartsWith,
+      value: '200',
+      state: { negated: false },
+    })
+  )
+
+  const expected = parse(`
+    response => jsonpath.query(response.json(), "$.value")
+      .some(value => value.startsWith("200"))
+  `)
+
+  t.deepEqual(result, expected)
+})
+
+test('checks if value ends with value when check condition is EndsWith', (t) => {
+  const result = parse(
+    JSONPathValue('check name', {
+      expression: '$.value',
+      condition: CheckCondition.EndsWith,
+      value: 'OK',
+      state: { negated: false },
+    })
+  )
+
+  const expected = parse(`
+    response => jsonpath.query(response.json(), "$.value")
+      .some(value => value.endsWith("OK"))
+  `)
+
+  t.deepEqual(result, expected)
+})
+
+test('checks if value has correct type using typeof operator when check condition is TypeOf', (t) => {
+  const result = parse(
+    JSONPathValue('check name', {
+      expression: '$.value',
+      condition: CheckCondition.TypeOf,
+      value: 'string',
+      state: { negated: false },
+    })
+  )
+
+  const expected = parse(`
+    response => jsonpath.query(response.json(), "$.value")
+      .some(value => typeof value === "string")
+  `)
+
+  t.deepEqual(result, expected)
+})
+
+test('checks if value is an array when check condition is TypeOf and expected type is "array"', (t) => {
+  const result = parse(
+    JSONPathValue('check name', {
+      expression: '$.value',
+      condition: CheckCondition.TypeOf,
+      value: 'array',
+      state: { negated: false },
+    })
+  )
+
+  const expected = parse(`
+    response => jsonpath.query(response.json(), "$.value")
+      .some(value => Array.isArray(value))
+  `)
+
+  t.deepEqual(result, expected)
 })
