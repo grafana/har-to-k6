@@ -1,31 +1,15 @@
-const indent = require('../../indent')
-const string = require('../../string')
+const { js, from } = require('../../../codegen')
 
-function JSONPath(name, spec) {
-  const item = {
+const template = js`
+  response => jsonpath.query(response.json(), ${from('expression')}).length > 0
+`
+
+function JSONPath(name, { comment, expression }) {
+  return {
     name,
-    value: logic(spec),
+    comment,
+    value: template({ expression }),
   }
-  if (spec.comment) {
-    item.comment = spec.comment
-  }
-  return item
-}
-
-function logic(spec) {
-  return `response => ${body(spec)}`
-}
-
-function body(spec) {
-  const expression = string(spec.expression)
-  const subject = `jsonpath.query(response.json(), ${expression})`
-  const content = `return !!${subject}.length;`
-  return (
-    '' +
-    `{
-${indent(content)}
-}`
-  )
 }
 
 module.exports = JSONPath

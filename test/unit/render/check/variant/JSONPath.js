@@ -1,29 +1,21 @@
 import test from 'ava'
-import isolate from 'helper/isolate'
-import { checkState as makeCheckState } from 'make'
-const [JSONPath, { indent, string }] = isolate(test, 'render/check/variant/JSONPath', {
-  indent: 'render/indent',
-  string: 'render/string',
-})
+import { parse } from '../../../../helper/parse'
+import JSONPath from '../../../../../src/render/check/variant/JSONPath'
+import { CheckCondition } from '../../../../../src/enum'
 
-test.serial('basic', (t) => {
-  string.returns('expression')
-  indent.returns('indented')
-  const spec = {
-    expression: '$.token',
-    state: makeCheckState(),
-  }
-  spec.state.negated = false
-  spec.state.plural = false
-  const result = JSONPath('$.token exists', spec)
-  t.deepEqual(result, {
-    name: '$.token exists',
-    value:
-      '' +
-      `response => {
-indented
-}`,
-  })
-  t.is(string.firstCall.args[0], '$.token')
-  t.is(indent.firstCall.args[0], `return !!jsonpath.query(response.json(), expression).length;`)
+test('should check if jsonpath exists', (t) => {
+  const result = parse(
+    JSONPath('check name', {
+      expression: '$.value',
+      condition: CheckCondition.Equals,
+      value: 'True',
+      state: { negated: false },
+    })
+  )
+
+  const expected = parse(`
+    response => jsonpath.query(response.json(), "$.value").length > 0
+  `)
+
+  t.deepEqual(result, expected)
 })
