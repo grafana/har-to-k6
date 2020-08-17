@@ -1,2 +1,4 @@
 standalone.js
 *.md
+
+test/e2e/pass/*.js
