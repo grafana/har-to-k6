@@ -1,4 +1,4 @@
-const acorn = require('acorn')
+const babel = require('prettier/parser-babel')
 
 const BUILD = Symbol('build')
 const UNQUOTED = Symbol('unquoted')
@@ -148,14 +148,14 @@ exports.js = (strings, ...expressions) => {
     build,
     (ctx = {}, { validate = false, output = 'string' } = {}) => {
       const script = build(ctx, []).join('')
-      const ast = validate ? acorn.parse(script) : null
+      const ast = validate ? babel.parsers.babel.parse(script) : null
 
       if (output === 'string') {
         return script
       }
 
       if (output === 'ast') {
-        return ast || acorn.parse(script)
+        return ast || babel.parsers.babel.parse(script)
       }
 
       throw new Error(`Invalid output type '${output}'`)
