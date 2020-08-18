@@ -13,6 +13,8 @@ function condition(value) {
       return 'starts with'
     case CheckCondition.EndsWith:
       return 'ends with'
+    case CheckCondition.TypeOf:
+      return 'is of type'
     default:
       throw new UnrecognizedError(
         { name: 'UnrecognizedCheckCondition' },

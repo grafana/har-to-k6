@@ -18,6 +18,7 @@ io.version(version)
   .option('-o, --output <output>', 'Output file', output, 'loadtest.js')
   .argument('<archive>', 'LI-HAR archive to convert')
   .action(run)
+
 io.parse(process.argv)
 
 function output(value) {

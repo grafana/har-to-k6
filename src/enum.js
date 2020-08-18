@@ -46,7 +46,9 @@ const CheckCondition = Object.freeze({
   Equals: 2,
   StartsWith: 3,
   EndsWith: 4,
+  TypeOf: 5,
 })
+
 const CheckConditionEncoding = inverse(CheckCondition)
 
 const CheckSubject = Object.freeze({
@@ -104,7 +106,7 @@ function inverse(items) {
   return map
 }
 
-Object.assign(exports, {
+module.exports = {
   AddressSpecies,
   SleepPlacement,
   CheckCondition,
@@ -119,4 +121,4 @@ Object.assign(exports, {
   StringSpecies,
   VariableType,
   VariableTypeEncoding,
-})
+}
