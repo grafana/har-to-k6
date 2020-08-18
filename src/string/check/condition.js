@@ -14,7 +14,7 @@ function condition(value) {
     case CheckCondition.EndsWith:
       return 'ends with'
     case CheckCondition.TypeOf:
-      return 'is of type'
+      return 'is'
     default:
       throw new UnrecognizedError(
         { name: 'UnrecognizedCheckCondition' },
