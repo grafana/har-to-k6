@@ -1,4 +1,4 @@
-const { CheckCondition } = require('../../../enum')
+const { CheckCondition, TypeOfOptions } = require('../../../enum')
 const { UnrecognizedError } = require('../../../error')
 
 const { js, from } = require('../../../codegen')
@@ -21,7 +21,11 @@ function predicate({ condition, value }) {
       return js`value => value.endsWith(${value})`
 
     case CheckCondition.TypeOf:
-      if (value === 'array') {
+      if (value === TypeOfOptions.Null) {
+        return js`value => value === null`
+      }
+
+      if (value === TypeOfOptions.Array) {
         return js`value => Array.isArray(value)`
       }
 

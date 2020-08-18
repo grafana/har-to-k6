@@ -23,10 +23,16 @@ export default function main() {
       jsonpath
         .query(response.json(), "$.value")
         .some(values => !values.includes("hello")),
-    "$.value is of type string": response =>
+    "$.value is string": response =>
       jsonpath
         .query(response.json(), "$.value")
         .some(value => typeof value === "string"),
+    "$.value is null": response =>
+      jsonpath.query(response.json(), "$.value").some(value => value === null),
+    "$.value is array": response =>
+      jsonpath
+        .query(response.json(), "$.value")
+        .some(value => Array.isArray(value)),
     "$.value exists": response =>
       jsonpath.query(response.json(), "$.value").length > 0,
   });

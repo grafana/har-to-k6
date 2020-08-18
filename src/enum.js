@@ -66,6 +66,15 @@ const CheckType = Object.freeze({
 })
 const CheckTypeEncoding = inverse(CheckType)
 
+const TypeOfOptions = {
+  String: 'string',
+  Number: 'number',
+  Boolean: 'boolean',
+  Object: 'object',
+  Array: 'array',
+  Null: 'null',
+}
+
 const CommentLocation = Object.freeze({
   Top: 0,
   Suffix: 1,
@@ -121,4 +130,5 @@ module.exports = {
   StringSpecies,
   VariableType,
   VariableTypeEncoding,
+  TypeOfOptions,
 }
