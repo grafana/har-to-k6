@@ -3,7 +3,8 @@ const acorn = require('acorn')
 const BUILD = Symbol('build')
 const UNQUOTED = Symbol('unquoted')
 
-const hasOwnProperty = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+const hasOwnProperty = (obj, prop) =>
+  Object.prototype.hasOwnProperty.call(obj, prop)
 
 const makeTemplate = (build, render) => {
   render[BUILD] = build
@@ -143,18 +144,21 @@ exports.js = (strings, ...expressions) => {
     }, result)
   }
 
-  return makeTemplate(build, (ctx = {}, { validate = true, output = 'string' } = {}) => {
-    const script = build(ctx, []).join('')
-    const ast = validate ? acorn.parse(script) : null
+  return makeTemplate(
+    build,
+    (ctx = {}, { validate = false, output = 'string' } = {}) => {
+      const script = build(ctx, []).join('')
+      const ast = validate ? acorn.parse(script) : null
 
-    if (output === 'string') {
-      return script
+      if (output === 'string') {
+        return script
+      }
+
+      if (output === 'ast') {
+        return ast || acorn.parse(script)
+      }
+
+      throw new Error(`Invalid output type '${output}'`)
     }
-
-    if (output === 'ast') {
-      return ast || acorn.parse(script)
-    }
-
-    throw new Error(`Invalid output type '${output}'`)
-  })
+  )
 }
