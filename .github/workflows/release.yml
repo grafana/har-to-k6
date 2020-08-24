@@ -46,5 +46,5 @@ jobs:
           docker tag \
             loadimpact/har-to-k6:$tag \
             loadimpact/har-to-k6:latest
-          docker push loadimpact/har-to-k6$tag
+          docker push loadimpact/har-to-k6:$tag
           docker push loadimpact/har-to-k6:latest
