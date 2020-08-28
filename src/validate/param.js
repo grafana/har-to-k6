@@ -14,7 +14,7 @@ function param(node, i, j) {
 
 function validate(node, i, j) {
   if (empty(node.name)) {
-    throw new InvalidArchiveError({ name: 'MissingParamName' }, `Missing param name (${i}:${j})`)
+    console.warn(`[WARN] Discarding param with missing name (${i}:${j})`)
   }
   if (typeof node.name !== 'string') {
     throw new InvalidArchiveError(

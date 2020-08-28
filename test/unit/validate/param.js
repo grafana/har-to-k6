@@ -2,15 +2,6 @@ import test from 'ava'
 import param from 'validate/param'
 import { assay as makeAssay } from 'make'
 
-test('missing name', (t) => {
-  t.throws(
-    () => {
-      param({}, 0, 0, makeAssay())
-    },
-    { name: 'MissingParamName' }
-  )
-})
-
 test('invalid name', (t) => {
   t.throws(
     () => {

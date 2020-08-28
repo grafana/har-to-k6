@@ -1,5 +1,10 @@
 const params = require('./params')
-const { empty, emptyObject, seralizeURLSearchParams, getContentTypeValue } = require('../aid')
+const {
+  empty,
+  emptyObject,
+  seralizeURLSearchParams,
+  getContentTypeValue,
+} = require('../aid')
 const { InvalidArchiveError } = require('../error')
 
 /*
@@ -63,9 +68,8 @@ function validate(node, i) {
     node.mimeType.includes('application/x-www-form-urlencoded')
   ) {
     if (seralizeURLSearchParams(node.params) !== node.text) {
-      throw new InvalidArchiveError(
-        { name: 'PostDataConflict' },
-        `Post data conflict (${i}): params and text must be equal if both are provided`
+      console.warn(
+        `[WARN] Post data conflict (${i}): Both params and text are provided but the values do not match.`
       )
     }
   }
