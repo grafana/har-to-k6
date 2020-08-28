@@ -1,7 +1,9 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
 import { assay as makeAssay } from 'make'
-const [postData, { params }] = isolate(test, 'validate/postData', { params: 'validate/params' })
+const [postData, { params }] = isolate(test, 'validate/postData', {
+  params: 'validate/params',
+})
 
 test.serial('empty', (t) => {
   t.notThrows(() => {
@@ -67,23 +69,6 @@ test.serial('invalid structured type', (t) => {
       )
     },
     { name: 'InvalidPostDataType' }
-  )
-})
-
-test.serial('invalid postData combination', (t) => {
-  t.throws(
-    () => {
-      postData(
-        {
-          mimeType: 'application/x-www-form-urlencoded',
-          params: [{ name: 'foo', value: 1 }],
-          text: 'bar=2',
-        },
-        0,
-        makeAssay()
-      )
-    },
-    { name: 'PostDataConflict' }
   )
 })
 
