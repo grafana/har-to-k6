@@ -116,7 +116,7 @@ function result() {
   }
 }
 
-Object.assign(exports, {
+module.exports = {
   addressState,
   assay,
   checkState,
@@ -130,4 +130,4 @@ Object.assign(exports, {
   requestSpec,
   requestState,
   result,
-})
+}

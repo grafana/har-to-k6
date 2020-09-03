@@ -10,8 +10,8 @@ function value(a, b) {
   return a.value > b.value ? 1 : a.value < b.value ? -1 : 0
 }
 
-Object.assign(exports, {
+module.exports = {
   firstElement,
   index,
   value,
-})
+}

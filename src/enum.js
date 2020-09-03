@@ -1,4 +1,4 @@
-const AddressSpecies = Object.freeze({
+const AddressSpecies = {
   /*
    * Fixed string
    *
@@ -33,37 +33,37 @@ const AddressSpecies = Object.freeze({
    * - Query with variable
    */
   Runtime: 4,
-})
+}
 
-const SleepPlacement = Object.freeze({
+const SleepPlacement = {
   Before: 'before',
   After: 'after',
-})
+}
 
-const CheckCondition = Object.freeze({
+const CheckCondition = {
   Contains: 0,
   NotContains: 1,
   Equals: 2,
   StartsWith: 3,
   EndsWith: 4,
   TypeOf: 5,
-})
+}
 
 const CheckConditionEncoding = inverse(CheckCondition)
 
-const CheckSubject = Object.freeze({
+const CheckSubject = {
   ResponseBody: 0,
   ResponseHeaders: 1,
   HttpStatusCode: 2,
-})
+}
 const CheckSubjectEncoding = inverse(CheckSubject)
 
-const CheckType = Object.freeze({
+const CheckType = {
   Text: 0,
   JSONPathValue: 1,
   JSONPath: 2,
   Regex: 3,
-})
+}
 const CheckTypeEncoding = inverse(CheckType)
 
 const TypeOfOptions = {
@@ -75,32 +75,32 @@ const TypeOfOptions = {
   Null: 'null',
 }
 
-const CommentLocation = Object.freeze({
+const CommentLocation = {
   Top: 0,
   Suffix: 1,
-})
+}
 
-const FlowItemType = Object.freeze({
+const FlowItemType = {
   External: 0,
   Group: 1,
-})
+}
 
-const PostSpecies = Object.freeze({
+const PostSpecies = {
   Empty: 1,
   Unstructured: 2,
   Structured: 3,
-})
+}
 
-const StringSpecies = Object.freeze({
+const StringSpecies = {
   Identifier: 0,
   String: 1,
   Template: 2,
-})
+}
 
-const VariableType = Object.freeze({
+const VariableType = {
   JSONPath: 0,
   Regex: 1,
-})
+}
 const VariableTypeEncoding = inverse(VariableType)
 
 function inverse(items) {

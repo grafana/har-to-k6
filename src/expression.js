@@ -7,7 +7,7 @@ const variable = /\${([^}]*)}/
 const variables = /\${([^}]*)}/g
 const variableStart = /^\${([^}]*)}/
 
-Object.assign(exports, {
+module.exports = {
   absoluteUrl,
   lineBreak,
   lineComment,
@@ -16,4 +16,4 @@ Object.assign(exports, {
   variable,
   variables,
   variableStart,
-})
+}
