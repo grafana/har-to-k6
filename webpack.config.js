@@ -1,5 +1,6 @@
 const path = require('path')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 
 /** @type {import('webpack').Configuration } */
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
   mode: 'production',
   output: {
     path: path.resolve(__dirname),
-    filename: 'standalone.js',
+    filename: './dist/standalone.js',
     library: 'harToK6',
     libraryTarget: 'umd',
   },
