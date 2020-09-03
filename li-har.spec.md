@@ -495,9 +495,10 @@ A variable named `access_token` is referenced as `${access_token}`.
 ```typescript
 export const JSONPathVariable = 0
 export const RegexVariable = 1
+export const CSSSelectorVariable = 2
 
-export type VariableTypeVariant = JSONPathVariable | RegexVariable
-
+export type VariableTypeVariant = JSONPathVariable | RegexVariable | CSSSelectorVariable 
+ 
 export interface Variable {
   type: VariableTypeVariant
   name: string
