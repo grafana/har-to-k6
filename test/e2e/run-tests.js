@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 
 const convert = require('convert')
+const { parse } = require('../helper/parse')
 
 const listEntries = (dir) => fs.readdirSync(dir, { withFileTypes: true })
 
@@ -41,11 +42,12 @@ const findTests = (dir) => {
 
 const pass = (expectedFile, inputFile) => async (t) => {
   const input = JSON.parse(fs.readFileSync(inputFile).toString())
-  const expected = fs.readFileSync(expectedFile).toString()
+  const expected = parse(fs.readFileSync(expectedFile).toString())
 
-  const { main: result } = await convert(input)
+  const { main } = await convert(input)
+  const result = parse(main)
 
-  t.is(expected, result)
+  t.deepEqual(expected, result)
 }
 
 const fail = (inputFile) => async (t) => {
@@ -55,5 +57,5 @@ const fail = (inputFile) => async (t) => {
 }
 
 findTests(__dirname).forEach(({ type, name, expected, input }) => {
-  test(name, type === 'pass' ? pass(expected, input) : fail(expected, input))
+  test(name, type === 'pass' ? pass(expected, input) : fail(input))
 })

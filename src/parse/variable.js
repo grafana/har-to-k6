@@ -2,6 +2,7 @@
 function variable(node, spec) {
   const item = {
     type: node.type,
+    attribute: node.attribute || null,
     expression: node.expression,
   }
   if (node.comment) {

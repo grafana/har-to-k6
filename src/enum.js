@@ -100,6 +100,7 @@ const StringSpecies = {
 const VariableType = {
   JSONPath: 0,
   Regex: 1,
+  CSSSelector: 2,
 }
 const VariableTypeEncoding = inverse(VariableType)
 

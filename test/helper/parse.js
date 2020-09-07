@@ -33,4 +33,19 @@ const ignoreLocationProps = (obj) => {
  * source code dependent properties to allow deep equality assertions between
  * parsed ASTs.
  */
-exports.parse = (src) => ignoreLocationProps(acorn.parse(src.value || src))
+
+exports.parse = (src, opts = { sourceType: 'module' }) =>
+  ignoreLocationProps(acorn.parse(src.value || src, opts))
+
+exports.parseComments = (src) => {
+  const result = []
+
+  acorn.parse(src.value || src, {
+    locations: true,
+    onComment: (isBlock, text, start, end, loc) => {
+      result.push({ isBlock, text, line: loc.line })
+    },
+  })
+
+  return result
+}

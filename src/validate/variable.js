@@ -9,6 +9,7 @@ const { InvalidArchiveError } = require('../error')
  * expression: required string
  * comment: optional string
  */
+
 function variable(node, i, j) {
   validate(node, i, j)
 }

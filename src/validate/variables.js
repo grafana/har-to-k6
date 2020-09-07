@@ -5,11 +5,11 @@ const { InvalidArchiveError } = require('../error')
 /*
  * [j]: object
  */
-function variables(node, i, assay) {
+function variables(node, i) {
   validate(node, i)
   for (let j = 0; j < node.length; j++) {
     const item = node[j]
-    variable(item, i, j, assay)
+    variable(item, i, j)
   }
 }
 

@@ -1,56 +1,92 @@
 import test from 'ava'
-import isolate from 'helper/isolate'
+
+import variable from 'render/variable'
+import { parse } from 'helper/parse'
+
 import { VariableType } from 'enum'
-const [variable, { comment, string, text }] = isolate(test, 'render/variable', {
-  comment: 'render/comment',
-  string: 'render/string',
-  text: 'render/text',
-})
+import { parseComments } from '../../helper/parse'
 
-test.serial('Regex', (t) => {
-  string.returns('"^token: (.+)$"')
-  text.returns('"token"')
-  const result = variable('token', {
-    type: VariableType.Regex,
-    expression: '^token: (.+)$',
-  })
-  t.is(string.firstCall.args[0], '^token: (.+)$')
-  t.is(text.firstCall.args[0], 'token')
-  t.is(
-    result,
-    '' +
-      `match = new RegExp("^token: (.+)$").exec(response.body);
-vars["token"] = match ? match[1] || match[0] : null;`
+test('Regex', (t) => {
+  const result = parse(
+    variable('token', {
+      type: VariableType.Regex,
+      expression: '^token: (.+)$',
+    })
   )
+
+  const expected = parse(`
+    match = new RegExp("^token: (.+)$")
+      .exec(response.body);
+
+    vars["token"] = match ? match[1] || match[0] : null;
+  `)
+
+  t.deepEqual(result, expected)
 })
 
-test.serial('JSONPath', (t) => {
-  string.returns('"$.token"')
-  text.returns('"token"')
-  const result = variable('token', {
-    type: VariableType.JSONPath,
-    expression: '$.token',
-  })
-  t.is(string.firstCall.args[0], '$.token')
-  t.is(text.firstCall.args[0], 'token')
-  t.is(result, `vars["token"] = jsonpath.query(response.json(), "$.token")[0];`)
-})
-
-test.serial('comment', (t) => {
-  comment.returns(`// Extract authorization token`)
-  string.returns('expression')
-  text.returns('name')
-  const result = variable('token', {
-    type: VariableType.Regex,
-    expression: '^token: (.+)$',
-    comment: 'Extract authorization token',
-  })
-  t.is(comment.firstCall.args[0], 'Extract authorization token')
-  t.is(
-    result,
-    '' +
-      `// Extract authorization token
-match = new RegExp(expression).exec(response.body);
-vars[name] = match ? match[1] || match[0] : null;`
+test('JSONPath', (t) => {
+  const result = parse(
+    variable('token', {
+      type: VariableType.JSONPath,
+      expression: '$.token',
+    })
   )
+
+  const expected = parse(`
+    vars["token"] = jsonpath.query(response.json(), "$.token")[0]
+  `)
+
+  t.deepEqual(result, expected)
+})
+
+test('should select innerHTML when no attribute was given when using CSSSelector', (t) => {
+  const result = parse(
+    variable('token', {
+      type: VariableType.CSSSelector,
+      expression: 'input[name=username]',
+    })
+  )
+
+  const expected = parse(`
+    vars["token"] = response
+      .html()
+      .find("input[name=username]")
+      .html()
+  `)
+
+  t.deepEqual(result, expected)
+})
+
+test('should select attribute by name if given when using CSSSelector', (t) => {
+  const result = parse(
+    variable('token', {
+      type: VariableType.CSSSelector,
+      attribute: 'value',
+      expression: 'input[name=username]',
+    })
+  )
+
+  const expected = parse(`
+    vars["token"] = response
+      .html()
+      .find("input[name=username]")
+      .first()
+      .attr("value")
+  `)
+
+  t.deepEqual(result, expected)
+})
+
+test('comment', (t) => {
+  const result = parseComments(
+    variable('token', {
+      type: VariableType.Regex,
+      expression: '^token: (.+)$',
+      comment: 'Extract authorization token',
+    })
+  )
+
+  t.deepEqual(result, [
+    { isBlock: false, text: ' Extract authorization token', line: 1 },
+  ])
 })
