@@ -16,7 +16,7 @@ function note(item) {
   }
 }
 
-function logic(name, { type, expression }) {
+function logic(name, { type, attribute, expression }) {
   switch (type) {
     case VariableType.JSONPath:
       return jsonPath({ name, expression })
@@ -25,7 +25,7 @@ function logic(name, { type, expression }) {
       return regex({ name, expression })
 
     case VariableType.CSSSelector:
-      return cssSelector({ name, expression })
+      return cssSelector({ name, attribute, expression })
 
     default:
       throw new UnrecognizedError(
@@ -48,10 +48,19 @@ const regex = js`
   vars[${from('name')}] = match ? match[1] || match[0] : null
 `
 
+const selectValue = ({ attribute }) => {
+  if (attribute) {
+    return js`attr(${attribute})`
+  }
+
+  return js`html()`
+}
+
 const cssSelector = js`
   vars[${from('name')}] = response.html()
     .find(${from('expression')})
-    .map((idx, el) => el.attr("value"))[0]
+    .first()
+    .${selectValue}
 `
 
 module.exports = variable

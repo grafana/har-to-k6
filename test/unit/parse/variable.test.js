@@ -18,7 +18,11 @@ test('minimal', (t) => {
   )
   t.deepEqual(
     spec,
-    new Map().set('token', { type: VariableType.JSONPath, expression: 'token' })
+    new Map().set('token', {
+      type: VariableType.JSONPath,
+      expression: 'token',
+      attribute: null,
+    })
   )
 })
 
@@ -39,6 +43,7 @@ test('comment', (t) => {
       type: VariableType.JSONPath,
       expression: 'token',
       comment: 'Extract authorization token',
+      attribute: null,
     })
   )
 })

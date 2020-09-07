@@ -39,7 +39,7 @@ test('JSONPath', (t) => {
   t.deepEqual(result, expected)
 })
 
-test('CSSSelector', (t) => {
+test('should select innerHTML when no attribute was given when using CSSSelector', (t) => {
   const result = parse(
     variable('token', {
       type: VariableType.CSSSelector,
@@ -48,9 +48,31 @@ test('CSSSelector', (t) => {
   )
 
   const expected = parse(`
-    vars["token"] = response.html()
+    vars["token"] = response
+      .html()
       .find("input[name=username]")
-      .map((idx, el) => el.attr("value"))[0]
+      .first()
+      .html()
+  `)
+
+  t.deepEqual(result, expected)
+})
+
+test('should select attribute by name if given when using CSSSelector', (t) => {
+  const result = parse(
+    variable('token', {
+      type: VariableType.CSSSelector,
+      attribute: 'value',
+      expression: 'input[name=username]',
+    })
+  )
+
+  const expected = parse(`
+    vars["token"] = response
+      .html()
+      .find("input[name=username]")
+      .first()
+      .attr("value")
   `)
 
   t.deepEqual(result, expected)

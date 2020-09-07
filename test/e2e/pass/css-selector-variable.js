@@ -13,7 +13,8 @@ export default function main() {
   vars["redir"] = response
     .html()
     .find("input[name=redir]")
-    .map((idx, el) => el.attr("value"))[0];
+    .first()
+    .attr("value");
 
   response = http.post(
     "https://test.k6.io/my_messages.php",

@@ -493,17 +493,26 @@ A variable named `access_token` is referenced as `${access_token}`.
 ### Type definition
 
 ```typescript
-export const JSONPathVariable = 0
-export const RegexVariable = 1
-export const CSSSelectorVariable = 2
-
-export type VariableTypeVariant = JSONPathVariable | RegexVariable | CSSSelectorVariable 
- 
-export interface Variable {
-  type: VariableTypeVariant
-  name: string
-  expression: string
+export interface JSONPathVariable { 
+    type: 0
+    name: string
+    expression: string
 }
+
+export interface RegexVariable {
+    type: 1
+    name: string
+    expression: string
+}
+
+export interface CSSSelectorVariable {
+    type: 2
+    name: string 
+    attribute?: string
+    expression: string
+} 
+
+export type Variable = JSONPathVariable | RegexVariable | CSSSelectorVariable 
 ```
 
 ### Expression match, variable initialization
@@ -584,8 +593,6 @@ export default function() {
   })
 }
 ```
-
-
 
 ## Examples
 
