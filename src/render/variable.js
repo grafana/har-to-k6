@@ -50,9 +50,7 @@ const regex = js`
 
 const selectValue = ({ attribute }) => {
   if (attribute) {
-    return js`
-      .first().attr(${attribute})
-    `
+    return js`.first().attr(${attribute})`
   }
 
   return js`.html()`
