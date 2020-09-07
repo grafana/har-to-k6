@@ -51,7 +51,6 @@ test('should select innerHTML when no attribute was given when using CSSSelector
     vars["token"] = response
       .html()
       .find("input[name=username]")
-      .first()
       .html()
   `)
 

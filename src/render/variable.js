@@ -50,17 +50,18 @@ const regex = js`
 
 const selectValue = ({ attribute }) => {
   if (attribute) {
-    return js`attr(${attribute})`
+    return js`
+      .first().attr(${attribute})
+    `
   }
 
-  return js`html()`
+  return js`.html()`
 }
 
 const cssSelector = js`
   vars[${from('name')}] = response.html()
     .find(${from('expression')})
-    .first()
-    .${selectValue}
+    ${selectValue}
 `
 
 module.exports = variable

@@ -10,6 +10,11 @@ export default function main() {
 
   response = http.get("https://test.k6.io/my_messages.php");
 
+  vars["entireForm"] = response
+    .html()
+    .find("form")
+    .html();
+
   vars["redir"] = response
     .html()
     .find("input[name=redir]")
@@ -22,6 +27,7 @@ export default function main() {
       username: "admin",
       password: "123",
       redir: `${vars["redir"]}`,
+      extra: `${vars["entireForm"]}`
     },
     {
       headers: {
