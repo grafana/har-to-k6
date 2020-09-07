@@ -1,6 +1,6 @@
+const { js, from } = require('../codegen')
+
 const comment = require('./comment')
-const string = require('./string')
-const text = require('./text')
 const { VariableType } = require('../enum')
 const { UnrecognizedError } = require('../error')
 
@@ -19,9 +19,14 @@ function note(item) {
 function logic(name, { type, expression }) {
   switch (type) {
     case VariableType.JSONPath:
-      return JSONPath(name, expression)
+      return jsonPath({ name, expression })
+
     case VariableType.Regex:
-      return Regex(name, expression)
+      return regex({ name, expression })
+
+    case VariableType.CSSSelector:
+      return cssSelector({ name, expression })
+
     default:
       throw new UnrecognizedError(
         { name: 'UnrecognizedVariableType' },
@@ -30,17 +35,23 @@ function logic(name, { type, expression }) {
   }
 }
 
-function JSONPath(name, expression) {
-  const extract = `jsonpath.query(response.json(), ${string(expression)})[0]`
-  return `vars[${text(name)}] = ${extract};`
-}
+const jsonPath = js`
+  vars[${from('name')}] = jsonpath.query(response.json(), ${from(
+  'expression'
+)})[0]
+`
 
-function Regex(name, expression) {
-  return (
-    '' +
-    `match = new RegExp(${string(expression)}).exec(response.body);
-vars[${text(name)}] = match ? match[1] || match[0] : null;`
-  )
-}
+const regex = js`
+  match = new RegExp(${from('expression')})
+    .exec(response.body)
+
+  vars[${from('name')}] = match ? match[1] || match[0] : null
+`
+
+const cssSelector = js`
+  vars[${from('name')}] = response.html()
+    .find(${from('expression')})
+    .map((idx, el) => el.attr("value"))[0]
+`
 
 module.exports = variable
