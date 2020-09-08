@@ -202,18 +202,24 @@ declare module 'har-to-k6' {
 
   export type Check = Text | JSONPathValue | JSONPath | Regex
 
-  export type JSONPathVariable = 0
-  export type RegexVariable = 1
-  export type CSSSelectorVariable = 2
-
-  export type VariableTypeVariant =
-    | JSONPathVariable
-    | RegexVariable
-    | CSSSelectorVariable
-
-  export interface Variable {
-    type: VariableTypeVariant
+  export interface JSONPathVariable {
+    type: 0
     name: string
     expression: string
   }
+
+  export interface RegexVariable {
+    type: 1
+    name: string
+    expression: string
+  }
+
+  export interface CSSSelectorVariable {
+    type: 2
+    name: string
+    expression: string
+    attribute?: string
+  }
+
+  export type Variable = JSONPathVariable | RegexVariable | CSSSelectorVariable
 }
