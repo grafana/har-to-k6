@@ -1,7 +1,7 @@
 {
     "name": "har-to-k6",
     "description": "Convert LI-HAR to k6 script",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "license": "Apache-2.0",
     "keywords": [
         "k6",
