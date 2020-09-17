@@ -66,7 +66,7 @@ function validate(node, i, j) {
   if (node.type === VariableType.CSSSelector && !isValidAttributeName(node)) {
     throw new InvalidArchiveError(
       { name: 'InvalidAttributeName' },
-      `Attribute name must be specified.`
+      `Attribute name must be specified (${i}:${j})`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
