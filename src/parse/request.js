@@ -30,16 +30,17 @@ function request(node, spec) {
 // Fallback to content type from postData
 // Preserves explicit header which potentially has more information
 function contentType(mimeType, headers) {
-  if (!headers.has('Content-Type')) {
+  if (!headers.has('Content-Type') && !headers.has('content-type')) {
     const item = { value: mimeType }
     const items = new Set([item])
-    headers.set('Content-Type', items)
+    headers.set('content-type', items)
   }
 }
 
 function addBoundary(boundary, headers) {
-  if (headers.has('Content-Type')) {
-    const items = [...headers.get('Content-Type').values()]
+  const contentType = headers.get('Content-Type') || headers.get('content-type')
+  if (contentType) {
+    const items = [...contentType.values()]
     const newItems = items.map((item) => {
       const value = getContentTypeValue(item.value)
       if (value === 'multipart/form-data') {
@@ -49,7 +50,7 @@ function addBoundary(boundary, headers) {
       return item
     })
 
-    headers.set('Content-Type', new Set(newItems))
+    headers.set('content-type', new Set(newItems))
   }
 }
 
