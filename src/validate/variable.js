@@ -1,6 +1,6 @@
 const isNaturalNumber = require('is-natural-number')
 const { empty } = require('../aid')
-const { VariableTypeEncoding } = require('../enum')
+const { VariableTypeEncoding, VariableType } = require('../enum')
 const { InvalidArchiveError } = require('../error')
 
 /*
@@ -63,12 +63,28 @@ function validate(node, i, j) {
       `Invalid variable expression (${i}:${j}): must be string`
     )
   }
+  if (node.type === VariableType.CSSSelector && !isValidAttributeName(node)) {
+    throw new InvalidArchiveError(
+      { name: 'InvalidAttributeName' },
+      `Attribute name must be specified.`
+    )
+  }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
       { name: 'InvalidComment' },
       `Invalid variable comment (${i}:${j}): must be string`
     )
   }
+}
+
+function isValidAttributeName({ attribute }) {
+  return (
+    attribute === undefined || attribute === null || isNonEmptyString(attribute)
+  )
+}
+
+function isNonEmptyString(value) {
+  return typeof value === 'string' && value !== ''
 }
 
 module.exports = variable

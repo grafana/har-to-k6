@@ -114,6 +114,22 @@ test('invalid comment', (t) => {
   })
 })
 
+test('invalid attribute name', (t) => {
+  t.throws(() => {
+    variable(
+      {
+        name: 'a',
+        type: VariableType.CSSSelector,
+        expression: 'abcd',
+        attribute: '',
+      },
+      0,
+      0,
+      makeAssay()
+    )
+  })
+})
+
 test('valid JSONPath', (t) => {
   t.notThrows(() => {
     variable(
@@ -138,6 +154,53 @@ test('valid Regex', (t) => {
         type: VariableType.Regex,
         expression: 'token=([^\n]+)\n',
         comment: 'Extract session token',
+      },
+      0,
+      0,
+      makeAssay()
+    )
+  })
+})
+
+test('valid attribute name', (t) => {
+  t.notThrows(() => {
+    variable(
+      {
+        name: 'a',
+        type: VariableType.CSSSelector,
+        expression: 'abcd',
+        attribute: 'name',
+      },
+      0,
+      0,
+      makeAssay()
+    )
+  })
+})
+
+test('attribute name is null', (t) => {
+  t.notThrows(() => {
+    variable(
+      {
+        name: 'a',
+        type: VariableType.CSSSelector,
+        expression: 'abcd',
+        attribute: null,
+      },
+      0,
+      0,
+      makeAssay()
+    )
+  })
+})
+
+test('attribute name is undefined', (t) => {
+  t.notThrows(() => {
+    variable(
+      {
+        name: 'a',
+        type: VariableType.CSSSelector,
+        expression: 'abcd',
       },
       0,
       0,
