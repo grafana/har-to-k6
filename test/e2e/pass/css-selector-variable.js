@@ -31,7 +31,7 @@ export default function main() {
     },
     {
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "content-type": "application/x-www-form-urlencoded",
       },
     }
   );
