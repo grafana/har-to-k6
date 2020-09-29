@@ -16,7 +16,7 @@ function makeFixture(urls) {
 test('nil', async (t) => {
   const fixture = makeFixture(['https://example.com/'])
   const compare = makeFixture(['https://example.com/'])
-  t.deepEqual(compare, await filter(compare, { only: null }))
+  t.deepEqual(compare, await filter(fixture, { only: null }))
 })
 
 test('filter', async (t) => {
@@ -31,6 +31,6 @@ test('filter', async (t) => {
   ])
   t.deepEqual(
     compare,
-    await filter(compare, { only: ['example.com', 'bat.com'] })
+    await filter(fixture, { only: ['example.com', 'bat.com'] })
   )
 })
