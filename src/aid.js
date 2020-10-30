@@ -30,7 +30,7 @@ function extrinsic(enumeration) {
   return Math.max(...Object.values(enumeration)) + 1
 }
 
-function nought(value) {
+function isNil(value) {
   return value === undef || value === null
 }
 
@@ -79,7 +79,7 @@ module.exports = {
   emptyObject,
   isString,
   extrinsic,
-  nought,
+  isNil,
   parseContentType,
   getContentTypeValue,
 }

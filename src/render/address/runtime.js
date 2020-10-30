@@ -18,15 +18,15 @@ function runtime(spec, factor) {
 }
 
 function parse(address, factor) {
-  factor.pre.push(`address = new URI(${text(address)});`)
+  factor.pre.push(`address = new URL(${text(address)});`)
 }
 
 function protocol(address, factor) {
   if (variableStart.test(address)) {
     factor.pre.push(
       '' +
-        `if (!address.protocol()) {
-  address.protocol("https");
+        `if (!address.protocol {
+  address.protocol = "https";
 }`
     )
   }

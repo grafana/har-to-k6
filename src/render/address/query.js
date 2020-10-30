@@ -1,34 +1,21 @@
-const chain = require('../chain')
 const text = require('../text')
-const { nought } = require('../../aid')
+const { isNil } = require('../../aid')
 
 // Runtime query string construction
 function query(spec, factor) {
   if (spec.size) {
-    const links = []
-    for (const [name, items] of spec) {
-      links.push(...group(name, items))
-    }
     factor.pre.push(
-      '' +
-        `address
-${chain(links)};`
+      [...spec.entries()]
+        // [[foo, [1,2]]] => [[foo, 1], [foo, 2]]
+        .flatMap(([name, items]) => [...items].map((item) => entry(name, item)))
+        .join('\n')
     )
   }
 }
 
-function group(name, items) {
-  return [...items].map((item) => entry(name, item))
-}
-
-function entry(name, { value, comment }) {
-  const args = []
-  args.push(text(name))
-  if (!nought(value)) {
-    args.push(text(value))
-  }
-  const call = `addQuery(${args.join(`, `)})`
-  return { call, comment }
+function entry(name, { value }) {
+  const args = [text(name), text(isNil(value) ? '' : value)]
+  return `address.searchParams.append(${args.join(`, `)})`
 }
 
 module.exports = query

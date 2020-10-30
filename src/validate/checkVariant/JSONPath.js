@@ -1,5 +1,5 @@
 const jsonpath = require('jsonpath')
-const { empty, nought } = require('../../aid')
+const { empty, isNil } = require('../../aid')
 const { CheckSubject } = require('../../enum')
 const { InvalidArchiveError } = require('../../error')
 
@@ -35,7 +35,7 @@ function validate(node, i, j) {
       `Invalid check condition (${i}:${j}): prohibited for JSONPath`
     )
   }
-  if (!nought(node.value)) {
+  if (!isNil(node.value)) {
     throw new InvalidArchiveError(
       { name: 'InvalidCheckValue' },
       `Invalid check value (${i}:${j}): prohibited for JSONPath`

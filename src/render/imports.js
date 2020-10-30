@@ -46,7 +46,8 @@ const K6_JS_LIBS = (() => {
   return {
     jsonpath: `import jsonpath from "${BASE_URL}/jsonpath/1.0.2/index.js"`,
     formurlencoded: `import formurlencoded from "${BASE_URL}/form-urlencoded/3.0.0/index.js"`,
-    // mimeBuilder: `import MimeBuilder from "${BASE_URL}/mimebuilder/4.0.0/main.js"`,
+    // FIXME change to `import { URL } from "${BASE_URL}/url/0.0.1/index.js"`,
+    url: `import { URL } from "./url.js"`,
   }
 })()
 
@@ -59,12 +60,14 @@ function k6JsLibs(spec, lines) {
     if (spec.formUrlEncode) {
       lines.push(K6_JS_LIBS.formurlencoded)
     }
+
     if (spec.jsonpath) {
       lines.push(K6_JS_LIBS.jsonpath)
     }
-    // if (spec.MimeBuilder) {
-    //   lines.push(K6_JS_LIBS.mimeBuilder)
-    // }
+
+    if (spec.url) {
+      lines.push(K6_JS_LIBS.url)
+    }
   }
 }
 
