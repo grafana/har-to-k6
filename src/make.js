@@ -46,9 +46,10 @@ function imports() {
     http: false,
 
     // jslib.k6.io
-    url: false,
+    URLSearchParams: false,
+    URL: false,
+
     jsonpath: false,
-    formUrlEncode: false,
     MimeBuilder: false,
   }
 }

@@ -1,10 +1,14 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [fixed, { comment, note, string }] = isolate(test, 'render/post/url/plural/fixed', {
-  comment: 'render/comment',
-  note: 'render/note/map',
-  string: 'render/string',
-})
+const [fixed, { comment, note, string }] = isolate(
+  test,
+  'render/post/url/plural/fixed',
+  {
+    comment: 'render/comment',
+    note: 'render/note/map',
+    string: 'render/string',
+  }
+)
 
 test.serial('result', (t) => {
   string.returns('rendered')
@@ -26,7 +30,7 @@ test.serial('3', (t) => {
     .set('filter', new Set([{ value: 'cute' }]))
     .set('order', new Set([{ value: 'cuteness' }]))
   fixed(params)
-  t.is(string.firstCall.args[0], 'filter=cute&order=cuteness&search=kitten')
+  t.is(string.firstCall.args[0], 'search=kitten&filter=cute&order=cuteness')
 })
 
 test.serial('multivalue', (t) => {
@@ -35,14 +39,17 @@ test.serial('multivalue', (t) => {
     new Set([{ value: 'kitten' }, { value: 'puppy' }, { value: 'quokka' }])
   )
   fixed(params)
-  t.is(string.firstCall.args[0], 'search%5B0%5D=kitten&search%5B1%5D=puppy&search%5B2%5D=quokka')
+  t.is(string.firstCall.args[0], 'search=kitten%2Cpuppy%2Cquokka')
 })
 
 test.serial('comment', (t) => {
   note.returns('-search- Find kittens')
   comment.returns('// -search- Find kittens')
   string.returns('"search=kitten"')
-  const params = new Map().set('search', new Set([{ value: 'kitten', comment: 'Find kittens' }]))
+  const params = new Map().set(
+    'search',
+    new Set([{ value: 'kitten', comment: 'Find kittens' }])
+  )
   const result = fixed(params)
   t.deepEqual(note.firstCall.args[0], params)
   t.is(comment.firstCall.args[0], '-search- Find kittens')

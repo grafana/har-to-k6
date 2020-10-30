@@ -32,15 +32,13 @@ test('sleep', (t) => {
 test('jslib', (t) => {
   const spec = makeImports()
   spec.jsonpath = true
-  spec.formUrlEncode = true
   spec.MimeBuilder = true
-  spec.url = true
+  spec.URLSearchParams = true
+  spec.URL = true
   const result = imports(spec)
   t.is(
     result,
-    `import formurlencoded from "https://jslib.k6.io/form-urlencoded/3.0.0/index.js"
-import jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"
-import { URL } from "./url.js"`
+    `import { URL, URLSearchParams } from "./url.js"\nimport jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"`
   ) // FIXME: change to "https://jslib.k6.io/url/1.0.0/index.js"
 })
 
@@ -51,9 +49,9 @@ test('combined', (t) => {
   spec.check = true
   spec.sleep = true
   spec.http = true
-  spec.url = true
+  spec.URL = true
+  spec.URLSearchParams = true
   spec.jsonpath = true
-  spec.formUrlEncode = true
   spec.MimeBuilder = true
   const result = imports(spec)
   t.is(
@@ -63,8 +61,7 @@ test('combined', (t) => {
 import http from "k6/http";
 
 
-import formurlencoded from "https://jslib.k6.io/form-urlencoded/3.0.0/index.js"
-import jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"
-import { URL } from "./url.js"`
+import { URL, URLSearchParams } from "./url.js"
+import jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"`
   )
 })

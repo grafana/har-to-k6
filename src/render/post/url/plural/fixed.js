@@ -1,5 +1,4 @@
 const comment = require('../../../comment')
-const encode = require('form-urlencoded').default
 const note = require('../../../note/map')
 const string = require('../../../string')
 
@@ -10,7 +9,7 @@ function fixed(params) {
 
 function value(params) {
   const spec = specify(params)
-  const encoded = encode(spec, { sorted: true })
+  const encoded = new URLSearchParams(spec).toString()
   return string(encoded)
 }
 

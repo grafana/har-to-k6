@@ -37,7 +37,8 @@ async function run(arg, opt, log) {
     write(main, opt.output)
     success(opt.output, log)
   } catch (error) {
-    inform(error, log)
+    console.error(error)
+    // inform(error, log)
   }
 }
 

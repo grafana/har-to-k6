@@ -26,15 +26,15 @@ function imports(archive, result) {
     }
 
     if (result.flow.find(formUrlEncodeFlowItem)) {
-      result.imports.formUrlEncode = true
+      result.imports.URLSearchParams = true
+    }
+
+    if (result.flow.find(URLFlowItem)) {
+      result.imports.URL = true
     }
 
     if (result.flow.find(MimeBuilderFlowItem)) {
       result.imports.MimeBuilder = true
-    }
-
-    if (result.flow.find(URLFlowItem)) {
-      result.imports.url = true
     }
   }
 }
@@ -68,7 +68,22 @@ function formUrlEncodeFlowItem(item) {
   }
 }
 
-function URLFlowItem({ entry }) {
+function URLFlowItem(item) {
+  const check = ({ request }) =>
+    request.state.address.species === AddressSpecies.Runtime
+
+  switch (item.type) {
+    case FlowItemType.External:
+      return check(item.entry)
+    case FlowItemType.Group:
+      return item.entries.find(check)
+    default:
+      throw new UnrecognizedError(
+        { name: 'UnrecognizedFlowItemType' },
+        `Unrecognized flow item type: ${item.type}`
+      )
+  }
+
   return entry.request.state.address.species === AddressSpecies.Runtime
 }
 

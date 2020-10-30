@@ -1,15 +1,19 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-const [resolved, { note, object, text }] = isolate(test, 'render/post/url/plural/resolved', {
-  note: 'render/note/items',
-  object: 'render/object',
-  text: 'render/text',
-})
+const [resolved, { note, object, text }] = isolate(
+  test,
+  'render/post/url/plural/resolved',
+  {
+    note: 'render/note/items',
+    object: 'render/object',
+    text: 'render/text',
+  }
+)
 
 test.serial('result', (t) => {
   object.returns('{}')
   const result = resolved(new Map())
-  t.is(result, `formurlencoded({})`)
+  t.is(result, `new URLSearchParams({}).toString()`)
 })
 
 test.serial('singular', (t) => {
@@ -36,7 +40,10 @@ test.serial('plural', (t) => {
 test.serial('comment singular', (t) => {
   text.returns('"kitten"')
   note.returns('Find kittens')
-  const params = new Map().set('search', new Set([{ value: 'kitten', comment: 'Find kittens' }]))
+  const params = new Map().set(
+    'search',
+    new Set([{ value: 'kitten', comment: 'Find kittens' }])
+  )
   resolved(params)
   t.deepEqual(object.firstCall.args[0], [
     { name: 'search', value: '"kitten"', comment: 'Find kittens' },

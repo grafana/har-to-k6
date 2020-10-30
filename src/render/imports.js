@@ -45,28 +45,32 @@ const K6_JS_LIBS = (() => {
   const BASE_URL = 'https://jslib.k6.io'
   return {
     jsonpath: `import jsonpath from "${BASE_URL}/jsonpath/1.0.2/index.js"`,
-    formurlencoded: `import formurlencoded from "${BASE_URL}/form-urlencoded/3.0.0/index.js"`,
+    // formurlencoded: `import formurlencoded from "${BASE_URL}/form-urlencoded/3.0.0/index.js"`,
     // FIXME change to `import { URL } from "${BASE_URL}/url/0.0.1/index.js"`,
-    url: `import { URL } from "./url.js"`,
+    // url: `import { URL } from "./url.js"`,
+    url_meta_url: `"./url.js"`,
   }
 })()
 
 function k6JsLibs(spec, lines) {
-  if (spec.formUrlEncode || spec.jsonpath || spec.MimeBuilder) {
+  if (spec.URL || spec.URLSearchParams || spec.jsonpath || spec.MimeBuilder) {
     if (lines.length > 0) {
       lines.push('\n')
     }
 
-    if (spec.formUrlEncode) {
-      lines.push(K6_JS_LIBS.formurlencoded)
+    if (spec.URLSearchParams || spec.URL) {
+      const modules = [
+        spec.URL && 'URL',
+        spec.URLSearchParams && 'URLSearchParams',
+      ]
+        .filter(Boolean)
+        .join(', ')
+
+      lines.push(`import { ${modules} } from ${K6_JS_LIBS.url_meta_url}`)
     }
 
     if (spec.jsonpath) {
       lines.push(K6_JS_LIBS.jsonpath)
-    }
-
-    if (spec.url) {
-      lines.push(K6_JS_LIBS.url)
     }
   }
 }
