@@ -38,8 +38,8 @@ test('jslib', (t) => {
   const result = imports(spec)
   t.is(
     result,
-    `import { URL, URLSearchParams } from "./url.js"\nimport jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"`
-  ) // FIXME: change to "https://jslib.k6.io/url/1.0.0/index.js"
+    `import { URL, URLSearchParams } from "https://jslib.k6.io/url/1.0.0/index.js"\nimport jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"`
+  )
 })
 
 // TODO: update when K6 remote js lib is up.
@@ -61,7 +61,7 @@ test('combined', (t) => {
 import http from "k6/http";
 
 
-import { URL, URLSearchParams } from "./url.js"
+import { URL, URLSearchParams } from "https://jslib.k6.io/url/1.0.0/index.js"
 import jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"`
   )
 })

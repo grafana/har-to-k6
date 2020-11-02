@@ -44,11 +44,8 @@ function http(spec, lines) {
 const K6_JS_LIBS = (() => {
   const BASE_URL = 'https://jslib.k6.io'
   return {
-    jsonpath: `import jsonpath from "${BASE_URL}/jsonpath/1.0.2/index.js"`,
-    // formurlencoded: `import formurlencoded from "${BASE_URL}/form-urlencoded/3.0.0/index.js"`,
-    // FIXME change to `import { URL } from "${BASE_URL}/url/0.0.1/index.js"`,
-    // url: `import { URL } from "./url.js"`,
-    url_meta_url: `"./url.js"`,
+    jsonpath: `${BASE_URL}/jsonpath/1.0.2/index.js`,
+    url: `${BASE_URL}/url/1.0.0/index.js`,
   }
 })()
 
@@ -66,11 +63,11 @@ function k6JsLibs(spec, lines) {
         .filter(Boolean)
         .join(', ')
 
-      lines.push(`import { ${modules} } from ${K6_JS_LIBS.url_meta_url}`)
+      lines.push(`import { ${modules} } from "${K6_JS_LIBS.url}"`)
     }
 
     if (spec.jsonpath) {
-      lines.push(K6_JS_LIBS.jsonpath)
+      lines.push(`import jsonpath from "${K6_JS_LIBS.jsonpath}"`)
     }
   }
 }

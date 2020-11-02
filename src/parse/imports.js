@@ -83,8 +83,6 @@ function URLFlowItem(item) {
         `Unrecognized flow item type: ${item.type}`
       )
   }
-
-  return entry.request.state.address.species === AddressSpecies.Runtime
 }
 
 function formUrlEncodeEntry({ request }) {
