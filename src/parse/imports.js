@@ -2,6 +2,7 @@ const {
   CheckType,
   FlowItemType,
   PostSpecies,
+  AddressSpecies,
   VariableType,
 } = require('../enum')
 const { UnrecognizedError } = require('../error')
@@ -15,15 +16,23 @@ function imports(archive, result) {
     if (entries.find((entry) => entry.pageref)) {
       result.imports.group = true
     }
+
     if (entries.find((entry) => entry.checks && entry.checks.length)) {
       result.imports.check = true
     }
+
     if (entries.find(jsonPathEntry)) {
       result.imports.jsonpath = true
     }
+
     if (result.flow.find(formUrlEncodeFlowItem)) {
-      result.imports.formUrlEncode = true
+      result.imports.URLSearchParams = true
     }
+
+    if (result.flow.find(URLFlowItem)) {
+      result.imports.URL = true
+    }
+
     if (result.flow.find(MimeBuilderFlowItem)) {
       result.imports.MimeBuilder = true
     }
@@ -51,6 +60,23 @@ function formUrlEncodeFlowItem(item) {
       return formUrlEncodeEntry(item.entry)
     case FlowItemType.Group:
       return item.entries.find(formUrlEncodeEntry)
+    default:
+      throw new UnrecognizedError(
+        { name: 'UnrecognizedFlowItemType' },
+        `Unrecognized flow item type: ${item.type}`
+      )
+  }
+}
+
+function URLFlowItem(item) {
+  const check = ({ request }) =>
+    request.state.address.species === AddressSpecies.Runtime
+
+  switch (item.type) {
+    case FlowItemType.External:
+      return check(item.entry)
+    case FlowItemType.Group:
+      return item.entries.find(check)
     default:
       throw new UnrecognizedError(
         { name: 'UnrecognizedFlowItemType' },

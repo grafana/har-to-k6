@@ -29,16 +29,16 @@ test('sleep', (t) => {
   t.is(result, `import { sleep } from "k6";`)
 })
 
-test('compat', (t) => {
+test('jslib', (t) => {
   const spec = makeImports()
   spec.jsonpath = true
-  spec.formUrlEncode = true
   spec.MimeBuilder = true
+  spec.URLSearchParams = true
+  spec.URL = true
   const result = imports(spec)
   t.is(
     result,
-    `import formurlencoded from "https://jslib.k6.io/form-urlencoded/3.0.0/index.js"
-import jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"`
+    `import { URL, URLSearchParams } from "https://jslib.k6.io/url/1.0.0/index.js"\nimport jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"`
   )
 })
 
@@ -49,8 +49,9 @@ test('combined', (t) => {
   spec.check = true
   spec.sleep = true
   spec.http = true
+  spec.URL = true
+  spec.URLSearchParams = true
   spec.jsonpath = true
-  spec.formUrlEncode = true
   spec.MimeBuilder = true
   const result = imports(spec)
   t.is(
@@ -60,7 +61,7 @@ test('combined', (t) => {
 import http from "k6/http";
 
 
-import formurlencoded from "https://jslib.k6.io/form-urlencoded/3.0.0/index.js"
+import { URL, URLSearchParams } from "https://jslib.k6.io/url/1.0.0/index.js"
 import jsonpath from "https://jslib.k6.io/jsonpath/1.0.2/index.js"`
   )
 })

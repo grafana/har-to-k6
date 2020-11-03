@@ -1,12 +1,12 @@
 const string = require('../string')
-const URI = require('urijs')
+const { isNil } = require('../../aid')
 
 /*
  * Address without variable
  * Query without variable
  */
 function constructed(spec, factor) {
-  const address = new URI(spec.address)
+  const address = new URL(spec.address)
   query(spec, address)
   factor.address = string(address.toString())
 }
@@ -14,7 +14,7 @@ function constructed(spec, factor) {
 function query(spec, address) {
   for (const [key, items] of spec.query) {
     for (const { value } of items) {
-      address.addQuery(key, value)
+      address.searchParams.append(key, isNil(value) ? '' : value)
     }
   }
 }

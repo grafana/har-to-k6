@@ -33,11 +33,17 @@ function fixed(spec) {
 }
 
 function constructed(spec) {
-  return !!spec.query.size && !(spec.state.address.variable || spec.state.query.variable)
+  return (
+    !!spec.query.size &&
+    !(spec.state.address.variable || spec.state.query.variable)
+  )
 }
 
 function resolved(spec) {
-  return spec.state.address.variable && !(spec.state.address.variableStart || !!spec.query.size)
+  return (
+    spec.state.address.variable &&
+    !(spec.state.address.variableStart || !!spec.query.size)
+  )
 }
 
 module.exports = address

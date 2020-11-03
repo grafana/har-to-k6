@@ -1,4 +1,4 @@
-const { empty, nought } = require('../../aid')
+const { empty, isNil } = require('../../aid')
 const { InvalidArchiveError } = require('../../error')
 
 /*
@@ -38,7 +38,7 @@ function validate(node, i, j) {
       `Invalid check condition (${i}:${j}): prohibited for Regex`
     )
   }
-  if (!nought(node.value)) {
+  if (!isNil(node.value)) {
     throw new InvalidArchiveError(
       { name: 'InvalidCheckValue' },
       `Invalid check value (${i}:${j}): prohibited for Regex`
