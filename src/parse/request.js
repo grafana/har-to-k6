@@ -7,12 +7,23 @@ const { emptyObject, getContentTypeValue } = require('../aid')
 function request(node, spec) {
   spec.method = node.method.toUpperCase()
   spec.address = node.url
+
   if (node.comment) {
     spec.comment = node.comment
   }
+
   if (node.queryString) {
-    queryString(node.queryString, spec.query)
+    // Filter out value pairs that are already in the request
+    const url = new URL(node.url);
+    const queryStringNode = node.queryString.filter(({name, value}) => {
+      // decode URI before comparing, since searchParam will hold decoded values
+      return url.searchParams.get(name) !== decodeURIComponent(value)
+    })
+    if (queryStringNode) {
+      queryString(queryStringNode, spec.query)
+    }
   }
+
   if (node.headers) {
     headers(node.headers, spec.headers)
   }
