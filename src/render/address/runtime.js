@@ -28,7 +28,7 @@ function protocol(address, factor) {
 if (!address.protocol) {
   address.protocol = "https";
 }
-`,
+`
     )
   }
 }
