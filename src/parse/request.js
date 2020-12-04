@@ -13,15 +13,7 @@ function request(node, spec) {
   }
 
   if (node.queryString) {
-    // Filter out value pairs that are already in the request
-    // Using base url, since url may be invalid (variable instead protocol)
-    const url = new URL(node.url, 'https://test.k6.io');
-    const queryStringNode = node.queryString.filter(({name, value}) => {
-      // decode URI before comparing, since searchParam will hold decoded values
-      return url.searchParams.get(name) !== decodeURIComponent(value)
-    })
-    
-    queryString(queryStringNode, spec.query)
+    queryString(node.queryString, spec.query, node.url)
   }
 
   if (node.headers) {
