@@ -13,7 +13,7 @@ function request(node, spec) {
   }
 
   if (node.queryString) {
-    queryString(node.queryString, spec.query, node.url)
+    queryString(node.queryString, node.url, spec.query)
   }
 
   if (node.headers) {

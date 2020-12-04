@@ -1,6 +1,6 @@
 const queryItem = require('./queryItem')
 
-function queryString(node, spec, requestUrl) {
+function queryString(node, requestUrl, spec) {
   // Filter out value pairs that are already in the request
   // Using base url, since url may be invalid (variable instead protocol)
   const url = new URL(requestUrl, 'https://test.k6.io')
