@@ -20,10 +20,8 @@ function request(node, spec) {
       // decode URI before comparing, since searchParam will hold decoded values
       return url.searchParams.get(name) !== decodeURIComponent(value)
     })
-
-    if (queryStringNode) {
-      queryString(queryStringNode, spec.query)
-    }
+    
+    queryString(queryStringNode, spec.query)
   }
 
   if (node.headers) {
