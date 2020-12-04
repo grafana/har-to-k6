@@ -23,13 +23,11 @@ function parse(address, factor) {
 
 function protocol(address, factor) {
   if (variableStart.test(address)) {
-    factor.pre.push(
-      '' +
-        `if (!address.protocol {
-  address.protocol = "https";
-}`
-    )
-  }
+    factor.pre.push(`
+    if (!address.protocol) {
+      address.protocol = "https";
+    }
+`)}
 }
 
 module.exports = runtime
