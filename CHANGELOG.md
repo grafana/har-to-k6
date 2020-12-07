@@ -1,10 +1,36 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+The format has been based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.6.0] - 2020-12-07
+
+### Changed
+
+- `queryString` items are no longer added if key/value pair is already in request
+
+### Fixed
+- Invalid script generated when request protocol was missing
+- Double URI encoding of `queryString` items
+
+## [0.5.0] - 2020-09-09
+
+### Added
+
+- CSS-selector variable declaration support
+
+### Changed
+
+- Less strict validation of `postData.params`
+- Warning instead of throw when `postData.params` and `postData.text` is not equal
+    
+## [0.4.0] - 2020-08-18
+
+### Added
+- Type checking support
 
 ## [0.3.3] - 2020-06-08
 
@@ -74,7 +100,10 @@ Broken positional arg in caporal resulting in broken `har-to-k6` command.
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/loadimpact/har-to-k6/compare/v0.3.3...HEAD
+[Unreleased]: https://github.com/loadimpact/har-to-k6/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/loadimpact/har-to-k6/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/loadimpact/har-to-k6/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/loadimpact/har-to-k6/compare/v0.3.3...v0.4.0
 [0.3.3]: https://github.com/loadimpact/har-to-k6/compare/v0.2.0...v0.3.3
 [0.3.2]: https://github.com/loadimpact/har-to-k6/compare/v0.2.0...v0.3.2
 [0.3.1]: https://github.com/loadimpact/har-to-k6/compare/v0.2.0...v0.3.1
