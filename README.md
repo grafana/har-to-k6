@@ -4,11 +4,11 @@
 
 # har-to-k6
 Converts [LI-HAR](li-har.spec.md) and [HAR](https://w3c.github.io/web-performance/specs/HAR/Overview.html) to [K6 script](https://docs.k6.io/docs).
-  
-![GitHub Actions Status](https://github.com/loadimpact/har-to-k6/workflows/CI%20-%20Release/badge.svg)
+
+![GitHub Actions Status](https://github.com/loadimpact/har-to-k6/workflows/Release/badge.svg)
 ![NPM Version](https://img.shields.io/npm/v/har-to-k6.svg)
 ![NPM Weekly Downloads](https://img.shields.io/npm/dw/har-to-k6.svg)
-![DockerHub](https://img.shields.io/docker/pulls/loadimpact/har-to-k6.svg) 
+![DockerHub](https://img.shields.io/docker/pulls/loadimpact/har-to-k6.svg)
 
 </div>
 
