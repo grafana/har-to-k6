@@ -37,3 +37,4 @@ testem.log
 loadtest.js
 
 yarn-error.log
+.idea
