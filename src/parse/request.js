@@ -7,12 +7,15 @@ const { emptyObject, getContentTypeValue } = require('../aid')
 function request(node, spec) {
   spec.method = node.method.toUpperCase()
   spec.address = node.url
+
   if (node.comment) {
     spec.comment = node.comment
   }
+
   if (node.queryString) {
-    queryString(node.queryString, spec.query)
+    queryString(node.queryString, node.url, spec.query)
   }
+
   if (node.headers) {
     headers(node.headers, spec.headers)
   }

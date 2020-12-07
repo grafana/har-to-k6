@@ -31,10 +31,11 @@ test.serial('protocol default', (t) => {
   runtime(spec, factor)
   t.deepEqual(factor.pre, [
     'address = new URL(`${vars["address"]}`);',
-    '' +
-      `if (!address.protocol {
+    `
+if (!address.protocol) {
   address.protocol = "https";
-}`,
+}
+`,
   ])
   t.is(factor.address, `address.toString()`)
 })
