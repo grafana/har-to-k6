@@ -151,20 +151,17 @@ test('GET with body', (t) => {
 })
 
 test('inconsistent Content-Type', (t) => {
-  t.throws(
-    () => {
-      request(
-        {
-          method: 'POST',
-          url: 'http://example.com',
-          headers: [{ name: 'Content-Type', value: 'text/plain' }],
-          postData: { mimeType: 'text/csv' },
-        },
-        0,
-        makeAssay()
-      )
-    },
-    { name: 'InconsistentContentType' }
+  t.notThrows(() =>
+    request(
+      init({
+        method: 'POST',
+        url: 'http://example.com',
+        headers: [{ name: 'Content-Type', value: 'text/plain' }],
+        postData: { mimeType: 'text/csv' },
+      }),
+      0,
+      makeAssay()
+    )
   )
 })
 
