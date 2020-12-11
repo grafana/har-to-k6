@@ -38,7 +38,10 @@ function request(node, i, assay) {
 
 function validate(node, i) {
   if (empty(node.method)) {
-    throw new InvalidArchiveError({ name: 'MissingRequestMethod' }, `Missing request method (${i})`)
+    throw new InvalidArchiveError(
+      { name: 'MissingRequestMethod' },
+      `Missing request method (${i})`
+    )
   }
   if (typeof node.method !== 'string') {
     throw new InvalidArchiveError(
@@ -47,7 +50,10 @@ function validate(node, i) {
     )
   }
   if (empty(node.url)) {
-    throw new InvalidArchiveError({ name: 'MissingRequestUrl' }, `Missing request url (${i})`)
+    throw new InvalidArchiveError(
+      { name: 'MissingRequestUrl' },
+      `Missing request url (${i})`
+    )
   }
   if (typeof node.url !== 'string') {
     throw new InvalidArchiveError(
@@ -94,20 +100,28 @@ function validate(node, i) {
 }
 
 function relation(node, i) {
-  if (node.method.toUpperCase() === 'GET' && node.postData && !emptyObject(node.postData)) {
+  if (
+    node.method.toUpperCase() === 'GET' &&
+    node.postData &&
+    !emptyObject(node.postData)
+  ) {
     throw new InvalidArchiveError(
       { name: 'InvalidRequestData' },
       `Invalid request postData (${i}): prohibited for GET request`
     )
   }
-  if (node.headers && node.postData && node.headers.findIndex(findContentType) !== -1) {
+  if (
+    node.headers &&
+    node.postData &&
+    node.headers.findIndex(findContentType) !== -1
+  ) {
     const header = node.headers.find(findContentType)
     const headerType = getContentTypeValue(header.value)
     const postType = getContentTypeValue(node.postData.mimeType)
     if (headerType !== postType) {
-      throw new InvalidArchiveError(
-        { name: 'InconsistentContentType' },
-        `Inconsistent post content type (${i}): ` + `'${headerType}' vs '${postType}'`
+      console.warn(
+        `[WARN] Inconsistent post content type (${i}): ` +
+          `'${headerType}' vs '${postType}'`
       )
     }
   }
