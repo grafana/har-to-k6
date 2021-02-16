@@ -1,4 +1,9 @@
-const { AddressSpecies, FlowItemType, PostSpecies, VariableType } = require('../enum')
+const {
+  AddressSpecies,
+  FlowItemType,
+  PostSpecies,
+  VariableType,
+} = require('../enum')
 const { UnrecognizedError } = require('../error')
 
 function declares(archive, result) {
@@ -13,6 +18,9 @@ function declares(archive, result) {
     }
     if (entries.find(matchEntry)) {
       result.declares.add('match')
+    }
+    if (entries.find(hasMultipartFormData)) {
+      result.declares.add('formData')
     }
   }
 }
@@ -63,6 +71,14 @@ function matchEntry(entry) {
 
 function matchVariable(variable) {
   return variable.type === VariableType.Regex
+}
+
+function hasMultipartFormData(entry) {
+  if (!entry.request.postData) {
+    return
+  }
+
+  return entry.request.postData.mimeType.includes('multipart/form-data')
 }
 
 module.exports = declares

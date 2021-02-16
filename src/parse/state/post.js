@@ -1,4 +1,3 @@
-const { generateBoundary } = require('emailjs-mime-builder/dist/utils')
 const { PostSpecies } = require('../../enum')
 const { parseContentType } = require('../../aid')
 
@@ -20,11 +19,18 @@ function species(spec) {
 
 function boundary(spec, species) {
   const { mimeType, boundary } = parseContentType(spec.type)
-  if (species === PostSpecies.Structured && mimeType === 'multipart/form-data') {
-    return boundary || generateBoundary(1, Date.now().toString() + Math.random())
+  if (
+    species === PostSpecies.Structured &&
+    mimeType === 'multipart/form-data'
+  ) {
+    return boundary || generateBoundary()
   } else {
     return null
   }
+}
+
+function generateBoundary() {
+  return '------RWWorkerFormDataBoundary' + Math.random().toString(36)
 }
 
 module.exports = post
