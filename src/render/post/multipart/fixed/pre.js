@@ -1,43 +1,33 @@
 const text = require('../../../text')
 
 function generateMultipartFixedPre(params, boundary) {
-  const preRequestLogic = []
-
-  preRequestLogic.push(initializeFormData())
-  preRequestLogic.push(setBoundary(boundary))
-  preRequestLogic.push(...appendData(params))
-
-  return `${preRequestLogic.join(`\n`)}\n`
+  return (
+    [
+      `let formData = new FormData();`,
+      `formData.boundary = ${text(boundary)};`,
+      ...generateAppendData(params),
+    ].join('\n') + '\n'
+  )
 }
 
-function initializeFormData() {
-  return `formData = new FormData();`
-}
+function generateAppendData(params) {
+  return Array.from(params).reduce((acc, [name, valueSet]) => {
+    valueSet.forEach((value) => {
+      const data = `data: ${text(value.value)}`
+      const fileName = value.fileName
+        ? `, fileName: ${text(value.fileName)}`
+        : ''
+      const contentType = value.type
+        ? `, content_type: ${text(value.type)}`
+        : ''
 
-function setBoundary(boundary) {
-  return `formData.boundary = ${text(boundary)};`
-}
-
-function generateFileData(value) {
-  const data = `data: ${text(value.value)}`
-  const fileName = value.fileName ? `, fileName: ${text(value.fileName)}` : ''
-  const contentType = value.type ? `, content_type: ${text(value.type)}` : ''
-
-  return `{${data}${fileName}${contentType}}`
-}
-
-function appendData(params) {
-  const appends = []
-
-  for (const [name, values] of params) {
-    for (const value of values) {
-      appends.push(
-        `formData.append(${text(name)}, ${generateFileData(value)});`
+      acc.push(
+        `formData.append(${text(name)}, {${data}${fileName}${contentType}});`
       )
-    }
-  }
+    })
 
-  return appends
+    return acc
+  }, [])
 }
 
 module.exports = generateMultipartFixedPre
