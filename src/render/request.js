@@ -49,7 +49,7 @@ function body(spec, factor) {
   factor.body = post(spec)
 
   const isStructured = spec.state.post.species === PostSpecies.Structured
-  const isMultipartFormData = spec.post.type === 'multipart/form-data'
+  const isMultipartFormData = spec.post.type.includes('multipart/form-data')
   const hasVariables = !!spec.state.params.variable
 
   if (isStructured && isMultipartFormData) {
