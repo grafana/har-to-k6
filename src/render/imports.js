@@ -78,7 +78,7 @@ function k6JsLibs(spec, lines) {
     }
 
     if (spec.formData) {
-      lines.push(`import FormData from "${K6_JS_LIBS.formData}"`)
+      lines.push(`import { FormData } from "${K6_JS_LIBS.formData}"`)
     }
   }
 }
