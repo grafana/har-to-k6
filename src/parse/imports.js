@@ -5,7 +5,9 @@ const {
   AddressSpecies,
   VariableType,
 } = require('../enum')
+
 const { UnrecognizedError } = require('../error')
+const { isMultipartFormData } = require('../aid')
 
 function imports(archive, result) {
   if (archive.log.entries) {
@@ -25,7 +27,7 @@ function imports(archive, result) {
       result.imports.jsonpath = true
     }
 
-    if (entries.find(hasMultipartFormData)) {
+    if (entries.find(isMultipartFormData)) {
       result.imports.formData = true
     }
 
@@ -48,14 +50,6 @@ function jsonPathEntry(entry) {
     (entry.variables && entry.variables.find(jsonPathVariable)) ||
     (entry.checks && entry.checks.find(jsonPathCheck))
   )
-}
-
-function hasMultipartFormData(entry) {
-  if (!entry.request.postData) {
-    return
-  }
-
-  return entry.request.postData.mimeType.includes('multipart/form-data')
 }
 
 function jsonPathVariable(variable) {

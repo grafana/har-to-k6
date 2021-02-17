@@ -2,7 +2,7 @@ const note = require('../../../note/map')
 const comment = require('../../../comment')
 
 function fixed(spec) {
-  return [description(spec.post.params), `formData.body()`]
+  return [description(spec.post.params), `formData.bodyToString()`]
     .filter((item) => item)
     .join(`\n`)
 }

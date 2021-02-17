@@ -71,6 +71,14 @@ function isObject(value) {
   return value && typeof value === 'object' && value.constructor === Object
 }
 
+function isMultipartFormData(entry) {
+  if (!entry.request.postData) {
+    return false
+  }
+
+  return entry.request.postData.mimeType.includes('multipart/form-data')
+}
+
 module.exports = {
   seralizeURLSearchParams,
   empty,
@@ -82,4 +90,5 @@ module.exports = {
   isNil,
   parseContentType,
   getContentTypeValue,
+  isMultipartFormData,
 }
