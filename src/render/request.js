@@ -4,8 +4,8 @@ const headers = require('./headers')
 const indent = require('./indent')
 const object = require('./object')
 const post = require('./post')
-const postMultipartResolvedPre = require('./post/multipart/resolved/pre')
 const text = require('./text')
+const generateMultipartFixedPre = require('./post/multipart/fixed/pre')
 const { requestFactor: makeRequestFactor } = require('../make')
 const { PostSpecies } = require('../enum')
 
@@ -47,13 +47,20 @@ function capacity(spec) {
 
 function body(spec, factor) {
   factor.body = post(spec)
-  if (
-    spec.state.post.species === PostSpecies.Structured &&
-    spec.post.type === 'multipart/form-data' &&
-    spec.state.params.variable
-  ) {
-    // Prerequest MIME message construction
-    factor.pre.push(postMultipartResolvedPre(spec.post.params))
+
+  const isStructured = spec.state.post.species === PostSpecies.Structured
+  const isMultipartFormData = (spec.post.type || '').includes(
+    'multipart/form-data'
+  )
+  const hasVariables = !!spec.state.params.variable
+
+  if (isStructured && isMultipartFormData) {
+    // Pre-request logic for fixed multipart/form-data
+    if (!hasVariables) {
+      factor.pre.push(
+        generateMultipartFixedPre(spec.post.params, spec.state.post.boundary)
+      )
+    }
   }
 }
 
@@ -91,7 +98,9 @@ function args(factor) {
 }
 
 function compact(factor) {
-  return !factor.capacity || factor.args.length === 1 || factor.args[1] === 'null'
+  return (
+    !factor.capacity || factor.args.length === 1 || factor.args[1] === 'null'
+  )
 }
 
 function render(factor) {

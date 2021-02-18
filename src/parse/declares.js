@@ -1,5 +1,12 @@
-const { AddressSpecies, FlowItemType, PostSpecies, VariableType } = require('../enum')
+const {
+  AddressSpecies,
+  FlowItemType,
+  PostSpecies,
+  VariableType,
+} = require('../enum')
+
 const { UnrecognizedError } = require('../error')
+const { isMultipartFormData } = require('../aid')
 
 function declares(archive, result) {
   if (archive.log.entries) {
@@ -13,6 +20,9 @@ function declares(archive, result) {
     }
     if (entries.find(matchEntry)) {
       result.declares.add('match')
+    }
+    if (entries.find(isMultipartFormData)) {
+      result.declares.add('formData')
     }
   }
 }

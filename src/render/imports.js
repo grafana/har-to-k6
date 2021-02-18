@@ -46,11 +46,18 @@ const K6_JS_LIBS = (() => {
   return {
     jsonpath: `${BASE_URL}/jsonpath/1.0.2/index.js`,
     url: `${BASE_URL}/url/1.0.0/index.js`,
+    formData: `${BASE_URL}/formdata/0.0.1/index.js`,
   }
 })()
 
 function k6JsLibs(spec, lines) {
-  if (spec.URL || spec.URLSearchParams || spec.jsonpath || spec.MimeBuilder) {
+  if (
+    spec.URL ||
+    spec.URLSearchParams ||
+    spec.jsonpath ||
+    spec.MimeBuilder ||
+    spec.formData
+  ) {
     if (lines.length > 0) {
       lines.push('\n')
     }
@@ -68,6 +75,10 @@ function k6JsLibs(spec, lines) {
 
     if (spec.jsonpath) {
       lines.push(`import jsonpath from "${K6_JS_LIBS.jsonpath}"`)
+    }
+
+    if (spec.formData) {
+      lines.push(`import { FormData } from "${K6_JS_LIBS.formData}"`)
     }
   }
 }

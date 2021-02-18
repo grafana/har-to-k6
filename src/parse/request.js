@@ -19,10 +19,12 @@ function request(node, spec) {
   if (node.headers) {
     headers(node.headers, spec.headers)
   }
+
   if (node.postData && !emptyObject(node.postData)) {
     postData(node.postData, spec.post)
     contentType(node.postData.mimeType, spec.headers)
   }
+
   state(spec)
 
   if (spec.state.post.boundary) {
@@ -42,6 +44,7 @@ function contentType(mimeType, headers) {
 
 function addBoundary(boundary, headers) {
   const contentType = headers.get('Content-Type') || headers.get('content-type')
+
   if (contentType) {
     const items = [...contentType.values()]
     const newItems = items.map((item) => {
@@ -53,6 +56,7 @@ function addBoundary(boundary, headers) {
       return item
     })
 
+    headers.delete('Content-Type') // Remove uppercased content-type in case it exists
     headers.set('content-type', new Set(newItems))
   }
 }

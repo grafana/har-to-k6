@@ -1,11 +1,10 @@
-const { generateBoundary } = require('emailjs-mime-builder/dist/utils')
 const { PostSpecies } = require('../../enum')
 const { parseContentType } = require('../../aid')
 
 function post(spec) {
   const state = spec.state.post
   state.species = species(spec.post)
-  state.boundary = boundary(spec.post, state.species)
+  state.boundary = boundary(spec, state.species)
 }
 
 function species(spec) {
@@ -19,12 +18,33 @@ function species(spec) {
 }
 
 function boundary(spec, species) {
-  const { mimeType, boundary } = parseContentType(spec.type)
-  if (species === PostSpecies.Structured && mimeType === 'multipart/form-data') {
-    return boundary || generateBoundary(1, Date.now().toString() + Math.random())
+  // Currently headers might be specified uppercased or lowercased
+  const contentType =
+    spec.headers.get('Content-Type') || spec.headers.get('content-type')
+
+  if (!contentType) {
+    return null
+  }
+
+  const headerValue = [...contentType].find((t) =>
+    t.value.includes('multipart/form-data')
+  )
+
+  if (!headerValue) {
+    return null
+  }
+
+  const { boundary } = parseContentType(headerValue.value)
+
+  if (species === PostSpecies.Structured) {
+    return boundary || generateBoundary()
   } else {
     return null
   }
+}
+
+function generateBoundary() {
+  return '------RWWorkerFormDataBoundary' + Math.random().toString(36)
 }
 
 module.exports = post

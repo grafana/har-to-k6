@@ -19,7 +19,7 @@ test('unstructured', (t) => {
 
 test('structured', (t) => {
   const spec = makeRequestSpec()
-  spec.post.type = 'multipart/form-data'
+  spec.headers.set('content-type', new Set([{ value: `multipart/form-data;` }]))
   spec.post.params = [{}, {}, {}]
   post(spec)
   t.is(spec.state.post.species, PostSpecies.Structured)
@@ -27,7 +27,7 @@ test('structured', (t) => {
 
 test('generated boundary', (t) => {
   const spec = makeRequestSpec()
-  spec.post.type = 'multipart/form-data'
+  spec.headers.set('content-type', new Set([{ value: `multipart/form-data;` }]))
   spec.post.params = [{}, {}, {}]
   post(spec)
   t.not(spec.state.post.boundary, null)
@@ -35,7 +35,12 @@ test('generated boundary', (t) => {
 
 test('existing boundary is respected', (t) => {
   const spec = makeRequestSpec()
-  spec.post.type = 'multipart/form-data; boundary=----someKindOfLongBoundary'
+  spec.headers.set(
+    'content-type',
+    new Set([
+      { value: `multipart/form-data; boundary=----someKindOfLongBoundary` },
+    ])
+  )
   spec.post.params = [{}, {}, {}]
   post(spec)
   t.is(spec.state.post.boundary, '----someKindOfLongBoundary')

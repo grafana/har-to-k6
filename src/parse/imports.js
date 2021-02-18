@@ -5,7 +5,9 @@ const {
   AddressSpecies,
   VariableType,
 } = require('../enum')
+
 const { UnrecognizedError } = require('../error')
+const { isMultipartFormData } = require('../aid')
 
 function imports(archive, result) {
   if (archive.log.entries) {
@@ -23,6 +25,10 @@ function imports(archive, result) {
 
     if (entries.find(jsonPathEntry)) {
       result.imports.jsonpath = true
+    }
+
+    if (entries.find(isMultipartFormData)) {
+      result.imports.formData = true
     }
 
     if (result.flow.find(formUrlEncodeFlowItem)) {
