@@ -7,7 +7,6 @@ function fixed(spec) {
     .join(`\n`)
 }
 
-// ???
 function description(params) {
   const content = note(params)
   if (content) {
