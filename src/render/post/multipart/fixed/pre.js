@@ -16,7 +16,7 @@ function generateAppendData(params) {
       const data = `data: ${text(value.value)}`
 
       let fileName = ''
-      let contentType = ''
+      let contentType = `, content_type: ${text('text/plain')}`
 
       if (value.fileName) {
         fileName = `, filename: ${text(value.fileName)}`
