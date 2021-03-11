@@ -22,7 +22,7 @@
     "engines": {
         "node": ">=11.0.0"
     },
-    "browser": "src/index.js",
+    "browser": "dist/standalone.js",
     "main": "src/index.js",
     "bin": "bin/har-to-k6.js",
     "dependencies": {
