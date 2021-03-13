@@ -36,7 +36,6 @@
         "iso8601-validator": "^1.0.1",
         "jsonpath": "^1.0.1",
         "moment": "^2.24.0",
-        "nanoid": "^3.1.20",
         "pkginfo": "^0.4.1",
         "prettier": "^2.0.5",
         "tmp": "^0.1.0",
