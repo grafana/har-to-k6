@@ -14,7 +14,7 @@ const MIN_SLEEP = 500
  * @param {HTTPArchive} archive
  * @return {boolean}
  */
-function isValidArchiveUNIQUE(archive) {
+function isValidArchive(archive) {
   return (
     !!archive && !!archive.log && !!archive.log.pages && !!archive.log.entries
   )
@@ -142,7 +142,7 @@ function getEntries(nodes, timeline, options) {
  */
 function normalize(archive, options = DEFAULT_OPTIONS) {
   // Return input archive if it doesnt pass validation
-  if (!isValidArchiveUNIQUE(archive)) {
+  if (!isValidArchive(archive)) {
     return archive
   }
 
