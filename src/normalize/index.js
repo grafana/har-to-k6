@@ -39,8 +39,8 @@ function getDraft(archive) {
  */
 function getTimeline(nodes) {
   let timeline = []
-  for (let index = 0, length = nodes.length; index < length; index += 1) {
-    const node = nodes[index]
+
+  for (const node of nodes) {
     const { id = '', pageref: pageRef = '', startedDateTime } = node
     const timelineRef = { id, pageRef, date: new Date(startedDateTime) }
 
@@ -49,21 +49,14 @@ function getTimeline(nodes) {
     node.timelineRef = timelineRef
 
     // Check if there is a reason to exit
-    if (Number.isNaN(timelineRef.valueOf())) {
-      // Discard getTimeline and exit loop
-      timeline = null
-      break
+    if (Number.isNaN(timelineRef.date.valueOf())) {
+      return null
     }
   }
 
-  // Sort timeline by timingRef.date (valueOf()) unless timeline is falsy
-  if (timeline) {
-    timeline.sort((refA, refB) => {
-      return refA.date - refB.date
-    })
-  }
-
-  return timeline
+  return timeline.sort((refA, refB) => {
+    return refA.date - refB.date
+  })
 }
 
 function hasParent(timelineRef, parentRef = null) {
@@ -80,24 +73,31 @@ function isPage(timelineRef) {
 
 function withSleep(node, timeline) {
   // Dont add sleep if sleep is truthy
-  if (!node.sleep) {
-    const precedingIndex = timeline.indexOf(node.timelineRef) - 1
-    if (precedingIndex >= 0) {
-      const precedingRef = timeline[precedingIndex]
-      // Dont add sleep if preceding node is parent of current node
-      if (!hasParent(node.timelineRef, precedingRef)) {
-        const offset = node.timelineRef.date - precedingRef.date
-        let milliseconds = 0
-        if (offset) {
-          milliseconds = Math.round(offset / 10) * 10 || null
-        }
+  if (node.sleep) {
+    return false
+  }
 
-        if (milliseconds >= MIN_SLEEP) {
-          node.sleep = [{ [SleepPlacement.Before]: milliseconds }]
-          return true
-        }
-      }
-    }
+  const precedingIndex = timeline.indexOf(node.timelineRef) - 1
+  if (precedingIndex < 0) {
+    return false
+  }
+
+  const precedingRef = timeline[precedingIndex]
+  // Dont add sleep if preceding node is parent of current node
+  if (hasParent(node.timelineRef, precedingRef)) {
+    return false
+  }
+
+  const offset = node.timelineRef.date - precedingRef.date
+  let milliseconds = 0
+  if (offset) {
+    milliseconds = Math.round(offset / 10) * 10 || null
+  }
+
+  if (milliseconds >= MIN_SLEEP) {
+    node.sleep = [{ [SleepPlacement.Before]: milliseconds }]
+
+    return true
   }
 
   return false
