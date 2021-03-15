@@ -1,6 +1,6 @@
 /**
- * @typedef {{log: {pages: Object[], entries: Object[]}}} HTTPArchive
- * @typedef {{log: {pages: Object<{sleep?:[]|null}>[], entries: Object<{sleep?:[]|null}>[]}}} K6HTTPArchive
+ * @typedef {{log: {pages?: Object[], entries: Object[]}}} HTTPArchive
+ * @typedef {{log: {pages?: Object<{sleep?:[]|null}>[], entries: Object<{sleep?:[]|null}>[]}}} K6HTTPArchive
  * @typedef {{startedDateTime?: string, id?: string, pageref?: string}} HARNode
  * @typedef {{id?: string, pageRef?: string, date: Date}} TimelineRef
  */
@@ -15,9 +15,7 @@ const MIN_SLEEP = 500
  * @return {boolean}
  */
 function isValidArchive(archive) {
-  return (
-    !!archive && !!archive.log && !!archive.log.pages && !!archive.log.entries
-  )
+  return !!archive && !!archive.log && !!archive.log.entries
 }
 
 function getDraft(archive) {
