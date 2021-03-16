@@ -41,8 +41,17 @@ declare module 'har-to-k6' {
     comment?: string
   }
 
+  export enum SleepPlacement {
+    Before = 'before',
+    After = 'after',
+  }
+
+  export type Sleep = {
+    [key in SleepPlacement]: number
+  }
+
   export interface Entry {
-    pageRef?: string
+    pageref?: string
     startedDateTime: string
     time: number
     request: Request
@@ -69,6 +78,8 @@ declare module 'har-to-k6' {
     variables?: Variable[]
 
     comment?: string
+
+    sleep?: Sleep[]
   }
 
   export interface Request {
@@ -222,4 +233,10 @@ declare module 'har-to-k6' {
   }
 
   export type Variable = JSONPathVariable | RegexVariable | CSSSelectorVariable
+
+  export interface TimelineRef {
+    date: Date
+  }
+
+  export type Timeline = TimelineRef[]
 }

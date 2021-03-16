@@ -1,17 +1,10 @@
-/**
- * @typedef {{log: {pages?: Object[], entries: Object[]}}} HTTPArchive
- * @typedef {{log: {pages?: Object<{sleep?:[]|null}>[], entries: Object<{sleep?:[]|null}>[]}}} K6HTTPArchive
- * @typedef {{startedDateTime?: string, id?: string, pageref?: string}} HARNode
- * @typedef {{id?: string, pageRef?: string, date: Date}} TimelineRef
- */
-
 const { SleepPlacement } = require('../enum')
 const { DEFAULT_OPTIONS } = require('../constants')
 const MIN_SLEEP = 500
 
 /**
  * Validate archive without iterating nodes
- * @param {HTTPArchive} archive
+ * @param {HAR} archive
  * @return {boolean}
  */
 function isValidArchive(archive) {
@@ -32,15 +25,18 @@ function getDraft(archive) {
 
 /**
  *
- * @param {HARNode[]} nodes
+ * @param {Entry[]} nodes
  * @return {TimelineRef[]}
  */
 function getTimeline(nodes) {
+  /**
+   * @type {Timeline}
+   */
   let timeline = []
 
   for (const node of nodes) {
-    const { pageref: pageRef = '', startedDateTime } = node
-    const timelineRef = { pageRef, date: new Date(startedDateTime) }
+    const { startedDateTime } = node
+    const timelineRef = { date: new Date(startedDateTime) }
 
     // Add ref to timeline and attach reference to node
     timeline.push(timelineRef)
@@ -102,9 +98,9 @@ function getEntries(nodes, timeline, options) {
 
 /**
  *
- * @param {HTTPArchive} archive
+ * @param {HAR} archive
  * @param {{addSleep?: boolean}} options
- * @return {K6HTTPArchive}
+ * @return {HAR}
  */
 function normalize(archive, options = DEFAULT_OPTIONS) {
   // Return input archive if it doesnt pass validation
