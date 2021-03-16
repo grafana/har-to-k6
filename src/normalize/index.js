@@ -24,10 +24,10 @@ function getDraft(archive) {
       ? JSON.parse(archive)
       : JSON.parse(JSON.stringify(archive))
 
-  const { pages = [], entries = [], ...log } = draft.log
+  const { entries = [], ...log } = draft.log
   draft.log = log
 
-  return [draft, pages, entries]
+  return [draft, entries]
 }
 
 /**
@@ -39,8 +39,8 @@ function getTimeline(nodes) {
   let timeline = []
 
   for (const node of nodes) {
-    const { id = '', pageref: pageRef = '', startedDateTime } = node
-    const timelineRef = { id, pageRef, date: new Date(startedDateTime) }
+    const { pageref: pageRef = '', startedDateTime } = node
+    const timelineRef = { pageRef, date: new Date(startedDateTime) }
 
     // Add ref to timeline and attach reference to node
     timeline.push(timelineRef)
@@ -57,43 +57,26 @@ function getTimeline(nodes) {
   })
 }
 
-function hasParent(timelineRef, parentRef = null) {
-  if (parentRef) {
-    return timelineRef.pageRef ? timelineRef.pageRef === parentRef.id : false
-  }
-
-  return !!timelineRef.pageRef
-}
-
-function isPage(timelineRef) {
-  return timelineRef.id && !timelineRef.pageRef
-}
-
 function withSleep(node, timeline) {
   // Dont add sleep if sleep is truthy
   if (node.sleep) {
     return false
   }
 
-  const precedingIndex = timeline.indexOf(node.timelineRef) - 1
-  if (precedingIndex < 0) {
+  const nextIndex = timeline.indexOf(node.timelineRef) + 1
+  const nextRef = timeline[nextIndex]
+  if (!nextRef) {
     return false
   }
 
-  const precedingRef = timeline[precedingIndex]
-  // Dont add sleep if preceding node is parent of current node
-  if (hasParent(node.timelineRef, precedingRef)) {
-    return false
-  }
-
-  const offset = node.timelineRef.date - precedingRef.date
+  const offset = nextRef.date - node.timelineRef.date
   let milliseconds = 0
   if (offset) {
     milliseconds = Math.round(offset / 10) * 10 || null
   }
 
   if (milliseconds >= MIN_SLEEP) {
-    node.sleep = [{ [SleepPlacement.Before]: milliseconds }]
+    node.sleep = [{ [SleepPlacement.After]: milliseconds }]
 
     return true
   }
@@ -106,30 +89,15 @@ function cleanNode(node) {
   return node
 }
 
-function getPages(nodes, timeline, options) {
-  return timeline
-    .filter((timelineRef) => isPage(timelineRef))
-    .map((timelineRef) => {
-      const node = nodes.find((node) => node.timelineRef === timelineRef)
-      if (options.addSleep) {
-        withSleep(node, timeline)
-      }
-
-      return cleanNode(node)
-    })
-}
-
 function getEntries(nodes, timeline, options) {
-  return timeline
-    .filter((timelineRef) => !isPage(timelineRef))
-    .map((timelineRef) => {
-      const node = nodes.find((node) => node.timelineRef === timelineRef)
-      if (options.addSleep) {
-        withSleep(node, timeline)
-      }
+  return timeline.map((timelineRef) => {
+    const node = nodes.find((node) => node.timelineRef === timelineRef)
+    if (options.addSleep) {
+      withSleep(node, timeline)
+    }
 
-      return cleanNode(node)
-    })
+    return cleanNode(node)
+  })
 }
 
 /**
@@ -144,8 +112,8 @@ function normalize(archive, options = DEFAULT_OPTIONS) {
     return archive
   }
 
-  const [draft, pages, entries] = getDraft(archive)
-  const timeline = getTimeline([...pages, ...entries])
+  const [draft, entries] = getDraft(archive)
+  const timeline = getTimeline(entries)
 
   // Return input archive if timeline couldn't be created
   if (!timeline) {
@@ -157,7 +125,6 @@ function normalize(archive, options = DEFAULT_OPTIONS) {
     ...draft,
     log: {
       ...draft.log,
-      pages: getPages(pages, timeline, options),
       entries: getEntries(entries, timeline, options),
     },
   }
