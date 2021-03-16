@@ -1,127 +1,124 @@
 const { SleepPlacement } = require('../enum')
 const { DEFAULT_OPTIONS } = require('../constants')
+const { nanoid } = require('nanoid')
 const MIN_SLEEP = 500
 
 /**
- * Validate archive without iterating nodes
+ * Validate that archive has a list of entries that all have a `startedDateTime` property
  * @param {HAR} archive
  * @return {boolean}
  */
 function isValidArchive(archive) {
-  return !!archive && !!archive.log && !!archive.log.entries
-}
-
-function getDraft(archive) {
-  const draft =
-    typeof archive === 'string'
-      ? JSON.parse(archive)
-      : JSON.parse(JSON.stringify(archive))
-
-  const { entries = [], ...log } = draft.log
-  draft.log = log
-
-  return [draft, entries]
+  return (
+    !!archive &&
+    !!archive.log &&
+    !!archive.log.entries &&
+    archive.log.entries.every((entry) => !!entry.startedDateTime)
+  )
 }
 
 /**
  *
- * @param {Entry[]} nodes
- * @return {TimelineRef[]}
+ * @param {HAR} draft
+ * @return {TimelineNode[]}
  */
-function getTimeline(nodes) {
-  /**
-   * @type {Timeline}
-   */
+function getTimeline(draft) {
+  const { entries } = draft.log
+
   let timeline = []
-
-  for (const node of nodes) {
-    const { startedDateTime } = node
-    const timelineRef = { date: new Date(startedDateTime) }
-
-    // Add ref to timeline and attach reference to node
-    timeline.push(timelineRef)
-    node.timelineRef = timelineRef
+  for (const entry of entries) {
+    const { startedDateTime } = entry
+    const node = { id: nanoid(), date: new Date(startedDateTime), entry }
+    timeline.push(node)
 
     // Check if there is a reason to exit
-    if (Number.isNaN(timelineRef.date.valueOf())) {
+    if (Number.isNaN(node.date.valueOf())) {
       return null
     }
   }
 
-  return timeline.sort((refA, refB) => {
-    return refA.date - refB.date
+  return timeline.sort((nodeA, nodeB) => {
+    return nodeA.date - nodeB.date
   })
 }
 
-function withSleep(node, timeline) {
-  // Dont add sleep if sleep is truthy
-  if (node.sleep) {
+/**
+ *
+ * @param {TimelineNode} node
+ * @param {TimelineNode[]} timeline
+ * @return {Array|boolean}
+ */
+function getSleep(node, timeline) {
+  if (node.entry.sleep) {
     return false
   }
 
-  const nextIndex = timeline.indexOf(node.timelineRef) + 1
-  const nextRef = timeline[nextIndex]
-  if (!nextRef) {
+  const nextIndex = timeline.findIndex((item) => item.id === node.id) + 1
+  const nextNode = timeline[nextIndex]
+  if (!nextNode) {
     return false
   }
 
-  const offset = nextRef.date - node.timelineRef.date
+  const offset = nextNode.date - node.date
   let milliseconds = 0
   if (offset) {
-    milliseconds = Math.round(offset / 10) * 10 || null
+    milliseconds = Math.round(offset / 100) * 100 || null
   }
 
   if (milliseconds >= MIN_SLEEP) {
-    node.sleep = [{ [SleepPlacement.After]: milliseconds }]
-
-    return true
+    return [{ [SleepPlacement.After]: milliseconds }]
   }
 
   return false
 }
 
-function cleanNode(node) {
-  delete node.timelineRef
-  return node
-}
-
-function getEntries(nodes, timeline, options) {
-  return timeline.map((timelineRef) => {
-    const node = nodes.find((node) => node.timelineRef === timelineRef)
+/**
+ *
+ * @param {TimelineNode[]} timeline
+ * @param {{ addSleep?: boolean }} options
+ * @return {Entry[]}
+ */
+function getEntries(timeline, options) {
+  return timeline.map((node) => {
     if (options.addSleep) {
-      withSleep(node, timeline)
+      const sleep = getSleep(node, timeline)
+      if (sleep) {
+        return {
+          ...node.entry,
+          sleep,
+        }
+      }
     }
 
-    return cleanNode(node)
+    return node.entry
   })
 }
 
 /**
  *
  * @param {HAR} archive
- * @param {{addSleep?: boolean}} options
+ * @param {{ addSleep?: boolean }} options
  * @return {HAR}
  */
 function normalize(archive, options = DEFAULT_OPTIONS) {
-  // Return input archive if it doesnt pass validation
+  // Return archive if it doesnt pass validation
   if (!isValidArchive(archive)) {
     return archive
   }
 
-  const [draft, entries] = getDraft(archive)
-  const timeline = getTimeline(entries)
+  const timeline = getTimeline(archive)
 
-  // Return input archive if timeline couldn't be created
+  // Return archive if timeline couldn't be created
   if (!timeline) {
     return archive
   }
 
   // Rebuild archive
   return {
-    ...draft,
+    ...archive,
     log: {
-      ...draft.log,
-      entries: getEntries(entries, timeline, options),
+      ...archive.log,
+      entries: getEntries(timeline, options),
     },
   }
 }

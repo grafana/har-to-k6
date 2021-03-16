@@ -234,9 +234,9 @@ declare module 'har-to-k6' {
 
   export type Variable = JSONPathVariable | RegexVariable | CSSSelectorVariable
 
-  export interface TimelineRef {
+  export interface TimelineNode {
+    id: string
     date: Date
+    entry: Entry
   }
-
-  export type Timeline = TimelineRef[]
 }

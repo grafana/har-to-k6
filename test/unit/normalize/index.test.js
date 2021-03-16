@@ -111,6 +111,6 @@ test('option.addSleep=true', (t) => {
   const result = normalize(archive, { addSleep: true })
   t.deepEqual(result.log.entries[0].sleep, undefined) // less than 500ms to next entry (MIN_SLEEP)
   t.deepEqual(result.log.entries[1].sleep, [{ [SleepPlacement.After]: 9600 }]) // first chile (no sleep)
-  t.deepEqual(result.log.entries[2].sleep, [{ [SleepPlacement.After]: 510 }]) // rounded
+  t.deepEqual(result.log.entries[2].sleep, [{ [SleepPlacement.After]: 500 }]) // rounded
   t.deepEqual(result.log.entries[3].sleep, undefined) // last entry has no sleep
 })
