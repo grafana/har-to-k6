@@ -6,6 +6,7 @@ const fs = require('fs')
 const io = require('caporal')
 const pkginfo = require('pkginfo')
 const { HarToK6Error } = require('../src/error')
+const { DEFAULT_CLI_OPTIONS } = require('../src/constants')
 
 class CommandLineError extends HarToK6Error {}
 
@@ -15,7 +16,17 @@ delete module.exports.version
 
 io.version(version)
   .description('Convert LI-HAR to k6 script')
-  .option('-o, --output <output>', 'Output file', output, 'loadtest.js')
+  .option(
+    '-o, --output <output>',
+    'Output file',
+    output,
+    DEFAULT_CLI_OPTIONS.output
+  )
+  .option(
+    '--add-sleep',
+    'Add automatic sleep() based on startDateTime',
+    DEFAULT_CLI_OPTIONS.addSleep
+  )
   .argument('<archive>', 'LI-HAR archive to convert')
   .action(run)
 
@@ -33,7 +44,7 @@ async function run(arg, opt, log) {
     start(arg.archive, log)
     const json = read(arg.archive)
     const archive = parse(json)
-    const { main } = await transform(archive)
+    const { main } = await transform(archive, opt)
     write(main, opt.output)
     success(opt.output, log)
   } catch (error) {
@@ -61,9 +72,9 @@ function parse(json) {
   }
 }
 
-async function transform(archive) {
+async function transform(archive, options) {
   try {
-    return await convert(archive)
+    return await convert(archive, options)
   } catch (error) {
     throw new CommandLineError({ name: 'ConvertError', cause: error })
   }
