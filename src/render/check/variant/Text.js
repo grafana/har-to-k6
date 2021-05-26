@@ -1,6 +1,6 @@
 const comparison = require('../comparison')
 const indent = require('../../indent')
-const string = require('../../string')
+const text = require('../../text')
 const subject = require('../subject')
 
 function Text(name, spec) {
@@ -8,9 +8,11 @@ function Text(name, spec) {
     name,
     value: logic(spec),
   }
+
   if (spec.comment) {
     item.comment = spec.comment
   }
+
   return item
 }
 
@@ -25,7 +27,7 @@ function logic(spec) {
 }
 
 function value(spec) {
-  return string(spec.value)
+  return text(spec.value)
 }
 
 function body(spec, factor) {
