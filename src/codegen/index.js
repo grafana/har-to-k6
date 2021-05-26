@@ -1,15 +1,15 @@
 const babel = require('prettier/parser-babel')
 const evaluateVariable = require('../render/evaluate')
+const expressions = require('../expression')
 
 const BUILD = Symbol('build')
 const UNQUOTED = Symbol('unquoted')
-const VARIABLE_REGEX = /^\$\{(\w+)\}$/
 
 const hasOwnProperty = (obj, prop) =>
   Object.prototype.hasOwnProperty.call(obj, prop)
 
-const isVariable = (expr) => VARIABLE_REGEX.test(expr)
-const getVariableName = (expr) => (VARIABLE_REGEX.exec(expr) || [])[1]
+const isVariable = (expr) => expressions.variable.test(expr)
+const getVariableName = (expr) => (expressions.variable.exec(expr) || [])[1]
 
 const makeTemplate = (build, render) => {
   render[BUILD] = build
