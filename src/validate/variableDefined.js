@@ -1,6 +1,7 @@
 const sort = require('../sort')
 const { variables } = require('../expression')
 const { InvalidArchiveError } = require('../error')
+const { CheckType } = require('../enum')
 
 /*
  * method: variables defined
@@ -25,18 +26,19 @@ function variableDefined(archive) {
 
   for (let i = 0; i < entries.length; i++) {
     const entry = entries[i]
-    validate(entry.request, i, defined)
+    validate({ request: entry.request, checks: entry.checks }, i, defined)
     define(entry, defined)
   }
 }
 
-function validate(request, i, defined) {
+function validate({ request, checks }, i, defined) {
   validateString(request.method, i, null, defined, 'Request method')
   validateString(request.url, i, null, defined, 'Request URL')
   queryString(request.queryString, i, defined)
   headers(request.headers, i, defined)
   cookies(request.cookies, i, defined)
   postData(request.postData, i, defined)
+  validateChecks(checks, i, defined)
 }
 
 function validateString(value, i, j, defined, property) {
@@ -49,6 +51,16 @@ function validateString(value, i, j, defined, property) {
       )
     }
   }
+}
+
+function validateChecks(checks = [], topLevelIndex, defined) {
+  checks.forEach((check, index) => {
+    const value =
+      check.type === CheckType.Regex ? check.expression : check.value
+    const property =
+      check.type === CheckType.Regex ? 'Check expression' : 'Check value'
+    validateString(value, topLevelIndex, index, defined, property)
+  })
 }
 
 function queryString(node, i, defined) {
@@ -143,7 +155,9 @@ function zipGroups(entries) {
     return result
   }, new Map())
 
-  return [...groupedEntries.entries()].flatMap(([item, children]) => children || item)
+  return [...groupedEntries.entries()].flatMap(
+    ([item, children]) => children || item
+  )
 }
 
 function orderEntries(archive) {
@@ -173,7 +187,9 @@ function orderExplicit(entries, pages) {
 
 // eslint-disable-next-line no-unused-vars
 function orderImplicit(entries, pages) {
-  const unordered = entries.filter((entry) => entry.pageref && !pages.has(entry.pageref))
+  const unordered = entries.filter(
+    (entry) => entry.pageref && !pages.has(entry.pageref)
+  )
   const groups = groupEntries(unordered)
   const orderedGroups = orderGroupsByName(groups)
   return expand(orderedGroups)

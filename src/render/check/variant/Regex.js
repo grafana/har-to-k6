@@ -1,5 +1,6 @@
 const indent = require('../../indent')
 const string = require('../../string')
+const text = require('../../text')
 const subject = require('../subject')
 
 function Regex(name, spec) {
@@ -7,6 +8,7 @@ function Regex(name, spec) {
     name,
     value: logic(spec),
   }
+
   if (spec.comment) {
     item.comment = spec.comment
   }
@@ -24,7 +26,7 @@ function logic(spec) {
 }
 
 function expression(spec) {
-  return string(spec.expression)
+  return text(spec.expression)
 }
 
 function flags(spec) {
