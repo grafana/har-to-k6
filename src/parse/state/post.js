@@ -27,7 +27,7 @@ function boundary(spec, species) {
   }
 
   const headerValue = [...contentType].find((t) =>
-    (t.value || []).includes('multipart/form-data')
+    (t.value || '').includes('multipart/form-data')
   )
 
   if (!headerValue) {
