@@ -1,6 +1,6 @@
 const babel = require('prettier/parser-babel')
-const evaluateVariable = require('../render/evaluate')
 const expressions = require('../expression')
+const template = require('../render/template')
 
 const BUILD = Symbol('build')
 const UNQUOTED = Symbol('unquoted')
@@ -9,7 +9,6 @@ const hasOwnProperty = (obj, prop) =>
   Object.prototype.hasOwnProperty.call(obj, prop)
 
 const isVariable = (expr) => expressions.variable.test(expr)
-const getVariableName = (expr) => (expressions.variable.exec(expr) || [])[1]
 
 const makeTemplate = (build, render) => {
   render[BUILD] = build
@@ -64,7 +63,7 @@ const stringify = (ctx, expr, result) => {
     case 'number':
     case 'boolean':
       if (isVariable(expr)) {
-        return push(result, evaluateVariable(getVariableName(expr)))
+        return push(result, template(expr))
       }
 
       return push(result, JSON.stringify(expr))

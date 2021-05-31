@@ -21,7 +21,7 @@ export default function main() {
     [`\$.token contains ${vars["token"]}`]: response =>
       jsonpath
         .query(response.json(), "$.token")
-        .some(values => values.includes(vars["token"])),
+        .some(values => values.includes(`${vars["token"]}`)),
     [`body matches /${vars["token"]}/`]: response => {
       const expr = new RegExp(`${vars["token"]}`);
       return expr.test(response.body);
