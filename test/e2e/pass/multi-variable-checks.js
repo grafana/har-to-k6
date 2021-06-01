@@ -37,7 +37,7 @@ export default function main() {
   );
   response = http.get(address.toString());
   check(response, {
-    [`\$.full_name equals ${vars["firstName"]} ${vars["lastName"]}`]: response =>
+    "$.full_name equals ${firstName} ${lastName}": response =>
       jsonpath
         .query(response.json(), "$.full_name")
         .some(value => value === `${vars["firstName"]} ${vars["lastName"]}`),

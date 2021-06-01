@@ -1,10 +1,15 @@
 const check = require('./check')
-const object = require('./object')
+
+const objectProperty = (item) => [`"${item.name}"`, item.value].join(':')
 
 function checks(spec) {
   if (spec.size) {
-    const entries = [...spec].map(([name, item]) => check(name, item))
-    return `check(response, ${object(entries)});`
+    const items = [...spec].map(([name, item]) => check(name, item))
+    // Using dumb method of rendering the code here because we want to explicitly render ${varName}
+    // instead of resolving it.
+    const body = ['{', items.map(objectProperty), '}'].join('')
+
+    return `check(response, ${body});`
   } else {
     return null
   }
