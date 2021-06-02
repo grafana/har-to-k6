@@ -1,32 +1,38 @@
 import test from 'ava'
-import isolate from 'helper/isolate'
-const [checks, { check, object }] = isolate(test, 'render/checks', {
-  check: 'render/check',
-  object: 'render/object',
-})
+import checks from 'render/checks'
+import { parse } from 'helper/parse'
 
-test.serial('empty', (t) => {
-  const result = checks(new Map())
-  t.is(result, null)
-})
+const checkProto = {
+  type: 2,
+  state: { negated: false, plural: true },
+  subject: 1,
+  condition: 0,
+  expression: '$.user.name',
+}
 
 test.serial('1', (t) => {
-  object.returns('rendered')
-  const spec = new Map().set('$.token exists', new Set([{}]))
-  const result = checks(spec)
-  t.is(result, 'check(response, rendered);')
-  t.true(check.calledOnce)
-  t.true(object.calledOnce)
+  let expectedResult = `
+    check(response, {
+      "test": response => jsonpath.query(response.json(), "$.user.name").length > 0
+    });`
+
+  const result = checks(new Map().set('test', checkProto))
+  t.deepEqual(parse(result), parse(expectedResult))
 })
 
 test.serial('3', (t) => {
-  object.returns('rendered')
+  let expectedResult = `
+    check(response, {
+      "$.status is success": response => jsonpath.query(response.json(), "$.user.name").length > 0,
+      "$.results is 7": response => jsonpath.query(response.json(), "$.user.name").length > 0,
+      "$.result[0].name is Kitten": response => jsonpath.query(response.json(), "$.user.name").length > 0
+    });`
+
   const spec = new Map()
-    .set('$.status is success', new Set([{}]))
-    .set('$.results is 7', new Set([{}]))
-    .set('$.result[0].name is Kitten', new Set([{}]))
+    .set('$.status is success', checkProto)
+    .set('$.results is 7', checkProto)
+    .set('$.result[0].name is Kitten', checkProto)
+
   const result = checks(spec)
-  t.is(result, 'check(response, rendered);')
-  t.true(check.calledThrice)
-  t.true(object.calledOnce)
+  t.deepEqual(parse(result), parse(expectedResult))
 })

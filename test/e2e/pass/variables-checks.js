@@ -16,13 +16,13 @@ export default function main() {
 
   response = http.get("http://test.k6.io");
   check(response, {
-    [`status equals ${vars["token"]}`]: response =>
+    "status equals ${token}": response =>
       response.status.toString() === `${vars["token"]}`,
-    [`\$.token contains ${vars["token"]}`]: response =>
+    "$.token contains ${token}": response =>
       jsonpath
         .query(response.json(), "$.token")
         .some(values => values.includes(vars["token"])),
-    [`body matches /${vars["token"]}/`]: response => {
+    "body matches /${token}/": response => {
       const expr = new RegExp(`${vars["token"]}`);
       return expr.test(response.body);
     },

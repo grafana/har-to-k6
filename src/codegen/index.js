@@ -1,6 +1,7 @@
 const babel = require('prettier/parser-babel')
-const evaluateVariable = require('../render/evaluate')
 const expressions = require('../expression')
+const template = require('../render/template')
+const evaluateVariable = require('../render/evaluate')
 
 const BUILD = Symbol('build')
 const UNQUOTED = Symbol('unquoted')
@@ -9,7 +10,13 @@ const hasOwnProperty = (obj, prop) =>
   Object.prototype.hasOwnProperty.call(obj, prop)
 
 const isVariable = (expr) => expressions.variable.test(expr)
+
 const getVariableName = (expr) => (expressions.variable.exec(expr) || [])[1]
+
+const isMultiVariableString = (expr) => {
+  const matches = [...expr.matchAll(expressions.variables)]
+  return matches.length > 1
+}
 
 const makeTemplate = (build, render) => {
   render[BUILD] = build
@@ -61,12 +68,19 @@ const stringify = (ctx, expr, result) => {
       return push(result, 'undefined')
 
     case 'string':
-    case 'number':
-    case 'boolean':
+      if (isMultiVariableString(expr)) {
+        return push(result, template(expr))
+      }
+
+      // This will have to be single variable since the above case captures multi variable
       if (isVariable(expr)) {
         return push(result, evaluateVariable(getVariableName(expr)))
       }
 
+      return push(result, JSON.stringify(expr))
+
+    case 'number':
+    case 'boolean':
       return push(result, JSON.stringify(expr))
 
     case 'function':
