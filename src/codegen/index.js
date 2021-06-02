@@ -13,9 +13,10 @@ const isVariable = (expr) => expressions.variable.test(expr)
 
 const getVariableName = (expr) => (expressions.variable.exec(expr) || [])[1]
 
-const isMultiVariableString = (expr) => {
+const isTemplateWithVariable = (expr) => {
   const matches = [...expr.matchAll(expressions.variables)]
-  return matches.length > 1
+  // We have multiple variables `${a} ${b}` or single variable + random string `Random ${a} string`.
+  return matches.length > 1 || matches.some((match) => match[0] !== match.input)
 }
 
 const makeTemplate = (build, render) => {
@@ -68,7 +69,7 @@ const stringify = (ctx, expr, result) => {
       return push(result, 'undefined')
 
     case 'string':
-      if (isMultiVariableString(expr)) {
+      if (isTemplateWithVariable(expr)) {
         return push(result, template(expr))
       }
 
