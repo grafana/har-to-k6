@@ -41,6 +41,12 @@ function validate(node, i, assay) {
       `Invalid page title (${i}): must be string`
     )
   }
+  if (!empty(node.name) && typeof node.name !== 'string') {
+    throw new InvalidArchiveError(
+      { name: 'InvalidPageName' },
+      `Invalid page name (${i}): must be string`
+    )
+  }
   if (node.sleep && !Array.isArray(node.sleep)) {
     throw new InvalidArchiveError(
       { name: 'InvalidPageSleep' },
