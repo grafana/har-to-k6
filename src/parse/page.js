@@ -1,13 +1,24 @@
 const sleep = require('./sleep')
 
-function page(node, result) {
+function pageName(node) {
   const nameParts = []
 
-  node.id && nameParts.push(node.id)
-  node.title && nameParts.push(node.title)
+  if (node.name) {
+    nameParts.push(node.name)
+  } else if (node.id) {
+    nameParts.push(node.id)
+  }
 
+  if (node.title) {
+    nameParts.push(node.title)
+  }
+
+  return nameParts.join(' - ')
+}
+
+function page(node, result) {
   const spec = {
-    name: nameParts.join(' - '),
+    name: pageName(node),
   }
 
   if (node.comment) {
