@@ -4,10 +4,12 @@ const babelParser = require('prettier/parser-babel')
 
 function prettify(raw) {
   return prettier.format(raw, {
-    semi: true,
+    semi: false,
     arrowParens: 'avoid',
     parser: 'babel',
     plugins: [babelParser],
+    singleQuote: true,
+    trailingComma: 'all',
   })
 }
 

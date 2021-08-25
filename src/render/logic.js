@@ -11,7 +11,11 @@ function logic(result) {
     flow(result),
     defaultSleep(result),
   ].filter((item) => item)
-  return `export default function main() ${block(content)}`
+
+  const { exportAs = 'main', namedExport = false } = result
+  const exportType = namedExport ? 'export' : 'export default'
+
+  return `${exportType} function ${exportAs}() ${block(content)}`
 }
 
 module.exports = logic

@@ -64,10 +64,11 @@
         "bundle": "./node_modules/.bin/webpack --config webpack.config.js",
         "analyze": "BUNDLE_ANALYSIS=\"reports/commit_$(git rev-parse --short HEAD).html\" ./node_modules/.bin/webpack --config webpack.config.js",
         "lint": "eslint .",
-        "test": "npm-run-all test-unit test-int test-e2e",
+        "test": "npm-run-all test-unit test-int test-e2e test-e2e-adhoc",
         "test-int": "cross-env NODE_PATH=src:test ava test/int",
         "test-unit": "cross-env NODE_PATH=src:test ava test/unit",
         "test-e2e": "cross-env NODE_PATH=src:test ava test/e2e/run-tests.js",
+        "test-e2e-adhoc": "cross-env NODE_PATH=src:test ava test/e2e/**/*.test.js",
         "test-hoc": "cross-env NODE_PATH=src:test ava",
         "test-only": "cross-env NODE_PATH=src:test ava",
         "prepare": "npm-run-all bundle"

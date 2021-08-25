@@ -3,6 +3,7 @@ const creator = require('./creator')
 const entries = require('./entries')
 const pages = require('./pages')
 const options = require('./options')
+const exportAs = require('./exportAs')
 
 function log(node, result) {
   if (node.options) {
@@ -23,6 +24,8 @@ function log(node, result) {
   if (node.entries) {
     entries(node.entries, result)
   }
+
+  exportAs(node.namedExport, node.exportAs, result)
 }
 
 module.exports = log
