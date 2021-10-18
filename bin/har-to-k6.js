@@ -5,10 +5,10 @@ const convert = require('../src/convert')
 const fs = require('fs')
 const io = require('caporal')
 const pkginfo = require('pkginfo')
-const { HarToK6Error } = require('../src/error')
 const { DEFAULT_CLI_OPTIONS } = require('../src/constants')
+const { VError } = require('verror')
 
-class CommandLineError extends HarToK6Error {}
+class CommandLineError extends VError {}
 
 pkginfo(module, 'version')
 const version = module.exports.version

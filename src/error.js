@@ -1,11 +1,17 @@
-const { VError } = require('verror')
+class DetailedError extends Error {
+  constructor(details, message) {
+    super(typeof details === 'string' ? details : message)
 
-class HarToK6Error extends VError {}
-class InvalidArchiveError extends HarToK6Error {}
-class UnrecognizedError extends HarToK6Error {}
+    if (typeof details === 'object') {
+      Object.assign(this, details)
+    }
+  }
+}
+
+class InvalidArchiveError extends DetailedError {}
+class UnrecognizedError extends DetailedError {}
 
 module.exports = {
-  HarToK6Error,
   InvalidArchiveError,
   UnrecognizedError,
 }
