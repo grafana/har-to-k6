@@ -35,6 +35,8 @@ interface Log {
   pages?: Array // List of exported pages
   entries?: Array // List of exported requests
   comment?: Check // A comment provided by the user or the application
+  exportAs?: String // Name of function that wraps the created script (default: 'main')
+  namedExport?: boolean // Whether or not the function should be a named export (rather than a `default` export) (default: false)
 }
 ``` 
 
