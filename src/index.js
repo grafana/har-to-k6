@@ -3,4 +3,5 @@ module.exports = {
   liHARToK6Script: require('./convert'),
   validate: require('./validate'),
   normalizeHAR: require('./normalize'),
+  strToFunctionName: require('./helpers/strToFunctionName'),
 }

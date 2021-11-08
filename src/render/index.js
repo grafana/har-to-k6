@@ -1,12 +1,7 @@
 const prettify = require('./prettify')
 const root = require('./root')
 
-/**
- *
- * @param {...*} result
- * @return {*}
- */
-function render(...result) {
+function render(result) {
   const raw = root(result)
   return prettify(raw)
 }

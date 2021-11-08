@@ -108,42 +108,18 @@ function requestState() {
   }
 }
 
-function exportState() {
-  return {
-    defaultExported: false,
-    functions: [],
-  }
-}
-
-function result(multiConvert = false) {
-  // Reset result state unless multiConvert is TRUE
-  if (!multiConvert) {
-    resetResult()
-  }
-
+function result() {
   return {
     comment: [],
     options: {},
     pages: new Map(),
     entries: [],
     flow: [],
-    imports: result.importsState,
+    imports: imports(),
     declares: new Set(),
-    exportAs: 'main',
-    namedExport: false,
-    exports: result.exportsState,
+    exportAs: '',
+    defaultExport: true,
   }
-}
-
-result.importsState = imports()
-result.exportsState = exportState()
-
-/**
- * Reset static state
- */
-function resetResult() {
-  result.importsState = imports()
-  result.exportsState = exportState()
 }
 
 module.exports = {
@@ -160,5 +136,4 @@ module.exports = {
   requestSpec,
   requestState,
   result,
-  resetResultImports: resetResult,
 }

@@ -4,17 +4,8 @@ const imports = require('./imports')
 const root = require('./root')
 const { result: makeResult } = require('../make')
 
-/**
- * Parse HAR archive
- *
- * Assumes valid archive.
- *
- * @param {HAR} archive
- * @param {boolean} persistImports Whether or not to persist imports (automatically used when converting multiple archives)
- * @return {*}
- */
-function parse(archive, persistImports = false) {
-  const result = makeResult(persistImports)
+function parse(archive) {
+  const result = makeResult()
   root(archive, result)
   flow(result)
   imports(archive, result)

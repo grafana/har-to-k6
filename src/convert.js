@@ -3,7 +3,6 @@ const render = require('./render')
 const validate = require('./validate')
 const normalize = require('./normalize')
 const { DEFAULT_OPTIONS } = require('./constants')
-const { resetResultImports } = require('./make')
 const { InvalidArchiveError } = require('./error')
 
 /**
@@ -18,25 +17,23 @@ async function convert(_archives, options = DEFAULT_OPTIONS) {
 
   const result = archives.map((archive, index) => {
     const source = normalize(archive, options)
+
     try {
       validate(source)
     } catch (error) {
       throw new InvalidArchiveError(
         { name: error.name },
-        isMultiConvert ? `Scenario(${index}): ${error.message}` : error.message
+        isMultiConvert ? `Archive(${index}): ${error.message}` : error.message
       )
     }
 
-    return parse(source, isMultiConvert)
+    return parse(source)
   })
-
-  // Reset result imports so that result.importsState isn't tainted between calls
-  resetResultImports()
 
   // NOTE: => render(result) instead of { main: render(result) } ??
   // Then /bin/har-to-k6.js need to change as well.
   return {
-    main: render(...result),
+    main: render(result),
   }
 }
 

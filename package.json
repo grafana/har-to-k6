@@ -69,6 +69,7 @@
         "test-unit": "cross-env NODE_PATH=src:test ava test/unit",
         "test-e2e": "cross-env NODE_PATH=src:test ava test/e2e/run-tests.js",
         "test-e2e-adhoc": "cross-env NODE_PATH=src:test ava test/e2e/**/*.test.js",
+        "test:watch": "cross-env NODE_PATH=src:test ava --watch test/unit",
         "test-hoc": "cross-env NODE_PATH=src:test ava",
         "test-only": "cross-env NODE_PATH=src:test ava",
         "prepare": "npm-run-all bundle"
@@ -94,9 +95,10 @@
         ]
     },
     "prettier": {
-        "trailingComma": "es5",
         "semi": false,
+        "arrowParens": "avoid",
         "singleQuote": true,
+        "trailingComma": "es5",
         "printWidth": 80
     },
     "husky": {

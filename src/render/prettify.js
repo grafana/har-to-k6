@@ -9,7 +9,8 @@ function prettify(raw) {
     parser: 'babel',
     plugins: [babelParser],
     singleQuote: true,
-    trailingComma: 'all',
+    trailingComma: 'es5',
+    printWidth: 80,
   })
 }
 

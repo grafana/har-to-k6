@@ -25,7 +25,7 @@ function log(node, result) {
     entries(node.entries, result)
   }
 
-  exportAs(node.namedExport, node.exportAs, result)
+  exportAs(node.exportAs, result)
 }
 
 module.exports = log

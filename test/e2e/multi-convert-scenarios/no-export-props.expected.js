@@ -86,7 +86,7 @@ export default function main() {
   sleep(1)
 }
 
-export function main_0() {
+export function main0() {
   let formData, response
 
   // Request 1

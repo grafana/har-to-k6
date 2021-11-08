@@ -12,6 +12,12 @@ function loadHAR(relativeFilename) {
   return JSON.parse(har)
 }
 
+// Useful for when test fails (use diffing tool to check what the actual diff is)
+// Usage: write(main, path.resolve(__dirname, expectedFile))
+// function write(main, expectedFile) {
+//   fs.writeFileSync(`actual_${path.basename(expectedFile)}`, main)
+// }
+
 async function testConvert(input, expectedFile) {
   const { main } = await convert(input)
   const result = parse(main)
@@ -24,7 +30,7 @@ async function testConvert(input, expectedFile) {
   return [result, expected, main]
 }
 
-test('with export props', async (t) => {
+test('with export props', async t => {
   const input = [
     loadHAR('./with-export-props-1.har'),
     loadHAR('./with-export-props-2.har'),
@@ -37,7 +43,7 @@ test('with export props', async (t) => {
   t.deepEqual(result, expected)
 })
 
-test('no export props', async (t) => {
+test('no export props', async t => {
   const input = [
     loadHAR('./no-export-props.har'),
     loadHAR('./no-export-props.har'),

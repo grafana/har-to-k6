@@ -32,7 +32,7 @@ export const options = {
   },
 }
 
-export default function Scenario_1() {
+export function scenario1a() {
   let response
 
   // This is from Scenario 1
