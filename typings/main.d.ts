@@ -1,3 +1,5 @@
+import { VError } from 'verror'
+
 declare module 'har-to-k6' {
   export type JsonValue =
     | string
@@ -239,4 +241,20 @@ declare module 'har-to-k6' {
     date: Date
     entry: Entry
   }
+
+  // module.exports
+  export class HarToK6Error extends VError {}
+
+  export class InvalidArchiveError extends HarToK6Error {}
+
+  export class UnrecognizedError extends HarToK6Error {}
+
+  export function liHARToK6Script(): { main: string }
+
+  /** @throws {InvalidArchiveError} */
+  export function validate(archive: HAR): void
+
+  export function normalize(archive: HAR, options?: { addSleep?: boolean }): HAR
+
+  export function strToFunctionName(subject: string, fallback?: string): string
 }
