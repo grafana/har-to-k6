@@ -72,6 +72,9 @@ const javascriptReservedWords = [
 const k6ReservedWords = [
   // general
   'options',
+  '__ITER',
+  '__VU',
+  'open',
   // k6
   'sleep',
   'check',
