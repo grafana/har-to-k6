@@ -249,7 +249,7 @@ declare module 'har-to-k6' {
 
   export class UnrecognizedError extends HarToK6Error {}
 
-  export function liHARToK6Script(): { main: string }
+  export function liHARToK6Script(): Promise<{ main: string }>
 
   /** @throws {InvalidArchiveError} */
   export function validate(archive: HAR): void
