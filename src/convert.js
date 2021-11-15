@@ -4,6 +4,8 @@ const validate = require('./validate')
 const normalize = require('./normalize')
 const { DEFAULT_OPTIONS } = require('./constants')
 const { InvalidArchiveError } = require('./error')
+const combineImports = require('./combineImports')
+const combineExports = require('./combineExports')
 
 /**
  * Convert one or many HAR objects, into k6 script
@@ -30,10 +32,17 @@ async function convert(_archives, options = DEFAULT_OPTIONS) {
     return parse(source)
   })
 
+  const imports = combineImports(result)
+
+  // combine exports to make sure we only have one default export and no
+  // colliding function names (result item (.exportAs and/or .defaultExport) is
+  // mutated) in place
+  combineExports(result)
+
   // NOTE: => render(result) instead of { main: render(result) } ??
   // Then /bin/har-to-k6.js need to change as well.
   return {
-    main: render(result),
+    main: render(result, imports),
   }
 }
 
