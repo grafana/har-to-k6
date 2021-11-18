@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.1] - 2021-11-17
+
+### Fixed
+
+- Less inclusive variable recognition RegExp (whitespace characters except space are now ignored)
+
 ## [0.10.0] - 2021-07-13
 
 ### Added
