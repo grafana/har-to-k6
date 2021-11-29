@@ -15,6 +15,10 @@ function generateAppendData(params) {
     (acc, [name, valueSet]) => [
       ...acc,
       ...Array.from(valueSet).map((value) => {
+        if (!value.type) {
+          return `formData.append(${text(name)}, ${text(value.value)})`
+        }
+
         const data = `data: ${text(value.value)}`
 
         let fileName = ''
