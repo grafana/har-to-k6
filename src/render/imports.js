@@ -46,7 +46,7 @@ const K6_JS_LIBS = (() => {
   return {
     jsonpath: `${BASE_URL}/jsonpath/1.0.2/index.js`,
     url: `${BASE_URL}/url/1.0.0/index.js`,
-    formData: `${BASE_URL}/formdata/0.0.1/index.js`,
+    formData: `${BASE_URL}/formdata/0.0.2/index.js`,
   }
 })()
 
