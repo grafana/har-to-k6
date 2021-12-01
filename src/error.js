@@ -1,6 +1,13 @@
-const { VError } = require('verror')
+class HarToK6Error extends Error {
+  constructor(details, message) {
+    super(typeof details === 'string' ? details : message)
 
-class HarToK6Error extends VError {}
+    if (typeof details === 'object') {
+      Object.assign(this, details)
+    }
+  }
+}
+
 class InvalidArchiveError extends HarToK6Error {}
 class UnrecognizedError extends HarToK6Error {}
 
