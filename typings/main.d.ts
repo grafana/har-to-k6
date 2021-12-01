@@ -243,7 +243,7 @@ declare module 'har-to-k6' {
   }
 
   // module.exports
-  export class HarToK6Error extends VError {}
+  export class HarToK6Error extends Error {}
 
   export class InvalidArchiveError extends HarToK6Error {}
 
