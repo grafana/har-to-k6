@@ -1,7 +1,7 @@
 import { sleep } from 'k6'
 import http from 'k6/http'
 
-import { FormData } from 'https://jslib.k6.io/formdata/0.0.1/index.js'
+import { FormData } from 'https://jslib.k6.io/formdata/0.0.2/index.js'
 
 export const options = {}
 
@@ -11,7 +11,7 @@ export default function main() {
   // Request 1
   formData = new FormData()
   formData.boundary = '---boundary'
-  formData.append('hello', { data: 'world', content_type: 'text/plain' })
+  formData.append('hello', 'world')
 
   response = http.post('http://test.k6.io/value-pairs', formData.body(), {
     headers: {
@@ -38,10 +38,7 @@ export default function main() {
   // Request 3
   formData = new FormData()
   formData.boundary = '---boundary'
-  formData.append('hello', {
-    data: '`\'"world"\'`*!',
-    content_type: 'text/plain',
-  })
+  formData.append('hello', '`\'"world"\'`*!')
 
   response = http.post('http://test.k6.io/value-pairs-chars', formData.body(), {
     headers: {
@@ -68,9 +65,9 @@ export default function main() {
   // Request 5
   formData = new FormData()
   formData.boundary = '---boundary'
-  formData.append('hello', { data: 'world', content_type: 'text/plain' })
-  formData.append('hola', { data: 'amigo', content_type: 'text/plain' })
-  formData.append('labas', { data: 'pasauli', content_type: 'text/plain' })
+  formData.append('hello', 'world')
+  formData.append('hola', 'amigo')
+  formData.append('labas', 'pasauli')
 
   response = http.post(
     'http://test.k6.io/multiple-value-pairs',
@@ -92,7 +89,7 @@ export function main0() {
   // Request 1
   formData = new FormData()
   formData.boundary = '---boundary'
-  formData.append('hello', { data: 'world', content_type: 'text/plain' })
+  formData.append('hello', 'world')
 
   response = http.post('http://test.k6.io/value-pairs', formData.body(), {
     headers: {
@@ -119,10 +116,7 @@ export function main0() {
   // Request 3
   formData = new FormData()
   formData.boundary = '---boundary'
-  formData.append('hello', {
-    data: '`\'"world"\'`*!',
-    content_type: 'text/plain',
-  })
+  formData.append('hello', '`\'"world"\'`*!')
 
   response = http.post('http://test.k6.io/value-pairs-chars', formData.body(), {
     headers: {
@@ -149,9 +143,9 @@ export function main0() {
   // Request 5
   formData = new FormData()
   formData.boundary = '---boundary'
-  formData.append('hello', { data: 'world', content_type: 'text/plain' })
-  formData.append('hola', { data: 'amigo', content_type: 'text/plain' })
-  formData.append('labas', { data: 'pasauli', content_type: 'text/plain' })
+  formData.append('hello', 'world')
+  formData.append('hola', 'amigo')
+  formData.append('labas', 'pasauli')
 
   response = http.post(
     'http://test.k6.io/multiple-value-pairs',
