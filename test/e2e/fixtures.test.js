@@ -5,12 +5,12 @@ const path = require('path')
 const convert = require('convert')
 const { parse } = require('../helper/parse')
 
-const listEntries = (dir) => fs.readdirSync(dir, { withFileTypes: true })
+const listEntries = dir => fs.readdirSync(dir, { withFileTypes: true })
 
 const listFiles = (dir, ext = '.har') =>
-  listEntries(dir).filter((f) => f.isFile() && path.extname(f.name) === ext)
+  listEntries(dir).filter(f => f.isFile() && path.extname(f.name) === ext)
 
-const findTests = (dir) => {
+const findTests = dir => {
   const entries = fs.readdirSync(dir, { withFileTypes: true })
   let files = []
 
@@ -23,7 +23,7 @@ const findTests = (dir) => {
 
     if (folder.name === 'pass' || folder.name === 'fail') {
       files = files.concat(
-        listFiles(childDir).map((f) => ({
+        listFiles(childDir).map(f => ({
           type: folder.name,
           name: path.relative(__dirname, path.join(childDir, f.name)),
           input: path.join(childDir, f.name),
@@ -40,7 +40,7 @@ const findTests = (dir) => {
   return files
 }
 
-const pass = (expectedFile, inputFile) => async (t) => {
+const pass = (expectedFile, inputFile) => async t => {
   const input = JSON.parse(fs.readFileSync(inputFile).toString())
   const expected = parse(fs.readFileSync(expectedFile).toString())
 
@@ -50,7 +50,7 @@ const pass = (expectedFile, inputFile) => async (t) => {
   t.deepEqual(expected, result)
 }
 
-const fail = (inputFile) => async (t) => {
+const fail = inputFile => async t => {
   const input = fs.readFileSync(inputFile)
 
   t.throws(async () => await convert(input))
