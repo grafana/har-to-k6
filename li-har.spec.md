@@ -35,6 +35,7 @@ interface Log {
   pages?: Array // List of exported pages
   entries?: Array // List of exported requests
   comment?: Check // A comment provided by the user or the application
+  exportAs?: String // Export parsed HAR as named function rather than "export default function main()..."
 }
 ``` 
 

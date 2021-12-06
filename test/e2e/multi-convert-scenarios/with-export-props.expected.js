@@ -1,11 +1,50 @@
-import { sleep } from 'k6'
+import { sleep, group } from 'k6'
 import http from 'k6/http'
 
 import { FormData } from 'https://jslib.k6.io/formdata/0.0.2/index.js'
 
-export const options = {}
+export const options = {
+  scenarios: {
+    scenario_1: {
+      executor: 'constant-vus',
+      vus: 50,
+      duration: '5m',
+      gracefulStop: '0s',
+      tags: { test_type: 'website' },
+    },
+    scenario_2: {
+      executor: 'constant-arrival-rate',
+      rate: 90,
+      timeUnit: '1m',
+      duration: '5m',
+      preAllocatedVUs: 10,
+      maxVUs: 10,
+      tags: { test_type: 'api' },
+      env: { MY_CROC_ID: '1' },
+      exec: 'scenario2',
+    },
+  },
+  discardResponseBodies: true,
+  thresholds: {
+    'http_req_duration{test_type:api}': ['p(95)<250', 'p(99)<350'],
+    'http_req_duration{test_type:website}': ['p(99)<500'],
+    'http_req_duration{scenario:scenario1}': ['p(99)<300'],
+  },
+}
 
-export default function main() {
+export function scenario1a() {
+  let response
+
+  // This is from Scenario 1
+  group('page_1', function () {
+    response = http.get('http://test.k6.io/scenario=1')
+  })
+
+  // Automatically added sleep
+  sleep(1)
+}
+
+export function scenario2() {
   let formData, response
 
   // Request 1
@@ -69,11 +108,15 @@ export default function main() {
   formData.append('hola', 'amigo')
   formData.append('labas', 'pasauli')
 
-  response = http.post('http://test.k6.io/multiple-value-pairs', formData.body(), {
-    headers: {
-      'content-type': 'multipart/form-data; boundary=---boundary',
-    },
-  })
+  response = http.post(
+    'http://test.k6.io/multiple-value-pairs',
+    formData.body(),
+    {
+      headers: {
+        'content-type': 'multipart/form-data; boundary=---boundary',
+      },
+    }
+  )
 
   // Automatically added sleep
   sleep(1)

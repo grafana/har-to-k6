@@ -10,8 +10,15 @@ function logic(result) {
     variableSpace(result),
     flow(result),
     defaultSleep(result),
-  ].filter((item) => item)
-  return `export default function main() ${block(content)}`
+  ].filter(item => item)
+
+  const exportAs = result.exportAs ? result.exportAs : 'main'
+
+  // default unless defaultExport is explicitly set to false
+  const exportType =
+    result.defaultExport !== false ? 'export default' : 'export'
+
+  return `${exportType} function ${exportAs}() ${block(content)}`
 }
 
 module.exports = logic

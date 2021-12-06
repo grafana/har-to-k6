@@ -117,6 +117,8 @@ function result() {
     flow: [],
     imports: imports(),
     declares: new Set(),
+    exportAs: '',
+    defaultExport: true,
   }
 }
 

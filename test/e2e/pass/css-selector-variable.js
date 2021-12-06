@@ -1,41 +1,41 @@
-import { sleep } from "k6";
-import http from "k6/http";
+import { sleep } from 'k6'
+import http from 'k6/http'
 
-export const options = {};
+export const options = {}
 
 export default function main() {
-  let response;
+  let response
 
-  const vars = {};
+  const vars = {}
 
-  response = http.get("https://test.k6.io/my_messages.php");
+  response = http.get('https://test.k6.io/my_messages.php')
 
-  vars["entireForm"] = response
+  vars['entireForm'] = response
     .html()
-    .find("form")
-    .html();
-
-  vars["redir"] = response
+    .find('form')
     .html()
-    .find("input[name=redir]")
+
+  vars['redir'] = response
+    .html()
+    .find('input[name=redir]')
     .first()
-    .attr("value");
+    .attr('value')
 
   response = http.post(
-    "https://test.k6.io/my_messages.php",
+    'https://test.k6.io/my_messages.php',
     {
-      username: "admin",
-      password: "123",
-      redir: `${vars["redir"]}`,
-      extra: `${vars["entireForm"]}`
+      username: 'admin',
+      password: '123',
+      redir: `${vars['redir']}`,
+      extra: `${vars['entireForm']}`,
     },
     {
       headers: {
-        "content-type": "application/x-www-form-urlencoded",
+        'content-type': 'application/x-www-form-urlencoded',
       },
-    }
-  );
+    },
+  )
 
   // Automatically added sleep
-  sleep(1);
+  sleep(1)
 }
