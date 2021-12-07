@@ -5,6 +5,8 @@ const variables = require('./variables')
 const sleep = require('./sleep')
 const { empty } = require('../aid')
 const { InvalidArchiveError } = require('../error')
+const { createEntriesPath } = require('./utils/path')
+const { createEntriesIndexes } = require('./utils/indexes')
 
 /*
  * request: required object
@@ -30,45 +32,77 @@ function entry(node, i, assay) {
 function validate(node, i) {
   if (!empty(node.pageref) && typeof node.pageref !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidEntryPageref' },
-      `Invalid entry pageref (${i})`
+      createErrorParams({
+        name: 'InvalidEntryPageref',
+        index: i,
+        path: 'pageref',
+      }),
+      `Entry pageref is invalid, must be a string`
     )
   }
   if (empty(node.request)) {
     throw new InvalidArchiveError(
-      { name: 'MissingEntryRequest' },
-      `Missing entry request (${i})`
+      createErrorParams({
+        name: 'MissingEntryRequest',
+        index: i,
+        path: 'request',
+      }),
+      `Entry request is required`
     )
   }
   if (!isPlainObject(node.request)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidEntryRequest' },
-      `Invalid entry request (${i}): must be object`
+      createErrorParams({
+        name: 'InvalidEntryRequest',
+        index: i,
+        path: 'request',
+      }),
+      `Entry request is invalid, must be an object`
     )
   }
   if (node.sleep && !Array.isArray(node.sleep)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidEntrySleep' },
-      `Invalid entry sleep (${i}): must be array`
+      createErrorParams({ name: 'InvalidEntrySleep', index: i, path: 'sleep' }),
+      `Entry sleep is invalid, must be an array`
     )
   }
   if (node.checks && !Array.isArray(node.checks)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidEntryChecks' },
-      `Invalid entry checks (${i}): must be array`
+      createErrorParams({
+        name: 'InvalidEntryChecks',
+        index: i,
+        path: 'checks',
+      }),
+      `Entry checks are invalid, must be an array`
     )
   }
   if (node.variables && !Array.isArray(node.variables)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidEntryVariables' },
-      `Invalid entry variables (${i}): must be array`
+      createErrorParams({
+        name: 'InvalidEntryVariables',
+        index: i,
+        path: 'variables',
+      }),
+      `Entry variables are invalid, must be an array`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidComment' },
-      `Invalid entry comment (${i}): must be string`
+      createErrorParams({
+        name: 'InvalidEntryComment',
+        index: i,
+        path: 'comment',
+      }),
+      `Entry comment is invalid, must be a string`
     )
+  }
+}
+
+function createErrorParams({ name, index, path = '' }) {
+  return {
+    name,
+    path: createEntriesPath(index, path),
+    indexes: createEntriesIndexes(index),
   }
 }
 

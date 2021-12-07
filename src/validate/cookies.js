@@ -1,6 +1,8 @@
 const cookie = require('./cookie')
 const isPlainObject = require('is-plain-object')
 const { InvalidArchiveError } = require('../error')
+const { createCookiesIndexes } = require('./utils/indexes')
+const { createCookiesPath } = require('./utils/path')
 
 /*
  * [j]: object
@@ -18,8 +20,12 @@ function validate(node, i) {
     const item = node[j]
     if (!isPlainObject(item)) {
       throw new InvalidArchiveError(
-        { name: 'InvalidCookie' },
-        `Invalid cookie (${i}:${j}): must be object`
+        {
+          name: 'InvalidCookie',
+          path: createCookiesPath(i, j),
+          indexes: createCookiesIndexes(i, j),
+        },
+        `Cookie is invalid, must be an object`
       )
     }
   }

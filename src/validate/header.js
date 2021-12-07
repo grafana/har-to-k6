@@ -1,5 +1,7 @@
 const { empty } = require('../aid')
 const { InvalidArchiveError } = require('../error')
+const { createHeadersIndexes } = require('./utils/indexes')
+const { createHeadersPath } = require('./utils/path')
 
 /*
  * name: required string
@@ -12,25 +14,56 @@ function header(node, i, j) {
 
 function validate(node, i, j) {
   if (empty(node.name)) {
-    throw new InvalidArchiveError({ name: 'MissingHeaderName' }, `Missing header name (${i}:${j})`)
+    throw new InvalidArchiveError(
+      createErrorParams({
+        name: 'MissingHeaderName',
+        indexes: [i, j],
+        path: 'name',
+      }),
+      `Header name is required`
+    )
   }
   if (typeof node.name !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidHeaderName' },
-      `Invalid header name (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidHeaderName',
+        indexes: [i, j],
+        path: 'name',
+      }),
+      `Header name is invalid, must be a string`
     )
   }
   if (node.value && typeof node.value !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidHeaderValue' },
-      `Invalid header value (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidHeaderValue',
+        indexes: [i, j],
+        path: 'value',
+      }),
+      `Header value is invalid, must be a string`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidComment' },
-      `Invalid header comment (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidHeaderComment',
+        indexes: [i, j],
+        path: 'comment',
+      }),
+      `Header comment is invalid, must be a string`
     )
+  }
+}
+
+function createErrorParams({
+  name,
+  indexes: [entryIndex, headerIndex],
+  path = '',
+}) {
+  return {
+    name,
+    path: createHeadersPath(entryIndex, headerIndex, path),
+    indexes: createHeadersIndexes(entryIndex, headerIndex),
   }
 }
 

@@ -6,6 +6,8 @@ const {
   getContentTypeValue,
 } = require('../aid')
 const { InvalidArchiveError } = require('../error')
+const { createPostDataPath } = require('./utils/path')
+const { createEntriesIndexes } = require('./utils/indexes')
 
 /*
  * mimeType: required string
@@ -28,36 +30,56 @@ function postData(node, i, assay) {
 function validate(node, i) {
   if (empty(node.mimeType)) {
     throw new InvalidArchiveError(
-      { name: 'MissingPostDataType' },
-      `Missing post data MIME type (${i})`
+      createErrorParams({
+        name: 'MissingPostDataType',
+        index: i,
+        path: 'mimeType',
+      }),
+      `Post data MIME type is required`
     )
   }
 
   if (typeof node.mimeType !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidPostDataType' },
-      `Invalid post data MIME type (${i}): must be string`
+      createErrorParams({
+        name: 'InvalidPostDataType',
+        index: i,
+        path: 'mimeType',
+      }),
+      `Post data MIME type is invalid, must be a string`
     )
   }
 
   if (node.params && !Array.isArray(node.params)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidPostDataParams' },
-      `Invalid post data params (${i}): must be array`
+      createErrorParams({
+        name: 'InvalidPostDataParams',
+        index: i,
+        path: 'params',
+      }),
+      `Post data params are invalid, must be an array`
     )
   }
 
   if (node.text && typeof node.text !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidPostDataText' },
-      `Invalid post data text (${i}): must be string`
+      createErrorParams({
+        name: 'InvalidPostDataText',
+        index: i,
+        path: 'text',
+      }),
+      `Post data text is invalid, must be a string`
     )
   }
 
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidComment' },
-      `Invalid post data comment (${i}): must be string`
+      createErrorParams({
+        name: 'InvalidPostDataComment',
+        index: i,
+        path: 'comment',
+      }),
+      `Post data comment is invalid, must be a string`
     )
   }
 
@@ -82,9 +104,21 @@ function validate(node, i) {
     )
   ) {
     throw new InvalidArchiveError(
-      { name: 'InvalidPostDataType' },
-      `Invalid structured post data MIME type (${i}): ${node.mimeType}`
+      createErrorParams({
+        name: 'InvalidPostDataType',
+        index: i,
+        path: 'mimeType',
+      }),
+      `Post data MIME type is invalid, must be one of "multipart/form-data", "application/x-www-form-urlencoded"`
     )
+  }
+}
+
+function createErrorParams({ name, index, path = '' }) {
+  return {
+    name,
+    path: createPostDataPath(index, path),
+    indexes: createEntriesIndexes(index),
   }
 }
 

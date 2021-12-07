@@ -1,6 +1,8 @@
 const isPlainObject = require('is-plain-object')
 const param = require('./param')
 const { InvalidArchiveError } = require('../error')
+const { createPostDataParamsPath } = require('./utils/path')
+const { createPostDataParamsIndexes } = require('./utils/indexes')
 
 /*
  * [j]: object
@@ -18,8 +20,12 @@ function validate(node, i) {
     const item = node[j]
     if (!isPlainObject(item)) {
       throw new InvalidArchiveError(
-        { name: 'InvalidParam' },
-        `Invalid param (${i}:${j}): must be object`
+        {
+          name: 'InvalidParam',
+          path: createPostDataParamsPath(i, j),
+          indexes: createPostDataParamsIndexes(i, j),
+        },
+        `Param is invalid, must be an object`
       )
     }
   }

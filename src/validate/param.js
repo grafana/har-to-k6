@@ -1,5 +1,7 @@
 const { empty } = require('../aid')
 const { InvalidArchiveError } = require('../error')
+const { createPostDataParamsIndexes } = require('./utils/indexes')
+const { createPostDataParamsPath } = require('./utils/path')
 
 /*
  * name: required string
@@ -18,33 +20,65 @@ function validate(node, i, j) {
   }
   if (typeof node.name !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidParamName' },
-      `Invalid param name (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidParamName',
+        indexes: [i, j],
+        path: 'name',
+      }),
+      `Param name is invalid, must be a string`
     )
   }
   if (node.value && typeof node.value !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidParamValue' },
-      `Invalid param value (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidParamValue',
+        indexes: [i, j],
+        path: 'value',
+      }),
+      `Param value is invalid, must be a string`
     )
   }
   if (node.fileName && typeof node.fileName !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidParamFileName' },
-      `Invalid param file name (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidParamFileName',
+        indexes: [i, j],
+        path: 'fileName',
+      }),
+      `Param file name is invalid, must be a string`
     )
   }
   if (node.contentType && typeof node.contentType !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidParamType' },
-      `Invalid param content type (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidParamType',
+        indexes: [i, j],
+        path: 'contentType',
+      }),
+      `Param content type is invalid, must be a string`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidComment' },
-      `Invalid param comment (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidPageComment',
+        indexes: [i, j],
+        path: 'comment',
+      }),
+      `Param comment is invalid, must be a string`
     )
+  }
+}
+
+function createErrorParams({
+  name,
+  indexes: [entryIndex, checkIndex],
+  path = '',
+}) {
+  return {
+    name,
+    path: createPostDataParamsPath(entryIndex, checkIndex, path),
+    indexes: createPostDataParamsIndexes(entryIndex, checkIndex),
   }
 }
 

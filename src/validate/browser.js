@@ -1,4 +1,5 @@
 const { InvalidArchiveError } = require('../error')
+const { createLogPath } = require('./utils/path')
 
 function browser(node) {
   validate(node)
@@ -7,20 +8,32 @@ function browser(node) {
 function validate(node) {
   if (node.name && typeof node.name !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidBrowserName' },
-      'Invalid browser name: must be string'
+      {
+        name: 'InvalidBrowserName',
+        path: createLogPath('browser.name'),
+        indexes: [],
+      },
+      'Browser name is invalid, must be a string'
     )
   }
   if (node.version && typeof node.version !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidBrowserVersion' },
-      'Invalid browser version: must be string'
+      {
+        name: 'InvalidBrowserVersion',
+        path: createLogPath('browser.version'),
+        indexes: [],
+      },
+      'Browser version is invalid, must be a string'
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidComment' },
-      'Invalid browser.comment: must be string'
+      {
+        name: 'InvalidBrowserComment',
+        path: createLogPath('browser.comment'),
+        indexes: [],
+      },
+      'Browser comment is invalid, must be a string'
     )
   }
 }

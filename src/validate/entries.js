@@ -1,6 +1,8 @@
 const isPlainObject = require('is-plain-object')
 const entry = require('./entry')
 const { InvalidArchiveError } = require('../error')
+const { createEntriesPath } = require('./utils/path')
+const { createEntriesIndexes } = require('./utils/indexes')
 
 /*
  * [i]: object
@@ -18,8 +20,12 @@ function validate(node) {
     const item = node[i]
     if (!isPlainObject(item)) {
       throw new InvalidArchiveError(
-        { name: 'InvalidEntry' },
-        `Invalid entry (${i}): must be object`
+        {
+          name: 'InvalidEntry',
+          path: createEntriesPath(i),
+          indexes: createEntriesIndexes(i),
+        },
+        `Entry is invalid, must be an object`
       )
     }
   }

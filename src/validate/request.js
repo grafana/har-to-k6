@@ -6,6 +6,8 @@ const queryString = require('./queryString')
 const { empty, emptyObject, getContentTypeValue } = require('../aid')
 const { absoluteUrl, variableStart } = require('../expression')
 const { InvalidArchiveError } = require('../error')
+const { createRequestPath } = require('./utils/path')
+const { createEntriesIndexes } = require('./utils/indexes')
 
 /*
  * method: required string
@@ -39,62 +41,90 @@ function request(node, i, assay) {
 function validate(node, i) {
   if (empty(node.method)) {
     throw new InvalidArchiveError(
-      { name: 'MissingRequestMethod' },
-      `Missing request method (${i})`
+      createErrorParams({
+        name: 'MissingRequestMethod',
+        index: i,
+        path: 'method',
+      }),
+      `Request method is required`
     )
   }
   if (typeof node.method !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidRequestMethod' },
-      `Invalid request method (${i}): must be string`
+      createErrorParams({
+        name: 'InvalidRequestMethod',
+        index: i,
+        path: 'method',
+      }),
+      `Request method is invalid, must be one of: 'GET', 'POST', 'PUT', 'PATCH', 'OPTIONS', 'DELETE', 'HEAD'`
     )
   }
   if (empty(node.url)) {
     throw new InvalidArchiveError(
-      { name: 'MissingRequestUrl' },
-      `Missing request url (${i})`
+      createErrorParams({ name: 'MissingRequestUrl', index: i, path: 'url' }),
+      `Request URL is required`
     )
   }
   if (typeof node.url !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidRequestUrl' },
-      `Invalid request url (${i}): must be string`
+      createErrorParams({ name: 'InvalidRequestUrl', index: i, path: 'url' }),
+      `Request URL is not valid, must be a string`
     )
   }
   if (!(absoluteUrl.test(node.url) || variableStart.test(node.url))) {
     throw new InvalidArchiveError(
-      { name: 'InvalidRequestUrl' },
-      `Invalid request url (${i}): must be absolute or start with variable`
+      createErrorParams({ name: 'InvalidRequestUrl', index: i, path: 'url' }),
+      `Request URL is not valid, must be absolute or start with variable`
     )
   }
   if (node.queryString && !Array.isArray(node.queryString)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidRequestQuery' },
-      `Invalid request queryString (${i}): must be array`
+      createErrorParams({
+        name: 'InvalidRequestQuery',
+        index: i,
+        path: 'queryString',
+      }),
+      `Request queryString is not valid, must be an array`
     )
   }
   if (node.headers && !Array.isArray(node.headers)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidRequestHeaders' },
-      `Invalid request headers (${i}): must be array`
+      createErrorParams({
+        name: 'InvalidRequestHeaders',
+        index: i,
+        path: 'headers',
+      }),
+      `Request headers are not valid, must be an array`
     )
   }
   if (node.cookies && !Array.isArray(node.cookies)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidRequestCookies' },
-      `Invalid request cookies (${i}): must be array`
+      createErrorParams({
+        name: 'InvalidRequestCookies',
+        index: i,
+        path: 'cookies',
+      }),
+      `Request cookies are not valid, must be an array`
     )
   }
   if (node.postData && !isPlainObject(node.postData)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidRequestData' },
-      `Invalid request postData (${i}): must be object`
+      createErrorParams({
+        name: 'InvalidRequestData',
+        index: i,
+        path: 'postData',
+      }),
+      `Request postData is not valid, must be an object`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidComment' },
-      `Invalid request comment (${i}): must be string`
+      createErrorParams({
+        name: 'InvalidRequestComment',
+        index: i,
+        path: 'comment',
+      }),
+      `Request comment is not valid, must be a string`
     )
   }
 }
@@ -106,8 +136,12 @@ function relation(node, i) {
     !emptyObject(node.postData)
   ) {
     throw new InvalidArchiveError(
-      { name: 'InvalidRequestData' },
-      `Invalid request postData (${i}): prohibited for GET request`
+      createErrorParams({
+        name: 'InvalidRequestData',
+        index: i,
+        path: 'postData',
+      }),
+      `Request postData is not valid, usage with GET requests is prohibited`
     )
   }
   if (
@@ -129,6 +163,14 @@ function relation(node, i) {
 
 function findContentType(header) {
   return header.name.toLowerCase() === 'content-type'
+}
+
+function createErrorParams({ name, index, path = '' }) {
+  return {
+    name,
+    path: createRequestPath(index, path),
+    indexes: createEntriesIndexes(index),
+  }
 }
 
 module.exports = request
