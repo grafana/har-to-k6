@@ -11,7 +11,6 @@ function validate(node) {
       {
         name: 'InvalidBrowserName',
         path: createLogPath('browser.name'),
-        indexes: [],
       },
       'Browser name is invalid, must be a string'
     )
@@ -21,7 +20,6 @@ function validate(node) {
       {
         name: 'InvalidBrowserVersion',
         path: createLogPath('browser.version'),
-        indexes: [],
       },
       'Browser version is invalid, must be a string'
     )
@@ -31,7 +29,6 @@ function validate(node) {
       {
         name: 'InvalidBrowserComment',
         path: createLogPath('browser.comment'),
-        indexes: [],
       },
       'Browser comment is invalid, must be a string'
     )

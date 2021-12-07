@@ -63,6 +63,20 @@ function createQueryStringPath(entryIndex, queryStringIndex, rest = '') {
   )
 }
 
+function createSleepPath(entryIndex, sleepIndex, rest = '') {
+  return createEntriesPath(
+    entryIndex,
+    `${HAR_KEYS.sleep}[${sleepIndex}]${rest && `.${rest}`}`
+  )
+}
+
+function createVariablesPath(entryIndex, variablesIndex, rest = '') {
+  return createEntriesPath(
+    entryIndex,
+    `${HAR_KEYS.variables}[${variablesIndex}]${rest && `.${rest}`}`
+  )
+}
+
 module.exports = {
   createLogPath,
   createPagesPath,
@@ -74,4 +88,6 @@ module.exports = {
   createPostDataPath,
   createPostDataParamsPath,
   createQueryStringPath,
+  createSleepPath,
+  createVariablesPath,
 }

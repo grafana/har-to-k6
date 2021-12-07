@@ -1,6 +1,8 @@
 const isPlainObject = require('is-plain-object')
 const variable = require('./variable')
 const { InvalidArchiveError } = require('../error')
+const { createVariablesPath } = require('./utils/path')
+const { createVariablesIndexes } = require('./utils/indexes')
 
 /*
  * [j]: object
@@ -18,8 +20,12 @@ function validate(node, i) {
     const item = node[j]
     if (!isPlainObject(item)) {
       throw new InvalidArchiveError(
-        { name: 'InvalidVariable' },
-        `Invalid variable (${i}:${j}): must be object`
+        {
+          name: 'InvalidVariable',
+          path: createVariablesPath(i, j),
+          indexes: createVariablesIndexes(i, j),
+        },
+        `Variable is invalid, must be an object`
       )
     }
   }

@@ -31,6 +31,14 @@ function createQueryStringIndexes(entryIndex, queryStringIndex) {
   ])
 }
 
+function createSleepIndexes(entryIndex, sleepIndex) {
+  return createEntriesIndexes(entryIndex, [HAR_KEYS.sleep, sleepIndex])
+}
+
+function createVariablesIndexes(entryIndex, variableIndex) {
+  return createEntriesIndexes(entryIndex, [HAR_KEYS.variables, variableIndex])
+}
+
 module.exports = {
   createPagesIndexes,
   createEntriesIndexes,
@@ -39,4 +47,6 @@ module.exports = {
   createCookiesIndexes,
   createPostDataParamsIndexes,
   createQueryStringIndexes,
+  createSleepIndexes,
+  createVariablesIndexes,
 }

@@ -9,6 +9,8 @@ const HAR_KEYS = {
   postData: 'postData',
   params: 'params',
   queryString: 'queryString',
+  sleep: 'sleep',
+  variables: 'variables',
 }
 
 module.exports = { HAR_KEYS }

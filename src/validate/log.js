@@ -37,43 +37,43 @@ function log(node, assay) {
 function validate(node) {
   if (node.options && !isPlainObject(node.options)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidOptions', path: createLogPath('options'), indexes: [] },
+      { name: 'InvalidOptions', path: createLogPath('options') },
       'Options are invalid, must be an object'
     )
   }
   if (node.version && typeof node.version !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidVersion', path: createLogPath('version'), indexes: [] },
+      { name: 'InvalidVersion', path: createLogPath('version') },
       'Version is invalid, must be a string'
     )
   }
   if (node.creator && !isPlainObject(node.creator)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidCreator', path: createLogPath('creator'), indexes: [] },
+      { name: 'InvalidCreator', path: createLogPath('creator') },
       'Creator section is invalid, must be an object'
     )
   }
   if (node.browser && !isPlainObject(node.browser)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidBrowser', path: createLogPath('browser'), indexes: [] },
+      { name: 'InvalidBrowser', path: createLogPath('browser') },
       'Browser section is invalid, must be an object'
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidComment', path: createLogPath('comment'), indexes: [] },
+      { name: 'InvalidComment', path: createLogPath('comment') },
       'Comment is invalid, must be a string'
     )
   }
   if (node.pages && !Array.isArray(node.pages)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidPages', path: createLogPath('pages'), indexes: [] },
+      { name: 'InvalidPages', path: createLogPath('pages') },
       'Pages section is invalid, must be an array'
     )
   }
   if (node.entries && !Array.isArray(node.entries)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidEntries', path: createLogPath('entries'), indexes: [] },
+      { name: 'InvalidEntries', path: createLogPath('entries') },
       'Entries section is invalid, must be an array'
     )
   }

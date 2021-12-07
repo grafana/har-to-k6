@@ -16,7 +16,6 @@ function validate(node) {
       {
         name: 'InvalidCreatorName',
         path: createLogPath('creator.name'),
-        indexes: [],
       },
       'Creator name is invalid, must be a string'
     )
@@ -26,7 +25,6 @@ function validate(node) {
       {
         name: 'InvalidCreatorVersion',
         path: createLogPath('creator.version'),
-        indexes: [],
       },
       'Creator version is invalid, must be a string'
     )
@@ -36,7 +34,6 @@ function validate(node) {
       {
         name: 'InvalidCreatorComment',
         path: createLogPath('creator.comment'),
-        indexes: [],
       },
       'Creator comment is invalid, must be a string'
     )

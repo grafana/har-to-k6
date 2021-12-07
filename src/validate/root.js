@@ -13,13 +13,22 @@ function root(node, assay) {
 
 function validate(node) {
   if (!isPlainObject(node)) {
-    throw new InvalidArchiveError({ name: 'MissingRoot' }, 'Missing root node')
+    throw new InvalidArchiveError(
+      { name: 'MissingRoot' },
+      'Root node is required'
+    )
   }
   if (!('log' in node)) {
-    throw new InvalidArchiveError({ name: 'MissingLog' }, 'Missing log section')
+    throw new InvalidArchiveError(
+      { name: 'MissingLog', path: 'log' },
+      'Log section is required'
+    )
   }
   if (!isPlainObject(node.log)) {
-    throw new InvalidArchiveError({ name: 'InvalidLog' }, 'Invalid log section: must be object')
+    throw new InvalidArchiveError(
+      { name: 'InvalidLog', path: 'log' },
+      'Log section is invalid, must be an object'
+    )
   }
 }
 
