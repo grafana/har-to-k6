@@ -37,7 +37,7 @@ function validate(node, i) {
         index: i,
         path: 'pageref',
       }),
-      `Entry pageref is invalid, must be a string`
+      `Entry pageref must be a string`
     )
   }
   if (empty(node.request)) {
@@ -57,13 +57,13 @@ function validate(node, i) {
         index: i,
         path: 'request',
       }),
-      `Entry request is invalid, must be an object`
+      `Entry request must be an object`
     )
   }
   if (node.sleep && !Array.isArray(node.sleep)) {
     throw new InvalidArchiveError(
       createErrorParams({ name: 'InvalidEntrySleep', index: i, path: 'sleep' }),
-      `Entry sleep is invalid, must be an array`
+      `Entry sleep must be an array`
     )
   }
   if (node.checks && !Array.isArray(node.checks)) {
@@ -93,7 +93,7 @@ function validate(node, i) {
         index: i,
         path: 'comment',
       }),
-      `Entry comment is invalid, must be a string`
+      `Entry comment must be a string`
     )
   }
 }

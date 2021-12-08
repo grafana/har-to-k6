@@ -30,7 +30,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'name',
       }),
-      `Header name is invalid, must be a string`
+      `Header name must be a string`
     )
   }
   if (node.value && typeof node.value !== 'string') {
@@ -40,7 +40,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'value',
       }),
-      `Header value is invalid, must be a string`
+      `Header value must be a string`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
@@ -50,7 +50,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'comment',
       }),
-      `Header comment is invalid, must be a string`
+      `Header comment must be a string`
     )
   }
 }

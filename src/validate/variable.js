@@ -34,7 +34,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'name',
       }),
-      `Variable name is invalid, must be a string`
+      `Variable name must be a string`
     )
   }
   if (/}/.test(node.name)) {
@@ -44,7 +44,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'name',
       }),
-      `Variable name is invalid, may not contain '}'`
+      `Variable name may not contain '}'`
     )
   }
   if (empty(node.type)) {
@@ -64,7 +64,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'type',
       }),
-      `Variable type is invalid, must be nonnegative integer`
+      `Variable type must be a nonnegative integer`
     )
   }
   if (!VariableTypeEncoding.has(node.type)) {
@@ -74,7 +74,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'type',
       }),
-      `Variable type is invalid, must be one of 0 (JSON Path), 1 (Regex), 2 (CSS Selector)`
+      `Variable type must be one of 0 (JSON Path), 1 (Regex), 2 (CSS Selector)`
     )
   }
   if (empty(node.expression)) {
@@ -94,7 +94,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'expression',
       }),
-      `Variable expression is invalid, must be a string`
+      `Variable expression must be a string`
     )
   }
   if (node.type === VariableType.CSSSelector && !isValidAttributeName(node)) {
@@ -114,7 +114,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'comment',
       }),
-      `Variable comment is invalid, must be a string`
+      `Variable comment must be a string`
     )
   }
 }

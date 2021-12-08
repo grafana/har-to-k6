@@ -46,7 +46,7 @@ function validate(node, i) {
         index: i,
         path: 'mimeType',
       }),
-      `Post data MIME type is invalid, must be a string`
+      `Post data MIME type must be a string`
     )
   }
 
@@ -68,7 +68,7 @@ function validate(node, i) {
         index: i,
         path: 'text',
       }),
-      `Post data text is invalid, must be a string`
+      `Post data text must be a string`
     )
   }
 
@@ -79,7 +79,7 @@ function validate(node, i) {
         index: i,
         path: 'comment',
       }),
-      `Post data comment is invalid, must be a string`
+      `Post data comment must be a string`
     )
   }
 
@@ -109,7 +109,7 @@ function validate(node, i) {
         index: i,
         path: 'mimeType',
       }),
-      `Post data MIME type is invalid, must be one of "multipart/form-data", "application/x-www-form-urlencoded"`
+      `Post data MIME type must be one of "multipart/form-data", "application/x-www-form-urlencoded"`
     )
   }
 }

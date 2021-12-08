@@ -17,7 +17,7 @@ function validate(node) {
         name: 'InvalidCreatorName',
         path: createLogPath('creator.name'),
       },
-      'Creator name is invalid, must be a string'
+      'Creator name must be a string'
     )
   }
   if (node.version && typeof node.version !== 'string') {
@@ -26,7 +26,7 @@ function validate(node) {
         name: 'InvalidCreatorVersion',
         path: createLogPath('creator.version'),
       },
-      'Creator version is invalid, must be a string'
+      'Creator version must be a string'
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
@@ -35,7 +35,7 @@ function validate(node) {
         name: 'InvalidCreatorComment',
         path: createLogPath('creator.comment'),
       },
-      'Creator comment is invalid, must be a string'
+      'Creator comment must be a string'
     )
   }
 }

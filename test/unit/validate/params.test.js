@@ -12,7 +12,7 @@ test.serial('invalid param 0', (t) => {
     },
     {
       name: 'InvalidParam',
-      message: 'Invalid param (0:0): must be object',
+      message: 'Param must be an object',
     }
   )
 })
@@ -24,7 +24,7 @@ test.serial('invalid param 2', (t) => {
     },
     {
       name: 'InvalidParam',
-      message: 'Invalid param (8:2): must be object',
+      message: 'Param must be an object',
     }
   )
 })

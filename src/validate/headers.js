@@ -31,7 +31,7 @@ function validate(node, i) {
           path: createHeadersPath(i, j),
           indexes: createHeadersIndexes(i, j),
         },
-        `Header is invalid, must be an object`
+        `Header must be an object`
       )
     }
   }

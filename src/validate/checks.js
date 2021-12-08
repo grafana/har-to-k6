@@ -25,7 +25,7 @@ function validate(node, i) {
           path: createChecksPath(i, j),
           indexes: createChecksIndexes(i, j),
         },
-        `Check is invalid, must be an object`
+        `Check must be an object`
       )
     }
   }

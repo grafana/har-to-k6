@@ -12,7 +12,7 @@ test.serial('invalid header 0', (t) => {
     },
     {
       name: 'InvalidHeader',
-      message: 'Invalid header (0:0): must be object',
+      message: 'Header must be an object',
     }
   )
 })
@@ -24,7 +24,7 @@ test.serial('invalid header 2', (t) => {
     },
     {
       name: 'InvalidHeader',
-      message: 'Invalid header (8:2): must be object',
+      message: 'Header must be an object',
     }
   )
 })

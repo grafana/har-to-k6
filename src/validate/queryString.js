@@ -25,7 +25,7 @@ function validate(node, i) {
           path: createQueryStringPath(i, j),
           indexes: createQueryStringIndexes(i, j),
         },
-        `Query item is invalid, must be an object`
+        `Query item must be an object`
       )
     }
   }

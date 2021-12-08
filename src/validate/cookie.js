@@ -38,7 +38,7 @@ function validate(node, i, j, assay) {
         indexes: [i, j],
         path: 'name',
       }),
-      `Cookie name is invalid, must be a string`
+      `Cookie name must be a string`
     )
   }
   if (node.value && typeof node.value !== 'string') {
@@ -48,7 +48,7 @@ function validate(node, i, j, assay) {
         indexes: [i, j],
         path: 'value',
       }),
-      `Cookie value is invalid, must be a string`
+      `Cookie value must be a string`
     )
   }
   if (node.path && typeof node.path !== 'string') {
@@ -58,7 +58,7 @@ function validate(node, i, j, assay) {
         indexes: [i, j],
         path: 'path',
       }),
-      `Cookie path is invalid, must be a string`
+      `Cookie path must be a string`
     )
   }
   if (node.domain && typeof node.domain !== 'string') {
@@ -68,7 +68,7 @@ function validate(node, i, j, assay) {
         indexes: [i, j],
         path: 'domain',
       }),
-      `Cookie domain is invalid, must be a string`
+      `Cookie domain must be a string`
     )
   }
   if (node.expires) {
@@ -79,7 +79,7 @@ function validate(node, i, j, assay) {
           indexes: [i, j],
           path: 'expires',
         }),
-        `Cookie expiration is invalid, must be a string`
+        `Cookie expiration must be a string`
       )
     }
 
@@ -90,7 +90,7 @@ function validate(node, i, j, assay) {
           indexes: [i, j],
           path: 'expires',
         }),
-        `Cookie expiration is invalid, must be ISO 8601 datetime`
+        `Cookie expiration must be ISO 8601 datetime`
       )
     }
   }
@@ -101,7 +101,7 @@ function validate(node, i, j, assay) {
         indexes: [i, j],
         path: 'httpOnly',
       }),
-      `Cookie HTTP only flag is invalid, must be a boolean`
+      `Cookie HTTP only flag must be a boolean`
     )
   }
   if (!(empty(node.secure) || typeof node.secure === 'boolean')) {
@@ -111,7 +111,7 @@ function validate(node, i, j, assay) {
         indexes: [i, j],
         path: 'secure',
       }),
-      `Cookie secure flag is invalid, must be a boolean`
+      `Cookie secure flag must be a boolean`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
@@ -121,7 +121,7 @@ function validate(node, i, j, assay) {
         indexes: [i, j],
         path: 'comment',
       }),
-      `Cookie comment is invalid, must be a string`
+      `Cookie comment must be a string`
     )
   }
 }

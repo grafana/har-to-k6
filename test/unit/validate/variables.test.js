@@ -12,7 +12,7 @@ test.serial('invalid variable 0', (t) => {
     },
     {
       name: 'InvalidVariable',
-      message: 'Invalid variable (0:0): must be object',
+      message: 'Variable must be an object',
     }
   )
 })
@@ -24,7 +24,7 @@ test.serial('invalid variable 2', (t) => {
     },
     {
       name: 'InvalidVariable',
-      message: 'Invalid variable (8:2): must be object',
+      message: 'Variable must be an object',
     }
   )
 })

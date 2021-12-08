@@ -25,7 +25,7 @@ function validate(node, i) {
           path: createCookiesPath(i, j),
           indexes: createCookiesIndexes(i, j),
         },
-        `Cookie is invalid, must be an object`
+        `Cookie must be an object`
       )
     }
   }

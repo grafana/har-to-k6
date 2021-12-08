@@ -14,7 +14,7 @@ test('undefined method', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Request method referenced undefined variable (0): method',
+      message: 'Request method referenced undefined variable: method',
     }
   )
 })
@@ -29,7 +29,7 @@ test('undefined url', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Request URL referenced undefined variable (0): path',
+      message: 'Request URL referenced undefined variable: path',
     }
   )
 })
@@ -47,7 +47,7 @@ test('undefined queryItem name', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Query item name referenced undefined variable (0:0): key',
+      message: 'Query item name referenced undefined variable: key',
     }
   )
 })
@@ -65,7 +65,7 @@ test('undefined queryItem value', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Query item value referenced undefined variable (0:0): search',
+      message: 'Query item value referenced undefined variable: search',
     }
   )
 })
@@ -83,7 +83,7 @@ test('undefined header name', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Header name referenced undefined variable (0:0): header',
+      message: 'Header name referenced undefined variable: header',
     }
   )
 })
@@ -101,7 +101,7 @@ test('undefined header value', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Header value referenced undefined variable (0:0): contentType',
+      message: 'Header value referenced undefined variable: contentType',
     }
   )
 })
@@ -119,7 +119,7 @@ test('undefined cookie name', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Cookie name referenced undefined variable (0:0): cookie',
+      message: 'Cookie name referenced undefined variable: cookie',
     }
   )
 })
@@ -137,7 +137,7 @@ test('undefined cookie value', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Cookie value referenced undefined variable (0:0): session',
+      message: 'Cookie value referenced undefined variable: session',
     }
   )
 })
@@ -155,7 +155,7 @@ test('undefined cookie path', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Cookie path referenced undefined variable (0:0): path',
+      message: 'Cookie path referenced undefined variable: path',
     }
   )
 })
@@ -173,7 +173,7 @@ test('undefined cookie domain', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Cookie domain referenced undefined variable (0:0): host',
+      message: 'Cookie domain referenced undefined variable: host',
     }
   )
 })
@@ -191,7 +191,7 @@ test('undefined post text', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Post text referenced undefined variable (0): body',
+      message: 'Post text referenced undefined variable: body',
     }
   )
 })
@@ -210,7 +210,7 @@ test('undefined param name', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Param name referenced undefined variable (0:0): param',
+      message: 'Param name referenced undefined variable: param',
     }
   )
 })
@@ -229,7 +229,7 @@ test('undefined param value', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Param value referenced undefined variable (0:0): search',
+      message: 'Param value referenced undefined variable: search',
     }
   )
 })
@@ -248,7 +248,7 @@ test('undefined param file name', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Param file name referenced undefined variable (0:0): file',
+      message: 'Param file name referenced undefined variable: file',
     }
   )
 })
@@ -267,7 +267,7 @@ test('undefined param type', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Param type referenced undefined variable (0:0): type',
+      message: 'Param content type referenced undefined variable: type',
     }
   )
 })
@@ -302,7 +302,7 @@ test('undefined after defined', (t) => {
     },
     {
       name: 'UndefinedVariable',
-      message: 'Cookie value referenced undefined variable (1:2): theme',
+      message: 'Cookie value referenced undefined variable: theme',
     }
   )
 })

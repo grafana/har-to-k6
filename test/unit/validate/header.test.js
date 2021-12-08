@@ -34,7 +34,7 @@ test('invalid comment', (t) => {
     () => {
       header({ name: 'Accept', comment: 5 }, 0, 0, makeAssay())
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidHeaderComment' }
   )
 })
 

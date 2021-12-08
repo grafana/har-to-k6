@@ -19,7 +19,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'name',
       }),
-      `Query item name is invalid, must be a string`
+      `Query item name must be a string`
     )
   }
   if (node.value && typeof node.value !== 'string') {
@@ -29,7 +29,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'value',
       }),
-      `Query item value is invalid, must be a string`
+      `Query item value must be a string`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
@@ -39,7 +39,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'comment',
       }),
-      `Query item comment is invalid, must be a string`
+      `Query item comment must be a string`
     )
   }
 }

@@ -25,7 +25,7 @@ test('invalid comment', (t) => {
     () => {
       creator({ name: 'WebTracer', version: '5', comment: 5 }, makeAssay())
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidCreatorComment' }
   )
 })
 

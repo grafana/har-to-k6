@@ -55,7 +55,7 @@ test('invalid comment', (t) => {
       const assay = makeAssay()
       page({ id: 'page1', title: 'Page 1', comment: 5 }, 0, assay)
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidPageComment' }
   )
 })
 

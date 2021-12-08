@@ -28,7 +28,7 @@ function validate(node, i, assay) {
   if (typeof node.id !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({ name: 'InvalidPageId', index: i, path: 'id' }),
-      `Page id is invalid, must be a string`
+      `Page id must be a string`
     )
   }
   if (assay.pageIds.has(node.id)) {
@@ -40,19 +40,19 @@ function validate(node, i, assay) {
   if (!empty(node.title) && typeof node.title !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({ name: 'InvalidPageTitle', index: i, path: 'title' }),
-      `Page title is invalid, must be a string`
+      `Page title must be a string`
     )
   }
   if (!empty(node.name) && typeof node.name !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({ name: 'InvalidPageName', index: i, path: 'name' }),
-      `Page name is invalid, must be a string`
+      `Page name must be a string`
     )
   }
   if (node.sleep && !Array.isArray(node.sleep)) {
     throw new InvalidArchiveError(
       createErrorParams({ name: 'InvalidPageSleep', index: i, path: 'sleep' }),
-      `Page sleep is invalid, must be an array`
+      `Page sleep must be an array`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
@@ -62,7 +62,7 @@ function validate(node, i, assay) {
         index: i,
         path: 'comment',
       }),
-      `Page comment is invalid, must be a string`
+      `Page comment must be a string`
     )
   }
 }

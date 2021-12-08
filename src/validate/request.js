@@ -56,7 +56,7 @@ function validate(node, i) {
         index: i,
         path: 'method',
       }),
-      `Request method is invalid, must be one of: 'GET', 'POST', 'PUT', 'PATCH', 'OPTIONS', 'DELETE', 'HEAD'`
+      `Request method must be one of: 'GET', 'POST', 'PUT', 'PATCH', 'OPTIONS', 'DELETE', 'HEAD'`
     )
   }
   if (empty(node.url)) {
@@ -68,13 +68,13 @@ function validate(node, i) {
   if (typeof node.url !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({ name: 'InvalidRequestUrl', index: i, path: 'url' }),
-      `Request URL is not valid, must be a string`
+      `Request URL must be a string`
     )
   }
   if (!(absoluteUrl.test(node.url) || variableStart.test(node.url))) {
     throw new InvalidArchiveError(
       createErrorParams({ name: 'InvalidRequestUrl', index: i, path: 'url' }),
-      `Request URL is not valid, must be absolute or start with variable`
+      `Request URL must be absolute or start with variable`
     )
   }
   if (node.queryString && !Array.isArray(node.queryString)) {
@@ -84,7 +84,7 @@ function validate(node, i) {
         index: i,
         path: 'queryString',
       }),
-      `Request queryString is not valid, must be an array`
+      `Request queryString must be an array`
     )
   }
   if (node.headers && !Array.isArray(node.headers)) {
@@ -94,7 +94,7 @@ function validate(node, i) {
         index: i,
         path: 'headers',
       }),
-      `Request headers are not valid, must be an array`
+      `Request headers are invalid, must be an array`
     )
   }
   if (node.cookies && !Array.isArray(node.cookies)) {
@@ -104,7 +104,7 @@ function validate(node, i) {
         index: i,
         path: 'cookies',
       }),
-      `Request cookies are not valid, must be an array`
+      `Request cookies are invalid, must be an array`
     )
   }
   if (node.postData && !isPlainObject(node.postData)) {
@@ -114,7 +114,7 @@ function validate(node, i) {
         index: i,
         path: 'postData',
       }),
-      `Request postData is not valid, must be an object`
+      `Request postData must be an object`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
@@ -124,7 +124,7 @@ function validate(node, i) {
         index: i,
         path: 'comment',
       }),
-      `Request comment is not valid, must be a string`
+      `Request comment must be a string`
     )
   }
 }
@@ -141,7 +141,7 @@ function relation(node, i) {
         index: i,
         path: 'postData',
       }),
-      `Request postData is not valid, usage with GET requests is prohibited`
+      `Request postData usage with GET requests is prohibited`
     )
   }
   if (

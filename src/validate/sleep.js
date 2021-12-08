@@ -29,7 +29,7 @@ function validate(node, i, j) {
           indexes: [i, j],
           path: 'before',
         }),
-        `Sleep before is invalid, must be a nonnegative number`
+        `Sleep before must be a nonnegative number`
       )
     }
     if (
@@ -42,13 +42,13 @@ function validate(node, i, j) {
           indexes: [i, j],
           path: 'after',
         }),
-        `Sleep after is invalid, must be a nonnegative number`
+        `Sleep after must be a nonnegative number`
       )
     }
   } else if (!isNaturalNumber(node, { includeZero: true })) {
     throw new InvalidArchiveError(
       createErrorParams({ name: 'InvalidSleepType', indexes: [i, j] }),
-      `Sleep is invalid, must be a nonnegative number`
+      `Sleep must be a nonnegative number`
     )
   }
 }

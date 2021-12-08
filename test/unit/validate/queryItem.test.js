@@ -25,7 +25,7 @@ test('invalid comment', (t) => {
     () => {
       queryItem({ name: 'search', comment: 5 }, 0, 0, makeAssay())
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidQueryStringComment' }
   )
 })
 

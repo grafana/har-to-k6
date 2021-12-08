@@ -25,7 +25,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'name',
       }),
-      `Param name is invalid, must be a string`
+      `Param name must be a string`
     )
   }
   if (node.value && typeof node.value !== 'string') {
@@ -35,7 +35,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'value',
       }),
-      `Param value is invalid, must be a string`
+      `Param value must be a string`
     )
   }
   if (node.fileName && typeof node.fileName !== 'string') {
@@ -45,7 +45,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'fileName',
       }),
-      `Param file name is invalid, must be a string`
+      `Param file name must be a string`
     )
   }
   if (node.contentType && typeof node.contentType !== 'string') {
@@ -55,17 +55,17 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'contentType',
       }),
-      `Param content type is invalid, must be a string`
+      `Param content type must be a string`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({
-        name: 'InvalidPageComment',
+        name: 'InvalidParamComment',
         indexes: [i, j],
         path: 'comment',
       }),
-      `Param comment is invalid, must be a string`
+      `Param comment must be a string`
     )
   }
 }

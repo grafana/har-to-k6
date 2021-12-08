@@ -20,7 +20,7 @@ test('invalid name type', (t) => {
     },
     {
       name: 'InvalidVariableName',
-      message: 'Invalid variable name (0:0): must be string',
+      message: 'Variable name must be a string',
     }
   )
 })
@@ -32,7 +32,7 @@ test('invalid name character', (t) => {
     },
     {
       name: 'InvalidVariableName',
-      message: "Invalid variable name (8:2): may not contain '}'",
+      message: "Variable name may not contain '}'",
     }
   )
 })
@@ -53,7 +53,7 @@ test('invalid type type', (t) => {
     },
     {
       name: 'InvalidVariableType',
-      message: 'Invalid variable type (0:0): must be nonnegative integer',
+      message: 'Variable type must be a nonnegative integer',
     }
   )
 })
@@ -66,7 +66,7 @@ test('invalid type undefined', (t) => {
     },
     {
       name: 'InvalidVariableType',
-      message: `Invalid variable type (0:0): ${type}`,
+      message: `Variable type must be one of 0 (JSON Path), 1 (Regex), 2 (CSS Selector)`,
     }
   )
 })

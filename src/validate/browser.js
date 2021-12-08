@@ -12,7 +12,7 @@ function validate(node) {
         name: 'InvalidBrowserName',
         path: createLogPath('browser.name'),
       },
-      'Browser name is invalid, must be a string'
+      'Browser name must be a string'
     )
   }
   if (node.version && typeof node.version !== 'string') {
@@ -21,7 +21,7 @@ function validate(node) {
         name: 'InvalidBrowserVersion',
         path: createLogPath('browser.version'),
       },
-      'Browser version is invalid, must be a string'
+      'Browser version must be a string'
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
@@ -30,7 +30,7 @@ function validate(node) {
         name: 'InvalidBrowserComment',
         path: createLogPath('browser.comment'),
       },
-      'Browser comment is invalid, must be a string'
+      'Browser comment must be a string'
     )
   }
 }

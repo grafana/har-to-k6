@@ -46,7 +46,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'type',
       }),
-      `Check type is invalid, must be one of: 0 (Text), 1 (JSON path value), 2 (JSON path), 3 (Regex)`
+      `Check type must be one of: 0 (Text), 1 (JSON path value), 2 (JSON path), 3 (Regex)`
     )
   }
   if (!(empty(node.subject) || CheckSubjectEncoding.has(node.subject))) {
@@ -56,7 +56,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'subject',
       }),
-      `Check subject is invalid, must be one of: 0 (Response body), 1 (Response headers), 2 (HTTP status code)`
+      `Check subject must be one of: 0 (Response body), 1 (Response headers), 2 (HTTP status code)`
     )
   }
   if (!(empty(node.condition) || CheckConditionEncoding.has(node.condition))) {
@@ -66,7 +66,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'condition',
       }),
-      `Check condition is invalid, must be one of: 0 (Contains), 1 (Not contains), 2 (Equals), 3 (Starts with), 4 (Ends with), 5 (Type of)`
+      `Check condition must be one of: 0 (Contains), 1 (Not contains), 2 (Equals), 3 (Starts with), 4 (Ends with), 5 (Type of)`
     )
   }
   if (node.expression && typeof node.expression !== 'string') {
@@ -76,7 +76,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'expression',
       }),
-      `Check expression is invalid, must be a string`
+      `Check expression must be a string`
     )
   }
   if (node.flags && typeof node.flags !== 'string') {
@@ -86,7 +86,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'flags',
       }),
-      `Check flags is invalid, must be a string`
+      `Check flags must be a string`
     )
   }
   if (node.value && typeof node.value !== 'string') {
@@ -96,7 +96,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'value',
       }),
-      `Check value is invalid, must be a string`
+      `Check value must be a string`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
@@ -106,7 +106,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'comment',
       }),
-      `Check comment is invalid, must be string`
+      `Check comment must be string`
     )
   }
 }
@@ -122,7 +122,7 @@ function validateName(node, i, j, assay) {
         indexes: [i, j],
         path: 'name',
       }),
-      `Check expression must be unique, duplicate: ${checkName(node)}`
+      `Check name must be unique, duplicate: ${checkName(node)}`
     )
   }
 }

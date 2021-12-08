@@ -54,7 +54,7 @@ test('invalid expires type', (t) => {
     },
     {
       name: 'InvalidCookieExpiration',
-      message: 'Invalid cookie expiration (0:0): must be string',
+      message: 'Cookie expiration must be a string',
     }
   )
 })
@@ -66,7 +66,7 @@ test('invalid expires format', (t) => {
     },
     {
       name: 'InvalidCookieExpiration',
-      message: 'Invalid cookie expiration (0:0): must be ISO 8601 datetime',
+      message: 'Cookie expiration must be ISO 8601 datetime',
     }
   )
 })
@@ -94,7 +94,7 @@ test('invalid comment', (t) => {
     () => {
       cookie({ name: 'session', comment: 5 }, 0, 0, makeAssay())
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidCookieComment' }
   )
 })
 

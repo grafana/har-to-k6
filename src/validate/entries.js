@@ -25,7 +25,7 @@ function validate(node) {
           path: createEntriesPath(i),
           indexes: createEntriesIndexes(i),
         },
-        `Entry is invalid, must be an object`
+        `Entry must be an object`
       )
     }
   }
