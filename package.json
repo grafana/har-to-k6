@@ -71,7 +71,7 @@
         "test:watch": "cross-env NODE_PATH=src:test ava --watch test/unit",
         "test-hoc": "cross-env NODE_PATH=src:test ava",
         "test-only": "cross-env NODE_PATH=src:test ava",
-        "prepare": "npm-run-all bundle"
+        "prepack": "npm-run-all bundle"
     },
     "eslintConfig": {
         "env": {
