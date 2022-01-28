@@ -17,9 +17,8 @@ function doesArchiveHaveEntries(archive) {
  * @returns {Entry[]} entries
  */
 function getNormalizedEntries(entries, options) {
-  entries = getSortedEntries(entries, options)
-  entries = getDecodedPostDataParamEntries(entries)
-  return entries
+  const sortedEntries = getSortedEntries(entries, options)
+  return getDecodedPostDataParamEntries(sortedEntries)
 }
 
 module.exports = { doesArchiveHaveEntries, getNormalizedEntries }

@@ -1,3 +1,5 @@
+const { getContentTypeValue } = require('../../aid')
+
 /**
  * Decodes `entries[x].request.postData.params` if the mimeType is equal to application/x-www-form-urlencoded
  * @param {Entry[]} entries
@@ -9,14 +11,17 @@ function getDecodedPostDataParamEntries(entries) {
       return entry
     }
 
-    if (entry.request.method !== 'POST' || !entry.request.postData) {
+    if (!entry.request.postData) {
       return entry
     }
 
-    if (
-      entry.request.postData.mimeType !== 'application/x-www-form-urlencoded' ||
-      !entry.request.postData.params
-    ) {
+    if (!entry.request.postData.params) {
+      return entry
+    }
+
+    const mimeType = getContentTypeValue(entry.request.postData.mimeType)
+
+    if (mimeType !== 'application/x-www-form-urlencoded') {
       return entry
     }
 
