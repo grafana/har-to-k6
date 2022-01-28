@@ -9,6 +9,7 @@ const { DEFAULT_CLI_OPTIONS } = require('../src/constants')
 const { VError } = require('verror')
 
 class CommandLineError extends VError {}
+const BOM_REGEX = /^\uFEFF/
 
 pkginfo(module, 'version')
 const version = module.exports.version
@@ -66,7 +67,7 @@ function read(file) {
 
 function parse(json) {
   try {
-    return JSON.parse(json)
+    return JSON.parse(json.replace(BOM_REGEX, ''))
   } catch (error) {
     throw new CommandLineError({ name: 'ParseError', cause: error })
   }
