@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.0] - 2022-02-01
+
+### Changed
+- Decode postData params when mimeType is application/x-www-form-urlencoded
+- Remove BOM character before parsing a har file
+
 ## [0.12.0] - 2021-12-06
 
 ### Added
@@ -157,7 +163,9 @@ Broken positional arg in caporal resulting in broken `har-to-k6` command.
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/loadimpact/har-to-k6/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/loadimpact/har-to-k6/compare/v0.13.0...HEAD
+[0.13.0]: https://github.com/loadimpact/har-to-k6/compare/v0.12.0...v0.13.0
+[0.12.0]: https://github.com/loadimpact/har-to-k6/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/loadimpact/har-to-k6/compare/v0.10.1...v0.11.0
 [0.10.1]: https://github.com/loadimpact/har-to-k6/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/loadimpact/har-to-k6/compare/v0.9.1...v0.10.0
