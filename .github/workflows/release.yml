@@ -42,9 +42,9 @@ jobs:
             --username ${{ secrets.DOCKERHUB_USERNAME }} \
             --password-stdin
           export tag=${GITHUB_REF/refs\/tags\/v/}
-          docker build . -t loadimpact/har-to-k6:$tag
+          docker build . -t grafana/har-to-k6:$tag
           docker tag \
-            loadimpact/har-to-k6:$tag \
-            loadimpact/har-to-k6:latest
-          docker push loadimpact/har-to-k6:$tag
-          docker push loadimpact/har-to-k6:latest
+            grafana/har-to-k6:$tag \
+            grafana/har-to-k6:latest
+          docker push grafana/har-to-k6:$tag
+          docker push grafana/har-to-k6:latest
