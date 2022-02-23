@@ -21,7 +21,10 @@ function getDecodedPostDataParamEntries(entries) {
 
     const mimeType = getContentTypeValue(entry.request.postData.mimeType)
 
-    if (mimeType !== 'application/x-www-form-urlencoded') {
+    if (
+      mimeType !== 'application/x-www-form-urlencoded' ||
+      entry.request.postData.decoded
+    ) {
       return entry
     }
 
@@ -33,6 +36,7 @@ function getDecodedPostDataParamEntries(entries) {
     })
 
     entry.request.postData.params = postDataParams
+    entry.request.postData.decoded = true
     return entry
   })
 }
