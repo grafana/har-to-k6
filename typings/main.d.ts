@@ -140,6 +140,7 @@ declare module 'har-to-k6' {
   export interface PostData extends Body {
     params: QueryParameter[]
     comment?: string
+    decoded?: boolean
   }
 
   export interface URLEncodedParameter {

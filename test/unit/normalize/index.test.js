@@ -26,18 +26,18 @@ class MockArchive {
   }
 }
 
-test('falsy archive', (t) => {
+test('falsy archive', t => {
   // Unmodified archive is returned
   t.is(normalize(-1), -1)
 })
 
-test('falsy archive.log', (t) => {
+test('falsy archive.log', t => {
   const invalid = { test: true }
   // Unmodified archive is returned
   t.is(normalize(invalid), invalid)
 })
 
-test('falsy archive.log.pages', (t) => {
+test('falsy archive.log.pages', t => {
   const archive = new MockArchive()
     .addEntry({
       id: 'last',
@@ -57,13 +57,13 @@ test('falsy archive.log.pages', (t) => {
   t.notDeepEqual(result, archive)
 })
 
-test('falsy archive.log.entries', (t) => {
+test('falsy archive.log.entries', t => {
   const invalid = { log: { pages: [] } }
   // Unmodified archive is returned
   t.is(normalize(invalid), invalid)
 })
 
-test('entries are sorted', (t) => {
+test('entries are sorted', t => {
   const archive = new MockArchive()
     .addEntry({
       id: 'last',
@@ -83,7 +83,7 @@ test('entries are sorted', (t) => {
   t.is(result.log.entries[2].id, 'last')
 })
 
-test('option.addSleep=true', (t) => {
+test('option.addSleep=true', t => {
   const archive = new MockArchive()
     .addPage({ id: 'page_2' })
     .addPage({ id: 'page_1' })
@@ -113,4 +113,26 @@ test('option.addSleep=true', (t) => {
   t.deepEqual(result.log.entries[1].sleep, [{ [SleepPlacement.After]: 9600 }]) // first chile (no sleep)
   t.deepEqual(result.log.entries[2].sleep, [{ [SleepPlacement.After]: 500 }]) // rounded
   t.deepEqual(result.log.entries[3].sleep, undefined) // last entry has no sleep
+})
+
+test('x-www-form-urlencoded values are decoded once', t => {
+  const archive = new MockArchive().addEntry({
+    request: {
+      postData: {
+        mimeType: 'application/x-www-form-urlencoded',
+        params: [
+          {
+            name: 'name',
+            value: '80%25',
+          },
+        ],
+      },
+    },
+  }).archive
+
+  const normalized = normalize(archive)
+  const normalizedTwice = normalize(normalized)
+
+  t.is(normalized.log.entries[0].request.postData.params[0].value, '80%')
+  t.is(normalizedTwice.log.entries[0].request.postData.params[0].value, '80%')
 })
