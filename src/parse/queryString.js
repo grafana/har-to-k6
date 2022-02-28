@@ -5,8 +5,8 @@ function queryString(node, requestUrl, spec) {
   // Using base url, since url may be invalid (variable instead protocol)
   const url = new URL(requestUrl, 'https://test.k6.io')
   const items = node.filter(({ name, value }) => {
-    // decode URI before comparing, since searchParam will hold decoded values
-    return url.searchParams.get(name) !== decodeURIComponent(value)
+    // no longer decode value as it's already decoded and if it contains % it breaks
+    return url.searchParams.get(name) !== value
   })
 
   for (const item of items) {
