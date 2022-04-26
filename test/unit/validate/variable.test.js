@@ -53,7 +53,7 @@ test('invalid type type', (t) => {
     },
     {
       name: 'InvalidVariableType',
-      message: 'Variable type must be a nonnegative integer',
+      message: 'Variable type must be a non-negative integer',
     }
   )
 })

@@ -25,7 +25,7 @@ function validate(node, i) {
           path: createVariablesPath(i, j),
           indexes: createVariablesIndexes(i, j),
         },
-        `Variable must be an object`
+        `Variable must be a plain object`
       )
     }
   }

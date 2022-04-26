@@ -38,7 +38,7 @@ function validate(node) {
   if (node.options && !isPlainObject(node.options)) {
     throw new InvalidArchiveError(
       { name: 'InvalidOptions', path: createLogPath('options') },
-      'Options are invalid, must be an object'
+      'Options are invalid, must be a plain object'
     )
   }
   if (node.version && typeof node.version !== 'string') {
@@ -50,13 +50,13 @@ function validate(node) {
   if (node.creator && !isPlainObject(node.creator)) {
     throw new InvalidArchiveError(
       { name: 'InvalidCreator', path: createLogPath('creator') },
-      'Creator section must be an object'
+      'Creator section must be a plain object'
     )
   }
   if (node.browser && !isPlainObject(node.browser)) {
     throw new InvalidArchiveError(
       { name: 'InvalidBrowser', path: createLogPath('browser') },
-      'Browser section must be an object'
+      'Browser section must be a plain object'
     )
   }
   if (node.comment && typeof node.comment !== 'string') {

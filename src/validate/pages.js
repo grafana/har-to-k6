@@ -25,7 +25,7 @@ function validate(node) {
           path: createPagesPath(i),
           indexes: createPagesIndexes(i),
         },
-        `Page must be an object`
+        `Page must be a plain object`
       )
     }
   }

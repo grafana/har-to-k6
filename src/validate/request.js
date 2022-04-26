@@ -114,7 +114,7 @@ function validate(node, i) {
         index: i,
         path: 'postData',
       }),
-      `Request postData must be an object`
+      `Request postData must be a plain object`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {

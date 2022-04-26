@@ -12,7 +12,7 @@ test.serial('invalid header 0', (t) => {
     },
     {
       name: 'InvalidHeader',
-      message: 'Header must be an object',
+      message: 'Header must be a plain object',
     }
   )
 })
@@ -24,7 +24,7 @@ test.serial('invalid header 2', (t) => {
     },
     {
       name: 'InvalidHeader',
-      message: 'Header must be an object',
+      message: 'Header must be a plain object',
     }
   )
 })

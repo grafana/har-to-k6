@@ -12,7 +12,7 @@ test.serial('invalid entry 0', (t) => {
     },
     {
       name: 'InvalidEntry',
-      message: 'Entry must be an object',
+      message: `Entry must be a plain object`,
     }
   )
 })
@@ -24,7 +24,7 @@ test.serial('invalid entry 2', (t) => {
     },
     {
       name: 'InvalidEntry',
-      message: 'Entry must be an object',
+      message: `Entry must be a plain object`,
     }
   )
 })

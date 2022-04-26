@@ -12,7 +12,7 @@ test.serial('invalid page 0', (t) => {
     },
     {
       name: 'InvalidPage',
-      message: 'Page must be an object',
+      message: 'Page must be a plain object',
     }
   )
 })
@@ -24,7 +24,7 @@ test.serial('invalid page 2', (t) => {
     },
     {
       name: 'InvalidPage',
-      message: 'Page must be an object',
+      message: 'Page must be a plain object',
     }
   )
 })

@@ -64,7 +64,7 @@ function validate(node, i, j) {
         indexes: [i, j],
         path: 'type',
       }),
-      `Variable type must be a nonnegative integer`
+      `Variable type must be a non-negative integer`
     )
   }
   if (!VariableTypeEncoding.has(node.type)) {

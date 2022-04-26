@@ -25,7 +25,7 @@ function validate(node, i) {
           path: createPostDataParamsPath(i, j),
           indexes: createPostDataParamsIndexes(i, j),
         },
-        `Param must be an object`
+        `Param must be a plain object`
       )
     }
   }

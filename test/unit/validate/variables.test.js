@@ -12,7 +12,7 @@ test.serial('invalid variable 0', (t) => {
     },
     {
       name: 'InvalidVariable',
-      message: 'Variable must be an object',
+      message: 'Variable must be a plain object',
     }
   )
 })
@@ -24,7 +24,7 @@ test.serial('invalid variable 2', (t) => {
     },
     {
       name: 'InvalidVariable',
-      message: 'Variable must be an object',
+      message: 'Variable must be a plain object',
     }
   )
 })

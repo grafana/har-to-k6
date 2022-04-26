@@ -57,7 +57,7 @@ function validate(node, i) {
         index: i,
         path: 'request',
       }),
-      `Entry request must be an object`
+      `Entry request must be a plain object`
     )
   }
   if (node.sleep && !Array.isArray(node.sleep)) {

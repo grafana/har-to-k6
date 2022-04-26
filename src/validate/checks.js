@@ -25,7 +25,7 @@ function validate(node, i) {
           path: createChecksPath(i, j),
           indexes: createChecksIndexes(i, j),
         },
-        `Check must be an object`
+        `Check must be a plain object`
       )
     }
   }

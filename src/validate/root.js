@@ -27,7 +27,7 @@ function validate(node) {
   if (!isPlainObject(node.log)) {
     throw new InvalidArchiveError(
       { name: 'InvalidLog', path: 'log' },
-      'Log section must be an object'
+      'Log section must be a plain object'
     )
   }
 }
