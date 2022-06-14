@@ -12,7 +12,7 @@ test.serial('invalid item 0', (t) => {
     },
     {
       name: 'InvalidQueryItem',
-      message: 'Invalid query item (0:0): must be object',
+      message: 'Query item must be a plain object',
     }
   )
 })
@@ -24,7 +24,7 @@ test.serial('invalid item 2', (t) => {
     },
     {
       name: 'InvalidQueryItem',
-      message: 'Invalid query item (8:2): must be object',
+      message: 'Query item must be a plain object',
     }
   )
 })

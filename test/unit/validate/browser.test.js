@@ -25,7 +25,7 @@ test('invalid comment', (t) => {
     () => {
       browser({ name: 'Brave', version: '5', comment: 5 }, makeAssay())
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidBrowserComment' }
   )
 })
 

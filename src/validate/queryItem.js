@@ -1,4 +1,6 @@
 const { InvalidArchiveError } = require('../error')
+const { createQueryStringPath } = require('./utils/path')
+const { createQueryStringIndexes } = require('./utils/indexes')
 
 /*
  * name: required string
@@ -12,21 +14,45 @@ function queryItem(node, i, j) {
 function validate(node, i, j) {
   if (typeof node.name !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidQueryItemName' },
-      `Invalid query item name (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidQueryItemName',
+        indexes: [i, j],
+        path: 'name',
+      }),
+      `Query item name must be a string`
     )
   }
   if (node.value && typeof node.value !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidQueryItemValue' },
-      `Invalid query item value (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidQueryItemValue',
+        indexes: [i, j],
+        path: 'value',
+      }),
+      `Query item value must be a string`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidComment' },
-      `Invalid query item comment (${i}:${j}): must be string`
+      createErrorParams({
+        name: 'InvalidQueryStringComment',
+        indexes: [i, j],
+        path: 'comment',
+      }),
+      `Query item comment must be a string`
     )
+  }
+}
+
+function createErrorParams({
+  name,
+  indexes: [entryIndex, queryStringIndex],
+  path = '',
+}) {
+  return {
+    name,
+    path: createQueryStringPath(entryIndex, queryStringIndex, path),
+    indexes: createQueryStringIndexes(entryIndex, queryStringIndex),
   }
 }
 

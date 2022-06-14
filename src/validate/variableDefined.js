@@ -2,6 +2,23 @@ const sort = require('../sort')
 const { variables } = require('../expression')
 const { InvalidArchiveError } = require('../error')
 const { CheckType } = require('../enum')
+const {
+  createRequestPath,
+  createQueryStringPath,
+  createHeadersPath,
+  createCookiesPath,
+  createPostDataParamsPath,
+  createPostDataPath,
+  createChecksPath,
+} = require('./utils/path')
+const {
+  createEntriesIndexes,
+  createQueryStringIndexes,
+  createHeadersIndexes,
+  createCookiesIndexes,
+  createPostDataParamsIndexes,
+  createChecksIndexes,
+} = require('./utils/indexes')
 
 /*
  * method: variables defined
@@ -32,8 +49,20 @@ function variableDefined(archive) {
 }
 
 function validate({ request, checks }, i, defined) {
-  validateString(request.method, i, null, defined, 'Request method')
-  validateString(request.url, i, null, defined, 'Request URL')
+  validateString(
+    request.method,
+    createRequestPath(i, 'method'),
+    createEntriesIndexes(i),
+    defined,
+    'Request method'
+  )
+  validateString(
+    request.url,
+    createRequestPath(i, 'url'),
+    createEntriesIndexes(i),
+    defined,
+    'Request URL'
+  )
   queryString(request.queryString, i, defined)
   headers(request.headers, i, defined)
   cookies(request.cookies, i, defined)
@@ -41,13 +70,12 @@ function validate({ request, checks }, i, defined) {
   validateChecks(checks, i, defined)
 }
 
-function validateString(value, i, j, defined, property) {
+function validateString(value, path, indexes, defined, property) {
   for (const name of referenced(value)) {
     if (!defined.has(name)) {
-      const index = `${i}${j !== null ? `:${j}` : ''}`
       throw new InvalidArchiveError(
-        { name: 'UndefinedVariable' },
-        `${property} referenced undefined variable (${index}): ${name}`
+        { name: 'UndefinedVariable', path, indexes },
+        `${property} referenced undefined variable: ${name}`
       )
     }
   }
@@ -57,59 +85,108 @@ function validateChecks(checks = [], topLevelIndex, defined) {
   checks.forEach((check, index) => {
     const value =
       check.type === CheckType.Regex ? check.expression : check.value
+    const path = check.type === CheckType.Regex ? 'expression' : 'value'
     const property =
       check.type === CheckType.Regex ? 'Check expression' : 'Check value'
-    validateString(value, topLevelIndex, index, defined, property)
+    validateString(
+      value,
+      createChecksPath(topLevelIndex, index, path),
+      createChecksIndexes(topLevelIndex, index),
+      defined,
+      property
+    )
   })
 }
 
 function queryString(node, i, defined) {
+  const _validate = (value, key, [i, j], name) =>
+    validateString(
+      value,
+      createQueryStringPath(i, j, key),
+      createQueryStringIndexes(i, j),
+      defined,
+      name
+    )
+
   if (node) {
     for (let j = 0; j < node.length; j++) {
       const queryItem = node[j]
-      validateString(queryItem.name, i, j, defined, 'Query item name')
-      validateString(queryItem.value, i, j, defined, 'Query item value')
+      _validate(queryItem.name, 'name', [i, j], 'Query item name')
+      _validate(queryItem.value, 'value', [i, j], 'Query item value')
     }
   }
 }
 
 function headers(node, i, defined) {
+  const _validate = (value, key, [i, j], name) =>
+    validateString(
+      value,
+      createHeadersPath(i, j, key),
+      createHeadersIndexes(i, j),
+      defined,
+      name
+    )
+
   if (node) {
     for (let j = 0; j < node.length; j++) {
       const header = node[j]
-      validateString(header.name, i, j, defined, 'Header name')
-      validateString(header.value, i, j, defined, 'Header value')
+      _validate(header.name, 'name', [i, j], 'Header name')
+      _validate(header.value, 'value', [i, j], 'Header value')
     }
   }
 }
 
 function cookies(node, i, defined) {
+  const _validate = (value, key, [i, j], name) =>
+    validateString(
+      value,
+      createCookiesPath(i, j, key),
+      createCookiesIndexes(i, j),
+      defined,
+      name
+    )
+
   if (node) {
     for (let j = 0; j < node.length; j++) {
       const cookie = node[j]
-      validateString(cookie.name, i, j, defined, 'Cookie name')
-      validateString(cookie.value, i, j, defined, 'Cookie value')
-      validateString(cookie.path, i, j, defined, 'Cookie path')
-      validateString(cookie.domain, i, j, defined, 'Cookie domain')
+      _validate(cookie.name, 'name', [i, j], 'Cookie name')
+      _validate(cookie.value, 'value', [i, j], 'Cookie value')
+      _validate(cookie.path, 'path', [i, j], 'Cookie path')
+      _validate(cookie.domain, 'domain', [i, j], 'Cookie domain')
     }
   }
 }
 
 function postData(node, i, defined) {
   if (node) {
-    validateString(node.text, i, null, defined, 'Post text')
+    validateString(
+      node.text,
+      createPostDataPath(i, 'text'),
+      createEntriesIndexes(i),
+      defined,
+      'Post text'
+    )
     params(node.params, i, defined)
   }
 }
 
 function params(node, i, defined) {
+  const _validate = (value, key, [i, j], name) =>
+    validateString(
+      value,
+      createPostDataParamsPath(i, j, key),
+      createPostDataParamsIndexes(i, j),
+      defined,
+      name
+    )
+
   if (node) {
     for (let j = 0; j < node.length; j++) {
       const param = node[j]
-      validateString(param.name, i, j, defined, 'Param name')
-      validateString(param.value, i, j, defined, 'Param value')
-      validateString(param.fileName, i, j, defined, 'Param file name')
-      validateString(param.contentType, i, j, defined, 'Param type')
+      _validate(param.name, 'name', [i, j], 'Param name')
+      _validate(param.value, 'value', [i, j], 'Param value')
+      _validate(param.fileName, 'fileName', [i, j], 'Param file name')
+      _validate(param.contentType, 'contentType', [i, j], 'Param content type')
     }
   }
 }

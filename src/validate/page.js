@@ -1,6 +1,8 @@
 const { empty } = require('../aid')
 const { InvalidArchiveError } = require('../error')
 const sleep = require('./sleep')
+const { createPagesIndexes } = require('./utils/indexes')
+const { createPagesPath } = require('./utils/path')
 
 /*
  * id: required unique string
@@ -19,45 +21,57 @@ function page(node, i, assay) {
 function validate(node, i, assay) {
   if (empty(node.id)) {
     throw new InvalidArchiveError(
-      { name: 'MissingPageId' },
-      `Missing page identifier (${i})`
+      createErrorParams({ name: 'MissingPageId', index: i, path: 'id' }),
+      `Page id is required`
     )
   }
   if (typeof node.id !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidPageId' },
-      `Invalid page identifier (${i}): must be string`
+      createErrorParams({ name: 'InvalidPageId', index: i, path: 'id' }),
+      `Page id must be a string`
     )
   }
   if (assay.pageIds.has(node.id)) {
     throw new InvalidArchiveError(
-      { name: 'DuplicatePageId' },
-      `Duplicate page identifier (${i}): ${node.id}`
+      createErrorParams({ name: 'DuplicatePageId', index: i, path: 'id' }),
+      `Page id must be unique, duplicate: ${node.id}`
     )
   }
   if (!empty(node.title) && typeof node.title !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidPageTitle' },
-      `Invalid page title (${i}): must be string`
+      createErrorParams({ name: 'InvalidPageTitle', index: i, path: 'title' }),
+      `Page title must be a string`
     )
   }
   if (!empty(node.name) && typeof node.name !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidPageName' },
-      `Invalid page name (${i}): must be string`
+      createErrorParams({ name: 'InvalidPageName', index: i, path: 'name' }),
+      `Page name must be a string`
     )
   }
   if (node.sleep && !Array.isArray(node.sleep)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidPageSleep' },
-      `Invalid page sleep (${i}): must be array`
+      createErrorParams({ name: 'InvalidPageSleep', index: i, path: 'sleep' }),
+      `Page sleep must be an array`
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidComment' },
-      `Invalid page.comment (${i}): must be string`
+      createErrorParams({
+        name: 'InvalidPageComment',
+        index: i,
+        path: 'comment',
+      }),
+      `Page comment must be a string`
     )
+  }
+}
+
+function createErrorParams({ name, index, path = '' }) {
+  return {
+    name,
+    path: createPagesPath(index, path),
+    indexes: createPagesIndexes(index),
   }
 }
 

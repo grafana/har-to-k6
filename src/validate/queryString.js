@@ -1,6 +1,8 @@
 const isPlainObject = require('is-plain-object')
 const queryItem = require('./queryItem')
 const { InvalidArchiveError } = require('../error')
+const { createQueryStringPath } = require('./utils/path')
+const { createQueryStringIndexes } = require('./utils/indexes')
 
 /*
  * [j]: object
@@ -18,8 +20,12 @@ function validate(node, i) {
     const item = node[j]
     if (!isPlainObject(item)) {
       throw new InvalidArchiveError(
-        { name: 'InvalidQueryItem' },
-        `Invalid query item (${i}:${j}): must be object`
+        {
+          name: 'InvalidQueryItem',
+          path: createQueryStringPath(i, j),
+          indexes: createQueryStringIndexes(i, j),
+        },
+        `Query item must be a plain object`
       )
     }
   }

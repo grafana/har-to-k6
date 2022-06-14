@@ -5,6 +5,7 @@ const options = require('./options')
 const isPlainObject = require('is-plain-object')
 const pages = require('./pages')
 const { InvalidArchiveError } = require('../error')
+const { createLogPath } = require('./utils/path')
 
 /*
  * version: optional string
@@ -35,33 +36,45 @@ function log(node, assay) {
 
 function validate(node) {
   if (node.options && !isPlainObject(node.options)) {
-    throw new InvalidArchiveError({ name: 'InvalidOptions' }, 'Invalid options: must be object')
+    throw new InvalidArchiveError(
+      { name: 'InvalidOptions', path: createLogPath('options') },
+      'Options are invalid, must be a plain object'
+    )
   }
   if (node.version && typeof node.version !== 'string') {
-    throw new InvalidArchiveError({ name: 'InvalidVersion' }, 'Invalid version: must be string')
+    throw new InvalidArchiveError(
+      { name: 'InvalidVersion', path: createLogPath('version') },
+      'Version must be a string'
+    )
   }
   if (node.creator && !isPlainObject(node.creator)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidCreator' },
-      'Invalid creator section: must be object'
+      { name: 'InvalidCreator', path: createLogPath('creator') },
+      'Creator section must be a plain object'
     )
   }
   if (node.browser && !isPlainObject(node.browser)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidBrowser' },
-      'Invalid browser section: must be object'
+      { name: 'InvalidBrowser', path: createLogPath('browser') },
+      'Browser section must be a plain object'
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
-    throw new InvalidArchiveError({ name: 'InvalidComment' }, 'Invalid log.comment: must be string')
+    throw new InvalidArchiveError(
+      { name: 'InvalidLogComment', path: createLogPath('comment') },
+      'Comment must be a string'
+    )
   }
   if (node.pages && !Array.isArray(node.pages)) {
-    throw new InvalidArchiveError({ name: 'InvalidPages' }, 'Invalid pages section: must be array')
+    throw new InvalidArchiveError(
+      { name: 'InvalidPages', path: createLogPath('pages') },
+      'Pages section must be an array'
+    )
   }
   if (node.entries && !Array.isArray(node.entries)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidEntries' },
-      'Invalid entries section: must be array'
+      { name: 'InvalidEntries', path: createLogPath('entries') },
+      'Entries section must be an array'
     )
   }
 }

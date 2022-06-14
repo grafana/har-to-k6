@@ -1,6 +1,11 @@
 const header = require('./header')
 const isPlainObject = require('is-plain-object')
 const { InvalidArchiveError } = require('../error')
+const { createEntriesPath, createHeadersPath } = require('./utils/path')
+const {
+  createEntriesIndexes,
+  createHeadersIndexes,
+} = require('./utils/indexes')
 
 /*
  * [j]: object
@@ -21,8 +26,12 @@ function validate(node, i) {
     const item = node[j]
     if (!isPlainObject(item)) {
       throw new InvalidArchiveError(
-        { name: 'InvalidHeader' },
-        `Invalid header (${i}:${j}): must be object`
+        {
+          name: 'InvalidHeader',
+          path: createHeadersPath(i, j),
+          indexes: createHeadersIndexes(i, j),
+        },
+        `Header must be a plain object`
       )
     }
   }
@@ -31,8 +40,12 @@ function validate(node, i) {
 function relation(node, i) {
   if (node.reduce(countContentType, 0) > 1) {
     throw new InvalidArchiveError(
-      { name: 'MultipleContentType' },
-      `Multiple Content-Type headers (${i}): max 1 allowed`
+      {
+        name: 'MultipleContentType',
+        path: createEntriesPath(i, 'headers'),
+        indexes: createEntriesIndexes(i),
+      },
+      `Header "Content-Type" is unique, only 1 allowed`
     )
   }
 }

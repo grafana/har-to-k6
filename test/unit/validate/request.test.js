@@ -38,7 +38,7 @@ test('missing url', (t) => {
 test('invalid url type', (t) => {
   t.throws(() => request(init({ method: 'GET', url: 5 }), 0, makeAssay()), {
     name: 'InvalidRequestUrl',
-    message: 'Invalid request url (0): must be string',
+    message: 'Request URL must be a string',
   })
 })
 
@@ -47,8 +47,7 @@ test('invalid url format', (t) => {
     () => request(init({ method: 'GET', url: 'example.com' }), 0, makeAssay()),
     {
       name: 'InvalidRequestUrl',
-      message:
-        'Invalid request url (0): must be absolute or start with variable',
+      message: 'Request URL must be absolute or start with variable',
     }
   )
 })
@@ -129,7 +128,7 @@ test('invalid comment', (t) => {
         0,
         makeAssay()
       ),
-    { name: 'InvalidComment' }
+    { name: 'InvalidRequestComment' }
   )
 })
 

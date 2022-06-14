@@ -1,6 +1,8 @@
 const check = require('./check')
 const isPlainObject = require('is-plain-object')
 const { InvalidArchiveError } = require('../error')
+const { createChecksPath } = require('./utils/path')
+const { createChecksIndexes } = require('./utils/indexes')
 
 /*
  * [j]: object
@@ -18,8 +20,12 @@ function validate(node, i) {
     const item = node[j]
     if (!isPlainObject(item)) {
       throw new InvalidArchiveError(
-        { name: 'InvalidCheck' },
-        `Invalid check (${i}:${j}): must be object`
+        {
+          name: 'InvalidCheck',
+          path: createChecksPath(i, j),
+          indexes: createChecksIndexes(i, j),
+        },
+        `Check must be a plain object`
       )
     }
   }

@@ -106,7 +106,7 @@ test.serial('invalid comment', (t) => {
     () => {
       check({ type: CheckType.Text, comment: 5 }, 0, 0, makeAssay())
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidCheckComment' }
   )
 })
 
@@ -119,7 +119,7 @@ test.serial('duplicate name', (t) => {
     },
     {
       name: 'DuplicateCheckName',
-      message: 'Duplicate check name (5:1): $.token exists',
+      message: 'Check name must be unique, duplicate: $.token exists',
     }
   )
 })

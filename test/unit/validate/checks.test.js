@@ -12,7 +12,7 @@ test.serial('invalid check 0', (t) => {
     },
     {
       name: 'InvalidCheck',
-      message: 'Invalid check (0:0): must be object',
+      message: 'Check must be a plain object',
     }
   )
 })
@@ -24,7 +24,7 @@ test.serial('invalid check 2', (t) => {
     },
     {
       name: 'InvalidCheck',
-      message: 'Invalid check (8:2): must be object',
+      message: 'Check must be a plain object',
     }
   )
 })

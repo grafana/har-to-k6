@@ -70,7 +70,7 @@ test.serial('invalid comment', (t) => {
     () => {
       entry({ request: {}, comment: 5 }, 0, makeAssay())
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidEntryComment' }
   )
 })
 

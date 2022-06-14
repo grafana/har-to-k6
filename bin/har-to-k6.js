@@ -96,7 +96,11 @@ function success(output, log) {
 function inform(error, log) {
   log.error(`${summarize(error)}:`)
   const source = cause(error)
-  log.error(chalk.red(source.message))
+  const message = `${source.message}${
+    source.path ? `, at path: ${source.path}` : ''
+  }`
+
+  log.error(chalk.red(message))
   log.debug(source.stack)
 }
 

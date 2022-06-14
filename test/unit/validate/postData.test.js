@@ -52,7 +52,7 @@ test.serial('invalid comment', (t) => {
     () => {
       postData({ mimeType: 'text/plain', comment: 5 }, 0, makeAssay())
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidPostDataComment' }
   )
 })
 

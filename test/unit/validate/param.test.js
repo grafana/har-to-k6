@@ -43,7 +43,7 @@ test('invalid comment', (t) => {
     () => {
       param({ name: 'recordId', comment: 5 }, 0, 0, makeAssay())
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidParamComment' }
   )
 })
 

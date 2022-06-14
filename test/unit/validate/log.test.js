@@ -54,7 +54,7 @@ test.serial('invalid comment', (t) => {
     () => {
       log({ comment: 5 }, makeAssay())
     },
-    { name: 'InvalidComment' }
+    { name: 'InvalidLogComment' }
   )
 })
 

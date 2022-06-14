@@ -1,5 +1,6 @@
 const { empty } = require('../../aid')
 const { InvalidArchiveError } = require('../../error')
+const createErrorParamsForCheckVariants = require('./utils')
 
 /*
  * subject: required
@@ -15,32 +16,52 @@ function Text(node, i, j) {
 function validate(node, i, j) {
   if (empty(node.subject)) {
     throw new InvalidArchiveError(
-      { name: 'MissingCheckSubject' },
-      `Missing check subject (${i}:${j}): required for Text`
+      createErrorParamsForCheckVariants({
+        name: 'MissingCheckSubject',
+        indexes: [i, j],
+        path: 'subject',
+      }),
+      `Check subject is required for Text`
     )
   }
   if (empty(node.condition)) {
     throw new InvalidArchiveError(
-      { name: 'MissingCheckCondition' },
-      `Missing check condition (${i}:${j}): required for Text`
+      createErrorParamsForCheckVariants({
+        name: 'MissingCheckCondition',
+        indexes: [i, j],
+        path: 'condition',
+      }),
+      `Check condition is required for Text`
     )
   }
   if (empty(node.value)) {
     throw new InvalidArchiveError(
-      { name: 'MissingCheckValue' },
-      `Missing check value (${i}:${j}): required for Text`
+      createErrorParamsForCheckVariants({
+        name: 'MissingCheckValue',
+        indexes: [i, j],
+        path: 'value',
+      }),
+      `Check value is required for Text`
     )
   }
   if (!empty(node.expression)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidCheckExpression' },
-      `Invalid check expression (${i}:${j}): prohibited for Text`
+      createErrorParamsForCheckVariants({
+        name: 'InvalidCheckExpression',
+        indexes: [i, j],
+        path: 'expression',
+      }),
+      `Check expression is prohibited for Text`
     )
   }
   if (!empty(node.flags)) {
     throw new InvalidArchiveError(
-      { name: 'InvalidCheckFlags' },
-      `Invalid check flags (${i}:${j}): prohibited for Text`
+      createErrorParamsForCheckVariants({
+        name: 'InvalidCheckFlags',
+        indexes: [i, j],
+        path: 'flags',
+      }),
+      `Check flags is prohibited for Text`
     )
   }
 }

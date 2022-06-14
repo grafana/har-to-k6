@@ -12,7 +12,7 @@ test.serial('invalid cookie 0', (t) => {
     },
     {
       name: 'InvalidCookie',
-      message: 'Invalid cookie (0:0): must be object',
+      message: 'Cookie must be a plain object',
     }
   )
 })
@@ -24,7 +24,7 @@ test.serial('invalid cookie 2', (t) => {
     },
     {
       name: 'InvalidCookie',
-      message: 'Invalid cookie (8:2): must be object',
+      message: 'Cookie must be a plain object',
     }
   )
 })

@@ -1,4 +1,5 @@
 const { InvalidArchiveError } = require('../error')
+const { createLogPath } = require('./utils/path')
 
 /*
  * name: optional string
@@ -12,20 +13,29 @@ function creator(node) {
 function validate(node) {
   if (node.name && typeof node.name !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidCreatorName' },
-      'Invalid creator name: must be string'
+      {
+        name: 'InvalidCreatorName',
+        path: createLogPath('creator.name'),
+      },
+      'Creator name must be a string'
     )
   }
   if (node.version && typeof node.version !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidCreatorVersion' },
-      'Invalid creator version: must be string'
+      {
+        name: 'InvalidCreatorVersion',
+        path: createLogPath('creator.version'),
+      },
+      'Creator version must be a string'
     )
   }
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
-      { name: 'InvalidComment' },
-      'Invalid creator.comment: must be string'
+      {
+        name: 'InvalidCreatorComment',
+        path: createLogPath('creator.comment'),
+      },
+      'Creator comment must be a string'
     )
   }
 }

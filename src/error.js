@@ -8,7 +8,12 @@ class HarToK6Error extends Error {
   }
 }
 
-class InvalidArchiveError extends HarToK6Error {}
+class InvalidArchiveError extends HarToK6Error {
+  constructor({ name = '', path = '', indexes = [] }, message) {
+    super({ name, path, indexes }, message)
+  }
+}
+
 class UnrecognizedError extends HarToK6Error {}
 
 module.exports = {

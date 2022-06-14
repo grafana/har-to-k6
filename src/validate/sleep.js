@@ -2,6 +2,8 @@
 const isNaturalNumber = require('is-natural-number')
 const { isObject } = require('../aid')
 const { InvalidArchiveError } = require('../error')
+const { createSleepPath } = require('./utils/path')
+const { createSleepIndexes } = require('./utils/indexes')
 
 /*
  * value: Float|Options
@@ -22,8 +24,12 @@ function validate(node, i, j) {
       !isNaturalNumber(node.before, { includeZero: true })
     ) {
       throw new InvalidArchiveError(
-        { name: 'InvalidSleepType' },
-        `Invalid sleep type (${i}:${j}): must be nonnegative number`
+        createErrorParams({
+          name: 'InvalidSleepType',
+          indexes: [i, j],
+          path: 'before',
+        }),
+        `Sleep before must be a non-negative number`
       )
     }
     if (
@@ -31,15 +37,31 @@ function validate(node, i, j) {
       !isNaturalNumber(node.after, { includeZero: true })
     ) {
       throw new InvalidArchiveError(
-        { name: 'InvalidSleepType' },
-        `Invalid sleep type (${i}:${j}): must be nonnegative number`
+        createErrorParams({
+          name: 'InvalidSleepType',
+          indexes: [i, j],
+          path: 'after',
+        }),
+        `Sleep after must be a non-negative number`
       )
     }
   } else if (!isNaturalNumber(node, { includeZero: true })) {
     throw new InvalidArchiveError(
-      { name: 'InvalidSleepType' },
-      `Invalid sleep type (${i}:${j}): must be nonnegative number`
+      createErrorParams({ name: 'InvalidSleepType', indexes: [i, j] }),
+      `Sleep must be a non-negative number`
     )
+  }
+}
+
+function createErrorParams({
+  name,
+  indexes: [entryIndex, sleepIndex],
+  path = '',
+}) {
+  return {
+    name,
+    path: createSleepPath(entryIndex, sleepIndex, path),
+    indexes: createSleepIndexes(entryIndex, sleepIndex),
   }
 }
 
