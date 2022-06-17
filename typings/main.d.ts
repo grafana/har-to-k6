@@ -246,7 +246,11 @@ declare module 'har-to-k6' {
   // module.exports
   export class HarToK6Error extends Error {}
 
-  export class InvalidArchiveError extends HarToK6Error {}
+  export class InvalidArchiveError extends HarToK6Error {
+    name: string
+    path: string
+    indexes: any[]
+  }
 
   export class UnrecognizedError extends HarToK6Error {}
 
