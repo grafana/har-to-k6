@@ -73,6 +73,11 @@ declare module 'har-to-k6' {
     title: string
 
     /**
+     * Non-standard property used by the k6 browser recorder.
+     */
+    url?: string
+
+    /**
      *  Detailed timing info about page load.
      */
     pageTimings: PageTimings
