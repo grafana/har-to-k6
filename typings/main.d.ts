@@ -654,7 +654,10 @@ declare module 'har-to-k6' {
   /** @throws {InvalidArchiveError} */
   export function validate(archive: HAR): void
 
-  export function normalize(archive: HAR, options?: { addSleep?: boolean }): HAR
+  export function normalizeHAR(
+    archive: HAR,
+    options?: { addSleep?: boolean }
+  ): HAR
 
   export function strToFunctionName(subject: string, fallback?: string): string
 }
