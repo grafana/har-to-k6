@@ -1,62 +1,58 @@
 import test from 'ava'
 import isolate from 'helper/isolate'
-import { assay as makeAssay } from 'make'
 const [postData, { params }] = isolate(test, 'validate/postData', {
   params: 'validate/params',
 })
 
-test.serial('empty', (t) => {
+test.serial('empty', t => {
   t.notThrows(() => {
-    postData({}, 0, makeAssay())
+    postData({}, 0)
   })
 })
 
-test.serial('missing type', (t) => {
-  t.throws(
-    () => {
-      postData({ text: 'Message in text' }, 0, makeAssay())
-    },
-    { name: 'MissingPostDataType' }
-  )
+test.serial('it should not throw when mimeType is missing', t => {
+  t.notThrows(() => {
+    postData({ text: 'Message in text' }, 0)
+  })
 })
 
-test.serial('invalid type', (t) => {
+test.serial('invalid type', t => {
   t.throws(
     () => {
-      postData({ mimeType: 5 }, 0, makeAssay())
+      postData({ mimeType: 5 }, 0)
     },
     { name: 'InvalidPostDataType' }
   )
 })
 
-test.serial('invalid params', (t) => {
+test.serial('invalid params', t => {
   t.throws(
     () => {
-      postData({ mimeType: 'text/plain', params: 5 }, 0, makeAssay())
+      postData({ mimeType: 'text/plain', params: 5 }, 0)
     },
     { name: 'InvalidPostDataParams' }
   )
 })
 
-test.serial('invalid text', (t) => {
+test.serial('invalid text', t => {
   t.throws(
     () => {
-      postData({ mimeType: 'text/plain', text: 5 }, 0, makeAssay())
+      postData({ mimeType: 'text/plain', text: 5 }, 0)
     },
     { name: 'InvalidPostDataText' }
   )
 })
 
-test.serial('invalid comment', (t) => {
+test.serial('invalid comment', t => {
   t.throws(
     () => {
-      postData({ mimeType: 'text/plain', comment: 5 }, 0, makeAssay())
+      postData({ mimeType: 'text/plain', comment: 5 }, 0)
     },
     { name: 'InvalidPostDataComment' }
   )
 })
 
-test.serial('invalid structured type', (t) => {
+test.serial('invalid structured type', t => {
   t.throws(
     () => {
       postData(
@@ -64,15 +60,14 @@ test.serial('invalid structured type', (t) => {
           mimeType: 'text/plain',
           params: [{}],
         },
-        0,
-        makeAssay()
+        0
       )
     },
     { name: 'InvalidPostDataType' }
   )
 })
 
-test.serial('valid postData combination', (t) => {
+test.serial('valid postData combination', t => {
   postData({
     mimeType: 'application/x-www-form-urlencoded',
     params: [
@@ -85,46 +80,43 @@ test.serial('valid postData combination', (t) => {
   t.true(params.calledOnce)
 })
 
-test.serial('valid minimal', (t) => {
+test.serial('valid minimal', t => {
   postData({ mimeType: 'text/plain' })
   t.true(params.notCalled)
 })
 
-test.serial('valid full params form-urlencoded', (t) => {
+test.serial('valid full params form-urlencoded', t => {
   postData(
     {
       mimeType: 'application/x-www-form-urlencoded',
       params: [{}],
       comment: 'Send URL encoded parameters',
     },
-    0,
-    makeAssay()
+    0
   )
   t.true(params.calledOnce)
 })
 
-test.serial('valid full params form-data', (t) => {
+test.serial('valid full params form-data', t => {
   postData(
     {
       mimeType: 'multipart/form-data',
       params: [{}],
       comment: 'Send multipart encoded parameters',
     },
-    0,
-    makeAssay()
+    0
   )
   t.true(params.calledOnce)
 })
 
-test.serial('valid full text', (t) => {
+test.serial('valid full text', t => {
   postData(
     {
       mimeType: 'text/plain',
       text: 'Message in text',
       comment: 'Send a text body',
     },
-    0,
-    makeAssay()
+    0
   )
   t.true(params.notCalled)
 })

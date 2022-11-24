@@ -3,6 +3,10 @@ const params = require('./params')
 function postData(node, spec) {
   spec.type = node.mimeType
 
+  if (spec.type === '') {
+    spec.type = 'text/plain'
+  }
+
   if (node.params && node.params.length) {
     spec.params = new Map()
     params(node.params, spec.params)
