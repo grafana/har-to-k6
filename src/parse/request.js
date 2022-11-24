@@ -4,6 +4,8 @@ const queryString = require('./queryString')
 const state = require('./state/request')
 const { emptyObject, getContentTypeValue } = require('../aid')
 
+const EMPTY_BODY_METHODS = ['HEAD', 'GET', 'OPTIONS']
+
 function request(node, spec) {
   spec.method = node.method.toUpperCase()
   spec.address = node.url
@@ -20,7 +22,11 @@ function request(node, spec) {
     headers(node.headers, spec.headers)
   }
 
-  if (node.postData && !emptyObject(node.postData)) {
+  if (
+    !EMPTY_BODY_METHODS.includes(node.method) &&
+    node.postData &&
+    !emptyObject(node.postData)
+  ) {
     postData(node.postData, spec.post)
     contentType(node.postData.mimeType, spec.headers)
   }
@@ -47,7 +53,7 @@ function addBoundary(boundary, headers) {
 
   if (contentType) {
     const items = [...contentType.values()]
-    const newItems = items.map((item) => {
+    const newItems = items.map(item => {
       const value = getContentTypeValue(item.value)
       if (value === 'multipart/form-data') {
         return { value: `${value}; boundary=${boundary}` }
