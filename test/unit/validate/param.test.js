@@ -55,13 +55,13 @@ test('should throw when comment is invalid', t => {
   )
 })
 
-test('should not throw when minimal input is valid', t => {
+test('should not throw when name is valid', t => {
   t.notThrows(() => {
     param({ name: 'recordId' }, 0, 0, makeAssay())
   })
 })
 
-test('should not throw when full input is valid', t => {
+test('should not throw when all values are valid', t => {
   t.notThrows(() => {
     param(
       {

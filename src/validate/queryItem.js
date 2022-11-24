@@ -1,3 +1,4 @@
+const { empty } = require('../aid')
 const { InvalidArchiveError } = require('../error')
 const { createQueryStringPath } = require('./utils/path')
 const { createQueryStringIndexes } = require('./utils/indexes')
@@ -12,6 +13,12 @@ function queryItem(node, i, j) {
 }
 
 function validate(node, i, j) {
+  if (empty(node.name)) {
+    console.warn(`[WARN] Discarding query item with missing name (${i}:${j})`)
+
+    return
+  }
+
   if (typeof node.name !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({
