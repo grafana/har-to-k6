@@ -17,7 +17,10 @@ function param(node, i, j) {
 function validate(node, i, j) {
   if (empty(node.name)) {
     console.warn(`[WARN] Discarding param with missing name (${i}:${j})`)
+
+    return
   }
+
   if (typeof node.name !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({
@@ -28,6 +31,7 @@ function validate(node, i, j) {
       `Param name must be a string`
     )
   }
+
   if (node.value && typeof node.value !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({
@@ -38,6 +42,7 @@ function validate(node, i, j) {
       `Param value must be a string`
     )
   }
+
   if (node.fileName && typeof node.fileName !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({
@@ -48,6 +53,7 @@ function validate(node, i, j) {
       `Param file name must be a string`
     )
   }
+
   if (node.contentType && typeof node.contentType !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({
@@ -58,6 +64,7 @@ function validate(node, i, j) {
       `Param content type must be a string`
     )
   }
+
   if (node.comment && typeof node.comment !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({

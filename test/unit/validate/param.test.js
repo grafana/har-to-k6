@@ -2,7 +2,15 @@ import test from 'ava'
 import param from 'validate/param'
 import { assay as makeAssay } from 'make'
 
-test('invalid name', (t) => {
+test('should ignore errors when name is empty', t => {
+  t.notThrows(() => {
+    param({
+      name: null,
+    })
+  })
+})
+
+test('should throw when name is invalid', t => {
   t.throws(
     () => {
       param({ name: 5 }, 0, 0, makeAssay())
@@ -11,7 +19,7 @@ test('invalid name', (t) => {
   )
 })
 
-test('invalid value', (t) => {
+test('should throw when value is invalid', t => {
   t.throws(
     () => {
       param({ name: 'recordId', value: 5 }, 0, 0, makeAssay())
@@ -20,7 +28,7 @@ test('invalid value', (t) => {
   )
 })
 
-test('invalid file name', (t) => {
+test('should throw when file name is invalid', t => {
   t.throws(
     () => {
       param({ name: 'recordId', fileName: 5 }, 0, 0, makeAssay())
@@ -29,7 +37,7 @@ test('invalid file name', (t) => {
   )
 })
 
-test('invalid type', (t) => {
+test('should throw when type is invalid', t => {
   t.throws(
     () => {
       param({ name: 'recordId', contentType: 5 }, 0, 0, makeAssay())
@@ -38,7 +46,7 @@ test('invalid type', (t) => {
   )
 })
 
-test('invalid comment', (t) => {
+test('should throw when comment is invalid', t => {
   t.throws(
     () => {
       param({ name: 'recordId', comment: 5 }, 0, 0, makeAssay())
@@ -47,13 +55,13 @@ test('invalid comment', (t) => {
   )
 })
 
-test('valid minimal', (t) => {
+test('should not throw when minimal input is valid', t => {
   t.notThrows(() => {
     param({ name: 'recordId' }, 0, 0, makeAssay())
   })
 })
 
-test('valid full', (t) => {
+test('should not throw when full input is valid', t => {
   t.notThrows(() => {
     param(
       {
