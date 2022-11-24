@@ -32,7 +32,7 @@ function validate(node, i) {
 
   if (mimeType === '') {
     console.warn(
-      `[WARN] Post data mimeType is missing and will be assumed to be text/plain (${i})`
+      `[WARN] Post data MIME type is missing and will be inferred from the content (${i})`
     )
   }
 
