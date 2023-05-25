@@ -45,7 +45,7 @@
     "devDependencies": {
         "@babel/core": "^7.4.3",
         "@babel/preset-env": "^7.8.4",
-        "ava": "^1.4.1",
+        "ava": "^2.4.0",
         "babel-eslint": "^10.1.0",
         "babel-loader": "^8.0.6",
         "cross-env": "^5.2.0",
@@ -65,12 +65,12 @@
         "analyze": "BUNDLE_ANALYSIS=\"reports/commit_$(git rev-parse --short HEAD).html\" ./node_modules/.bin/webpack --config webpack.config.js",
         "lint": "eslint .",
         "test": "npm-run-all test-unit test-int test-e2e",
-        "test-int": "cross-env NODE_PATH=src:test ava test/int",
-        "test-unit": "cross-env NODE_PATH=src:test ava test/unit",
+        "test-int": "cross-env NODE_PATH=src:test ava test/int/**/*.js",
+        "test-unit": "cross-env NODE_PATH=src:test ava test/unit/**/*.js",
         "test-e2e": "cross-env NODE_PATH=src:test ava test/e2e/fixtures.test.js test/e2e/**/*.test.js",
-        "test:watch": "cross-env NODE_PATH=src:test ava --watch test/unit",
-        "test-hoc": "cross-env NODE_PATH=src:test ava",
-        "test-only": "cross-env NODE_PATH=src:test ava",
+        "test:watch": "cross-env NODE_PATH=src:test ava --watch test/unit/**/*.js",
+        "test-hoc": "cross-env NODE_PATH=src:test ava ",
+        "test-only": "cross-env NODE_PATH=src:test ava --no-color",
         "prepare": "npm-run-all bundle"
     },
     "eslintConfig": {
