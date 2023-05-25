@@ -69,8 +69,8 @@
         "test-unit": "cross-env NODE_PATH=src:test ava test/unit/**/*.js",
         "test-e2e": "cross-env NODE_PATH=src:test ava test/e2e/fixtures.test.js test/e2e/**/*.test.js",
         "test:watch": "cross-env NODE_PATH=src:test ava --watch test/unit/**/*.js",
-        "test-hoc": "cross-env NODE_PATH=src:test ava ",
-        "test-only": "cross-env NODE_PATH=src:test ava --no-color",
+        "test-hoc": "cross-env NODE_PATH=src:test ava",
+        "test-only": "cross-env NODE_PATH=src:test ava",
         "prepare": "npm-run-all bundle"
     },
     "eslintConfig": {
