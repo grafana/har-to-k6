@@ -9,6 +9,8 @@ function structured(spec) {
       return url(spec)
     case 'multipart/form-data':
       return multipart(spec)
+    case 'application/json':
+      return json(spec)
     default:
       throw new UnrecognizedError(
         { name: 'UnrecognizedStructuredPostType' },

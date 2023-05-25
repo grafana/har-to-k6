@@ -99,9 +99,11 @@ function validate(node, i) {
   if (
     node.params &&
     node.params.length &&
-    !['application/x-www-form-urlencoded', 'multipart/form-data'].includes(
-      getContentTypeValue(node.mimeType)
-    )
+    ![
+      'application/x-www-form-urlencoded',
+      'multipart/form-data',
+      'application/json',
+    ].includes(getContentTypeValue(node.mimeType))
   ) {
     throw new InvalidArchiveError(
       createErrorParams({
