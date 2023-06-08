@@ -70,7 +70,7 @@ $ ./node_modules/.bin/har-to-k6 archive.har -o my-k6-script.js
 #### Global
 
 ```shell
-$ har-to-k6 archive.tar -o my-k6-script.js
+$ har-to-k6 archive.har -o my-k6-script.js
 ```
 
 ### Programmatic Usage
