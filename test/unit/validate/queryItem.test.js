@@ -1,47 +1,52 @@
 import test from 'ava'
 import queryItem from 'validate/queryItem'
-import { assay as makeAssay } from 'make'
 
-test('invalid name', (t) => {
+test('should ignore errors when name is empty', t => {
+  t.notThrows(() => {
+    queryItem({ name: null, value: 123 }, 0, 0)
+  })
+})
+
+test('it should throw when name is invalid', t => {
   t.throws(
     () => {
-      queryItem({ name: 5 }, 0, 0, makeAssay())
+      queryItem({ name: 5 }, 0, 0)
     },
     { name: 'InvalidQueryItemName' }
   )
 })
 
-test('invalid value', (t) => {
+test('it should throw when value is invalid', t => {
   t.throws(
     () => {
-      queryItem({ name: 'search', value: 5 }, 0, 0, makeAssay())
+      queryItem({ name: 'search', value: 5 }, 0, 0)
     },
     { name: 'InvalidQueryItemValue' }
   )
 })
 
-test('invalid comment', (t) => {
+test('it should throw when comment is invalid', t => {
   t.throws(
     () => {
-      queryItem({ name: 'search', comment: 5 }, 0, 0, makeAssay())
+      queryItem({ name: 'search', comment: 5 }, 0, 0)
     },
     { name: 'InvalidQueryStringComment' }
   )
 })
 
-test('valid minimal', (t) => {
+test('it should not throw when given only a name', t => {
   t.notThrows(() => {
-    queryItem({ name: 'search' }, 0, 0, makeAssay())
+    queryItem({ name: 'search' }, 0, 0)
   })
 })
 
-test('valid empty value', (t) => {
+test('it should not throw when given an empty value', t => {
   t.notThrows(() => {
-    queryItem({ name: 'search', value: '' }, 0, 0, makeAssay())
+    queryItem({ name: 'search', value: '' }, 0, 0)
   })
 })
 
-test('valid full', (t) => {
+test('it should not throw when all values are valid', t => {
   t.notThrows(() => {
     queryItem(
       {
@@ -50,8 +55,7 @@ test('valid full', (t) => {
         comment: 'Typical search',
       },
       0,
-      0,
-      makeAssay()
+      0
     )
   })
 })

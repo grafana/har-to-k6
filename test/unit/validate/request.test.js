@@ -2,7 +2,7 @@ import test from 'ava'
 import { assay as makeAssay } from 'make'
 import request from 'validate/request'
 
-const init = (requestBody) =>
+const init = requestBody =>
   Object.assign(
     {},
     {
@@ -17,32 +17,32 @@ const init = (requestBody) =>
     requestBody
   )
 
-test('missing method', (t) => {
+test('missing method', t => {
   t.throws(() => request(init({ method: null }), 0, makeAssay()), {
     name: 'MissingRequestMethod',
   })
 })
 
-test('invalid method', (t) => {
+test('invalid method', t => {
   t.throws(() => request(init({ method: 5 }), 0, makeAssay()), {
     name: 'InvalidRequestMethod',
   })
 })
 
-test('missing url', (t) => {
+test('missing url', t => {
   t.throws(() => request(init({ method: 'GET', url: null }), 0, makeAssay()), {
     name: 'MissingRequestUrl',
   })
 })
 
-test('invalid url type', (t) => {
+test('invalid url type', t => {
   t.throws(() => request(init({ method: 'GET', url: 5 }), 0, makeAssay()), {
     name: 'InvalidRequestUrl',
     message: 'Request URL must be a string',
   })
 })
 
-test('invalid url format', (t) => {
+test('invalid url format', t => {
   t.throws(
     () => request(init({ method: 'GET', url: 'example.com' }), 0, makeAssay()),
     {
@@ -52,7 +52,7 @@ test('invalid url format', (t) => {
   )
 })
 
-test('invalid queryString', (t) => {
+test('invalid queryString', t => {
   t.throws(
     () =>
       request(
@@ -68,7 +68,7 @@ test('invalid queryString', (t) => {
   )
 })
 
-test('invalid headers', (t) => {
+test('invalid headers', t => {
   t.throws(
     () =>
       request(
@@ -84,7 +84,7 @@ test('invalid headers', (t) => {
   )
 })
 
-test('invalid cookies', (t) => {
+test('invalid cookies', t => {
   t.throws(
     () =>
       request(
@@ -100,7 +100,7 @@ test('invalid cookies', (t) => {
   )
 })
 
-test('invalid postData', (t) => {
+test('invalid postData', t => {
   t.throws(
     () =>
       request(
@@ -116,7 +116,7 @@ test('invalid postData', (t) => {
   )
 })
 
-test('invalid comment', (t) => {
+test('invalid comment', t => {
   t.throws(
     () =>
       request(
@@ -132,8 +132,8 @@ test('invalid comment', (t) => {
   )
 })
 
-test('GET with body', (t) => {
-  t.throws(
+test('GET with body', t => {
+  t.notThrows(
     () => {
       request(
         {
@@ -149,7 +149,7 @@ test('GET with body', (t) => {
   )
 })
 
-test('inconsistent Content-Type', (t) => {
+test('inconsistent Content-Type', t => {
   t.notThrows(() =>
     request(
       init({
@@ -164,7 +164,7 @@ test('inconsistent Content-Type', (t) => {
   )
 })
 
-test('consistent Content-Type', (t) => {
+test('consistent Content-Type', t => {
   t.notThrows(() =>
     request(
       {
@@ -179,32 +179,32 @@ test('consistent Content-Type', (t) => {
   )
 })
 
-test('valid http url', (t) => {
+test('valid http url', t => {
   t.notThrows(() => {
     request(init({ method: 'GET', url: 'http://example.com' }), 0, makeAssay())
   })
 })
 
-test('valid https url', (t) => {
+test('valid https url', t => {
   t.notThrows(() => {
     request(init({ method: 'GET', url: 'https://example.com' }), 0, makeAssay())
   })
 })
 
-test('valid ftp url', (t) => {
+test('valid ftp url', t => {
   t.notThrows(() => {
     request(init({ method: 'GET', url: 'ftp://example.com' }), 0, makeAssay())
   })
 })
 
-test('valid variable url', (t) => {
+test('valid variable url', t => {
   /* eslint-disable-next-line no-template-curly-in-string */
   t.notThrows(() => {
     request(init({ method: 'GET', url: '${base}/index.html' }), 0, makeAssay())
   })
 })
 
-test('valid full', (t) => {
+test('valid full', t => {
   t.notThrows(() => {
     request(
       init({

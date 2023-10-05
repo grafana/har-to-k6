@@ -28,18 +28,15 @@ function postData(node, i, assay) {
 }
 
 function validate(node, i) {
-  if (empty(node.mimeType)) {
-    throw new InvalidArchiveError(
-      createErrorParams({
-        name: 'MissingPostDataType',
-        index: i,
-        path: 'mimeType',
-      }),
-      `Post data MIME type is required`
+  const mimeType = empty(node.mimeType) ? '' : node.mimeType
+
+  if (mimeType === '') {
+    console.warn(
+      `[WARN] Post data MIME type is missing and will be inferred from the content (${i})`
     )
   }
 
-  if (typeof node.mimeType !== 'string') {
+  if (typeof mimeType !== 'string') {
     throw new InvalidArchiveError(
       createErrorParams({
         name: 'InvalidPostDataType',

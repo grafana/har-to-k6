@@ -7,11 +7,11 @@ const { createQueryStringIndexes } = require('./utils/indexes')
 /*
  * [j]: object
  */
-function queryString(node, i, assay) {
+function queryString(node, i) {
   validate(node, i)
   for (let j = 0; j < node.length; j++) {
     const item = node[j]
-    queryItem(item, i, j, assay)
+    queryItem(item, i, j)
   }
 }
 

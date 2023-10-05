@@ -13,7 +13,7 @@ const [request, { cookies, headers, postData, queryString, state }] = isolate(
   }
 )
 
-test.serial('basic', (t) => {
+test.serial('basic', t => {
   const spec = makeRequestSpec()
   request({ method: 'get', url: 'http://example.com' }, spec)
   t.is(spec.method, 'GET')
@@ -29,7 +29,7 @@ test.serial('basic', (t) => {
   t.true(state.calledOnce)
 })
 
-test.serial('comment', (t) => {
+test.serial('comment', t => {
   const spec = makeRequestSpec()
   request(
     {
@@ -42,7 +42,7 @@ test.serial('comment', (t) => {
   t.is(spec.comment, 'Load test home page')
 })
 
-test.serial('queryString', (t) => {
+test.serial('queryString', t => {
   request(
     {
       method: 'GET',
@@ -54,7 +54,7 @@ test.serial('queryString', (t) => {
   t.true(queryString.calledOnce)
 })
 
-test.serial('headers', (t) => {
+test.serial('headers', t => {
   request(
     {
       method: 'GET',
@@ -66,7 +66,7 @@ test.serial('headers', (t) => {
   t.true(headers.calledOnce)
 })
 
-test.serial('headers boundary', (t) => {
+test.serial('headers boundary', t => {
   const spec = makeRequestSpec()
   spec.state.post.boundary = 'foobar'
   spec.headers = new Map().set(
@@ -87,7 +87,7 @@ test.serial('headers boundary', (t) => {
   )
 })
 
-test.serial('postData', (t) => {
+test.serial('it should ignore postData when method is GET', t => {
   request(
     {
       method: 'GET',
@@ -96,10 +96,22 @@ test.serial('postData', (t) => {
     },
     makeRequestSpec()
   )
+  t.false(postData.calledOnce)
+})
+
+test.serial('it should add postData when method is POST', t => {
+  request(
+    {
+      method: 'POST',
+      url: 'http://example.com',
+      postData: { mimeType: 'text/plain' },
+    },
+    makeRequestSpec()
+  )
   t.true(postData.calledOnce)
 })
 
-test.serial('postData empty', (t) => {
+test.serial('postData empty', t => {
   request(
     {
       method: 'GET',
