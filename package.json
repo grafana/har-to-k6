@@ -16,11 +16,11 @@
     "directories": {
         "lib": "src"
     },
-    "homepage": "https://github.com/loadimpact/har-to-k6",
-    "repository": "github:loadimpact/har-to-k6",
-    "bugs": "https://github.com/loadimpact/har-to-k6/issues",
+    "homepage": "https://github.com/grafana/har-to-k6",
+    "repository": "github:grafana/har-to-k6",
+    "bugs": "https://github.com/grafana/har-to-k6/issues",
     "engines": {
-        "node": ">=11.0.0"
+        "node": ">=16.0.0"
     },
     "browser": "dist/standalone.js",
     "main": "src/index.js",
@@ -35,15 +35,15 @@
         "is-plain-object": "^2.0.4",
         "iso8601-validator": "^1.0.1",
         "jsonpath": "^1.0.1",
-        "moment": "^2.24.0",
-        "nanoid": "^3.1.22",
+        "moment": "^2.29.4",
+        "nanoid": "^3.1.31",
         "pkginfo": "^0.4.1",
         "prettier": "^2.0.5",
         "tmp": "^0.1.0",
         "verror": "^1.10.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.4.3",
+        "@babel/core": "^7.18.6",
         "@babel/preset-env": "^7.8.4",
         "ava": "^1.4.1",
         "babel-eslint": "^10.1.0",
@@ -102,8 +102,8 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "pretty-quick --staged && yarn lint",
-            "pre-push": "yarn lint && yarn test"
+            "pre-commit": "pretty-quick --staged && npm run lint",
+            "pre-push": "npm run lint && npm test"
         }
     },
     "ava": {},

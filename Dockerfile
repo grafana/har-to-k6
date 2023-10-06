@@ -1,10 +1,10 @@
-FROM node:12-slim
+FROM node:16-slim
 
 WORKDIR /converter
 
 COPY . .
 
-RUN yarn
-RUN yarn bundle
+RUN npm install
+RUN npm run bundle
 
 ENTRYPOINT ["node", "bin/har-to-k6.js"]
