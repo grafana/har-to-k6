@@ -12,10 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Use Node.js 16.xs
+      - name: Setup environment
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
       - name: Install dependencies
@@ -31,9 +32,9 @@ jobs:
         run: npm run bundle
 
       - name: Publish to NPM
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access public
 
       - name: Build docker image
         run: |
