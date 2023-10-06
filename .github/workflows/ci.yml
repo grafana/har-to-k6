@@ -10,29 +10,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v1
-        env:
-          cache-name: node-modules
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          node-version: '16'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: yarn
+        run: npm ci
 
-      - name: Lint
-        run: yarn lint
+      - name: Lint files
+        run: npm run lint
 
       - name: Bundle
-        run: yarn bundle
+        run: npm run bundle
 
       - name: Test
-        run: yarn test
+        run: npm test
 
       - name: Build Docker Image
         run: |

@@ -133,20 +133,17 @@ test('invalid comment', t => {
 })
 
 test('GET with body', t => {
-  t.notThrows(
-    () => {
-      request(
-        {
-          method: 'GET',
-          url: 'http://example.com',
-          postData: { mimeType: 'text/csv' },
-        },
-        0,
-        makeAssay()
-      )
-    },
-    { name: 'InvalidRequestData' }
-  )
+  t.notThrows(() => {
+    request(
+      {
+        method: 'GET',
+        url: 'http://example.com',
+        postData: { mimeType: 'text/csv' },
+      },
+      0,
+      makeAssay()
+    )
+  })
 })
 
 test('inconsistent Content-Type', t => {
