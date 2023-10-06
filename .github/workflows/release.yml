@@ -10,25 +10,25 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Use Node.js 12.xs
-        uses: actions/setup-node@v1
+      - name: Use Node.js 16.xs
+        uses: actions/setup-node@v3
         with:
-          node-version: '12.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: '16'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
 
-      - name: Lint
-        run: yarn lint
+      - name: Lint files
+        run: npm run lint
 
       - name: Test
-        run: yarn test
+        run: npm test
 
       - name: Bundle
-        run: yarn bundle
+        run: npm run bundle
 
       - name: Publish to NPM
         env:
