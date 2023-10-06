@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - v*
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 jobs:
   build-on-tag:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish
+        run: npm publish --access public
 
       - name: Build docker image
         run: |
@@ -48,3 +48,21 @@ jobs:
             grafana/har-to-k6:latest
           docker push grafana/har-to-k6:$tag
           docker push grafana/har-to-k6:latest
+
+  create-github-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: publish
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create Release Notes
+        uses: actions/github-script@v6.2.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            await github.request(`POST /repos/${{ github.repository }}/releases`, {
+              tag_name: "${{ github.ref }}",
+              generate_release_notes: true
+            });
