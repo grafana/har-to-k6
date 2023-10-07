@@ -632,7 +632,12 @@ declare module 'har-to-k6' {
     sleep?: Sleep[]
   }
 
+  export interface ExtendedPage extends Page {
+    sleep?: Sleep[]
+  }
+
   export interface ExtendedLog extends Log {
+    pages?: ExtendedPage[]
     entries: ExtendedEntry[]
   }
 
