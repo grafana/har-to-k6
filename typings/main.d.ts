@@ -448,7 +448,7 @@ declare module 'har-to-k6' {
      *
      * Must be unique.
      */
-    pageRef?: string
+    pageref?: string
 
     /**
      * Date and time stamp of the request start (ISO 8601 - YYYY-MM-DDThh:mm:ss.sTZD).
