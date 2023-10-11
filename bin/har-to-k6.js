@@ -9,6 +9,7 @@ const { DEFAULT_CLI_OPTIONS } = require('../src/constants')
 const { VError } = require('verror')
 
 class CommandLineError extends VError {}
+
 const BOM_REGEX = /^\uFEFF/
 
 pkginfo(module, 'version')
@@ -21,12 +22,18 @@ io.version(version)
     '-o, --output <output>',
     'Output file',
     output,
-    DEFAULT_CLI_OPTIONS.output
+    /** @see {normalizeOptions} */
+    ''
   )
   .option(
     '--add-sleep',
     'Add automatic sleep() based on startDateTime',
     DEFAULT_CLI_OPTIONS.addSleep
+  )
+  .option(
+    '-s, --stdout',
+    'Write to stdout (ignored when running with -o, --output)',
+    DEFAULT_CLI_OPTIONS.stdout
   )
   .argument('<archive>', 'LI-HAR archive to convert')
   .action(run)
@@ -40,21 +47,51 @@ function output(value) {
   return value
 }
 
+/**
+ * Returns logger that either logs to stdout or stderr
+ * When writing to stdout, we want to log to stderr
+ *
+ * @param {import('caporal').LoggerInstance} log
+ * @param {{stdout: boolean}} opt
+ */
+function getLogger(log, opt) {
+  return opt.stdout ? log.warn : log.info
+}
+
 async function run(arg, opt, log) {
+  normalizeOptions(opt)
+  const logger = getLogger(log, opt)
+
   try {
-    start(arg.archive, log)
+    start(arg.archive, logger)
     const json = read(arg.archive)
     const archive = parse(json)
     const { main } = await transform(archive, opt)
-    write(main, opt.output)
-    success(opt.output, log)
+    write(main, opt)
+    success(opt, logger)
   } catch (error) {
     inform(error, log)
   }
 }
 
-function start(file, log) {
-  log.info(chalk.green(`Converting '${file}'`))
+/**
+ * Normalize options so that they are sane
+ * @param {{output: string, addSleep: boolean, stdout: boolean}} opt
+ */
+function normalizeOptions(opt) {
+  // If output is empty, and stdout is not set, set output to default value
+  if (opt.output === '' && !opt.stdout) {
+    opt.output = DEFAULT_CLI_OPTIONS.output
+  }
+
+  // If output is not empty, and stdout is set, set stdout to FALSE
+  if (opt.output !== '' && opt.stdout) {
+    opt.stdout = false
+  }
+}
+
+function start(file, logger) {
+  logger(chalk.green(`Converting '${file}'`))
 }
 
 function read(file) {
@@ -81,16 +118,22 @@ async function transform(archive, options) {
   }
 }
 
-function write(main, output) {
+function write(main, opt) {
   try {
-    fs.writeFileSync(output, main)
+    // Write to stdout if requested, AND if no output file was specified
+    if (opt.stdout) {
+      process.stdout.write(main)
+    } else {
+      fs.writeFileSync(opt.output, main)
+    }
   } catch (error) {
     throw new CommandLineError({ name: 'WriteError', cause: error })
   }
 }
 
-function success(output, log) {
-  log.info(chalk.green(`Wrote k6 script to '${output}'`))
+function success(opt, logger) {
+  const target = opt.stdout ? 'STDOUT' : `'${opt.output}'`
+  logger(chalk.green(`Wrote k6 script to ${target}`))
 }
 
 function inform(error, log) {
