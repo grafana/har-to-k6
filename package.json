@@ -61,8 +61,8 @@
         "webpack-cli": "^5.1.4"
     },
     "scripts": {
-        "bundle": "NODE_OPTIONS=--openssl-legacy-provider ./node_modules/.bin/webpack --config webpack.config.js",
-        "analyze": "NODE_OPTIONS=--openssl-legacy-provider BUNDLE_ANALYSIS=\"reports/commit_$(git rev-parse --short HEAD).html\" ./node_modules/.bin/webpack --config webpack.config.js",
+        "bundle": "./node_modules/.bin/webpack --config webpack.config.js",
+        "analyze": "BUNDLE_ANALYSIS=\"reports/commit_$(git rev-parse --short HEAD).html\" ./node_modules/.bin/webpack --config webpack.config.js",
         "lint": "eslint .",
         "test": "npm-run-all test-unit test-int test-e2e",
         "test-int": "cross-env NODE_PATH=src:test ava test/int/**/*.test.js",
