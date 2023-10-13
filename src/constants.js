@@ -5,6 +5,7 @@ const DEFAULT_OPTIONS = {
 const DEFAULT_CLI_OPTIONS = {
   ...DEFAULT_OPTIONS,
   output: 'loadtest.js',
+  stdout: false,
 }
 
 const DEFAULT_FUNCTION_NAME = 'main'

@@ -73,6 +73,12 @@ $ ./node_modules/.bin/har-to-k6 archive.har -o my-k6-script.js
 $ har-to-k6 archive.har -o my-k6-script.js
 ```
 
+#### Docker
+
+```shell
+$ docker run grafana/har-to-k6:latest archive.har > my-k6-script.js
+```
+
 ### Programmatic Usage
 
 #### Converting

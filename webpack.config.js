@@ -1,11 +1,14 @@
 const path = require('path')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 /** @type {import('webpack').Configuration } */
 module.exports = {
   entry: './src/index.js',
-  node: { fs: 'empty' },
+  resolve: {
+    fallback: {
+      fs: false,
+    },
+  },
   mode: 'production',
   output: {
     path: path.resolve(__dirname),
@@ -19,7 +22,7 @@ module.exports = {
         analyzerMode: 'static',
         reportFilename: path.join(__dirname, process.env.BUNDLE_ANALYSIS),
       }),
-  ].filter((a) => a),
+  ].filter(a => !!a),
   module: {
     rules: [
       {
