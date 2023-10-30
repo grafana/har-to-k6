@@ -1,14 +1,14 @@
-import test from 'ava'
-import query from 'parse/state/query'
-import { requestSpec as makeRequestSpec } from 'make'
+const test = require('ava')
+const query = require('parse/state/query')
+const { requestSpec: makeRequestSpec } = require('make')
 
-test('empty', (t) => {
+test('empty', t => {
   const spec = makeRequestSpec()
   query(spec)
   t.false(spec.state.query.variable)
 })
 
-test('static', (t) => {
+test('static', t => {
   const spec = makeRequestSpec()
   spec.query
     .set('search', new Set([{ value: 'kitten' }, { value: 'puppy' }]))
@@ -18,7 +18,7 @@ test('static', (t) => {
   t.false(spec.state.query.variable)
 })
 
-test('variable name', (t) => {
+test('variable name', t => {
   const spec = makeRequestSpec()
   /* eslint-disable-next-line no-template-curly-in-string */
   spec.query.set('${flag}', new Set([{}]))
@@ -26,7 +26,7 @@ test('variable name', (t) => {
   t.true(spec.state.query.variable)
 })
 
-test('variable value', (t) => {
+test('variable value', t => {
   const spec = makeRequestSpec()
   /* eslint-disable-next-line no-template-curly-in-string */
   spec.query.set('search', new Set([{ value: '${search}' }]))

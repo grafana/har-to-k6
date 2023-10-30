@@ -1,9 +1,9 @@
-import test from 'ava'
-import Regex from 'validate/checkVariant/Regex'
-import { CheckCondition, CheckSubject, CheckType } from 'enum'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const Regex = require('validate/checkVariant/Regex')
+const { CheckCondition, CheckSubject, CheckType } = require('enum')
+const { assay: makeAssay } = require('make')
 
-test('missing subject', (t) => {
+test('missing subject', t => {
   t.throws(
     () => {
       Regex({ type: CheckType.Regex }, 0, 0, makeAssay())
@@ -12,7 +12,7 @@ test('missing subject', (t) => {
   )
 })
 
-test('missing expression', (t) => {
+test('missing expression', t => {
   t.throws(
     () => {
       Regex(
@@ -29,7 +29,7 @@ test('missing expression', (t) => {
   )
 })
 
-test('invalid expression', (t) => {
+test('invalid expression', t => {
   t.throws(
     () => {
       Regex(
@@ -47,7 +47,7 @@ test('invalid expression', (t) => {
   )
 })
 
-test('invalid condition', (t) => {
+test('invalid condition', t => {
   t.throws(
     () => {
       Regex(
@@ -66,7 +66,7 @@ test('invalid condition', (t) => {
   )
 })
 
-test('invalid value', (t) => {
+test('invalid value', t => {
   t.throws(
     () => {
       Regex(
@@ -85,7 +85,7 @@ test('invalid value', (t) => {
   )
 })
 
-test('valid', (t) => {
+test('valid', t => {
   t.notThrows(() => {
     Regex(
       {

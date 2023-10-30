@@ -1,10 +1,10 @@
-import test from 'ava'
-import variable from 'validate/variable'
-import { VariableType } from 'enum'
-import { extrinsic } from 'aid'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const variable = require('validate/variable')
+const { VariableType } = require('enum')
+const { extrinsic } = require('aid')
+const { assay: makeAssay } = require('make')
 
-test('missing name', (t) => {
+test('missing name', t => {
   t.throws(
     () => {
       variable({}, 0, 0, makeAssay())
@@ -13,7 +13,7 @@ test('missing name', (t) => {
   )
 })
 
-test('invalid name type', (t) => {
+test('invalid name type', t => {
   t.throws(
     () => {
       variable({ name: 5 }, 0, 0, makeAssay())
@@ -25,7 +25,7 @@ test('invalid name type', (t) => {
   )
 })
 
-test('invalid name character', (t) => {
+test('invalid name character', t => {
   t.throws(
     () => {
       variable({ name: 'badname{badbadname}' }, 8, 2, makeAssay())
@@ -37,7 +37,7 @@ test('invalid name character', (t) => {
   )
 })
 
-test('missing type', (t) => {
+test('missing type', t => {
   t.throws(
     () => {
       variable({ name: 'a' }, 0, 0, makeAssay())
@@ -46,7 +46,7 @@ test('missing type', (t) => {
   )
 })
 
-test('invalid type type', (t) => {
+test('invalid type type', t => {
   t.throws(
     () => {
       variable({ name: 'a', type: 3.1415 }, 0, 0, makeAssay())
@@ -58,7 +58,7 @@ test('invalid type type', (t) => {
   )
 })
 
-test('invalid type undefined', (t) => {
+test('invalid type undefined', t => {
   const type = extrinsic(VariableType)
   t.throws(
     () => {
@@ -71,7 +71,7 @@ test('invalid type undefined', (t) => {
   )
 })
 
-test('missing expression', (t) => {
+test('missing expression', t => {
   t.throws(
     () => {
       variable({ name: 'a', type: VariableType.JSONPath }, 0, 0, makeAssay())
@@ -80,7 +80,7 @@ test('missing expression', (t) => {
   )
 })
 
-test('invalid expression', (t) => {
+test('invalid expression', t => {
   t.throws(
     () => {
       variable(
@@ -98,7 +98,7 @@ test('invalid expression', (t) => {
   )
 })
 
-test('invalid comment', (t) => {
+test('invalid comment', t => {
   t.throws(() => {
     variable(
       {
@@ -114,7 +114,7 @@ test('invalid comment', (t) => {
   })
 })
 
-test('invalid attribute name', (t) => {
+test('invalid attribute name', t => {
   t.throws(() => {
     variable(
       {
@@ -130,7 +130,7 @@ test('invalid attribute name', (t) => {
   })
 })
 
-test('valid JSONPath', (t) => {
+test('valid JSONPath', t => {
   t.notThrows(() => {
     variable(
       {
@@ -146,7 +146,7 @@ test('valid JSONPath', (t) => {
   })
 })
 
-test('valid Regex', (t) => {
+test('valid Regex', t => {
   t.notThrows(() => {
     variable(
       {
@@ -162,7 +162,7 @@ test('valid Regex', (t) => {
   })
 })
 
-test('valid attribute name', (t) => {
+test('valid attribute name', t => {
   t.notThrows(() => {
     variable(
       {
@@ -178,7 +178,7 @@ test('valid attribute name', (t) => {
   })
 })
 
-test('attribute name is null', (t) => {
+test('attribute name is null', t => {
   t.notThrows(() => {
     variable(
       {
@@ -194,7 +194,7 @@ test('attribute name is null', (t) => {
   })
 })
 
-test('attribute name is undefined', (t) => {
+test('attribute name is undefined', t => {
   t.notThrows(() => {
     variable(
       {

@@ -1,6 +1,6 @@
-import test from 'ava'
-import param from 'validate/param'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const param = require('validate/param')
+const { assay: makeAssay } = require('make')
 
 test('should ignore errors when name is empty', t => {
   t.notThrows(() => {

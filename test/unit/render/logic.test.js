@@ -1,5 +1,5 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [logic, { block, declares, flow, variableSpace }] = isolate(
   test,
   'render/logic',
@@ -11,7 +11,7 @@ const [logic, { block, declares, flow, variableSpace }] = isolate(
   }
 )
 
-test.serial('empty', (t) => {
+test.serial('empty', t => {
   block.returns('{}')
   const result = logic({})
   t.is(result, 'export default function main() {}')
@@ -24,7 +24,7 @@ test.serial('empty', (t) => {
   ])
 })
 
-test.serial('nonempty', (t) => {
+test.serial('nonempty', t => {
   flow.returns(`// Flow`)
   block.returns(
     '' +

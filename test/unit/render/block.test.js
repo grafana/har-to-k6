@@ -1,12 +1,12 @@
-import test from 'ava'
-import block from 'render/block'
+const test = require('ava')
+const block = require('render/block')
 
-test('empty', (t) => {
+test('empty', t => {
   const result = block([])
   t.is(result, '{}')
 })
 
-test('1 section', (t) => {
+test('1 section', t => {
   const result = block(['first();'])
   t.is(
     result,
@@ -16,7 +16,7 @@ test('1 section', (t) => {
   )
 })
 
-test('3 sections', (t) => {
+test('3 sections', t => {
   const result = block([
     'first();',
     'const value = getValue();' + '\nsecond(value);',

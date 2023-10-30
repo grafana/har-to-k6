@@ -1,5 +1,5 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [entry, { checks, request, variables }] = isolate(
   test,
   'render/entry/logic',
@@ -10,7 +10,7 @@ const [entry, { checks, request, variables }] = isolate(
   }
 )
 
-test.serial('minimal', (t) => {
+test.serial('minimal', t => {
   request.returns(`// Request`)
   const result = entry({
     request: {},
@@ -20,7 +20,7 @@ test.serial('minimal', (t) => {
   t.is(result, `// Request`)
 })
 
-test.serial('checks', (t) => {
+test.serial('checks', t => {
   request.returns(`// Request`)
   checks.returns(`// Checks`)
   const result = entry({
@@ -36,7 +36,7 @@ test.serial('checks', (t) => {
   )
 })
 
-test.serial('variables', (t) => {
+test.serial('variables', t => {
   request.returns(`// Request`)
   variables.returns(`// Variables`)
   const result = entry({
@@ -52,7 +52,7 @@ test.serial('variables', (t) => {
   )
 })
 
-test.serial('checks variables', (t) => {
+test.serial('checks variables', t => {
   request.returns(`// Request`)
   checks.returns(`// Checks`)
   variables.returns(`// Variables`)
@@ -70,7 +70,7 @@ test.serial('checks variables', (t) => {
   )
 })
 
-test.serial('sleep', (t) => {
+test.serial('sleep', t => {
   request.returns(`// Request`)
   checks.returns(`// Checks`)
   variables.returns(`// Variables`)

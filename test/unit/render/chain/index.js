@@ -1,17 +1,17 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [chain, { indent, items }] = isolate(test, 'render/chain', {
   indent: 'render/indent',
   items: 'render/chain/items',
 })
 
-test.serial('empty', (t) => {
+test.serial('empty', t => {
   items.returns(null)
   const result = chain([])
   t.is(result, null)
 })
 
-test.serial('nonempty', (t) => {
+test.serial('nonempty', t => {
   const rendered = Symbol('rendered')
   items.returns(`.filter(item => item)`)
   indent.returns(rendered)

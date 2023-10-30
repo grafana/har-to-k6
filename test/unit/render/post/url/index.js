@@ -1,12 +1,12 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { requestSpec as makeRequestSpec } from 'make'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { requestSpec: makeRequestSpec } = require('make')
 const [url, { plural, singular }] = isolate(test, 'render/post/url', {
   plural: 'render/post/url/plural',
   singular: 'render/post/url/singular',
 })
 
-test.serial('singular', (t) => {
+test.serial('singular', t => {
   const spec = makeRequestSpec()
   spec.state.params.plural = false
   url(spec)
@@ -14,7 +14,7 @@ test.serial('singular', (t) => {
   t.true(plural.notCalled)
 })
 
-test.serial('plural', (t) => {
+test.serial('plural', t => {
   const spec = makeRequestSpec()
   spec.state.params.plural = true
   url(spec)

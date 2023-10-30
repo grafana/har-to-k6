@@ -1,22 +1,22 @@
-import test from 'ava'
-import composite from 'render/string/composite'
+const test = require('ava')
+const composite = require('render/string/composite')
 
-test('empty', (t) => {
+test('empty', t => {
   t.is(composite([]), '""')
 })
 
-test('1', (t) => {
+test('1', t => {
   t.is(composite(['GET']), '"GET"')
 })
 
-test('3', (t) => {
+test('3', t => {
   t.is(composite(['GET', 'POST', 'HEAD']), '"GETPOSTHEAD"')
 })
 
-test('empty item', (t) => {
+test('empty item', t => {
   t.is(composite(['GET', '', 'HEAD']), '"GETHEAD"')
 })
 
-test('delimiter', (t) => {
+test('delimiter', t => {
   t.is(composite(['GET', '', 'HEAD'], ','), '"GET,,HEAD"')
 })

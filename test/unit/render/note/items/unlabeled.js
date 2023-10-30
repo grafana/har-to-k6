@@ -1,17 +1,17 @@
-import test from 'ava'
-import unlabeled from 'render/note/items/unlabeled'
+const test = require('ava')
+const unlabeled = require('render/note/items/unlabeled')
 
-test('empty', (t) => {
+test('empty', t => {
   const result = unlabeled([])
   t.is(result, null)
 })
 
-test('1 line', (t) => {
+test('1 line', t => {
   const result = unlabeled([{ comment: 'Enable superspeed' }])
   t.is(result, 'Enable superspeed')
 })
 
-test('3 line', (t) => {
+test('3 line', t => {
   const result = unlabeled([
     { comment: 'Enable superspeed' },
     { comment: 'Enable superstrength' },
@@ -26,8 +26,10 @@ Enable X-ray vision`
   )
 })
 
-test('1 multiline', (t) => {
-  const result = unlabeled([{ comment: 'Enable responsibility\nNecessary with great power' }])
+test('1 multiline', t => {
+  const result = unlabeled([
+    { comment: 'Enable responsibility\nNecessary with great power' },
+  ])
   t.is(
     result,
     '' +
@@ -36,7 +38,7 @@ Necessary with great power`
   )
 })
 
-test('2 multiline', (t) => {
+test('2 multiline', t => {
   const result = unlabeled([
     { comment: 'Enable responsibility\nNecessary with great power' },
     { comment: 'Enable fortitude\nNecessary with great trials' },
@@ -51,7 +53,7 @@ Necessary with great trials`
   )
 })
 
-test('mixed', (t) => {
+test('mixed', t => {
   const result = unlabeled([
     { comment: 'Enable responsibility\nNecessary with great power' },
     { comment: 'Enable superspeed' },

@@ -1,0 +1,440 @@
+
+> har-to-k6@0.14.5 test
+> npm-run-all test-unit test-int test-e2e
+
+
+> har-to-k6@0.14.5 test-unit
+> cross-env NODE_PATH=src:test ava test/unit/**/*.test.js
+
+
+  ✔ normalize › index › falsy archive
+  ✔ normalize › index › falsy archive.log
+  ✔ normalize › index › falsy archive.log.pages
+  ✔ normalize › index › falsy archive.log.entries
+  ✔ normalize › index › entries are sorted
+  ✔ normalize › index › option.addSleep=true
+  ✔ normalize › index › x-www-form-urlencoded values are decoded once
+  ✔ parse › browser › browser name
+  ✔ parse › browser › browser version
+  ✔ parse › browser › browser comment
+  ✔ parse › creator › creator name
+  ✔ parse › creator › creator version
+  ✔ parse › creator › creator comment
+  ✔ parse › exportAs › default export
+  ✔ parse › exportAs › named export
+  ✔ parse › exportAs › reserved name
+  ✔ parse › exportAs › ambiguous name
+  ✔ parse › flow › 1 external
+  ✔ parse › flow › 3 external
+  ✔ parse › flow › 1 group
+  ✔ parse › flow › 3 groups
+  ✔ parse › flow › mixed
+  ✔ parse › flow › split group
+  ✔ codegen › index › should return same template when interpolation is not used (228ms)
+  ✔ codegen › index › should splice undefined value
+  ✔ codegen › index › should splice null value
+  ✔ codegen › index › should splice value of number value
+  ✔ codegen › index › should splice value of boolean value
+  ✔ codegen › index › should splice value of string value
+  ✔ codegen › index › should splice value of array literal
+  ✔ codegen › index › should splice value of object literal
+  ✔ codegen › index › should pass context on to functions passed to interpolation
+  ✔ codegen › index › two templates should compose
+  ✔ codegen › index › context should be propagated to both composed templates
+  ✔ codegen › index › calling unquote should insert unescaped value
+  ✔ codegen › index › calling map on template should allow changes to the context
+  ✔ codegen › index › calling inContext on template should replace context with the given context
+  ✔ codegen › index › calling assign on template should extend the given context with values of given object literal
+  ✔ codegen › index › using from function in interpolation should insert value of property from the context
+  ✔ codegen › index › using from function in interpolation should insert default value when property does not exist in context
+  ✔ parse › checks › empty
+  ✔ parse › checks › 1
+  ✔ parse › checks › 3
+  ✔ parse › entries › 0
+  ✔ parse › entries › 1
+  ✔ parse › entries › 3
+  ✔ parse › check › basic
+  ✔ parse › check › comment
+  ✔ parse › cookies › empty
+  ✔ parse › cookies › 1
+  ✔ parse › cookies › 3
+  ✔ parse › entry › basic
+  ✔ parse › entry › page
+  ✔ parse › entry › comment
+  ✔ parse › entry › checks
+  ✔ parse › entry › variables
+  ✔ parse › entry › sleep
+  ✔ parse › cookie › basic
+  ✔ parse › cookie › value
+  ✔ parse › cookie › path
+  ✔ parse › cookie › domain
+  ✔ parse › cookie › httpOnly true
+  ✔ parse › cookie › httpOnly false
+  ✔ parse › cookie › secure true
+  ✔ parse › cookie › secure false
+  ✔ parse › cookie › comment
+  ✔ parse › cookie › multiple
+  ✔ parse › header › minimal
+  ✔ parse › header › value
+  ✔ parse › header › comment
+  ✔ parse › header › value with charset
+  ✔ parse › header › :pseudo headers are not included
+  ✔ parse › header › Content-Length header is removed
+  ✔ parse › page › main
+  ✔ parse › page › favor name before title
+  ✔ parse › page › fallback to using id as name
+  ✔ parse › page › comment
+  ✔ parse › headers › empty
+  ✔ parse › headers › 1
+  ✔ parse › headers › 3
+  ✔ parse › param › it should ignore the param if the name is empty
+  ✔ parse › param › it should use an empty object when only the name is given
+  ✔ parse › param › it should set the value of params when a value is given
+  ✔ parse › param › it should set the value of params when it is empty
+  ✔ parse › param › it should set the fileName of params when a fileName is given
+  ✔ parse › param › it should set the contentType of params when a contentType is given
+  ✔ parse › param › it should set the comment of params when a comment is given
+  ✔ parse › log › comment
+  ✔ parse › log › creator
+  ✔ parse › log › options
+  ✔ parse › log › browser
+  ✔ parse › log › pages
+  ✔ parse › log › entries
+  ✔ parse › queryItem › it should ignore the query item when name is empty
+  ✔ parse › queryItem › it should use an empty set when only the name is given
+  ✔ parse › queryItem › it should set the value of the query item when a value is given
+  ✔ parse › queryItem › it should set the comment of the query item when a comment is given
+  ✔ parse › params › empty
+  ✔ parse › params › 1
+  ✔ parse › params › 3
+  ✔ parse › pages › 0
+  ✔ parse › pages › 1
+  ✔ parse › pages › 3
+  ✔ parse › postData › basic
+  ✔ parse › postData › text
+  ✔ parse › postData › params
+  ✔ parse › postData › allows charset in mimeType
+  ✔ parse › postData › comment
+  ✔ parse › postData › it should assume mime-type is text/plain when mime-type is empty
+  ✔ parse › postData › it should assume mime-type is application/x-www-form-urlencoded when mime-type is empty when a params array is present
+  ✔ parse › postData › it should assume mime-type is application/json when text can be deserialized to a JSON-object
+  ✔ parse › variable › minimal
+  ✔ parse › variable › comment
+  ✔ parse › sleep › does not mutate during parse
+  ✔ parse › queryString › empty
+  ✔ parse › queryString › 1
+  ✔ parse › queryString › 3
+  ✔ parse › queryString › in request
+  ✔ parse › queryString › invalid request url
+  ✔ parse › request › basic
+  ✔ parse › request › comment
+  ✔ parse › request › queryString
+  ✔ parse › request › headers
+  ✔ parse › request › headers boundary
+  ✔ parse › request › it should ignore postData when method is GET
+  ✔ parse › request › it should add postData when method is POST
+  ✔ parse › request › postData empty
+  ✔ render › comment › single line
+  ✔ render › comment › multiline
+  ✔ render › comment › encoded
+  ✔ render › block › empty
+  ✔ render › block › 1 section
+  ✔ render › block › 3 sections
+  ✔ parse › root › success
+  ✔ render › checks › 1
+  ✔ render › checks › 3
+  ✔ parse › variables › empty
+  ✔ parse › variables › 1
+  ✔ parse › variables › 3
+  ✔ render › declares › none
+  ✔ render › declares › 1
+  ✔ render › declares › 3
+  ✔ render › cookie › basic
+  ✔ render › cookie › value
+  ✔ render › cookie › comment
+  ✔ render › imports › none
+  ✔ render › imports › k6
+  ✔ render › imports › http
+  ✔ render › imports › sleep
+  ✔ render › imports › jslib
+  ✔ render › imports › combined
+  ✔ render › cookies › empty
+  ✔ render › cookies › 1
+  ✔ render › cookies › 3
+  ✔ render › entries › empty
+  ✔ render › entries › 1
+  ✔ render › entries › 3 compact
+  ✔ render › entries › 3 expanded
+  ✔ render › flow › 1 external
+  ✔ render › flow › 3 external
+  ✔ render › flow › 1 group
+  ✔ render › flow › 3 group
+  ✔ render › flow › mixed
+  ✔ render › evaluate › basic
+  ✔ render › indent › 1 line (126ms)
+  ✔ render › indent › 3 lines
+  ✔ render › indent › empty lines
+  ✔ render › group › empty
+  ✔ render › group › implicit
+  ✔ render › group › explicit
+  ✔ render › group › comment
+  ✔ render › headers › empty
+  ✔ render › headers › 1
+  ✔ render › headers › 3
+  ✔ render › header › single value
+  ✔ render › header › multiple values
+  ✔ render › header › comment
+  ✔ render › sleep › number
+  ✔ render › sleep › zero
+  ✔ render › lead › empty
+  ✔ render › lead › 1 line
+  ✔ render › lead › 3 lines
+  ✔ render › logic › empty
+  ✔ render › logic › nonempty
+  ✔ render › request › minimal
+  ✔ render › request › body
+  ✔ render › request › headers
+  ✔ render › request › cookies
+  ✔ render › request › empty body + options
+  ✔ render › variable › Regex
+  ✔ render › variable › JSONPath
+  ✔ render › variable › should select innerHTML when no attribute was given when using CSSSelector
+  ✔ render › variable › should select attribute by name if given when using CSSSelector
+  ✔ render › variable › comment
+  ✔ render › options › basic (192ms)
+  ✔ render › options › vus + duration
+  ✔ render › options › advanced
+  ✔ render › withSleep › before
+  ✔ render › withSleep › after
+  ✔ render › withSleep › before after
+  ✔ render › withSleep › multiple before after
+  ✔ render › root › basic
+  ✔ validate › browser › invalid name
+  ✔ validate › browser › invalid version
+  ✔ validate › browser › invalid comment
+  ✔ validate › browser › valid empty
+  ✔ validate › browser › valid full
+  ✔ render › text › prime string
+  ✔ render › text › prime template
+  ✔ render › text › composite string
+  ✔ render › text › composite template
+  ✔ render › text › composite string delimiter
+  ✔ render › text › composite template delimiter
+  ✔ render › variables › empty
+  ✔ render › variables › 1
+  ✔ render › variables › 3
+  ✔ validate › check › missing type
+  ✔ validate › check › invalid type
+  ✔ validate › check › invalid subject
+  ✔ validate › check › invalid condition
+  ✔ validate › check › invalid expression
+  ✔ validate › check › invalid flags
+  ✔ validate › check › invalid value
+  ✔ validate › check › invalid comment
+  ✔ validate › check › duplicate name
+  ✔ validate › check › valid minimal
+  ✔ validate › check › valid full
+  ✔ validate › cookie › missing name
+  ✔ validate › cookie › invalid name
+  ✔ validate › cookie › invalid value
+  ✔ validate › cookie › invalid path
+  ✔ validate › cookie › invalid domain
+  ✔ validate › cookie › invalid expires type
+  ✔ validate › cookie › invalid expires format
+  ✔ validate › cookie › invalid httpOnly
+  ✔ validate › cookie › invalid secure
+  ✔ validate › cookie › invalid comment
+  ✔ validate › cookie › valid minimal
+  ✔ validate › cookie › valid empty value
+  ✔ validate › cookie › valid full
+  ✔ validate › creator › invalid name
+  ✔ validate › creator › invalid version
+  ✔ validate › creator › invalid comment
+  ✔ validate › creator › valid empty
+  ✔ validate › creator › valid full
+  ✔ validate › checks › invalid check 0
+  ✔ validate › checks › invalid check 2
+  ✔ validate › checks › valid 0
+  ✔ validate › checks › valid 1
+  ✔ validate › checks › valid 3
+  ✔ validate › header › missing name
+  ✔ validate › header › invalid name
+  ✔ validate › header › invalid value
+  ✔ validate › header › invalid comment
+  ✔ validate › header › valid minimal
+  ✔ validate › header › valid empty value
+  ✔ validate › header › valid full
+  ✔ validate › cookies › invalid cookie 0
+  ✔ validate › cookies › invalid cookie 2
+  ✔ validate › cookies › valid 0
+  ✔ validate › cookies › valid 1
+  ✔ validate › cookies › valid 3
+  ✔ validate › page › missing id
+  ✔ validate › page › invalid id
+  ✔ validate › page › duplicate id
+  ✔ validate › page › invalid title
+  ✔ validate › page › invalid sleep
+  ✔ validate › page › invalid comment
+  ✔ validate › page › valid
+  ✔ validate › entries › invalid entry 0
+  ✔ validate › entries › invalid entry 2
+  ✔ validate › entries › valid 0
+  ✔ validate › entries › valid 1
+  ✔ validate › entries › valid 3
+  ✔ validate › param › should ignore errors when name is empty
+  ✔ validate › param › should throw when name is invalid
+  ✔ validate › param › should throw when value is invalid
+  ✔ validate › param › should throw when file name is invalid
+  ✔ validate › param › should throw when type is invalid
+  ✔ validate › param › should throw when comment is invalid
+  ✔ validate › param › should not throw when name is valid
+  ✔ validate › param › should not throw when all values are valid
+  ✔ validate › headers › invalid header 0
+  ✔ validate › headers › invalid header 2
+  ✔ validate › headers › multiple Content-Type
+  ✔ validate › headers › valid 0
+  ✔ validate › headers › valid 1
+  ✔ validate › headers › valid 3
+  ✔ validate › log › invalid version
+  ✔ validate › log › invalid creator
+  ✔ validate › log › invalid options
+  ✔ validate › log › invalid browser
+  ✔ validate › log › invalid comment
+  ✔ validate › log › invalid pages
+  ✔ validate › log › invalid entries
+  ✔ validate › log › valid empty
+  ✔ validate › log › valid full
+  ✔ validate › entry › invalid pageref
+  ✔ validate › entry › missing request
+  ✔ validate › entry › invalid request
+  ✔ validate › entry › invalid checks
+  ✔ validate › entry › invalid variables
+  ✔ validate › entry › invalid comment
+  ✔ validate › entry › valid minimal
+  ✔ validate › entry › valid maximal
+  ✔ validate › entry › invalid sleep
+  ✔ validate › pages › invalid page 0
+  ✔ validate › pages › invalid page 2
+  ✔ validate › pages › valid 0
+  ✔ validate › pages › valid 1
+  ✔ validate › pages › valid 3
+  ✔ validate › params › invalid param 0
+  ✔ validate › params › invalid param 2
+  ✔ validate › params › valid 0
+  ✔ validate › params › valid 1
+  ✔ validate › params › valid 3
+  ✔ validate › queryItem › should ignore errors when name is empty
+  ✔ validate › queryItem › it should throw when name is invalid
+  ✔ validate › queryItem › it should throw when value is invalid
+  ✔ validate › queryItem › it should throw when comment is invalid
+  ✔ validate › queryItem › it should not throw when given only a name
+  ✔ validate › queryItem › it should not throw when given an empty value
+  ✔ validate › queryItem › it should not throw when all values are valid
+  ✔ validate › postData › empty
+  ✔ validate › postData › it should not throw when mimeType is missing
+  ✔ validate › postData › invalid type
+  ✔ validate › postData › invalid params
+  ✔ validate › postData › invalid text
+  ✔ validate › postData › invalid comment
+  ✔ validate › postData › invalid structured type
+  ✔ validate › postData › valid postData combination
+  ✔ validate › postData › valid minimal
+  ✔ validate › postData › valid full params form-urlencoded
+  ✔ validate › postData › valid full params form-data
+  ✔ validate › postData › valid full text
+  ✔ validate › request › missing method
+  ✔ validate › request › invalid method
+  ✔ validate › request › missing url
+  ✔ validate › request › invalid url type
+  ✔ validate › request › invalid url format
+  ✔ validate › request › invalid queryString
+  ✔ validate › request › invalid headers
+  ✔ validate › request › invalid cookies
+  ✔ validate › request › invalid postData
+  ✔ validate › request › invalid comment
+  ✔ validate › request › GET with body
+  ✔ validate › request › inconsistent Content-Type
+  ✔ validate › request › consistent Content-Type
+  ✔ validate › request › valid http url
+  ✔ validate › request › valid https url
+  ✔ validate › request › valid ftp url
+  ✔ validate › request › valid variable url
+  ✔ validate › request › valid full
+  ✔ validate › variable › missing name
+  ✔ validate › variable › invalid name type
+  ✔ validate › variable › invalid name character
+  ✔ validate › variable › missing type
+  ✔ validate › variable › invalid type type
+  ✔ validate › variable › invalid type undefined
+  ✔ validate › variable › missing expression
+  ✔ validate › variable › invalid expression
+  ✔ validate › variable › invalid comment
+  ✔ validate › variable › invalid attribute name
+  ✔ validate › variable › valid JSONPath
+  ✔ validate › variable › valid Regex
+  ✔ validate › variable › valid attribute name
+  ✔ validate › variable › attribute name is null
+  ✔ validate › variable › attribute name is undefined
+  ✔ validate › queryString › invalid item 0
+  ✔ validate › queryString › invalid item 2
+  ✔ validate › queryString › valid 0
+  ✔ validate › queryString › valid 1
+  ✔ validate › queryString › valid 3
+  ✔ validate › variableDefined › undefined method
+  ✔ validate › variableDefined › undefined url
+  ✔ validate › variableDefined › undefined queryItem name
+  ✔ validate › variableDefined › undefined queryItem value
+  ✔ validate › variableDefined › undefined header name
+  ✔ validate › variableDefined › undefined header value
+  ✔ validate › variableDefined › undefined cookie name
+  ✔ validate › variableDefined › undefined cookie value
+  ✔ validate › variableDefined › undefined cookie path
+  ✔ validate › variableDefined › undefined cookie domain
+  ✔ validate › variableDefined › undefined post text
+  ✔ validate › variableDefined › undefined param name
+  ✔ validate › variableDefined › undefined param value
+  ✔ validate › variableDefined › undefined param file name
+  ✔ validate › variableDefined › undefined param type
+  ✔ validate › variableDefined › undefined after defined
+  ✔ validate › variableDefined › valid no references
+  ✔ validate › variableDefined › valid references
+  ✔ validate › root › missing root
+  ✔ validate › root › missing log
+  ✔ validate › root › invalid log
+  ✔ validate › root › valid
+  ✔ validate › variables › invalid variable 0
+  ✔ validate › variables › invalid variable 2
+  ✔ validate › variables › valid 0
+  ✔ validate › variables › valid 1
+  ✔ validate › variables › valid 3
+  ─
+
+  400 tests passed
+
+> har-to-k6@0.14.5 test-int
+> cross-env NODE_PATH=src:test ava test/int/**/*.test.js
+
+
+  ✔ expires
+  ─
+
+  1 test passed
+
+> har-to-k6@0.14.5 test-e2e
+> cross-env NODE_PATH=src:test ava test/e2e/fixtures.test.js test/e2e/**/*.test.js
+
+
+  ✔ multi-convert-scenarios › multi-convert-scenarios › with export props (128ms)
+  ✔ multi-convert-scenarios › multi-convert-scenarios › no export props
+  ✔ fixtures › pass/better-variable-avoidance.har (240ms)
+  ✔ fixtures › pass/css-selector-variable.har (150ms)
+  ✔ fixtures › pass/generate-checks.har (135ms)
+  ✔ fixtures › pass/issue-58_url-search-params-double-inclusion.har (112ms)
+  ✔ fixtures › pass/multi-variable-checks.har (106ms)
+  ✔ fixtures › pass/multipart-formdata.har
+  ✔ fixtures › pass/variable-instead-of-protocol.har
+  ✔ fixtures › pass/variables-checks.har
+  ✔ fixtures › pass/x-www-form-url-encoded.har
+  ─
+
+  11 tests passed

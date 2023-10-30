@@ -1,5 +1,5 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [postData, { params }] = isolate(test, 'parse/postData', {
   params: 'parse/params',
 })

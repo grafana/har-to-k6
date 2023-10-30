@@ -1,7 +1,7 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { requestSpec as makeRequestSpec } from 'make'
-import { PostSpecies } from 'enum'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { requestSpec: makeRequestSpec } = require('make')
+const { PostSpecies } = require('enum')
 const [
   request,
   {
@@ -25,7 +25,7 @@ const [
   text: 'render/text',
 })
 
-test.serial('minimal', (t) => {
+test.serial('minimal', t => {
   text.withArgs('GET').returns('"GET"')
   address.callsFake((spec, factor) => {
     factor.address = '"http://example.com"'
@@ -47,7 +47,7 @@ test.serial('minimal', (t) => {
   t.true(cookies.calledOnce)
 })
 
-test.serial('body', (t) => {
+test.serial('body', t => {
   text.withArgs('POST').returns('"POST"')
   address.callsFake((spec, factor) => {
     factor.address = '"http://example.com"'
@@ -79,7 +79,7 @@ test.serial('body', (t) => {
   )
 })
 
-test.serial('headers', (t) => {
+test.serial('headers', t => {
   text.withArgs('GET').returns('"GET"')
   address.callsFake((spec, factor) => {
     factor.address = '"http://example.com"'
@@ -114,7 +114,7 @@ test.serial('headers', (t) => {
   ])
 })
 
-test.serial('cookies', (t) => {
+test.serial('cookies', t => {
   text.withArgs('GET').returns('"GET"')
   address.callsFake((spec, factor) => {
     factor.address = '"http://example.com"'
@@ -149,7 +149,7 @@ test.serial('cookies', (t) => {
   ])
 })
 
-test.serial('empty body + options', (t) => {
+test.serial('empty body + options', t => {
   text.withArgs('POST').returns('"POST"')
   address.callsFake((spec, factor) => {
     factor.address = '"http://example.com"'

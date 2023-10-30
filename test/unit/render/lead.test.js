@@ -1,16 +1,16 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [lead, { comment }] = isolate(test, 'render/lead', {
   comment: 'render/comment',
 })
 
-test.serial('empty', (t) => {
+test.serial('empty', t => {
   const result = lead({ comment: [] })
   t.is(result, null)
   t.true(comment.notCalled)
 })
 
-test.serial('1 line', (t) => {
+test.serial('1 line', t => {
   const rendered = Symbol('rendered')
   comment.returns(rendered)
   const result = lead({ comment: ['Creator: WebTracer'] })
@@ -19,7 +19,7 @@ test.serial('1 line', (t) => {
   t.is(result, rendered)
 })
 
-test.serial('3 lines', (t) => {
+test.serial('3 lines', t => {
   const rendered = Symbol('rendered')
   comment.returns(rendered)
   const result = lead({

@@ -1,12 +1,12 @@
-import test from 'ava'
-import indent from 'render/indent'
+const test = require('ava')
+const indent = require('render/indent')
 
-test('1 line', (t) => {
+test('1 line', t => {
   const result = indent('doImportantThings();')
   t.is(result, '  doImportantThings();')
 })
 
-test('3 lines', (t) => {
+test('3 lines', t => {
   const result = indent(
     '' +
       `first();
@@ -22,7 +22,7 @@ third();`
   )
 })
 
-test('empty lines', (t) => {
+test('empty lines', t => {
   const result = indent(
     '' +
       `first();

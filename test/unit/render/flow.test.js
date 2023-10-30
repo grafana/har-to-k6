@@ -1,13 +1,13 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { FlowItemType } from 'enum'
-import { result as makeResult } from 'make'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { FlowItemType } = require('enum')
+const { result: makeResult } = require('make')
 const [flow, { entry, group }] = isolate(test, 'render/flow', {
   entry: 'render/entry',
   group: 'render/group',
 })
 
-test.serial('1 external', (t) => {
+test.serial('1 external', t => {
   entry.returns(`// External`)
   const result = makeResult()
   result.flow.push({ type: FlowItemType.External, entry: {} })
@@ -16,7 +16,7 @@ test.serial('1 external', (t) => {
   t.true(group.notCalled)
 })
 
-test.serial('3 external', (t) => {
+test.serial('3 external', t => {
   entry.returns(`// External`)
   const result = makeResult()
   result.flow.push({ type: FlowItemType.External, entry: {} })
@@ -35,7 +35,7 @@ test.serial('3 external', (t) => {
   t.true(group.notCalled)
 })
 
-test.serial('1 group', (t) => {
+test.serial('1 group', t => {
   group.returns(`// Group`)
   const result = makeResult()
   result.flow.push({ type: FlowItemType.Group })
@@ -44,7 +44,7 @@ test.serial('1 group', (t) => {
   t.true(entry.notCalled)
 })
 
-test.serial('3 group', (t) => {
+test.serial('3 group', t => {
   group.returns(`// Group`)
   const result = makeResult()
   result.flow.push({ type: FlowItemType.Group })
@@ -63,7 +63,7 @@ test.serial('3 group', (t) => {
   t.true(entry.notCalled)
 })
 
-test.serial('mixed', (t) => {
+test.serial('mixed', t => {
   entry.returns(`// External`)
   group.returns(`// Group`)
   const result = makeResult()

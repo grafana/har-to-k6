@@ -1,21 +1,21 @@
-import test from 'ava'
-import subject from 'string/check/subject'
-import { extrinsic } from 'aid'
-import { CheckSubject } from 'enum'
+const test = require('ava')
+const subject = require('string/check/subject')
+const { extrinsic } = require('aid')
+const { CheckSubject } = require('enum')
 
-test('ResponseBody', (t) => {
+test('ResponseBody', t => {
   t.is(subject(CheckSubject.ResponseBody), 'body')
 })
 
-test('ResponseHeaders', (t) => {
+test('ResponseHeaders', t => {
   t.is(subject(CheckSubject.ResponseHeaders), 'header')
 })
 
-test('HttpStatusCode', (t) => {
+test('HttpStatusCode', t => {
   t.is(subject(CheckSubject.HttpStatusCode), 'status')
 })
 
-test('invalid', (t) => {
+test('invalid', t => {
   t.throws(
     () => {
       subject(extrinsic(CheckSubject))

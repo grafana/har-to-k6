@@ -1,7 +1,7 @@
-import test from 'ava'
-import withSleep from 'render/withSleep'
+const test = require('ava')
+const withSleep = require('render/withSleep')
 
-test('before', (t) => {
+test('before', t => {
   const flow = ['// content']
   const spec = [{ before: 1200 }]
   const result = withSleep(flow, spec)
@@ -9,7 +9,7 @@ test('before', (t) => {
   t.deepEqual(result, ['sleep(1.2);', '// content'])
 })
 
-test('after', (t) => {
+test('after', t => {
   const flow = ['// content']
   const spec = [{ after: 1200 }]
   const result = withSleep(flow, spec)
@@ -17,7 +17,7 @@ test('after', (t) => {
   t.deepEqual(result, ['// content', 'sleep(1.2);'])
 })
 
-test('before after', (t) => {
+test('before after', t => {
   const flow = ['// content']
   const spec = [{ before: 1000 }, { after: 2000 }]
   const result = withSleep(flow, spec)
@@ -25,7 +25,7 @@ test('before after', (t) => {
   t.deepEqual(result, ['sleep(1);', '// content', 'sleep(2);'])
 })
 
-test('multiple before after', (t) => {
+test('multiple before after', t => {
   const flow = ['// content']
   const spec = [
     { before: 100 },

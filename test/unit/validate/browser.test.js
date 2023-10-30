@@ -1,8 +1,8 @@
-import test from 'ava'
-import browser from 'validate/browser'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const browser = require('validate/browser')
+const { assay: makeAssay } = require('make')
 
-test('invalid name', (t) => {
+test('invalid name', t => {
   t.throws(
     () => {
       browser({ name: 5 }, makeAssay())
@@ -11,7 +11,7 @@ test('invalid name', (t) => {
   )
 })
 
-test('invalid version', (t) => {
+test('invalid version', t => {
   t.throws(
     () => {
       browser({ name: 'Brave', version: 5 }, makeAssay())
@@ -20,7 +20,7 @@ test('invalid version', (t) => {
   )
 })
 
-test('invalid comment', (t) => {
+test('invalid comment', t => {
   t.throws(
     () => {
       browser({ name: 'Brave', version: '5', comment: 5 }, makeAssay())
@@ -29,13 +29,13 @@ test('invalid comment', (t) => {
   )
 })
 
-test('valid empty', (t) => {
+test('valid empty', t => {
   t.notThrows(() => {
     browser({}, makeAssay())
   })
 })
 
-test('valid full', (t) => {
+test('valid full', t => {
   t.notThrows(() => {
     browser(
       { name: 'Brave', version: '5', comment: 'Build 20171028' },

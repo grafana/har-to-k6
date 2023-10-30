@@ -1,10 +1,10 @@
 /* eslint-disable no-template-curly-in-string */
 
-import test from 'ava'
-import variableDefined from 'validate/variableDefined'
-import { VariableType } from 'enum'
+const test = require('ava')
+const variableDefined = require('validate/variableDefined')
+const { VariableType } = require('enum')
 
-test('undefined method', (t) => {
+test('undefined method', t => {
   t.throws(
     () => {
       const entries = [
@@ -19,7 +19,7 @@ test('undefined method', (t) => {
   )
 })
 
-test('undefined url', (t) => {
+test('undefined url', t => {
   t.throws(
     () => {
       const entries = [
@@ -34,7 +34,7 @@ test('undefined url', (t) => {
   )
 })
 
-test('undefined queryItem name', (t) => {
+test('undefined queryItem name', t => {
   t.throws(
     () => {
       const queryString = [{ name: '${key}' }]
@@ -52,7 +52,7 @@ test('undefined queryItem name', (t) => {
   )
 })
 
-test('undefined queryItem value', (t) => {
+test('undefined queryItem value', t => {
   t.throws(
     () => {
       const queryString = [{ name: 'search', value: '${search}' }]
@@ -70,7 +70,7 @@ test('undefined queryItem value', (t) => {
   )
 })
 
-test('undefined header name', (t) => {
+test('undefined header name', t => {
   t.throws(
     () => {
       const headers = [{ name: '${header}', value: '*/*' }]
@@ -88,7 +88,7 @@ test('undefined header name', (t) => {
   )
 })
 
-test('undefined header value', (t) => {
+test('undefined header value', t => {
   t.throws(
     () => {
       const headers = [{ name: 'Allow', value: '${contentType}' }]
@@ -106,7 +106,7 @@ test('undefined header value', (t) => {
   )
 })
 
-test('undefined cookie name', (t) => {
+test('undefined cookie name', t => {
   t.throws(
     () => {
       const cookies = [{ name: '${cookie}' }]
@@ -124,7 +124,7 @@ test('undefined cookie name', (t) => {
   )
 })
 
-test('undefined cookie value', (t) => {
+test('undefined cookie value', t => {
   t.throws(
     () => {
       const cookies = [{ name: 'session', value: '${session}' }]
@@ -142,7 +142,7 @@ test('undefined cookie value', (t) => {
   )
 })
 
-test('undefined cookie path', (t) => {
+test('undefined cookie path', t => {
   t.throws(
     () => {
       const cookies = [{ name: 'theme', path: '${path}' }]
@@ -160,7 +160,7 @@ test('undefined cookie path', (t) => {
   )
 })
 
-test('undefined cookie domain', (t) => {
+test('undefined cookie domain', t => {
   t.throws(
     () => {
       const cookies = [{ name: 'theme', domain: '${host}' }]
@@ -178,7 +178,7 @@ test('undefined cookie domain', (t) => {
   )
 })
 
-test('undefined post text', (t) => {
+test('undefined post text', t => {
   t.throws(
     () => {
       const postData = { mimeType: 'text/plain', text: '${body}' }
@@ -196,7 +196,7 @@ test('undefined post text', (t) => {
   )
 })
 
-test('undefined param name', (t) => {
+test('undefined param name', t => {
   t.throws(
     () => {
       const params = [{ name: '${param}' }]
@@ -215,7 +215,7 @@ test('undefined param name', (t) => {
   )
 })
 
-test('undefined param value', (t) => {
+test('undefined param value', t => {
   t.throws(
     () => {
       const params = [{ name: 'search', value: '${search}' }]
@@ -234,7 +234,7 @@ test('undefined param value', (t) => {
   )
 })
 
-test('undefined param file name', (t) => {
+test('undefined param file name', t => {
   t.throws(
     () => {
       const params = [{ name: 'data', fileName: '${file}' }]
@@ -253,7 +253,7 @@ test('undefined param file name', (t) => {
   )
 })
 
-test('undefined param type', (t) => {
+test('undefined param type', t => {
   t.throws(
     () => {
       const params = [{ name: 'data', contentType: '${type}' }]
@@ -272,7 +272,7 @@ test('undefined param type', (t) => {
   )
 })
 
-test('undefined after defined', (t) => {
+test('undefined after defined', t => {
   t.throws(
     () => {
       const variables = [
@@ -307,14 +307,14 @@ test('undefined after defined', (t) => {
   )
 })
 
-test('valid no references', (t) => {
+test('valid no references', t => {
   t.notThrows(() => {
     const entries = [{ request: { method: 'GET', url: 'http://example.com' } }]
     variableDefined({ log: { entries } })
   })
 })
 
-test('valid references', (t) => {
+test('valid references', t => {
   t.notThrows(() => {
     const variables = [
       { name: 'one', type: VariableType.JSONPath, expression: 'one' },

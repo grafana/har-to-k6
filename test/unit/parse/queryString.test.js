@@ -1,5 +1,5 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [queryString, { queryItem }] = isolate(test, 'parse/queryString', {
   queryItem: 'parse/queryItem',
 })
@@ -14,22 +14,22 @@ function makeState() {
   }
 }
 
-test.serial('empty', (t) => {
+test.serial('empty', t => {
   queryString([], '', makeSpec(), makeState())
   t.true(queryItem.notCalled)
 })
 
-test.serial('1', (t) => {
+test.serial('1', t => {
   queryString([{}], '', makeSpec(), makeState())
   t.true(queryItem.calledOnce)
 })
 
-test.serial('3', (t) => {
+test.serial('3', t => {
   queryString([{}, {}, {}], '', makeSpec(), makeState())
   t.true(queryItem.calledThrice)
 })
 
-test.serial('in request', (t) => {
+test.serial('in request', t => {
   queryString(
     [
       { name: '__test__', value: '1' },
@@ -42,7 +42,7 @@ test.serial('in request', (t) => {
   t.true(queryItem.calledOnce)
 })
 
-test.serial('invalid request url', (t) => {
+test.serial('invalid request url', t => {
   queryString(
     [
       { name: '__test__', value: '1' },

@@ -1,8 +1,8 @@
-import test from 'ava'
-import Text from 'string/check/name/Text'
-import { CheckCondition, CheckSubject } from 'enum'
+const test = require('ava')
+const Text = require('string/check/name/Text')
+const { CheckCondition, CheckSubject } = require('enum')
 
-test('body contains', (t) => {
+test('body contains', t => {
   const name = Text({
     subject: CheckSubject.ResponseBody,
     condition: CheckCondition.Contains,
@@ -11,7 +11,7 @@ test('body contains', (t) => {
   t.is(name, 'body contains Logged in')
 })
 
-test('status starts with', (t) => {
+test('status starts with', t => {
   const name = Text({
     subject: CheckSubject.HttpStatusCode,
     condition: CheckCondition.StartsWith,

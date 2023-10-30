@@ -1,6 +1,6 @@
-import test from 'ava'
-import { assay as makeAssay } from 'make'
-import request from 'validate/request'
+const test = require('ava')
+const { assay: makeAssay } = require('make')
+const request = require('validate/request')
 
 const init = requestBody =>
   Object.assign(

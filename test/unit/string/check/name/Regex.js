@@ -1,8 +1,8 @@
-import test from 'ava'
-import Regex from 'string/check/name/Regex'
-import { CheckSubject } from 'enum'
+const test = require('ava')
+const Regex = require('string/check/name/Regex')
+const { CheckSubject } = require('enum')
 
-test('basic', (t) => {
+test('basic', t => {
   const name = Regex({
     subject: CheckSubject.ResponseBody,
     expression: 'User .+ logged in',
@@ -10,7 +10,7 @@ test('basic', (t) => {
   t.is(name, 'body matches /User .+ logged in/')
 })
 
-test('flags', (t) => {
+test('flags', t => {
   const name = Regex({
     subject: CheckSubject.ResponseHeaders,
     expression: 'Server: .*apache.*',

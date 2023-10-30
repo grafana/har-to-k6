@@ -1,6 +1,6 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { FlowItemType } from 'enum'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { FlowItemType } = require('enum')
 const [group, { block, comment, entries, string }] = isolate(
   test,
   'render/group',
@@ -12,7 +12,7 @@ const [group, { block, comment, entries, string }] = isolate(
   }
 )
 
-test.serial('empty', (t) => {
+test.serial('empty', t => {
   string.returns('"page1"')
   entries.returns(null)
   block.returns(`{}`)
@@ -26,7 +26,7 @@ test.serial('empty', (t) => {
   t.true(block.calledOnce)
 })
 
-test.serial('implicit', (t) => {
+test.serial('implicit', t => {
   string.returns('"page1"')
   entries.returns(`// Entries`)
   block.returns(`{
@@ -47,7 +47,7 @@ test.serial('implicit', (t) => {
   t.true(block.calledOnce)
 })
 
-test.serial('explicit', (t) => {
+test.serial('explicit', t => {
   string.returns('"Page 1"')
   entries.returns(`// Entries`)
   block.returns(`{
@@ -67,7 +67,7 @@ test.serial('explicit', (t) => {
   )
 })
 
-test.serial('comment', (t) => {
+test.serial('comment', t => {
   string.returns('"Page 1"')
   entries.returns(`// Entries`)
   block.returns(`{

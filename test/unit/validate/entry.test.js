@@ -1,6 +1,6 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { assay: makeAssay } = require('make')
 const [entry, { checks, request, variables }] = isolate(
   test,
   'validate/entry',
@@ -11,7 +11,7 @@ const [entry, { checks, request, variables }] = isolate(
   }
 )
 
-test.serial('invalid pageref', (t) => {
+test.serial('invalid pageref', t => {
   t.throws(
     () => {
       entry({ pageref: 5 }, 0, makeAssay())
@@ -20,7 +20,7 @@ test.serial('invalid pageref', (t) => {
   )
 })
 
-test.serial('missing request', (t) => {
+test.serial('missing request', t => {
   t.throws(
     () => {
       entry({}, 0, makeAssay())
@@ -29,7 +29,7 @@ test.serial('missing request', (t) => {
   )
 })
 
-test.serial('invalid request', (t) => {
+test.serial('invalid request', t => {
   t.throws(
     () => {
       entry({ request: 5 }, 0, makeAssay())
@@ -38,7 +38,7 @@ test.serial('invalid request', (t) => {
   )
 })
 
-test.serial('invalid checks', (t) => {
+test.serial('invalid checks', t => {
   t.throws(
     () => {
       entry({ request: {}, checks: 5 }, 0, makeAssay())
@@ -47,7 +47,7 @@ test.serial('invalid checks', (t) => {
   )
 })
 
-test.serial('invalid variables', (t) => {
+test.serial('invalid variables', t => {
   t.throws(
     () => {
       entry({ request: {}, variables: 5 }, 0, makeAssay())
@@ -56,7 +56,7 @@ test.serial('invalid variables', (t) => {
   )
 })
 
-test('invalid sleep', (t) => {
+test('invalid sleep', t => {
   t.throws(
     () => {
       entry({ request: {}, sleep: {} }, 0, makeAssay())
@@ -65,7 +65,7 @@ test('invalid sleep', (t) => {
   )
 })
 
-test.serial('invalid comment', (t) => {
+test.serial('invalid comment', t => {
   t.throws(
     () => {
       entry({ request: {}, comment: 5 }, 0, makeAssay())
@@ -74,14 +74,14 @@ test.serial('invalid comment', (t) => {
   )
 })
 
-test.serial('valid minimal', (t) => {
+test.serial('valid minimal', t => {
   entry({ request: {} }, 0, makeAssay())
   t.true(request.calledOnce)
   t.true(checks.notCalled)
   t.true(variables.notCalled)
 })
 
-test.serial('valid maximal', (t) => {
+test.serial('valid maximal', t => {
   entry(
     {
       request: {},

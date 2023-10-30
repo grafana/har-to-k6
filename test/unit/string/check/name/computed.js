@@ -1,7 +1,7 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { extrinsic } from 'aid'
-import { CheckCondition, CheckSubject, CheckType } from 'enum'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { extrinsic } = require('aid')
+const { CheckCondition, CheckSubject, CheckType } = require('enum')
 const [computed, { JSONPath, JSONPathValue, Regex, Text }] = isolate(
   test,
   'string/check/name/computed',
@@ -13,7 +13,7 @@ const [computed, { JSONPath, JSONPathValue, Regex, Text }] = isolate(
   }
 )
 
-test.serial('JSONPath', (t) => {
+test.serial('JSONPath', t => {
   const result = Symbol('result')
   JSONPath.returns(result)
   const name = computed({
@@ -23,7 +23,7 @@ test.serial('JSONPath', (t) => {
   t.is(name, result)
 })
 
-test.serial('JSONPathValue', (t) => {
+test.serial('JSONPathValue', t => {
   const result = Symbol('result')
   JSONPathValue.returns(result)
   const name = computed({
@@ -35,7 +35,7 @@ test.serial('JSONPathValue', (t) => {
   t.is(name, result)
 })
 
-test.serial('Regex', (t) => {
+test.serial('Regex', t => {
   const result = Symbol('result')
   Regex.returns(result)
   const name = computed({
@@ -46,7 +46,7 @@ test.serial('Regex', (t) => {
   t.is(name, result)
 })
 
-test.serial('Text', (t) => {
+test.serial('Text', t => {
   const result = Symbol('result')
   Text.returns(result)
   const name = computed({
@@ -58,7 +58,7 @@ test.serial('Text', (t) => {
   t.is(name, result)
 })
 
-test.serial('invalid', (t) => {
+test.serial('invalid', t => {
   t.throws(
     () => {
       computed({ type: extrinsic(CheckType) })

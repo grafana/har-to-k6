@@ -1,7 +1,7 @@
-import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
-import { CheckType } from 'enum'
+const test = require('ava')
+const mockRequire = require('mock-require')
+const sinon = require('sinon')
+const { CheckType } = require('enum')
 const checkName = sinon.stub()
 let check
 
@@ -27,7 +27,7 @@ test.afterEach.always(() => {
   }
 })
 
-test.serial('basic', (t) => {
+test.serial('basic', t => {
   checkName.returns('token exists')
   const spec = makeSpec()
   check({ type: CheckType.JSONPath, expression: 'token' }, spec)
@@ -40,7 +40,7 @@ test.serial('basic', (t) => {
   )
 })
 
-test.serial('comment', (t) => {
+test.serial('comment', t => {
   checkName.returns('token exists')
   const spec = makeSpec()
   check(

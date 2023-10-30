@@ -1,14 +1,18 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { CheckSubject } from 'enum'
-import { checkState as makeCheckState } from 'make'
-const [Regex, { indent, string, subject }] = isolate(test, 'render/check/variant/Regex', {
-  indent: 'render/indent',
-  string: 'render/string',
-  subject: 'render/check/subject',
-})
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { CheckSubject } = require('enum')
+const { checkState: makeCheckState } = require('make')
+const [Regex, { indent, string, subject }] = isolate(
+  test,
+  'render/check/variant/Regex',
+  {
+    indent: 'render/indent',
+    string: 'render/string',
+    subject: 'render/check/subject',
+  }
+)
 
-test.serial('subject', (t) => {
+test.serial('subject', t => {
   const spec = {
     subject: CheckSubject.ResponseBody,
     expression: 'User (.+) logged in',
@@ -21,7 +25,7 @@ test.serial('subject', (t) => {
   t.is(subject.firstCall.args[0], CheckSubject.ResponseBody)
 })
 
-test.serial('singular', (t) => {
+test.serial('singular', t => {
   subject.returns('subject')
   string.returns('expression')
   indent.returns('indented')
@@ -51,7 +55,7 @@ return expr.test(subject);`
   )
 })
 
-test.serial('plural', (t) => {
+test.serial('plural', t => {
   subject.returns('subject')
   string.returns('expression')
   indent.returns('indented')

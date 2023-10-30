@@ -1,5 +1,5 @@
-import test from 'ava'
-import exportAs from 'parse/exportAs'
+const test = require('ava')
+const exportAs = require('parse/exportAs')
 const { result: makeResult } = require('make')
 
 test('default export', t => {

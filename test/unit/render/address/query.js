@@ -1,14 +1,14 @@
-import test from 'ava'
-import { requestFactor as makeRequestFactor } from 'make'
-import query from 'render/address/query'
+const test = require('ava')
+const { requestFactor: makeRequestFactor } = require('make')
+const query = require('render/address/query')
 
-test.serial('empty', (t) => {
+test.serial('empty', t => {
   const factor = makeRequestFactor()
   query(new Map(), factor)
   t.deepEqual(factor.pre, [])
 })
 
-test.serial('1', (t) => {
+test.serial('1', t => {
   const factor = makeRequestFactor()
   const spec = new Map().set(
     'search',

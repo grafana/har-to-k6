@@ -1,8 +1,10 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-const [unstructured, { text }] = isolate(test, 'render/post/unstructured', { text: 'render/text' })
+const test = require('ava')
+const isolate = require('helper/isolate')
+const [unstructured, { text }] = isolate(test, 'render/post/unstructured', {
+  text: 'render/text',
+})
 
-test.serial('empty', (t) => {
+test.serial('empty', t => {
   text.returns('""')
   const post = {}
   const result = unstructured({ post })
@@ -11,7 +13,7 @@ test.serial('empty', (t) => {
   t.is(text.firstCall.args[0], '')
 })
 
-test.serial('nonempty', (t) => {
+test.serial('nonempty', t => {
   text.returns('"Good post"')
   const post = { value: 'Good post' }
   const result = unstructured({ post })

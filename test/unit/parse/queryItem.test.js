@@ -1,6 +1,6 @@
-import test from 'ava'
-import queryItem from 'parse/queryItem'
-import { queryState as makeState } from 'make'
+const test = require('ava')
+const queryItem = require('parse/queryItem')
+const { queryState: makeState } = require('make')
 
 function makeSpec() {
   return new Map()

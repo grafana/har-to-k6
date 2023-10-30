@@ -46,7 +46,7 @@
     "devDependencies": {
         "@babel/core": "^7.23.2",
         "@babel/preset-env": "^7.23.2",
-        "ava": "^2.4.0",
+        "ava": "^5.3.1",
         "babel-eslint": "^10.1.0",
         "babel-loader": "^8.0.6",
         "cross-env": "^5.2.0",
