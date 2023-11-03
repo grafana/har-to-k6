@@ -1,17 +1,17 @@
-import test from 'ava'
-import labeled from 'render/note/items/labeled'
+const test = require('ava')
+const labeled = require('render/note/items/labeled')
 
-test('empty', (t) => {
+test('empty', t => {
   const result = labeled([])
   t.is(result, null)
 })
 
-test('1 line', (t) => {
+test('1 line', t => {
   const result = labeled([{ value: 'speed', comment: 'Enable superspeed' }])
   t.is(result, 'speed: Enable superspeed')
 })
 
-test('3 line', (t) => {
+test('3 line', t => {
   const result = labeled([
     { value: 'vision', comment: 'Enable X-ray vision' },
     { value: 'speed', comment: 'Enable superspeed' },
@@ -26,7 +26,7 @@ vision: Enable X-ray vision`
   )
 })
 
-test('1 multiline', (t) => {
+test('1 multiline', t => {
   const result = labeled([
     {
       value: 'wisdom',
@@ -42,7 +42,7 @@ Necessary with great power`
   )
 })
 
-test('2 multiline', (t) => {
+test('2 multiline', t => {
   const result = labeled([
     {
       value: 'wisdom',
@@ -65,7 +65,7 @@ Necessary with great power`
   )
 })
 
-test('mixed', (t) => {
+test('mixed', t => {
   const result = labeled([
     {
       value: 'wisdom',

@@ -1,8 +1,8 @@
-import test from 'ava'
-import page from 'parse/page'
-import { result as makeResult } from 'make'
+const test = require('ava')
+const page = require('parse/page')
+const { result: makeResult } = require('make')
 
-test('main', (t) => {
+test('main', t => {
   const result = makeResult()
   page({ id: 'page1', title: 'Page 1' }, result)
   t.deepEqual(
@@ -18,7 +18,7 @@ test('main', (t) => {
   )
 })
 
-test('favor name before title', (t) => {
+test('favor name before title', t => {
   const result = makeResult()
   page({ id: 'page_id', name: 'Page name', title: 'Page title' }, result)
   t.deepEqual(
@@ -34,7 +34,7 @@ test('favor name before title', (t) => {
   )
 })
 
-test('fallback to using id as name', (t) => {
+test('fallback to using id as name', t => {
   const result = makeResult()
   page({ id: 'page_id_1', title: 'Page title' }, result)
 
@@ -66,7 +66,7 @@ test('fallback to using id as name', (t) => {
   )
 })
 
-test('comment', (t) => {
+test('comment', t => {
   const result = makeResult()
   page({ id: 'page1', title: 'Page 1', comment: 'Heavy load' }, result)
   t.deepEqual(

@@ -1,11 +1,11 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { assay: makeAssay } = require('make')
 const [headers, { header }] = isolate(test, 'validate/headers', {
   header: 'validate/header',
 })
 
-test.serial('invalid header 0', (t) => {
+test.serial('invalid header 0', t => {
   t.throws(
     () => {
       headers([5], 0, makeAssay())
@@ -17,7 +17,7 @@ test.serial('invalid header 0', (t) => {
   )
 })
 
-test.serial('invalid header 2', (t) => {
+test.serial('invalid header 2', t => {
   t.throws(
     () => {
       headers([{}, {}, 5], 8, makeAssay())
@@ -29,7 +29,7 @@ test.serial('invalid header 2', (t) => {
   )
 })
 
-test.serial('multiple Content-Type', (t) => {
+test.serial('multiple Content-Type', t => {
   t.throws(
     () => {
       headers(
@@ -42,17 +42,17 @@ test.serial('multiple Content-Type', (t) => {
   )
 })
 
-test.serial('valid 0', (t) => {
+test.serial('valid 0', t => {
   headers([], 0, makeAssay())
   t.true(header.notCalled)
 })
 
-test.serial('valid 1', (t) => {
+test.serial('valid 1', t => {
   headers([{}], 0, makeAssay())
   t.true(header.calledOnce)
 })
 
-test.serial('valid 3', (t) => {
+test.serial('valid 3', t => {
   headers([{}, {}, {}], 0, makeAssay())
   t.true(header.calledThrice)
 })

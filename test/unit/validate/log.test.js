@@ -1,6 +1,6 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { assay: makeAssay } = require('make')
 const [log, { browser, creator, entries, pages, options }] = isolate(
   test,
   'validate/log',
@@ -13,7 +13,7 @@ const [log, { browser, creator, entries, pages, options }] = isolate(
   }
 )
 
-test.serial('invalid version', (t) => {
+test.serial('invalid version', t => {
   t.throws(
     () => {
       log({ version: 5 }, makeAssay())
@@ -22,7 +22,7 @@ test.serial('invalid version', (t) => {
   )
 })
 
-test.serial('invalid creator', (t) => {
+test.serial('invalid creator', t => {
   t.throws(
     () => {
       log({ creator: 5 }, makeAssay())
@@ -31,7 +31,7 @@ test.serial('invalid creator', (t) => {
   )
 })
 
-test.serial('invalid options', (t) => {
+test.serial('invalid options', t => {
   t.throws(
     () => {
       log({ options: 5 }, makeAssay())
@@ -40,7 +40,7 @@ test.serial('invalid options', (t) => {
   )
 })
 
-test.serial('invalid browser', (t) => {
+test.serial('invalid browser', t => {
   t.throws(
     () => {
       log({ browser: 5 }, makeAssay())
@@ -49,7 +49,7 @@ test.serial('invalid browser', (t) => {
   )
 })
 
-test.serial('invalid comment', (t) => {
+test.serial('invalid comment', t => {
   t.throws(
     () => {
       log({ comment: 5 }, makeAssay())
@@ -58,7 +58,7 @@ test.serial('invalid comment', (t) => {
   )
 })
 
-test.serial('invalid pages', (t) => {
+test.serial('invalid pages', t => {
   t.throws(
     () => {
       log({ pages: {} }, makeAssay())
@@ -67,7 +67,7 @@ test.serial('invalid pages', (t) => {
   )
 })
 
-test.serial('invalid entries', (t) => {
+test.serial('invalid entries', t => {
   t.throws(
     () => {
       log({ entries: {} }, makeAssay())
@@ -76,7 +76,7 @@ test.serial('invalid entries', (t) => {
   )
 })
 
-test.serial('valid empty', (t) => {
+test.serial('valid empty', t => {
   log({}, makeAssay())
   t.true(creator.notCalled)
   t.true(browser.notCalled)
@@ -85,7 +85,7 @@ test.serial('valid empty', (t) => {
   t.true(options.notCalled)
 })
 
-test.serial('valid full', (t) => {
+test.serial('valid full', t => {
   log(
     {
       version: '1.2',

@@ -1,7 +1,7 @@
-import test from 'ava'
-import aid from 'aid'
+const test = require('ava')
+const aid = require('aid')
 
-test('extrinsic', (t) => {
+test('extrinsic', t => {
   const enumeration = {
     First: 0,
     Second: 1,

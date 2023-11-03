@@ -1,5 +1,5 @@
-import test from 'ava'
-import queryItem from 'validate/queryItem'
+const test = require('ava')
+const queryItem = require('validate/queryItem')
 
 test('should ignore errors when name is empty', t => {
   t.notThrows(() => {

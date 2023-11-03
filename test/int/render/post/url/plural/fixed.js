@@ -1,5 +1,5 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [fixed, { comment, note, string }] = isolate(
   test,
   'render/post/url/plural/fixed',
@@ -10,7 +10,7 @@ const [fixed, { comment, note, string }] = isolate(
   }
 )
 
-test.serial('result', (t) => {
+test.serial('result', t => {
   string.returns('rendered')
   const params = new Map()
   const result = fixed(params)
@@ -18,13 +18,13 @@ test.serial('result', (t) => {
   t.is(result, 'rendered')
 })
 
-test.serial('1', (t) => {
+test.serial('1', t => {
   const params = new Map().set('search', new Set([{ value: 'kitten' }]))
   fixed(params)
   t.is(string.firstCall.args[0], 'search=kitten')
 })
 
-test.serial('3', (t) => {
+test.serial('3', t => {
   const params = new Map()
     .set('search', new Set([{ value: 'kitten' }]))
     .set('filter', new Set([{ value: 'cute' }]))
@@ -33,7 +33,7 @@ test.serial('3', (t) => {
   t.is(string.firstCall.args[0], 'search=kitten&filter=cute&order=cuteness')
 })
 
-test.serial('multivalue', (t) => {
+test.serial('multivalue', t => {
   const params = new Map().set(
     'search',
     new Set([{ value: 'kitten' }, { value: 'puppy' }, { value: 'quokka' }])
@@ -42,7 +42,7 @@ test.serial('multivalue', (t) => {
   t.is(string.firstCall.args[0], 'search=kitten%2Cpuppy%2Cquokka')
 })
 
-test.serial('comment', (t) => {
+test.serial('comment', t => {
   note.returns('-search- Find kittens')
   comment.returns('// -search- Find kittens')
   string.returns('"search=kitten"')

@@ -1,12 +1,12 @@
-import test from 'ava'
+const test = require('ava')
 
-import variable from 'render/variable'
-import { parse } from 'helper/parse'
+const variable = require('render/variable')
+const { parse } = require('helper/parse')
 
-import { VariableType } from 'enum'
-import { parseComments } from '../../helper/parse'
+const { VariableType } = require('enum')
+const { parseComments } = require('../../helper/parse')
 
-test('Regex', (t) => {
+test('Regex', t => {
   const result = parse(
     variable('token', {
       type: VariableType.Regex,
@@ -24,7 +24,7 @@ test('Regex', (t) => {
   t.deepEqual(result, expected)
 })
 
-test('JSONPath', (t) => {
+test('JSONPath', t => {
   const result = parse(
     variable('token', {
       type: VariableType.JSONPath,
@@ -39,7 +39,7 @@ test('JSONPath', (t) => {
   t.deepEqual(result, expected)
 })
 
-test('should select innerHTML when no attribute was given when using CSSSelector', (t) => {
+test('should select innerHTML when no attribute was given when using CSSSelector', t => {
   const result = parse(
     variable('token', {
       type: VariableType.CSSSelector,
@@ -57,7 +57,7 @@ test('should select innerHTML when no attribute was given when using CSSSelector
   t.deepEqual(result, expected)
 })
 
-test('should select attribute by name if given when using CSSSelector', (t) => {
+test('should select attribute by name if given when using CSSSelector', t => {
   const result = parse(
     variable('token', {
       type: VariableType.CSSSelector,
@@ -77,7 +77,7 @@ test('should select attribute by name if given when using CSSSelector', (t) => {
   t.deepEqual(result, expected)
 })
 
-test('comment', (t) => {
+test('comment', t => {
   const result = parseComments(
     variable('token', {
       type: VariableType.Regex,

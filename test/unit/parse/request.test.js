@@ -1,6 +1,6 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { requestSpec as makeRequestSpec } from 'make'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { requestSpec: makeRequestSpec } = require('make')
 const [request, { cookies, headers, postData, queryString, state }] = isolate(
   test,
   'parse/request',

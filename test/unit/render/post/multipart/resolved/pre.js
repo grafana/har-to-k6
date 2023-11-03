@@ -1,11 +1,15 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-const [pre, { comment, text }] = isolate(test, 'render/post/multipart/resolved/pre', {
-  comment: 'render/comment',
-  text: 'render/text',
-})
+const test = require('ava')
+const isolate = require('helper/isolate')
+const [pre, { comment, text }] = isolate(
+  test,
+  'render/post/multipart/resolved/pre',
+  {
+    comment: 'render/comment',
+    text: 'render/text',
+  }
+)
 
-test.serial('minimal', (t) => {
+test.serial('minimal', t => {
   text.onFirstCall().returns('"form-data; name=search"')
   text.onSecondCall().returns('""')
   const params = new Map().set('search', new Set([{}]))
@@ -21,8 +25,8 @@ body.createChild()
   )
 })
 
-test.serial('3', (t) => {
-  text.callsFake((value) => JSON.stringify(value))
+test.serial('3', t => {
+  text.callsFake(value => JSON.stringify(value))
   const params = new Map()
     .set('search', new Set([{ value: 'kitten' }]))
     .set('filter', new Set([{ value: 'cute' }]))
@@ -47,8 +51,8 @@ body.createChild()
   )
 })
 
-test.serial('file', (t) => {
-  text.callsFake((value) => JSON.stringify(value))
+test.serial('file', t => {
+  text.callsFake(value => JSON.stringify(value))
   const params = new Map().set(
     'data',
     new Set([
@@ -71,10 +75,13 @@ body.createChild("text/csv", { filename: "data.csv" })
   )
 })
 
-test.serial('comment', (t) => {
-  text.callsFake((value) => JSON.stringify(value))
+test.serial('comment', t => {
+  text.callsFake(value => JSON.stringify(value))
   comment.returns(`// Find kittens`)
-  const params = new Map().set('search', new Set([{ value: 'kitten', comment: 'Find kittens' }]))
+  const params = new Map().set(
+    'search',
+    new Set([{ value: 'kitten', comment: 'Find kittens' }])
+  )
   const result = pre(params)
   t.is(
     result,

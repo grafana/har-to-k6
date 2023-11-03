@@ -1,13 +1,13 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { requestSpec as makeRequestSpec } from 'make'
-import { PostSpecies } from 'enum'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { requestSpec: makeRequestSpec } = require('make')
+const { PostSpecies } = require('enum')
 const [post, { structured, unstructured }] = isolate(test, 'render/post', {
   structured: 'render/post/structured',
   unstructured: 'render/post/unstructured',
 })
 
-test.serial('empty', (t) => {
+test.serial('empty', t => {
   const spec = makeRequestSpec()
   spec.state.post.species = PostSpecies.Empty
   const result = post(spec)
@@ -16,7 +16,7 @@ test.serial('empty', (t) => {
   t.is(result, null)
 })
 
-test.serial('unstructured', (t) => {
+test.serial('unstructured', t => {
   const spec = makeRequestSpec()
   spec.state.post.species = PostSpecies.Unstructured
   post(spec)
@@ -24,7 +24,7 @@ test.serial('unstructured', (t) => {
   t.true(structured.notCalled)
 })
 
-test.serial('structured', (t) => {
+test.serial('structured', t => {
   const spec = makeRequestSpec()
   spec.state.post.species = PostSpecies.Structured
   post(spec)

@@ -1,9 +1,9 @@
-import test from 'ava'
-import { parse } from '../../../../helper/parse'
-import JSONPath from '../../../../../src/render/check/variant/JSONPath'
-import { CheckCondition } from '../../../../../src/enum'
+const test = require('ava')
+const { parse } = require('../../../../helper/parse')
+const JSONPath = require('../../../../../src/render/check/variant/JSONPath')
+const { CheckCondition } = require('../../../../../src/enum')
 
-test('should check if jsonpath exists', (t) => {
+test('should check if jsonpath exists', t => {
   const result = parse(
     JSONPath('check name', {
       expression: '$.value',

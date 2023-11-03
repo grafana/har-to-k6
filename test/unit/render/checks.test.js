@@ -1,6 +1,6 @@
-import test from 'ava'
-import checks from 'render/checks'
-import { parse } from 'helper/parse'
+const test = require('ava')
+const checks = require('render/checks')
+const { parse } = require('helper/parse')
 
 const checkProto = {
   type: 2,
@@ -10,7 +10,7 @@ const checkProto = {
   expression: '$.user.name',
 }
 
-test.serial('1', (t) => {
+test.serial('1', t => {
   let expectedResult = `
     check(response, {
       "test": response => jsonpath.query(response.json(), "$.user.name").length > 0
@@ -20,7 +20,7 @@ test.serial('1', (t) => {
   t.deepEqual(parse(result), parse(expectedResult))
 })
 
-test.serial('3', (t) => {
+test.serial('3', t => {
   let expectedResult = `
     check(response, {
       "$.status is success": response => jsonpath.query(response.json(), "$.user.name").length > 0,

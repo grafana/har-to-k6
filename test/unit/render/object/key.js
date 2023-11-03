@@ -1,13 +1,17 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { StringSpecies } from 'enum'
-const [key, { string, stringSpecies, template }] = isolate(test, 'render/object/key', {
-  string: 'render/string',
-  stringSpecies: 'species/string',
-  template: 'render/template',
-})
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { StringSpecies } = require('enum')
+const [key, { string, stringSpecies, template }] = isolate(
+  test,
+  'render/object/key',
+  {
+    string: 'render/string',
+    stringSpecies: 'species/string',
+    template: 'render/template',
+  }
+)
 
-test.serial('Identifier', (t) => {
+test.serial('Identifier', t => {
   stringSpecies.returns(StringSpecies.Identifier)
   const result = key('token')
   t.is(result, 'token')
@@ -15,7 +19,7 @@ test.serial('Identifier', (t) => {
   t.true(template.notCalled)
 })
 
-test.serial('String', (t) => {
+test.serial('String', t => {
   stringSpecies.returns(StringSpecies.String)
   string.returns('"Content-Type"')
   const result = key('Content-Type')
@@ -24,7 +28,7 @@ test.serial('String', (t) => {
   t.true(template.notCalled)
 })
 
-test.serial('Template', (t) => {
+test.serial('Template', t => {
   /* eslint-disable no-template-curly-in-string */
   stringSpecies.returns(StringSpecies.Template)
   template.returns('`${name}`')

@@ -1,6 +1,6 @@
-import test from 'ava'
-import normalize from '../../../src/normalize'
-import { SleepPlacement } from '../../../src/enum'
+const test = require('ava')
+const normalize = require('../../../src/normalize')
+const { SleepPlacement } = require('../../../src/enum')
 
 class MockArchive {
   constructor() {

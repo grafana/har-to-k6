@@ -1,8 +1,8 @@
-import test from 'ava'
-import creator from 'validate/creator'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const creator = require('validate/creator')
+const { assay: makeAssay } = require('make')
 
-test('invalid name', (t) => {
+test('invalid name', t => {
   t.throws(
     () => {
       creator({ name: 5 }, makeAssay())
@@ -11,7 +11,7 @@ test('invalid name', (t) => {
   )
 })
 
-test('invalid version', (t) => {
+test('invalid version', t => {
   t.throws(
     () => {
       creator({ name: 'WebTracer', version: 5 }, makeAssay())
@@ -20,7 +20,7 @@ test('invalid version', (t) => {
   )
 })
 
-test('invalid comment', (t) => {
+test('invalid comment', t => {
   t.throws(
     () => {
       creator({ name: 'WebTracer', version: '5', comment: 5 }, makeAssay())
@@ -29,13 +29,13 @@ test('invalid comment', (t) => {
   )
 })
 
-test('valid empty', (t) => {
+test('valid empty', t => {
   t.notThrows(() => {
     creator({}, makeAssay())
   })
 })
 
-test('valid full', (t) => {
+test('valid full', t => {
   t.notThrows(() => {
     creator(
       { name: 'WebTracer', version: '5', comment: 'Build 20150607' },

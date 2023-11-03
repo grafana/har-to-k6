@@ -1,5 +1,5 @@
-import test from 'ava'
-import param from 'parse/param'
+const test = require('ava')
+const param = require('parse/param')
 
 function makeSpec() {
   return new Map()

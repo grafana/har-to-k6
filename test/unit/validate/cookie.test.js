@@ -1,8 +1,8 @@
-import test from 'ava'
-import cookie from 'validate/cookie'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const cookie = require('validate/cookie')
+const { assay: makeAssay } = require('make')
 
-test('missing name', (t) => {
+test('missing name', t => {
   t.throws(
     () => {
       cookie({}, 0, 0, makeAssay())
@@ -11,7 +11,7 @@ test('missing name', (t) => {
   )
 })
 
-test('invalid name', (t) => {
+test('invalid name', t => {
   t.throws(
     () => {
       cookie({ name: 5 }, 0, 0, makeAssay())
@@ -20,7 +20,7 @@ test('invalid name', (t) => {
   )
 })
 
-test('invalid value', (t) => {
+test('invalid value', t => {
   t.throws(
     () => {
       cookie({ name: 'session', value: 5 }, 0, 0, makeAssay())
@@ -29,7 +29,7 @@ test('invalid value', (t) => {
   )
 })
 
-test('invalid path', (t) => {
+test('invalid path', t => {
   t.throws(
     () => {
       cookie({ name: 'session', path: 5 }, 0, 0, makeAssay())
@@ -38,7 +38,7 @@ test('invalid path', (t) => {
   )
 })
 
-test('invalid domain', (t) => {
+test('invalid domain', t => {
   t.throws(
     () => {
       cookie({ name: 'session', domain: 5 }, 0, 0, makeAssay())
@@ -47,7 +47,7 @@ test('invalid domain', (t) => {
   )
 })
 
-test('invalid expires type', (t) => {
+test('invalid expires type', t => {
   t.throws(
     () => {
       cookie({ name: 'session', expires: 5 }, 0, 0, makeAssay())
@@ -59,7 +59,7 @@ test('invalid expires type', (t) => {
   )
 })
 
-test('invalid expires format', (t) => {
+test('invalid expires format', t => {
   t.throws(
     () => {
       cookie({ name: 'session', expires: '5 Feb 2020' }, 0, 0, makeAssay())
@@ -71,7 +71,7 @@ test('invalid expires format', (t) => {
   )
 })
 
-test('invalid httpOnly', (t) => {
+test('invalid httpOnly', t => {
   t.throws(
     () => {
       cookie({ name: 'session', httpOnly: 5 }, 0, 0, makeAssay())
@@ -80,7 +80,7 @@ test('invalid httpOnly', (t) => {
   )
 })
 
-test('invalid secure', (t) => {
+test('invalid secure', t => {
   t.throws(
     () => {
       cookie({ name: 'session', secure: 5 }, 0, 0, makeAssay())
@@ -89,7 +89,7 @@ test('invalid secure', (t) => {
   )
 })
 
-test('invalid comment', (t) => {
+test('invalid comment', t => {
   t.throws(
     () => {
       cookie({ name: 'session', comment: 5 }, 0, 0, makeAssay())
@@ -98,19 +98,19 @@ test('invalid comment', (t) => {
   )
 })
 
-test('valid minimal', (t) => {
+test('valid minimal', t => {
   t.notThrows(() => {
     cookie({ name: 'session' }, 0, 0, makeAssay())
   })
 })
 
-test('valid empty value', (t) => {
+test('valid empty value', t => {
   t.notThrows(() => {
     cookie({ name: 'session', value: '' }, 0, 0, makeAssay())
   })
 })
 
-test('valid full', (t) => {
+test('valid full', t => {
   t.notThrows(() => {
     cookie(
       {

@@ -1,12 +1,16 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { requestSpec as makeRequestSpec } from 'make'
-const [structured, { multipart, url }] = isolate(test, 'render/post/structured', {
-  multipart: 'render/post/multipart',
-  url: 'render/post/url',
-})
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { requestSpec: makeRequestSpec } = require('make')
+const [structured, { multipart, url }] = isolate(
+  test,
+  'render/post/structured',
+  {
+    multipart: 'render/post/multipart',
+    url: 'render/post/url',
+  }
+)
 
-test.serial('url', (t) => {
+test.serial('url', t => {
   const spec = makeRequestSpec()
   spec.post.type = 'application/x-www-form-urlencoded'
   structured(spec)
@@ -14,7 +18,7 @@ test.serial('url', (t) => {
   t.true(multipart.notCalled)
 })
 
-test.serial('multipart', (t) => {
+test.serial('multipart', t => {
   const spec = makeRequestSpec()
   spec.post.type = 'multipart/form-data'
   structured(spec)

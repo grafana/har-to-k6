@@ -1,9 +1,9 @@
-import test from 'ava'
-import Text from 'validate/checkVariant/Text'
-import { CheckCondition, CheckSubject, CheckType } from 'enum'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const Text = require('validate/checkVariant/Text')
+const { CheckCondition, CheckSubject, CheckType } = require('enum')
+const { assay: makeAssay } = require('make')
 
-test('missing subject', (t) => {
+test('missing subject', t => {
   t.throws(
     () => {
       Text({ type: CheckType.Text }, 0, 0, makeAssay())
@@ -12,7 +12,7 @@ test('missing subject', (t) => {
   )
 })
 
-test('missing condition', (t) => {
+test('missing condition', t => {
   t.throws(
     () => {
       Text(
@@ -29,7 +29,7 @@ test('missing condition', (t) => {
   )
 })
 
-test('missing value', (t) => {
+test('missing value', t => {
   t.throws(
     () => {
       Text(
@@ -47,7 +47,7 @@ test('missing value', (t) => {
   )
 })
 
-test('invalid expression', (t) => {
+test('invalid expression', t => {
   t.throws(
     () => {
       Text(
@@ -67,7 +67,7 @@ test('invalid expression', (t) => {
   )
 })
 
-test('invalid flags', (t) => {
+test('invalid flags', t => {
   t.throws(
     () => {
       Text(
@@ -87,7 +87,7 @@ test('invalid flags', (t) => {
   )
 })
 
-test('valid', (t) => {
+test('valid', t => {
   t.notThrows(() => {
     Text(
       {

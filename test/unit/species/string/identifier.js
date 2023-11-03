@@ -1,10 +1,10 @@
-import test from 'ava'
-import identifier from 'species/string/identifier'
+const test = require('ava')
+const identifier = require('species/string/identifier')
 
-test('pass', (t) => {
+test('pass', t => {
   t.true(identifier('token'))
 })
 
-test('fail', (t) => {
+test('fail', t => {
   t.false(identifier('Content-Type'))
 })

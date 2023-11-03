@@ -1,5 +1,5 @@
-import test from 'ava'
-import strToFunctionName from 'helpers/strToFunctionName'
+const test = require('ava')
+const strToFunctionName = require('helpers/strToFunctionName')
 
 /** @see strToFunctionName */
 test('add underscore in front of reserved words', t => {

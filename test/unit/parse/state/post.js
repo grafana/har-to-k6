@@ -1,15 +1,15 @@
-import test from 'ava'
-import post from 'parse/state/post'
-import { requestSpec as makeRequestSpec } from 'make'
-import { PostSpecies } from 'enum'
+const test = require('ava')
+const post = require('parse/state/post')
+const { requestSpec: makeRequestSpec } = require('make')
+const { PostSpecies } = require('enum')
 
-test('empty', (t) => {
+test('empty', t => {
   const spec = makeRequestSpec()
   post(spec)
   t.is(spec.state.post.species, PostSpecies.Empty)
 })
 
-test('unstructured', (t) => {
+test('unstructured', t => {
   const spec = makeRequestSpec()
   spec.post.type = 'text/plain'
   spec.post.text = 'Good post'
@@ -17,7 +17,7 @@ test('unstructured', (t) => {
   t.is(spec.state.post.species, PostSpecies.Unstructured)
 })
 
-test('structured', (t) => {
+test('structured', t => {
   const spec = makeRequestSpec()
   spec.headers.set('content-type', new Set([{ value: `multipart/form-data;` }]))
   spec.post.params = [{}, {}, {}]
@@ -25,7 +25,7 @@ test('structured', (t) => {
   t.is(spec.state.post.species, PostSpecies.Structured)
 })
 
-test('generated boundary', (t) => {
+test('generated boundary', t => {
   const spec = makeRequestSpec()
   spec.headers.set('content-type', new Set([{ value: `multipart/form-data;` }]))
   spec.post.params = [{}, {}, {}]
@@ -33,7 +33,7 @@ test('generated boundary', (t) => {
   t.not(spec.state.post.boundary, null)
 })
 
-test('existing boundary is respected', (t) => {
+test('existing boundary is respected', t => {
   const spec = makeRequestSpec()
   spec.headers.set(
     'content-type',

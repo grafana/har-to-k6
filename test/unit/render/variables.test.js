@@ -1,15 +1,15 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [variables, { variable }] = isolate(test, 'render/variables', {
   variable: 'render/variable',
 })
 
-test.serial('empty', (t) => {
+test.serial('empty', t => {
   const result = variables(new Map())
   t.is(result, null)
 })
 
-test.serial('1', (t) => {
+test.serial('1', t => {
   variable.returns('variable')
   const spec = new Map().set('token', {})
   const result = variables(spec)
@@ -17,7 +17,7 @@ test.serial('1', (t) => {
   t.is(result, 'variable')
 })
 
-test.serial('3', (t) => {
+test.serial('3', t => {
   variable.returns('variable')
   const spec = new Map()
     .set('token', {})

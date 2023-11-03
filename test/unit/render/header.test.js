@@ -1,11 +1,11 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [header, { note, text }] = isolate(test, 'render/header', {
   note: 'render/note/items',
   text: 'render/text',
 })
 
-test.serial('single value', (t) => {
+test.serial('single value', t => {
   note.returns(null)
   text.returns('"text/plain"')
   const result = header('Content-Type', new Set([{ value: 'text/plain' }]))
@@ -16,7 +16,7 @@ test.serial('single value', (t) => {
   })
 })
 
-test.serial('multiple values', (t) => {
+test.serial('multiple values', t => {
   note.returns(null)
   text.returns('"text/plain,text/csv,text/html"')
   const result = header(
@@ -34,7 +34,7 @@ test.serial('multiple values', (t) => {
   })
 })
 
-test.serial('comment', (t) => {
+test.serial('comment', t => {
   note.returns('comment')
   text.returns('"text/plain"')
   const result = header('Content-Type', new Set([{ value: 'text/plain' }]))

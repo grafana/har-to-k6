@@ -1,8 +1,8 @@
-import test from 'ava'
-import prettify from 'render/prettify'
-import options from 'render/options'
+const test = require('ava')
+const prettify = require('render/prettify')
+const options = require('render/options')
 
-test('basic', (t) => {
+test('basic', t => {
   const result = options({
     options: {},
   })
@@ -10,7 +10,7 @@ test('basic', (t) => {
   t.is(prettify(result), prettify(`export const options = {}`))
 })
 
-test('vus + duration', (t) => {
+test('vus + duration', t => {
   const result = options({
     options: {
       duration: '10s',
@@ -24,7 +24,7 @@ test('vus + duration', (t) => {
   )
 })
 
-test('advanced', (t) => {
+test('advanced', t => {
   const result = options({
     options: {
       stages: [

@@ -1,8 +1,8 @@
-import test from 'ava'
-import query from 'render/entry/header/query'
-import { requestSpec as makeRequestSpec } from 'make'
+const test = require('ava')
+const query = require('render/entry/header/query')
+const { requestSpec: makeRequestSpec } = require('make')
 
-test('no query', (t) => {
+test('no query', t => {
   const spec = makeRequestSpec()
   spec.state.address.variable = false
   spec.state.query.variable = false
@@ -10,7 +10,7 @@ test('no query', (t) => {
   t.is(result, null)
 })
 
-test('variable address', (t) => {
+test('variable address', t => {
   const spec = makeRequestSpec()
   spec.state.address.variable = true
   spec.state.query.variable = false
@@ -18,7 +18,7 @@ test('variable address', (t) => {
   t.is(result, null)
 })
 
-test('variable query', (t) => {
+test('variable query', t => {
   const spec = makeRequestSpec()
   spec.state.address.variable = false
   spec.state.query.variable = true
@@ -26,7 +26,7 @@ test('variable query', (t) => {
   t.is(result, null)
 })
 
-test('no comment', (t) => {
+test('no comment', t => {
   const spec = makeRequestSpec()
   spec.state.address.variable = false
   spec.state.query.variable = false
@@ -37,7 +37,7 @@ test('no comment', (t) => {
   t.is(result, null)
 })
 
-test('1 scalar', (t) => {
+test('1 scalar', t => {
   const spec = makeRequestSpec()
   spec.state.address.variable = false
   spec.state.query.variable = false
@@ -59,7 +59,7 @@ search: Find kittens`
   )
 })
 
-test('3 scalar', (t) => {
+test('3 scalar', t => {
   const spec = makeRequestSpec()
   spec.state.address.variable = false
   spec.state.query.variable = false
@@ -101,7 +101,7 @@ order: Show me the cutest kittens first`
   )
 })
 
-test('plural', (t) => {
+test('plural', t => {
   const spec = makeRequestSpec()
   spec.state.address.variable = false
   spec.state.query.variable = false
@@ -124,7 +124,7 @@ search[2]: Also find quokkas`
   )
 })
 
-test('1 multiline', (t) => {
+test('1 multiline', t => {
   const spec = makeRequestSpec()
   spec.state.address.variable = false
   spec.state.query.variable = false
@@ -143,7 +143,7 @@ They are the best`
   )
 })
 
-test('3 multiline', (t) => {
+test('3 multiline', t => {
   const spec = makeRequestSpec()
   spec.state.address.variable = false
   spec.state.query.variable = false

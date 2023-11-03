@@ -1,9 +1,9 @@
-import test from 'ava'
-import address from 'parse/state/address'
-import { requestSpec as makeRequestSpec } from 'make'
-import { AddressSpecies } from 'enum'
+const test = require('ava')
+const address = require('parse/state/address')
+const { requestSpec: makeRequestSpec } = require('make')
+const { AddressSpecies } = require('enum')
 
-test('no variable', (t) => {
+test('no variable', t => {
   const spec = makeRequestSpec()
   spec.address = 'http://example.com'
   address(spec)
@@ -11,7 +11,7 @@ test('no variable', (t) => {
   t.false(spec.state.address.variableStart)
 })
 
-test('variable inner', (t) => {
+test('variable inner', t => {
   const spec = makeRequestSpec()
   /* eslint-disable-next-line no-template-curly-in-string */
   spec.address = 'http://${host}'
@@ -21,7 +21,7 @@ test('variable inner', (t) => {
   t.false(spec.state.address.variableStart)
 })
 
-test('variable start', (t) => {
+test('variable start', t => {
   const spec = makeRequestSpec()
   /* eslint-disable-next-line no-template-curly-in-string */
   spec.address = '${location}'
@@ -31,7 +31,7 @@ test('variable start', (t) => {
   t.true(spec.state.address.variableStart)
 })
 
-test('fixed', (t) => {
+test('fixed', t => {
   const spec = makeRequestSpec()
   spec.address = 'http://example.com'
   spec.state.query.variable = false
@@ -39,7 +39,7 @@ test('fixed', (t) => {
   t.is(spec.state.address.species, AddressSpecies.Fixed)
 })
 
-test('constructed', (t) => {
+test('constructed', t => {
   const spec = makeRequestSpec()
   spec.address = 'http://example.com'
   spec.query.set('search', new Set([{ value: 'kitten' }]))
@@ -48,7 +48,7 @@ test('constructed', (t) => {
   t.is(spec.state.address.species, AddressSpecies.Constructed)
 })
 
-test('resolved', (t) => {
+test('resolved', t => {
   const spec = makeRequestSpec()
   /* eslint-disable-next-line no-template-curly-in-string */
   spec.address = 'http://${host}'
@@ -57,7 +57,7 @@ test('resolved', (t) => {
   t.is(spec.state.address.species, AddressSpecies.Resolved)
 })
 
-test('runtime address variable start', (t) => {
+test('runtime address variable start', t => {
   const spec = makeRequestSpec()
   /* eslint-disable-next-line no-template-curly-in-string */
   spec.address = '${location}'
@@ -66,7 +66,7 @@ test('runtime address variable start', (t) => {
   t.is(spec.state.address.species, AddressSpecies.Runtime)
 })
 
-test('runtime address variable + query', (t) => {
+test('runtime address variable + query', t => {
   const spec = makeRequestSpec()
   /* eslint-disable-next-line no-template-curly-in-string */
   spec.address = 'http://${host}'
@@ -76,7 +76,7 @@ test('runtime address variable + query', (t) => {
   t.is(spec.state.address.species, AddressSpecies.Runtime)
 })
 
-test('runtime query variable', (t) => {
+test('runtime query variable', t => {
   const spec = makeRequestSpec()
   spec.address = 'http://example.com'
   /* eslint-disable-next-line no-template-curly-in-string */

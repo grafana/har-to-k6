@@ -1,5 +1,5 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [root, { imports, lead, logic, options }] = isolate(test, 'render/root', {
   imports: 'render/imports',
   lead: 'render/lead',
@@ -7,7 +7,7 @@ const [root, { imports, lead, logic, options }] = isolate(test, 'render/root', {
   options: 'render/options',
 })
 
-test.serial('basic', (t) => {
+test.serial('basic', t => {
   root({})
   t.true(lead.calledOnce)
   t.true(imports.calledOnce)

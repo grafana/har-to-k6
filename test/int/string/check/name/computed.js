@@ -1,8 +1,8 @@
-import test from 'ava'
-import computed from 'string/check/name/computed'
-import { CheckCondition, CheckSubject, CheckType } from 'enum'
+const test = require('ava')
+const computed = require('string/check/name/computed')
+const { CheckCondition, CheckSubject, CheckType } = require('enum')
 
-test('JSONPath', (t) => {
+test('JSONPath', t => {
   const name = computed({
     type: CheckType.JSONPath,
     expression: '$.result.token',
@@ -10,7 +10,7 @@ test('JSONPath', (t) => {
   t.is(name, '$.result.token exists')
 })
 
-test('JSONPathValue', (t) => {
+test('JSONPathValue', t => {
   const name = computed({
     type: CheckType.JSONPathValue,
     expression: '$.user.id',
@@ -20,7 +20,7 @@ test('JSONPathValue', (t) => {
   t.is(name, '$.user.id equals 8734')
 })
 
-test('Regex', (t) => {
+test('Regex', t => {
   const name = computed({
     type: CheckType.Regex,
     subject: CheckSubject.HttpStatusCode,
@@ -29,7 +29,7 @@ test('Regex', (t) => {
   t.is(name, 'status matches /2\\d\\d/')
 })
 
-test('Text', (t) => {
+test('Text', t => {
   const name = computed({
     type: CheckType.Text,
     subject: CheckSubject.ResponseBody,

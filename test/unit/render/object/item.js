@@ -1,17 +1,17 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [item, { comment, key }] = isolate(test, 'render/object/item', {
   comment: 'render/comment',
   key: 'render/object/key',
 })
 
-test.serial('minimal', (t) => {
+test.serial('minimal', t => {
   key.returns('token')
   const result = item({ name: 'token', value: '"abc123"' }, true)
   t.is(result, 'token: "abc123"')
 })
 
-test.serial('comment inline', (t) => {
+test.serial('comment inline', t => {
   key.returns('token')
   comment.returns('// Authenticate')
   const result = item(
@@ -25,7 +25,7 @@ test.serial('comment inline', (t) => {
   t.is(result, 'token: "abc123" // Authenticate')
 })
 
-test.serial('comment multiline', (t) => {
+test.serial('comment multiline', t => {
   key.returns('query')
   comment.returns(
     '' +
@@ -53,13 +53,13 @@ query: "kittens"`
   )
 })
 
-test.serial('inner', (t) => {
+test.serial('inner', t => {
   key.returns('token')
   const result = item({ name: 'token', value: '"abc123"' }, false)
   t.is(result, 'token: "abc123",')
 })
 
-test.serial('inner comment', (t) => {
+test.serial('inner comment', t => {
   key.returns('token')
   comment.returns('// Authenticate')
   const result = item(

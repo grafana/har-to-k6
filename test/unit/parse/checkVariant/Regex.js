@@ -1,8 +1,8 @@
-import test from 'ava'
-import Regex from 'parse/checkVariant/Regex'
-import { CheckSubject } from 'enum'
+const test = require('ava')
+const Regex = require('parse/checkVariant/Regex')
+const { CheckSubject } = require('enum')
 
-test('basic', (t) => {
+test('basic', t => {
   const item = {}
   Regex(
     {
@@ -17,7 +17,7 @@ test('basic', (t) => {
   })
 })
 
-test('flags', (t) => {
+test('flags', t => {
   const item = {}
   Regex(
     {

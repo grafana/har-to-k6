@@ -1,9 +1,9 @@
-import test from 'ava'
-import flow from 'parse/flow'
-import { FlowItemType } from 'enum'
-import { result as makeResult } from 'make'
+const test = require('ava')
+const flow = require('parse/flow')
+const { FlowItemType } = require('enum')
+const { result: makeResult } = require('make')
 
-test('1 external', (t) => {
+test('1 external', t => {
   const result = makeResult()
   result.entries.push({ page: null })
   flow(result)
@@ -12,7 +12,7 @@ test('1 external', (t) => {
   ])
 })
 
-test('3 external', (t) => {
+test('3 external', t => {
   const result = makeResult()
   result.entries.push({ page: null })
   result.entries.push({ page: null })
@@ -25,7 +25,7 @@ test('3 external', (t) => {
   ])
 })
 
-test('1 group', (t) => {
+test('1 group', t => {
   const result = makeResult()
   result.entries.push({ page: 'page1' })
   result.entries.push({ page: 'page1' })
@@ -40,7 +40,7 @@ test('1 group', (t) => {
   ])
 })
 
-test('3 groups', (t) => {
+test('3 groups', t => {
   const result = makeResult()
   result.entries.push({ page: 'page1' })
   result.entries.push({ page: 'page1' })
@@ -68,7 +68,7 @@ test('3 groups', (t) => {
   ])
 })
 
-test('mixed', (t) => {
+test('mixed', t => {
   const result = makeResult()
   result.entries.push({ page: null })
   result.entries.push({ page: 'page1' })
@@ -94,7 +94,7 @@ test('mixed', (t) => {
   ])
 })
 
-test('split group', (t) => {
+test('split group', t => {
   const result = makeResult()
   result.entries.push({ page: 'page1' })
   result.entries.push({ page: null })

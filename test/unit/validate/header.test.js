@@ -1,8 +1,8 @@
-import test from 'ava'
-import header from 'validate/header'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const header = require('validate/header')
+const { assay: makeAssay } = require('make')
 
-test('missing name', (t) => {
+test('missing name', t => {
   t.throws(
     () => {
       header({}, 0, 0, makeAssay())
@@ -11,7 +11,7 @@ test('missing name', (t) => {
   )
 })
 
-test('invalid name', (t) => {
+test('invalid name', t => {
   t.throws(
     () => {
       header({ name: 5 }, 0, 0, makeAssay())
@@ -20,7 +20,7 @@ test('invalid name', (t) => {
   )
 })
 
-test('invalid value', (t) => {
+test('invalid value', t => {
   t.throws(
     () => {
       header({ name: 'Accept', value: 5 }, 0, 0, makeAssay())
@@ -29,7 +29,7 @@ test('invalid value', (t) => {
   )
 })
 
-test('invalid comment', (t) => {
+test('invalid comment', t => {
   t.throws(
     () => {
       header({ name: 'Accept', comment: 5 }, 0, 0, makeAssay())
@@ -38,19 +38,19 @@ test('invalid comment', (t) => {
   )
 })
 
-test('valid minimal', (t) => {
+test('valid minimal', t => {
   t.notThrows(() => {
     header({ name: 'Accept' }, 0, 0, makeAssay())
   })
 })
 
-test('valid empty value', (t) => {
+test('valid empty value', t => {
   t.notThrows(() => {
     header({ name: 'Accept', value: '' }, 0, 0, makeAssay())
   })
 })
 
-test('valid full', (t) => {
+test('valid full', t => {
   t.notThrows(() => {
     header(
       {

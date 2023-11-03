@@ -1,15 +1,19 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { CheckCondition, CheckSubject } from 'enum'
-import { checkState as makeCheckState } from 'make'
-const [Text, { comparison, indent, string, subject }] = isolate(test, 'render/check/variant/Text', {
-  comparison: 'render/check/comparison',
-  indent: 'render/indent',
-  string: 'render/string',
-  subject: 'render/check/subject',
-})
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { CheckCondition, CheckSubject } = require('enum')
+const { checkState: makeCheckState } = require('make')
+const [Text, { comparison, indent, string, subject }] = isolate(
+  test,
+  'render/check/variant/Text',
+  {
+    comparison: 'render/check/comparison',
+    indent: 'render/indent',
+    string: 'render/string',
+    subject: 'render/check/subject',
+  }
+)
 
-test.serial('subject', (t) => {
+test.serial('subject', t => {
   const spec = {
     subject: CheckSubject.ResponseBody,
     condition: CheckCondition.Contains,
@@ -23,7 +27,7 @@ test.serial('subject', (t) => {
   t.is(subject.firstCall.args[0], CheckSubject.ResponseBody)
 })
 
-test.serial('comparison', (t) => {
+test.serial('comparison', t => {
   string.returns('"Logged in"')
   const spec = {
     subject: CheckSubject.ResponseBody,
@@ -40,7 +44,7 @@ test.serial('comparison', (t) => {
   t.is(string.firstCall.args[0], 'Logged in')
 })
 
-test.serial('positive singular', (t) => {
+test.serial('positive singular', t => {
   subject.returns('subject')
   comparison.returns('comparison')
   const spec = {
@@ -58,7 +62,7 @@ test.serial('positive singular', (t) => {
   })
 })
 
-test.serial('positive plural', (t) => {
+test.serial('positive plural', t => {
   subject.returns('subject')
   comparison.returns('comparison')
   indent.returns('indented')
@@ -87,7 +91,7 @@ return !!values.find(value => valuecomparison);`
   )
 })
 
-test.serial('negative singular', (t) => {
+test.serial('negative singular', t => {
   subject.returns('subject')
   comparison.returns('comparison')
   const spec = {
@@ -105,7 +109,7 @@ test.serial('negative singular', (t) => {
   })
 })
 
-test.serial('negative plural', (t) => {
+test.serial('negative plural', t => {
   subject.returns('subject')
   comparison.returns('comparison')
   indent.returns('indented')

@@ -1,9 +1,9 @@
-import test from 'ava'
-import JSONPath from 'validate/checkVariant/JSONPath'
-import { CheckCondition, CheckSubject, CheckType } from 'enum'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const JSONPath = require('validate/checkVariant/JSONPath')
+const { CheckCondition, CheckSubject, CheckType } = require('enum')
+const { assay: makeAssay } = require('make')
 
-test('missing expression', (t) => {
+test('missing expression', t => {
   t.throws(
     () => {
       JSONPath({ type: CheckType.JSONPath }, 0, 0, makeAssay())
@@ -12,7 +12,7 @@ test('missing expression', (t) => {
   )
 })
 
-test('invalid expression', (t) => {
+test('invalid expression', t => {
   t.throws(
     () => {
       JSONPath(
@@ -29,7 +29,7 @@ test('invalid expression', (t) => {
   )
 })
 
-test('invalid condition', (t) => {
+test('invalid condition', t => {
   t.throws(
     () => {
       JSONPath(
@@ -47,7 +47,7 @@ test('invalid condition', (t) => {
   )
 })
 
-test('invalid value', (t) => {
+test('invalid value', t => {
   t.throws(
     () => {
       JSONPath(
@@ -65,7 +65,7 @@ test('invalid value', (t) => {
   )
 })
 
-test('invalid value empty', (t) => {
+test('invalid value empty', t => {
   t.throws(
     () => {
       JSONPath(
@@ -83,7 +83,7 @@ test('invalid value empty', (t) => {
   )
 })
 
-test('invalid flags', (t) => {
+test('invalid flags', t => {
   t.throws(
     () => {
       JSONPath(
@@ -101,7 +101,7 @@ test('invalid flags', (t) => {
   )
 })
 
-test('invalid subject', (t) => {
+test('invalid subject', t => {
   t.throws(
     () => {
       JSONPath(
@@ -119,7 +119,7 @@ test('invalid subject', (t) => {
   )
 })
 
-test('valid', (t) => {
+test('valid', t => {
   t.notThrows(() => {
     JSONPath(
       {
@@ -133,7 +133,7 @@ test('valid', (t) => {
   })
 })
 
-test('valid subject', (t) => {
+test('valid subject', t => {
   t.notThrows(() => {
     JSONPath(
       {

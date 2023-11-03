@@ -1,9 +1,9 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const isolate = require('helper/isolate')
+const { assay: makeAssay } = require('make')
 const [root, { log }] = isolate(test, 'validate/root', { log: 'validate/log' })
 
-test.serial('missing root', (t) => {
+test.serial('missing root', t => {
   t.throws(
     () => {
       root(null, makeAssay())
@@ -12,7 +12,7 @@ test.serial('missing root', (t) => {
   )
 })
 
-test.serial('missing log', (t) => {
+test.serial('missing log', t => {
   t.throws(
     () => {
       root({}, makeAssay())
@@ -21,7 +21,7 @@ test.serial('missing log', (t) => {
   )
 })
 
-test.serial('invalid log', (t) => {
+test.serial('invalid log', t => {
   t.throws(
     () => {
       root({ log: 5 }, makeAssay())
@@ -30,7 +30,7 @@ test.serial('invalid log', (t) => {
   )
 })
 
-test.serial('valid', (t) => {
+test.serial('valid', t => {
   root({ log: {} }, makeAssay())
   t.true(log.calledOnce)
 })

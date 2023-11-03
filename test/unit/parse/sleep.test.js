@@ -1,7 +1,7 @@
-import test from 'ava'
-import sleep from 'parse/sleep'
+const test = require('ava')
+const sleep = require('parse/sleep')
 
-test('does not mutate during parse', (t) => {
+test('does not mutate during parse', t => {
   const result = [
     { before: 0 },
     { before: 0.2 },

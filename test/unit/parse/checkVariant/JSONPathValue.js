@@ -1,8 +1,8 @@
-import test from 'ava'
-import JSONPathValue from 'parse/checkVariant/JSONPathValue'
-import { CheckCondition } from 'enum'
+const test = require('ava')
+const JSONPathValue = require('parse/checkVariant/JSONPathValue')
+const { CheckCondition } = require('enum')
 
-test('basic', (t) => {
+test('basic', t => {
   const item = {}
   JSONPathValue(
     {

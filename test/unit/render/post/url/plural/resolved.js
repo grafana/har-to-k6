@@ -1,5 +1,5 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [resolved, { note, object, text }] = isolate(
   test,
   'render/post/url/plural/resolved',
@@ -10,20 +10,20 @@ const [resolved, { note, object, text }] = isolate(
   }
 )
 
-test.serial('result', (t) => {
+test.serial('result', t => {
   object.returns('{}')
   const result = resolved(new Map())
   t.is(result, `new URLSearchParams({}).toString()`)
 })
 
-test.serial('singular', (t) => {
+test.serial('singular', t => {
   text.returns('"kitten"')
   const params = new Map().set('search', new Set([{ value: 'kitten' }]))
   resolved(params)
   t.deepEqual(object.firstCall.args[0], [{ name: 'search', value: '"kitten"' }])
 })
 
-test.serial('plural', (t) => {
+test.serial('plural', t => {
   text.onFirstCall().returns('"kitten"')
   text.onSecondCall().returns('"puppy"')
   text.onThirdCall().returns('"quokka"')
@@ -37,7 +37,7 @@ test.serial('plural', (t) => {
   ])
 })
 
-test.serial('comment singular', (t) => {
+test.serial('comment singular', t => {
   text.returns('"kitten"')
   note.returns('Find kittens')
   const params = new Map().set(
@@ -50,7 +50,7 @@ test.serial('comment singular', (t) => {
   ])
 })
 
-test.serial('comment plural', (t) => {
+test.serial('comment plural', t => {
   text.onFirstCall().returns('"kitten"')
   text.onSecondCall().returns('"puppy"')
   text.onThirdCall().returns('"quokka"')

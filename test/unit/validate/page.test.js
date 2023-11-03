@@ -1,8 +1,8 @@
-import test from 'ava'
-import page from 'validate/page'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const page = require('validate/page')
+const { assay: makeAssay } = require('make')
 
-test('missing id', (t) => {
+test('missing id', t => {
   t.throws(
     () => {
       page({}, 0, makeAssay())
@@ -11,7 +11,7 @@ test('missing id', (t) => {
   )
 })
 
-test('invalid id', (t) => {
+test('invalid id', t => {
   t.throws(
     () => {
       page({ id: 5 }, 0, makeAssay())
@@ -20,7 +20,7 @@ test('invalid id', (t) => {
   )
 })
 
-test('duplicate id', (t) => {
+test('duplicate id', t => {
   const assay = makeAssay()
   page({ id: 'page1', title: 'Page 1' }, 0, assay)
   t.throws(
@@ -31,7 +31,7 @@ test('duplicate id', (t) => {
   )
 })
 
-test('invalid title', (t) => {
+test('invalid title', t => {
   t.throws(
     () => {
       page({ id: 'page1', title: 5 }, 0, makeAssay())
@@ -40,7 +40,7 @@ test('invalid title', (t) => {
   )
 })
 
-test('invalid sleep', (t) => {
+test('invalid sleep', t => {
   t.throws(
     () => {
       page({ id: 'page1', title: 'Page 1', sleep: {} }, 0, makeAssay())
@@ -49,7 +49,7 @@ test('invalid sleep', (t) => {
   )
 })
 
-test('invalid comment', (t) => {
+test('invalid comment', t => {
   t.throws(
     () => {
       const assay = makeAssay()
@@ -59,7 +59,7 @@ test('invalid comment', (t) => {
   )
 })
 
-test('valid', (t) => {
+test('valid', t => {
   t.notThrows(() => {
     page({ id: 'page1', title: 'Page 1' }, 0, makeAssay())
   })

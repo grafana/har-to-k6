@@ -1,8 +1,8 @@
-import test from 'ava'
-import Text from 'parse/checkVariant/Text'
-import { CheckCondition, CheckSubject } from 'enum'
+const test = require('ava')
+const Text = require('parse/checkVariant/Text')
+const { CheckCondition, CheckSubject } = require('enum')
 
-test('basic', (t) => {
+test('basic', t => {
   const item = {}
   Text(
     {

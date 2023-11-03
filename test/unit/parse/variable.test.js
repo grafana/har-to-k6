@@ -1,12 +1,12 @@
-import test from 'ava'
-import variable from 'parse/variable'
-import { VariableType } from 'enum'
+const test = require('ava')
+const variable = require('parse/variable')
+const { VariableType } = require('enum')
 
 function makeSpec() {
   return new Map()
 }
 
-test('minimal', (t) => {
+test('minimal', t => {
   const spec = makeSpec()
   variable(
     {
@@ -26,7 +26,7 @@ test('minimal', (t) => {
   )
 })
 
-test('comment', (t) => {
+test('comment', t => {
   const spec = makeSpec()
   variable(
     {

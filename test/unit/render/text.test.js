@@ -1,11 +1,11 @@
-import test from 'ava'
-import isolate from 'helper/isolate'
+const test = require('ava')
+const isolate = require('helper/isolate')
 const [text, { string, template }] = isolate(test, 'render/text', {
   string: 'render/string',
   template: 'render/template',
 })
 
-test.serial('prime string', (t) => {
+test.serial('prime string', t => {
   const rendered = Symbol('rendered')
   string.returns(rendered)
   const result = text('Curiouser and curiouser')
@@ -14,7 +14,7 @@ test.serial('prime string', (t) => {
   t.true(template.notCalled)
 })
 
-test.serial('prime template', (t) => {
+test.serial('prime template', t => {
   const rendered = Symbol('rendered')
   template.returns(rendered)
   /* eslint-disable-next-line no-template-curly-in-string */
@@ -24,7 +24,7 @@ test.serial('prime template', (t) => {
   t.true(string.notCalled)
 })
 
-test.serial('composite string', (t) => {
+test.serial('composite string', t => {
   const rendered = Symbol('rendered')
   string.returns(rendered)
   const result = text(['one', 'two', 'three'])
@@ -33,7 +33,7 @@ test.serial('composite string', (t) => {
   t.true(template.notCalled)
 })
 
-test.serial('composite template', (t) => {
+test.serial('composite template', t => {
   const rendered = Symbol('rendered')
   template.returns(rendered)
   /* eslint-disable-next-line no-template-curly-in-string */
@@ -43,12 +43,12 @@ test.serial('composite template', (t) => {
   t.true(string.notCalled)
 })
 
-test.serial('composite string delimiter', (t) => {
+test.serial('composite string delimiter', t => {
   text(['one', 'two', 'three'], ',')
   t.is(string.firstCall.args[1], ',')
 })
 
-test.serial('composite template delimiter', (t) => {
+test.serial('composite template delimiter', t => {
   /* eslint-disable-next-line no-template-curly-in-string */
   text(['${one}', '${two}', '${three}'], ',')
   t.is(template.firstCall.args[1], ',')

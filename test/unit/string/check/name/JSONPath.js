@@ -1,7 +1,7 @@
-import test from 'ava'
-import JSONPath from 'string/check/name/JSONPath'
+const test = require('ava')
+const JSONPath = require('string/check/name/JSONPath')
 
-test('expression exists', (t) => {
+test('expression exists', t => {
   const name = JSONPath({
     expression: '$.store.book[*]',
   })

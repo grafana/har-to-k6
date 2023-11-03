@@ -1,9 +1,9 @@
-import test from 'ava'
-import mockRequire from 'mock-require'
-import sinon from 'sinon'
-import { CheckCondition, CheckSubject, CheckType } from 'enum'
-import { extrinsic } from 'aid'
-import { assay as makeAssay } from 'make'
+const test = require('ava')
+const mockRequire = require('mock-require')
+const sinon = require('sinon')
+const { CheckCondition, CheckSubject, CheckType } = require('enum')
+const { extrinsic } = require('aid')
+const { assay: makeAssay } = require('make')
 let check
 
 const checkVariant = {}
@@ -22,7 +22,7 @@ test.afterEach.always(() => {
   }
 })
 
-test.serial('missing type', (t) => {
+test.serial('missing type', t => {
   t.throws(
     () => {
       check({}, 0, 0, makeAssay())
@@ -31,7 +31,7 @@ test.serial('missing type', (t) => {
   )
 })
 
-test.serial('invalid type', (t) => {
+test.serial('invalid type', t => {
   t.throws(
     () => {
       check({ type: extrinsic(CheckType) }, 0, 0, makeAssay())
@@ -40,7 +40,7 @@ test.serial('invalid type', (t) => {
   )
 })
 
-test.serial('invalid subject', (t) => {
+test.serial('invalid subject', t => {
   t.throws(
     () => {
       check(
@@ -57,7 +57,7 @@ test.serial('invalid subject', (t) => {
   )
 })
 
-test.serial('invalid condition', (t) => {
+test.serial('invalid condition', t => {
   t.throws(
     () => {
       check(
@@ -74,7 +74,7 @@ test.serial('invalid condition', (t) => {
   )
 })
 
-test.serial('invalid expression', (t) => {
+test.serial('invalid expression', t => {
   t.throws(
     () => {
       check({ type: CheckType.Text, expression: 5 }, 0, 0, makeAssay())
@@ -83,7 +83,7 @@ test.serial('invalid expression', (t) => {
   )
 })
 
-test.serial('invalid flags', (t) => {
+test.serial('invalid flags', t => {
   t.throws(
     () => {
       check({ type: CheckType.Text, flags: 5 }, 0, 0, makeAssay())
@@ -92,7 +92,7 @@ test.serial('invalid flags', (t) => {
   )
 })
 
-test.serial('invalid value', (t) => {
+test.serial('invalid value', t => {
   t.throws(
     () => {
       check({ type: CheckType.Text, value: 5 }, 0, 0, makeAssay())
@@ -101,7 +101,7 @@ test.serial('invalid value', (t) => {
   )
 })
 
-test.serial('invalid comment', (t) => {
+test.serial('invalid comment', t => {
   t.throws(
     () => {
       check({ type: CheckType.Text, comment: 5 }, 0, 0, makeAssay())
@@ -110,7 +110,7 @@ test.serial('invalid comment', (t) => {
   )
 })
 
-test.serial('duplicate name', (t) => {
+test.serial('duplicate name', t => {
   const assay = makeAssay()
   check({ type: CheckType.JSONPath, expression: '$.token' }, 5, 0, assay)
   t.throws(
@@ -124,7 +124,7 @@ test.serial('duplicate name', (t) => {
   )
 })
 
-test.serial('valid minimal', (t) => {
+test.serial('valid minimal', t => {
   check(
     {
       type: CheckType.JSONPath,
@@ -137,7 +137,7 @@ test.serial('valid minimal', (t) => {
   t.true(checkVariant.JSONPath.calledOnce)
 })
 
-test.serial('valid full', (t) => {
+test.serial('valid full', t => {
   check(
     {
       type: CheckType.JSONPathValue,
