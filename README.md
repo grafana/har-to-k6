@@ -38,7 +38,7 @@ $ npm install --save har-to-k6
 ```
 
 Note that this will require you to run the converter with `npx har-to-k6 your-har-file` or,
-if you are using an older version of npm, ``./node_modules/.bin/har-to-k6 your-har-file`.
+if you are using an older version of npm, `./node_modules/.bin/har-to-k6 your-har-file`.
 
 ### Global Installation
 
