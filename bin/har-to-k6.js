@@ -13,6 +13,7 @@ class CommandLineError extends VError {}
 const BOM_REGEX = /^\uFEFF/
 
 pkginfo(module, 'version')
+
 const version = module.exports.version
 delete module.exports.version
 
