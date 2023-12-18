@@ -23,6 +23,8 @@ test.serial('basic', t => {
       variables: new Map(),
       sleep: null,
       state: { expanded: true },
+      webSocketMessages: [],
+      addSleep: false,
     },
   ])
   t.true(request.calledOnce)
@@ -55,4 +57,12 @@ test.serial('variables', t => {
 test.serial('sleep', t => {
   entry({ sleep: 1200 }, makeResult())
   t.true(sleep.calledOnce)
+})
+
+test.serial('webSocketMessages', t => {
+  let testMessage = 'Hello I am a test message'
+  let node = { time: 420, _webSocketMessages: [testMessage] }
+  let result = makeResult()
+  entry(node, result)
+  t.is(result.entries[0].webSocketMessages[0], testMessage)
 })

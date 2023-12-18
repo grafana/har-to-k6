@@ -4,10 +4,10 @@ const imports = require('./imports')
 const root = require('./root')
 const { result: makeResult } = require('../make')
 
-function parse(archive) {
+function parse(archive, options) {
   const result = makeResult()
   root(archive, result)
-  flow(result)
+  flow(result, options)
   imports(archive, result)
   declares(archive, result)
 

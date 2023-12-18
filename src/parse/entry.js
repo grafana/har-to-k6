@@ -23,6 +23,11 @@ function entry(node, result) {
   if (node.variables) {
     variables(node.variables, spec.variables)
   }
+  if (node._webSocketMessages) {
+    // capture all the websocket messages for later use connecting to the websocket
+    spec.timeConnected = node.time
+    spec.webSocketMessages = node._webSocketMessages
+  }
   state(spec)
   result.entries.push(spec)
 }

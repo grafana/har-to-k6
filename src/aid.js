@@ -35,8 +35,8 @@ function isNil(value) {
 }
 
 function parseContentType(str = '') {
-  const [mimeType, ...rest] = str.split(';').map((s) => s.trim())
-  const params = objectFromEntries(rest.map((s) => s.split('=')))
+  const [mimeType, ...rest] = str.split(';').map(s => s.trim())
+  const params = objectFromEntries(rest.map(s => s.split('=')))
 
   return {
     ...params,
@@ -53,8 +53,7 @@ function isBlacklistedHeader(headerName = '') {
   const [name] = headerName.split(';')
 
   return HEADERS_BLACKLIST.some(
-    (blacklistedHeader) =>
-      name.toLowerCase() === blacklistedHeader.toLowerCase()
+    blacklistedHeader => name.toLowerCase() === blacklistedHeader.toLowerCase()
   )
 }
 
@@ -79,6 +78,10 @@ function isMultipartFormData(entry) {
   return entry.request.postData.mimeType.includes('multipart/form-data')
 }
 
+function isWebsocket(url) {
+  return ['ws:', 'wss'].includes(url.slice(0, 3))
+}
+
 module.exports = {
   seralizeURLSearchParams,
   empty,
@@ -91,4 +94,5 @@ module.exports = {
   parseContentType,
   getContentTypeValue,
   isMultipartFormData,
+  isWebsocket,
 }

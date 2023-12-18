@@ -29,7 +29,7 @@ async function convert(_archives, options = DEFAULT_OPTIONS) {
       )
     }
 
-    return parse(source)
+    return parse(source, options)
   })
 
   const imports = combineImports(result)

@@ -22,6 +22,13 @@ test('http', t => {
   t.is(result, `import http from "k6/http";`)
 })
 
+test('webSocket', t => {
+  const spec = makeImports()
+  spec.websocket = true
+  const result = imports(spec)
+  t.is(result, `import ws from 'k6/ws';`)
+})
+
 test('sleep', t => {
   const spec = makeImports()
   spec.sleep = true

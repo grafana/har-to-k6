@@ -3,6 +3,7 @@ function imports(spec) {
     const lines = []
     k6(spec, lines)
     http(spec, lines)
+    websocket(spec, lines)
     k6JsLibs(spec, lines)
     return lines.join(`\n`)
   } else {
@@ -11,7 +12,7 @@ function imports(spec) {
 }
 
 function any(spec) {
-  return Object.values(spec).find((value) => value)
+  return Object.values(spec).find(value => value)
 }
 
 function k6(spec, lines) {
@@ -27,11 +28,20 @@ function k6(spec, lines) {
     if (spec.group) {
       items.push('group')
     }
+    if (spec.websocket) {
+      items.push('fail')
+    }
   }
 
   const content = items.join(`, `)
   if (items.length > 0) {
     lines.push(`import { ${content} } from "k6";`)
+  }
+}
+
+function websocket(spec, lines) {
+  if (spec.websocket) {
+    lines.push(`import ws from 'k6/ws';`)
   }
 }
 
