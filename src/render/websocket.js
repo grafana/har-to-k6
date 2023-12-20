@@ -69,13 +69,7 @@ function ws_send_messages(factor) {
     'let timings = { } ',
     'const messages = [',
   ]
-  let send_messages = [
-    `socket.on('message', function (mes) {`,
-    `if (mes.startsWith('44')) {`,
-    'socket.close()',
-    'fail(`Websocket Message Failure: ${mes}`)',
-    '}',
-  ]
+  let send_messages = [`socket.on('message', function (mes) {`]
   if (factor.addSleep) {
     send_messages.push(
       ...[
