@@ -12,7 +12,7 @@ function websocket(spec) {
 function getFactor(request, spec) {
   const factor = makeWebsocketFactor()
   if (spec.addSleep) {
-    factor.timeAlive = timeAlive(spec.timeConnected, spec.webSocketMessages)
+    factor.timeAlive = spec.timeConnected
     factor.addSleep = spec.addSleep
     factor.messages = changeMessageTimes(spec.webSocketMessages)
   } else {
@@ -50,50 +50,26 @@ function changeMessageTimes(messages) {
   }
 }
 
-function timeAlive(timeConnected, messages) {
-  /// calculates length of time when websocket is open minus the total time the messages took to run before closing the socket
-  let time = timeConnected
-  if (messages.length > 1) {
-    let firstMessageTime = messages[0].time
-    let finalMessageTime = messages[messages.length - 1].time
-    let totalTimeMessagesTook = finalMessageTime - firstMessageTime
-    time = timeConnected - totalTimeMessagesTook
-  }
-  return time
-}
-
 function ws_send_messages(factor) {
   // generates websocket functionality code
-  let socket_function = [
-    ' function (socket) {',
-    'let timings = { } ',
-    'const messages = [',
-  ]
-  let send_messages = [`socket.on('message', function (mes) {`]
+  let socket_function = [' function (socket) {', 'const messages = [']
+  let send_messages = [`socket.on('open', () => {`]
   if (factor.addSleep) {
     send_messages.push(
       ...[
-        'const parsedMessage = JSON.parse(mes)',
-        'if (parsedMessage.type === "start" || parsedMessage.type === "connection_ack") {',
-        'messages.forEach(function (currentMessage) {',
-        'socket.setTimeout(function () {',
-        'const date = new Date()',
-        'const startTime = date.getTime()',
-        'const currentId = JSON.parse(currentMessage.message).id',
-        'timings[currentId] = startTime',
-        'socket.send(currentMessage.message)',
-        '}, currentMessage.time)',
-        '})',
-        '} else {',
-        'const date = new Date()',
-        'const currentId = parsedMessage.id',
-        'if (timings[currentId] !== undefined) {',
-        'const endTime = date.getTime()',
-        'const startTime = timings[currentId]',
-        'const totalResponseTime = endTime - startTime',
-        // 'wsResponseTrend.add(totalResponseTime)',
-        '}',
-        '}',
+        `for (const currentMessage of messages) {
+          socket.setTimeout(() => {
+            socket.send(currentMessage.message)
+          }, currentMessage.time)
+        }`,
+      ]
+    )
+  } else {
+    send_messages.push(
+      ...[
+        `for (const currentMessage of messages) {
+          socket.send(currentMessage.message)
+        }`,
       ]
     )
   }
@@ -101,27 +77,17 @@ function ws_send_messages(factor) {
   send_messages.push('})')
   let messages = factor.messages
   let timeAlive = 2
-  send_messages.push("socket.on('open', function () {")
   if (messages) {
     for (const message of messages) {
       if (message.type === 'send') {
-        let parsed_data = JSON.parse(message.data)
-        if (
-          parsed_data.type === 'connection_init' ||
-          parsed_data.type === 'start' ||
-          !factor.addSleep
-        ) {
-          send_messages.push(`socket.send(${JSON.stringify(message.data)})`)
-        } else {
-          socket_function.push(
-            ...[
-              '{',
-              `message: ${JSON.stringify(message.data)},`,
-              `time: ${message.time},`,
-              '},',
-            ]
-          )
-        }
+        socket_function.push(
+          ...[
+            '{',
+            `message: ${JSON.stringify(message.data)},`,
+            `time: ${message.time},`,
+            '},',
+          ]
+        )
       }
     }
   }
@@ -130,11 +96,10 @@ function ws_send_messages(factor) {
   }
   send_messages.push(
     ...[
-      'socket.setTimeout(function () {',
+      'socket.setTimeout(() => {',
       'socket.close()',
       `}, ${timeAlive})`,
-      '})',
-      "socket.on('error', function (e) {",
+      "socket.on('error', (e) => {",
       'fail(`WebSocket failed: ${e.error()}`);',
       '})',
       '}',
