@@ -3,7 +3,7 @@
 const chalk = require('chalk')
 const convert = require('../src/convert')
 const fs = require('fs')
-const io = require('caporal')
+const { program: io } = require('@caporal/core')
 const pkginfo = require('pkginfo')
 const { DEFAULT_CLI_OPTIONS } = require('../src/constants')
 const { VError } = require('verror')
@@ -18,27 +18,22 @@ delete module.exports.version
 
 io.version(version)
   .description('Convert LI-HAR to k6 script')
-  .option(
-    '-o, --output <output>',
-    'Output file',
-    output,
-    /** @see {normalizeOptions} */
-    ''
-  )
-  .option(
-    '--add-sleep',
-    'Add automatic sleep() based on startDateTime',
-    DEFAULT_CLI_OPTIONS.addSleep
-  )
+  .option('-o, --output <output>', 'Output file', {
+    validator: output,
+    default: '',
+  })
+  .option('--add-sleep', 'Add automatic sleep() based on startDateTime', {
+    default: DEFAULT_CLI_OPTIONS.addSleep,
+  })
   .option(
     '-s, --stdout',
     'Write to stdout (ignored when running with -o, --output)',
-    DEFAULT_CLI_OPTIONS.stdout
+    { default: DEFAULT_CLI_OPTIONS.stdout }
   )
   .argument('<archive>', 'LI-HAR archive to convert')
   .action(run)
 
-io.parse(process.argv)
+io.run(process.argv.slice(2))
 
 function output(value) {
   if (fs.existsSync(value) && fs.lstatSync(value).isDirectory()) {
@@ -58,17 +53,17 @@ function getLogger(log, opt) {
   return opt.stdout ? log.warn : log.info
 }
 
-async function run(arg, opt, log) {
-  normalizeOptions(opt)
-  const logger = getLogger(log, opt)
+async function run({ args, options, logger: log }) {
+  normalizeOptions(options)
+  const logger = getLogger(log, options)
 
   try {
-    start(arg.archive, logger)
-    const json = read(arg.archive)
+    start(args.archive, logger)
+    const json = read(args.archive)
     const archive = parse(json)
-    const { main } = await transform(archive, opt)
-    write(main, opt)
-    success(opt, logger)
+    const { main } = await transform(archive, options)
+    write(main, options)
+    success(options, logger)
   } catch (error) {
     inform(error, log)
   }
