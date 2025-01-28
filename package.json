@@ -36,7 +36,7 @@
         "iso8601-validator": "^1.0.1",
         "jsonpath": "^1.0.1",
         "moment": "^2.29.4",
-        "nanoid": "^3.1.31",
+        "nanoid": "^3.3.8",
         "pkginfo": "^0.4.1",
         "prettier": "^2.0.5",
         "tmp": "^0.1.0",
@@ -57,7 +57,7 @@
         "pretty-quick": "^2.0.1",
         "sinon": "^7.3.1",
         "webpack": "^5.88.2",
-        "webpack-bundle-analyzer": "^4.9.1",
+        "webpack-bundle-analyzer": "^4.10.2",
         "webpack-cli": "^5.1.4"
     },
     "scripts": {
