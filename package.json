@@ -66,7 +66,7 @@
         "lint": "eslint .",
         "test": "npm-run-all test-unit test-int test-e2e",
         "test-int": "cross-env NODE_PATH=src:test ava test/int/**/*.test.js",
-        "test-unit": "cross-env NODE_PATH=src:test ava test/unit/**/*.test.js",
+        "test-unit": "cross-env NODE_PATH=src:test ava test/unit/*.test.js test/unit/**/*.test.js",
         "test-e2e": "cross-env NODE_PATH=src:test ava test/e2e/fixtures.test.js test/e2e/**/*.test.js",
         "test:watch": "cross-env NODE_PATH=src:test ava --watch test/unit/*",
         "test-hoc": "cross-env NODE_PATH=src:test ava",

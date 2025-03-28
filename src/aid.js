@@ -35,8 +35,8 @@ function isNil(value) {
 }
 
 function parseContentType(str = '') {
-  const [mimeType, ...rest] = str.split(';').map((s) => s.trim())
-  const params = objectFromEntries(rest.map((s) => s.split('=')))
+  const [mimeType, ...rest] = str.split(';').map(s => s.trim())
+  const params = objectFromEntries(rest.map(s => s.split('=')))
 
   return {
     ...params,
@@ -53,8 +53,7 @@ function isBlacklistedHeader(headerName = '') {
   const [name] = headerName.split(';')
 
   return HEADERS_BLACKLIST.some(
-    (blacklistedHeader) =>
-      name.toLowerCase() === blacklistedHeader.toLowerCase()
+    blacklistedHeader => name.toLowerCase() === blacklistedHeader.toLowerCase()
   )
 }
 
@@ -72,7 +71,7 @@ function isObject(value) {
 }
 
 function isMultipartFormData(entry) {
-  if (!entry.request.postData) {
+  if (!entry.request.postData || !entry.request.postData.mimeType) {
     return false
   }
 
