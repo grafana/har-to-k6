@@ -6,7 +6,6 @@ metadata:
   description: |
     JSON config representation of k6 script
   annotations:
-    backstage.io/techdocs-ref: dir:.
     github.com/project-slug: grafana/har-to-k6
 spec:
   type: tool
