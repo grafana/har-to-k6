@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: har-to-k6
+  title: har-to-k6
+  description: |
+    JSON config representation of k6 script
+  annotations:
+    github.com/project-slug: grafana/har-to-k6
+spec:
+  type: tool
+  owner: group:default/k6-frontend
+  lifecycle: production
