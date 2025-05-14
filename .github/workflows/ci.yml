@@ -1,5 +1,7 @@
 name: CI
 
+permissions: {}
+
 on:
   pull_request: {}
   push:
@@ -9,8 +11,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
       - uses: actions/setup-node@v3
         with:
           node-version: '18'

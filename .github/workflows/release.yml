@@ -1,5 +1,7 @@
 name: Release
 
+permissions: {}
+
 on:
   push:
     tags:
@@ -8,9 +10,15 @@ jobs:
   publish:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: Setup environment
         uses: actions/setup-node@v3
@@ -35,12 +43,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Login to DockerHub
+        uses: grafana/shared-workflows/actions/dockerhub-login@13fb504e3bfe323c1188bf244970d94b2d336e86
+
       - name: Build docker image
         run: |
-          echo '${{ secrets.DOCKERHUB_PASSWORD }}' | \
-          docker login \
-            --username ${{ secrets.DOCKERHUB_USERNAME }} \
-            --password-stdin
           export tag=${GITHUB_REF/refs\/tags\/v/}
           docker build . -t grafana/har-to-k6:$tag
           docker tag \
@@ -53,18 +60,25 @@ jobs:
     name: Create GitHub Release
     runs-on: ubuntu-latest
     needs: publish
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: Create Release Notes
         uses: actions/github-script@v6.2.0
         env:
-          TAG_NAME: ${{ github.ref }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${GITHUB_TOKEN}
           script: |
-            await github.request(`POST /repos/${{ github.repository }}/releases`, {
-              tag_name: "${TAG_NAME}",
+            await github.request(`POST /repos/${GITHUB_REPOSITORY}/releases`, {
+              tag_name: "${GITHUB_REF}",
               generate_release_notes: true
             });
