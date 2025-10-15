@@ -3,62 +3,9 @@ name: Release
 permissions: {}
 
 on:
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    environment: RELEASE
-
-    permissions:
-      contents: read
-      id-token: write
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-
-      - name: Setup environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: '24.5.0'
-          package-manager-cache: false
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint files
-        run: npm run lint
-
-      - name: Test
-        run: npm test
-
-      - name: Bundle
-        run: npm run bundle
-
-      - name: Publish to NPM
-        run: npm publish --access public
-
-      - name: Login to DockerHub
-        uses: grafana/shared-workflows/actions/dockerhub-login@dockerhub-login-v1.0.1
-
-      - name: Login to DockerHub
-        uses: grafana/shared-workflows/actions/dockerhub-login@13fb504e3bfe323c1188bf244970d94b2d336e86
-
-      - name: Build docker image
-        run: |
-          export tag=${GITHUB_REF/refs\/tags\/v/}
-          docker build . -t grafana/har-to-k6:$tag
-          docker tag \
-            grafana/har-to-k6:$tag \
-            grafana/har-to-k6:latest
-          docker push grafana/har-to-k6:$tag
-          docker push grafana/har-to-k6:latest
-
   create-github-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
@@ -79,9 +26,9 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${GITHUB_TOKEN}
+          github-token: ${env.GITHUB_TOKEN}
           script: |
-            await github.request(`POST /repos/${GITHUB_REPOSITORY}/releases`, {
-              tag_name: "${GITHUB_REF}",
+            await github.request(`POST /repos/${env.GITHUB_REPOSITORY}/releases`, {
+              tag_name: "v0.14.11",
               generate_release_notes: true
             });
