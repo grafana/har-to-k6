@@ -3,17 +3,13 @@ name: Release
 on:
   workflow_dispatch:
 
-
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   create-github-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
 
     steps:
       - name: Checkout code
