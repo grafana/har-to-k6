@@ -28,9 +28,9 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${env.GITHUB_TOKEN}
+          github-token: ${{ env.GITHUB_TOKEN }}
           script: |
-            await github.request(`POST /repos/${env.GITHUB_REPOSITORY}/releases`, {
+            await github.request(`POST /repos/${{ env.GITHUB_REPOSITORY }}/releases`, {
               tag_name: "v0.14.11",
               generate_release_notes: true
             });
