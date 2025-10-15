@@ -1,9 +1,12 @@
 name: Release
 
-permissions: {}
-
 on:
   workflow_dispatch:
+
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   create-github-release:
