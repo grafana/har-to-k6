@@ -9,6 +9,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: RELEASE
 
     permissions:
       contents: read
@@ -23,7 +24,8 @@ jobs:
       - name: Setup environment
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '24.5.0'
+          package-manager-cache: false
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
@@ -38,15 +40,8 @@ jobs:
       - name: Bundle
         run: npm run bundle
 
-      - uses: grafana/shared-workflows/actions/get-vault-secrets@get-vault-secrets-v1.1.0
-        with:
-          repo_secrets: |
-            NPM_TOKEN=release:npm_token
-
       - name: Publish to NPM
         run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
 
       - name: Login to DockerHub
         uses: grafana/shared-workflows/actions/dockerhub-login@dockerhub-login-v1.0.1
