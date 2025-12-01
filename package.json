@@ -39,7 +39,7 @@
         "nanoid": "^3.3.8",
         "pkginfo": "^0.4.1",
         "prettier": "^2.0.5",
-        "tmp": "^0.1.0",
+        "tmp": "^0.2.0",
         "verror": "^1.10.0"
     },
     "devDependencies": {
