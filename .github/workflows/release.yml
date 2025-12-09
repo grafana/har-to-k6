@@ -47,7 +47,7 @@ jobs:
         uses: grafana/shared-workflows/actions/dockerhub-login@dockerhub-login-v1.0.1
 
       - name: Login to DockerHub
-        uses: grafana/shared-workflows/actions/dockerhub-login@ddca2aceda132464ae86fcd8bce489d11a47ee1e
+        uses: grafana/shared-workflows/actions/dockerhub-login@c40eb37be87f39f641802f5f1cc746825d4a3e9b
 
       - name: Build docker image
         run: |
