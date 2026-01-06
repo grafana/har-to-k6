@@ -108,5 +108,9 @@
         }
     },
     "ava": {},
-    "typings": "./typings/main.d.ts"
+    "typings": "./typings/main.d.ts",
+    "overrides": {
+        "brace-expansion": "1.1.12",
+        "tmp": "^0.2.4"
+    }
 }
