@@ -110,7 +110,7 @@
     "ava": {},
     "typings": "./typings/main.d.ts",
     "overrides": {
-        "brace-expansion": "1.1.12",
+        "brace-expansion": "4.0.1",
         "tmp": "^0.2.4"
     }
 }
