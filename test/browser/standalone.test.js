@@ -10,10 +10,15 @@ const sampleHAR = {
   log: {
     entries: [
       {
-        index: 0,
+        request: {
+          method: 'GET',
+          url: 'https://quickpizza.grafana.com/',
+        },
+      },
+      {
         request: {
           method: 'POST',
-          url: 'https://quickpizza.grafana.com/',
+          url: 'ttps://quickpizza.grafana.com/api/pizza/',
           headers: [
             {
               name: 'Content-Type',
@@ -22,7 +27,8 @@ const sampleHAR = {
           ],
           postData: {
             mimeType: 'application/json',
-            text: '{"user":"admin","password":"123"}',
+            text:
+              '{"maxCaloriesPerSlice":1000,"mustBeVegetarian":false,"excludedIngredients":[],"excludedTools":[],"maxNumberOfToppings":5,"minNumberOfToppings":2,"customName":""}',
           },
         },
       },
