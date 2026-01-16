@@ -18,7 +18,7 @@ const sampleHAR = {
       {
         request: {
           method: 'POST',
-          url: 'ttps://quickpizza.grafana.com/api/pizza/',
+          url: 'https://quickpizza.grafana.com/api/pizza/',
           headers: [
             {
               name: 'Content-Type',
