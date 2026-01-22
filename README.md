@@ -171,3 +171,13 @@ async function run () {
 
 ## Credits
 Thanks to [bookmoons](https://github.com/bookmoons) for creating this tool 🎉
+
+## Publishing a new release
+
+This package uses [NPM Trusted Publishing](https://docs.npmjs.com/trusted-publishers). To publish a new release:
+
+1. Update the version in `package.json` with `npm version patch|minor|major`.
+2. Open a new PR with the version change.
+3. Once it's approved and merged, manually draft a new release in GitHub.
+4. Once the release is ready to be published, the [release.yml](/.github/workflows/release.yml) workflow will be triggered.
+5. Check Dockerhub and NPM for the new version.
