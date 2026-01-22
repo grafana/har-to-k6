@@ -22,7 +22,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup environment
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
           node-version: '24.5.0'
           package-manager-cache: false
