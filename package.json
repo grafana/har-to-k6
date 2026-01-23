@@ -46,7 +46,7 @@
         "@babel/core": "^7.23.2",
         "@babel/preset-env": "^7.23.2",
         "@babel/eslint-parser": "7.28.6",
-        "ava": "^5.3.1",
+        "ava": "^6.0.0",
         "babel-loader": "^8.0.6",
         "cross-env": "^5.2.0",
         "eslint": "^7.1.0",
