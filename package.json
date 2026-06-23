@@ -43,7 +43,7 @@
         "verror": "1.10.1"
     },
     "devDependencies": {
-        "@babel/core": "7.23.2",
+        "@babel/core": "7.29.6",
         "@babel/eslint-parser": "7.28.6",
         "@babel/preset-env": "7.29.5",
         "ava": "5.3.1",
