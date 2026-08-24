@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:24-alpine
 
 WORKDIR /converter
 
@@ -8,7 +8,7 @@ COPY webpack.config.js .editorconfig .eslintignore .prettierignore ./
 COPY src src
 COPY typings typings
 COPY LICENSE ./
-RUN npm install
+RUN npm ci
 
 # Bundle app source
 RUN npm run bundle
