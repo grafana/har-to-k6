@@ -24,7 +24,7 @@ jobs:
       - name: Setup environment
         uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
         with:
-          node-version: '24.5.0'
+          node-version: '24.21.0'
           package-manager-cache: false
           registry-url: 'https://registry.npmjs.org'
 
